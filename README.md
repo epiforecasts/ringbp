@@ -36,68 +36,21 @@ The analysis as I understand it so far is this:
 
 ### Set up
 
-* Set your working directory to the home directory of this project (or use the provided Rstudio project).
 
-* Run the following to check the installation of all required packages.
-
-```r
-source("scripts/install.R")
-```
-
-### Folders
-
-* `data`: input data.
-* `scripts`:  analysis scripts.
-* `functions`: R functions shared across scripts.
-* `output`: Contains analysis output. Subdivided into: `chain`, `likelihood_results`, `results`, and `plots`.
 
 ### Run an analysis
 
-* **Simulate from particular PA, Rwithin, Rmissed** there is a minimal working example of a simulation run in `scripts/wuhan_int_simulate.R`. Outputs the simulated curve and observed data as a plot. Calls following 2 source files:
-    * `load_modelling_functions.r`: Loads a list of modelling functions.
-    * `ring_vaccine_load_params.r`: Sets global parameters used across scenarios.
-    
-```r
-source("scripts/wuhan_int_simulate.R", echo = TRUE)
-```
-*  **Simulate across parameter values** using `scripts/ring_vaccine_pMCMC.R`. Calls following 2 source files:
-    * `load_modelling_functions.r`: Loads a list of modelling functions.
-    * `ring_vaccine_load_params.r`: Sets global parameters used across scenarios.
+To check your package is working correctly, try to run some simulations with the following:
 
 ```r
-source("scripts/ring_vaccine_pMCMC.R", echo = TRUE)
+wuhan_sim(n.cores = 6,n.sim = 25,wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 1,
+          initial.clusters = 5, prop.ascertain = 0.5, cap_cases = 4500, cap_max_days = 350,
+          r0within = 0.66, r0Am = 7, overkkmiss = 1.6, overkk = 0.19, vefficacy = 0.975,
+          vuptake = 0.90, ring.size = 100, time_to_protection = 10, incub_mean = 9.1, 
+          incub_var = 7.3, inf_mean = 5.3, inf_var = 4.3, delay_shape = 2.4114166, 
+          delay_rate = 0.3261129)
 ```
 
-* **Gather outputs and find MLE** using `posterior_plots.R` - imports results from `output` and finds maximimum likelihood estimate.
-
-```r
-source("scripts/posterior_plots.R", echo = TRUE)
-```
-
-### Additional functions (see `functions`)
-
-* `outbreak_model`: Core outbreak model around which all other analysis is built.
-
-* `ff_cases`: likelihood function for cases.
-
-* `ff_clust`: Likelihood function for the chain size.
-
-* `c.text`: Summarise outbreak size (with CI). Reported at the end of analysis functions.
-
-* `plot_cases`: Plots the acutal cases vs. estimated cases (read from saved output) for the MLE.
-
-* `ring_cf`: Run in `ring_vaccine_pMCMC.R`.  This simulates from MLE (defined manually at start), stores outputs in `output/chains`, then imports these chains, identifies transmission after vaccination introduced and re-simulates as if no vaccination. Difference is estimated as `c.text(cases_est$outbreak_size2)` at end of this function.
-
-### Other scripts
-
-* `archive/ring_vaccine_simulate_many_scenarios.R` - no documentation on this function and may not need for this analysis.
-
-## Code review + problems
-
-* For ideal reproducibility the tidyverse dep should be moved to the actual packages required in the analysis.
-* Can't find where `onsets` are saved. These files are used in `scripts/posterior_plots.R` and without them it will not run.
-* Foreach looping index appears somewhat broken in `scripts/ring_vaccine_pMCMC.R` - transcient errors.*
-* Code appears to need chains to be saved but by default this is not happening - controlled as an argument of `outbreak_model`.
 
 ## Table of parameters from branching process
 
