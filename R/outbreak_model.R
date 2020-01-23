@@ -18,7 +18,7 @@
 #' @param cap_max_days
 #' @param cap_cases
 #' @param rep_fn
-#' @param time_to_vaccination
+#' @param time_to_isolation
 #' @param time_to_protection
 #' @param ring.size
 #' @param hc.vacc
@@ -33,7 +33,7 @@
 #' @examples
 #'
 outbreak_model<-function(nrun,initc, initclust,r0Amiss,r0Cmiss,r0A,r0B,pr.id,wvacc,massvac=0,chain.output=F,vacc_cf=F,
-                         vacc_onsets=NULL,cap_max_days,cap_cases,rep_fn,time_to_vaccination,time_to_protection,ring.size,hc.vacc,
+                         vacc_onsets=NULL,cap_max_days,cap_cases,rep_fn,time_to_isolation,time_to_protection,ring.size,hc.vacc,
                          overkkmiss,overkk,infecfn,incubfn){
 
   # if ring vaccination (wvacc==1), reduced transmission, otherwise no reduction
@@ -109,7 +109,7 @@ outbreak_model<-function(nrun,initc, initclust,r0Amiss,r0Cmiss,r0A,r0B,pr.id,wva
       first.case=min(clust.onset.new)
       ascertain.delay=rep_fn(1)
       index.ascertained = first.case+ascertain.delay
-      tvacc=index.ascertained+time_to_vaccination(1)+time_to_protection # THIS IS VACCINATION DELAY
+      tvacc=index.ascertained+time_to_isolation+time_to_protection # THIS IS VACCINATION DELAY
 
     }else{ # if cluster is amongst the initial clusters
       clust.onset.new <-cluster_onset.inf
@@ -123,7 +123,7 @@ outbreak_model<-function(nrun,initc, initclust,r0Amiss,r0Cmiss,r0A,r0B,pr.id,wva
       first.case=min(clust.onset.new)
       ascertain.delay=rep_fn(1)
       index.ascertained = first.case+ascertain.delay
-      tvacc=index.ascertained+time_to_vaccination(1)+time_to_protection # THIS IS VACCINATION DELAY
+      tvacc=index.ascertained+time_to_isolation+time_to_protection # THIS IS VACCINATION DELAY
     }
 
     missed.tally <- numeric()

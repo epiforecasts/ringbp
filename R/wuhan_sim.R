@@ -17,6 +17,7 @@
 #' @param vuptake
 #' @param ring.size
 #' @param time_to_protection
+#' @param time_to_isolation
 #' @param incub_mean
 #' @param incub_var
 #' @param inf_mean
@@ -36,7 +37,7 @@
 #' @importFrom tibble as_tibble
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
                       cap_cases,cap_max_days,r0within,r0Am,overkkmiss,overkk,vefficacy,vuptake,ring.size,
-                      time_to_protection,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate){
+                      time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate){
 
   # n.cores = number of cores for parallel processing
   # n.sim = number of simulation runs
@@ -99,12 +100,6 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
     rgamma(x,shape=delay_shape, rate=delay_rate)
   }
 
-  # Distribution for delay from isolation to vaccination
-  time_to_vaccination <- function(x){
-    # rgamma(x,shape=3.062283, rate=1.186860)
-    return(0) # this is now zero since we only care about isolation
-  }
-
   # Intervention in health centers set to 0
   r0Cm <- 0
   hc.vacc <- 0
@@ -125,7 +120,7 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
                                   cap_max_days = cap_max_days,
                                   cap_cases = cap_cases,
                                   rep_fn = rep_fn,
-                                  time_to_vaccination = time_to_vaccination,
+                                  time_to_isolation = time_to_isolation,
                                   time_to_protection= time_to_protection,
                                   ring.size = ring.size,
                                   hc.vacc = hc.vacc,
