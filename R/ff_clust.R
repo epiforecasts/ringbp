@@ -1,8 +1,13 @@
-# - - - 
-# Calculate marginal likelihood for each parameter
-
-# Use joint distribution of probability with Poisson observation
-
+#' Marginal likelihood calculation for cluster number
+#' @author Adam Kucharski
+#' @param yy
+#' @param xx
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 ff_clust <- function(yy,xx) {
   dnorm(yy,mean=xx,sd=1)
   #dpois(yy,lambda = xx)

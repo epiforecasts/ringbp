@@ -1,0 +1,160 @@
+# Wuhan novel coronavirus analysis
+
+## Master to-do list
+- [ ] Put together/acquire time series of cases for Wuhan outbreak
+- [ ] Source new parameter values for branching process model based on SARS/flu (see parameters in table below)
+- [ ] Run simulations
+- [ ] Write up
+- [ ] Publish somewhere (need to decide where, blog? letter to journal? paper?)
+
+This outbreak contains code sent over by Adam and Alicia for branching process simulation from *Effectiveness of Ring Vaccination as a Control Strategy for Ebola Virus Disease* by Kucharski et al (2016):
+https://wwwnc.cdc.gov/eid/article/22/1/15-1410_article
+
+The analysis as I understand it so far is this:
+* Using the theoretical understanding of parameter that determines percentage of transmission that occurs before symptoms occur (theta) to understand the effectiveness of responding to outbreaks by isolating cases or both isolating cases and tracing and quarantining their contacts. This is fleshed out in *Factors that make an infectious disease outbreak controllable* by Fraser et al 2004 (https://www.pnas.org/content/101/16/6146)
+* Use priors for the value of Rm (Reproduction number for 'missed cases'), Rw (Reproduction number for detected and isolated cases), and theta that are similar to SARS, increasing them to be similar to flu. Simulate outbreaks that are close to Wuhan-ncov in nature.
+* Determine what values of theta and Rm will allow the Wuhan outbreak to be controlled by isolating cases (and tracing contacts) 
+* Compare these values to current estimates of reproduction number for Wuhan ncov outbreak from other sources
+
+
+## Parameters
+
+### Parameter overview from Fraser et al. 
+
+* Parameter estimates from SARs: 
+	* R0: 2-4
+	* Incubation period of 4.25 days with a variance of 14.25
+	* Infectiousness over time: "can be inferred from viral shedding data (5), which peaks 5–10 days after onset of symptoms. To maximize , we chose a low variance distribution (var = 0.1 * mean^2) and a peak at 9.25 days after infection, yielding theta < 11%"
+
+### Parameter overview from Campbell et al.
+
+* *Bayesian inference of transmission chains using timing of symptoms, pathogen genomes and contact data* by Campbell et al
+	* Table 2 has references for many epidemiological parameters of SARS-cov
+	* https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006930#sec006
+	
+## Usage
+
+### Set up
+
+* Set your working directory to the home directory of this project (or use the provided Rstudio project).
+
+* Run the following to check the installation of all required packages.
+
+```r
+source("scripts/install.R")
+```
+
+### Folders
+
+* `data`: input data.
+* `scripts`:  analysis scripts.
+* `functions`: R functions shared across scripts.
+* `output`: Contains analysis output. Subdivided into: `chain`, `likelihood_results`, `results`, and `plots`.
+
+### Run an analysis
+
+* **Simulate from particular PA, Rwithin, Rmissed** there is a minimal working example of a simulation run in `scripts/wuhan_int_simulate.R`. Outputs the simulated curve and observed data as a plot. Calls following 2 source files:
+    * `load_modelling_functions.r`: Loads a list of modelling functions.
+    * `ring_vaccine_load_params.r`: Sets global parameters used across scenarios.
+    
+```r
+source("scripts/wuhan_int_simulate.R", echo = TRUE)
+```
+*  **Simulate across parameter values** using `scripts/ring_vaccine_pMCMC.R`. Calls following 2 source files:
+    * `load_modelling_functions.r`: Loads a list of modelling functions.
+    * `ring_vaccine_load_params.r`: Sets global parameters used across scenarios.
+
+```r
+source("scripts/ring_vaccine_pMCMC.R", echo = TRUE)
+```
+
+* **Gather outputs and find MLE** using `posterior_plots.R` - imports results from `output` and finds maximimum likelihood estimate.
+
+```r
+source("scripts/posterior_plots.R", echo = TRUE)
+```
+
+### Additional functions (see `functions`)
+
+* `outbreak_model`: Core outbreak model around which all other analysis is built.
+
+* `ff_cases`: likelihood function for cases.
+
+* `ff_clust`: Likelihood function for the chain size.
+
+* `c.text`: Summarise outbreak size (with CI). Reported at the end of analysis functions.
+
+* `plot_cases`: Plots the acutal cases vs. estimated cases (read from saved output) for the MLE.
+
+* `ring_cf`: Run in `ring_vaccine_pMCMC.R`.  This simulates from MLE (defined manually at start), stores outputs in `output/chains`, then imports these chains, identifies transmission after vaccination introduced and re-simulates as if no vaccination. Difference is estimated as `c.text(cases_est$outbreak_size2)` at end of this function.
+
+### Other scripts
+
+* `archive/ring_vaccine_simulate_many_scenarios.R` - no documentation on this function and may not need for this analysis.
+
+## Code review + problems
+
+* For ideal reproducibility the tidyverse dep should be moved to the actual packages required in the analysis.
+* Can't find where `onsets` are saved. These files are used in `scripts/posterior_plots.R` and without them it will not run.
+* Foreach looping index appears somewhat broken in `scripts/ring_vaccine_pMCMC.R` - transcient errors.*
+* Code appears to need chains to be saved but by default this is not happening - controlled as an argument of `outbreak_model`.
+
+## Table of parameters from branching process
+
+Parameters passed to `wuhan_sim` function:
+
+| Parameter name | Parameter explanation | Will we need to alter it? |
+| -------------- | --------------------- | ------------------------- |
+| `FOSA.vac` | Yes/no patients/visitors are vaccinated at health centres | Set to FALSE? |
+| `wvaccYN` | Yes/no vaccination in model | set to FALSE |
+| `define_6m` | "Period when weekly average is below 10" | ? |
+| `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
+| `initial.clusters` | Initial number of different case clusters | Yes |
+| `prop.ascertain` | proportion of cases identified | Yes |
+| `cap_cases` | Limits the number of cases in simulation | Yes |
+| `cap_max_days` | Limits days since start of outbreak in simulation | Yes |
+| `r0within` | Alternative analysis R0 within ring? | Yes |
+| `r0Am` | R0 for missed (i.e. index cases) | Yes |
+| `overkkmiss` | "Dispersion parameter of data" | Yes? |
+| `overkk` | "Dispersion parameter of data" | Yes? |
+| `vefficacy` | vaccine efficacy | Yes, to make vaccination emulate isolation? |
+| `vuptake` | vaccine uptake | Set to 100%? |
+| `ring.size` | Limits maximum ring size | Yes |
+| `time_to_protection` | Time until vaccine protection | Yes to emulate isolation? |
+| `incub_mean` | mean of gamma distribution for incubation period | Yes |
+| `incub_var` | variance of gamma distribution for incubation period | Yes |
+| `inf_mean` | mean of gamma distribution for infectiousness | Yes |
+| `inf_var` | variance of gamma distribution for infectiousness | Yes |
+| `delay_shape` | shape parameter of gamma distribution for delay from symptom onset to isolation | Yes |
+| `delay_rate` | rate parameter of gamma distribution for delay from symptom onset to isolation | Yes |
+
+## Docker 
+
+This analysis was developed in a docker container based on the tidyverse docker image. 
+
+To build the docker image run (from the `wuhan_ncov` directory):
+
+```bash
+docker build . -t wuhan_ncov
+```
+
+To run the docker image run:
+
+```bash
+docker run -d -p 8787:8787 --name wuhan_ncov -e USER=wuhan_ncov -e PASSWORD=wuhan_ncov wuhan_ncov
+```
+
+The rstudio client can be found on port :8787 at your local machines ip. The default username:password is wuhan_ncov:wuhan_ncov, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.
+
+To mount a folder (from your current working directory - here assumed to be `tmp`) in the docker container to your local system use the following in the above docker run command (as given mounts the whole `wuhan_ncov` directory to `tmp`).
+
+```{bash, eval = FALSE}
+--mount type=bind,source=$(pwd)/tmp,target=/home/wuhan_ncov
+```
+
+To access the command line run the following:
+
+```{bash, eval = FALSE}
+docker exec -ti wuhan_ncov bash
+```
+

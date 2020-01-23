@@ -39,3 +39,6 @@ wuhan_sim(
 \description{
 Title
 }
+\examples{
+
+}

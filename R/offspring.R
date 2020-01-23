@@ -1,4 +1,25 @@
-# Individual offspring distribution
+#' Individual offspring distribution
+#' @author Adam Kucharski
+#' @param x
+#' @param hc.vacc
+#' @param r0A
+#' @param r0B
+#' @param r0Amiss
+#' @param r0Cmiss
+#' @param index.ascertained
+#' @param tvacc
+#' @param overkk
+#' @param overkkmiss
+#' @param ncases
+#' @param first.case
+#' @param vacc_cf
+#' @param vacc_cf_index
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 offspring<-function(x,hc.vacc,r0A,r0B,r0Amiss,r0Cmiss,index.ascertained,tvacc,overkk,overkkmiss,ncases,first.case,vacc_cf=F,vacc_cf_index=F){
   sapply(x,function(xx){
 

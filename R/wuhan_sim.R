@@ -28,6 +28,12 @@
 #' @export
 #'
 #' @examples
+#'
+#' @importFrom foreach foreach %dopar%
+#' @importFrom doMC registerDoMC
+#' @importFrom dplyr filter
+#' @importFrom magrittr %>%
+#' @importFrom tibble as_tibble
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
                       cap_cases,cap_max_days,r0within,r0Am,overkkmiss,overkk,vefficacy,vuptake,ring.size,
                       time_to_protection,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate){
@@ -128,7 +134,7 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
                                   infecfn = infecfn,
                                   incubfn = incubfn
     )
-    #outbreak_n_clusters0 <-nrow(epidata_test$clusertab) # how many clusters
+    outbreak_n_clusters0 <-nrow(epidata_test$clusertab) # how many clusters
     outbreak_n_clusters0 <- nrow(epidata_test$clusertab %>%
                                    filter(endt<define_6m) ) # Clusters in first 6m
     outbreak_size_all0 <-sum(epidata_test$clusertab$size)# Cases in first 6m
