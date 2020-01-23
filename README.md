@@ -32,6 +32,8 @@ The analysis as I understand it so far is this:
 	* Table 2 has references for many epidemiological parameters of SARS-cov
 	* https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006930#sec006
 	
+### Robin has data describing the proportion of cases for Wuhan with specific symptoms (fever, cough, shortness of breath, breathing difficulties (requires oxygen), chest pain, low white blood cell count). By comparing these with SARS, influenza etc we could potentially get a (very rough) idea of the level of symptoms for Wuhan vs other diseases, which could in turn (with some assumptions) inform the percentage of transmissions occurring without symptoms (since that is already known for other pathogens)?
+	
 ## Usage
 
 ### Set up
