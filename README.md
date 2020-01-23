@@ -48,7 +48,7 @@ wuhan_sim(n.cores = 6,n.sim = 25,wvaccYN = 0,define_6m = 239,initial.cases.pclus
           r0within = 0.66, r0Am = 7, overkkmiss = 1.6, overkk = 0.19, vefficacy = 0.975,
           vuptake = 0.90, ring.size = 100, time_to_protection = 10, incub_mean = 9.1, 
           incub_var = 7.3, inf_mean = 5.3, inf_var = 4.3, delay_shape = 2.4114166, 
-          delay_rate = 0.3261129)
+          delay_rate = 0.3261129,time_to_isolation=1)
 ```
 
 
@@ -74,7 +74,7 @@ Parameters passed to `wuhan_sim` function:
 | `vuptake` | vaccine uptake | Set to 100%? |
 | `ring.size` | Limits maximum ring size | Yes |
 | `time_to_protection` | Time from intervention until its effectiveness | Yes |
-| `time_to_vaccination` | Time from ascertainment until isolation | Yes |
+| `time_to_isolation` | Time from ascertainment until isolation | Yes |
 | `incub_mean` | mean of gamma distribution for incubation period | Yes |
 | `incub_var` | variance of gamma distribution for incubation period | Yes |
 | `inf_mean` | mean of gamma distribution for infectiousness | Yes |
