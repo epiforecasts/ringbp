@@ -59,21 +59,22 @@ Parameters passed to `wuhan_sim` function:
 | Parameter name | Parameter explanation | Will we need to alter it? |
 | -------------- | --------------------- | ------------------------- |
 | `FOSA.vac` | Yes/no patients/visitors are vaccinated at health centres | Set to FALSE? |
-| `wvaccYN` | Yes/no vaccination in model | set to FALSE |
-| `define_6m` | "Period when weekly average is below 10" | ? |
+| `wvaccYN` | Yes/no vaccination in model | set to TRUE |
+| `define_6m` | "Period when weekly average is below 10" | Not sure |
 | `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
 | `initial.clusters` | Initial number of different case clusters | Yes |
 | `prop.ascertain` | proportion of cases identified | Yes |
 | `cap_cases` | Limits the number of cases in simulation | Yes |
 | `cap_max_days` | Limits days since start of outbreak in simulation | Yes |
-| `r0within` | Alternative analysis R0 within ring? | Yes |
+| `r0within` | R0 for cases within ring | Yes |
 | `r0Am` | R0 for missed (i.e. index cases) | Yes |
-| `overkkmiss` | "Dispersion parameter of data" | Yes? |
-| `overkk` | "Dispersion parameter of data" | Yes? |
-| `vefficacy` | vaccine efficacy | Yes, to make vaccination emulate isolation? |
+| `overkkmiss` | Dispersion of negative binomial for missed cases | Yes? |
+| `overkk` | Dispersion of negative binomial for cases within ring | Yes? |
+| `vefficacy` | vaccine efficacy | Set to 100%? |
 | `vuptake` | vaccine uptake | Set to 100%? |
 | `ring.size` | Limits maximum ring size | Yes |
-| `time_to_protection` | Time until vaccine protection | Yes to emulate isolation? |
+| `time_to_protection` | Time from intervention until its effectiveness | Yes |
+| `time_to_vaccination` | Time from ascertainment until isolation | Yes |
 | `incub_mean` | mean of gamma distribution for incubation period | Yes |
 | `incub_var` | variance of gamma distribution for incubation period | Yes |
 | `inf_mean` | mean of gamma distribution for infectiousness | Yes |
