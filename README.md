@@ -58,7 +58,6 @@ Parameters passed to `wuhan_sim` function:
 
 | Parameter name | Parameter explanation | Will we need to alter it? |
 | -------------- | --------------------- | ------------------------- |
-| `FOSA.vac` | Yes/no patients/visitors are vaccinated at health centres | Set to FALSE? |
 | `wvaccYN` | Yes/no vaccination in model | set to TRUE |
 | `define_6m` | "Period when weekly average is below 10" | Not sure |
 | `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
