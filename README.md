@@ -46,8 +46,9 @@ The analysis as I understand it so far is this:
 ## Usage
 
 ### Set up
-
-
+* Installing the package is annoying because this is a private repository. You will need to set up a github personal access token (PAT), there is a step by step guide here: https://happygitwithr.com/github-pat.html
+* You can then run the command `devtools::install_github("epiforecasts/ringbp")`
+* Alternatively, if you are hoping to develop the package, clone this github repository to your own computer and open the R project file.
 
 ### Run an analysis
 
