@@ -106,8 +106,8 @@ Parameters passed to `wuhan_sim` function:
 | `incub_var` | variance of gamma distribution for incubation period | 5 |
 | `inf_mean` | mean of gamma distribution for infectiousness | Varies |
 | `inf_var` | variance of gamma distribution for infectiousness | 5? |
-| `delay_shape` | shape parameter of gamma distribution for delay from symptom onset to isolation | Varies |
-| `delay_rate` | rate parameter of gamma distribution for delay from symptom onset to isolation | Varies |
+| `delay_mean` | mean of gamma distribution for delay from symptom onset to isolation | Varies |
+| `delay_var` | variance of gamma distribution for delay from symptom onset to isolation | 1.5 |
 
 
 ## Table of parameters that are changed across scenarios
