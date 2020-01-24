@@ -32,7 +32,7 @@
 #'
 #' @importFrom foreach foreach %dopar%
 #' @importFrom doMC registerDoMC
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter group_by summarise
 #' @importFrom magrittr %>%
 #' @importFrom tibble as_tibble
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
@@ -157,5 +157,23 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
   names(outbreak_onsets) = c("n.sim","day","number")
   output_df <- data.frame(n.sim = 1:n.sim, outbreak_n_clusters, outbreak_size, outbreak_size_all)
 
-  return(output_df)
+  mean.outbreak_onsets<-outbreak_onsets %>% group_by(day) %>% summarise(mean.number=mean(number))
+  outbreak_df <- merge(outbreak_onsets, mean.outbreak_onsets, by="day")
+
+  weeks <- rep(seq(0,max(outbreak_onsets$day), by=7) / 7, each = 7)[1:(length(outbreak_onsets$day) / n.sim)]
+  outbreak_onsets$week <- rep(weeks, n.sim)
+  weekly_outbreak_onsets <- outbreak_onsets %>%
+    group_by(n.sim,week) %>%
+    summarise(number = sum(number))
+
+  #  mean of epi curves
+  mean.weekly_outbreak_onsets <- weekly_outbreak_onsets %>%
+    group_by(week) %>% summarise(mean.number = mean(number))
+  outbreak_df_week <- merge(weekly_outbreak_onsets, mean.weekly_outbreak_onsets, by="week")
+
+  # remove
+  max(outbreak_df_week$week)
+  outbreak_df_week <- outbreak_df_week %>% filter(week != max(outbreak_df_week$week))
+
+  return(list(output_df=output_df,outbreak_df=outbreak_df,outbreak_df_week=outbreak_df_week))
 }
