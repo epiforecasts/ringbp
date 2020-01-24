@@ -59,12 +59,12 @@ To check your package is working correctly, try to run some simulations with the
 
 ```r
 # Run 100 simulations
-res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 13*7,initial.cases.pcluster = 15,
-          initial.clusters = 10, prop.ascertain = 0.5, cap_cases = 4500, cap_max_days = 350,
-          r0within = 0.4, r0Am = 2.5, overkkmiss = 2, overkk = 2, vefficacy = 0.975,
-          vuptake = 0.90, ring.size = 150, time_to_protection = 0, incub_mean = 5.7, 
-          incub_var = 1, inf_mean = 5, inf_var = 1.5, delay_var = 1.5, 
-          delay_mean = 4,time_to_isolation=1,outbreak_df_out = TRUE)
+res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 20*7,initial.cases.pcluster = 6,
+          initial.clusters = 10, prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
+          r0within = 0.3, r0Am = 2.5, overkkmiss = 2, overkk = 0.16, vefficacy = 0.975,
+          vuptake = 0.90, ring.size = 150, time_to_protection = 0, incub_mean = 7, 
+          incub_var = 5, inf_mean = 7, inf_var = 5, delay_var = 2, 
+          delay_mean = 7,time_to_isolation=0,outbreak_df_out = TRUE)
 
 
 # plot(x=seq(0,10,0.1),y=dgamma(seq(0,10,0.1),shape = 1.4114166,rate=0.3261129),type="l")
