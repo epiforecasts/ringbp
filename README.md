@@ -54,12 +54,24 @@ The analysis as I understand it so far is this:
 To check your package is working correctly, try to run some simulations with the following:
 
 ```r
-wuhan_sim(n.cores = 6,n.sim = 25,wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 1,
-          initial.clusters = 5, prop.ascertain = 0.5, cap_cases = 4500, cap_max_days = 350,
-          r0within = 0.66, r0Am = 7, overkkmiss = 1.6, overkk = 0.19, vefficacy = 0.975,
-          vuptake = 0.90, ring.size = 100, time_to_protection = 10, incub_mean = 9.1, 
-          incub_var = 7.3, inf_mean = 5.3, inf_var = 4.3, delay_shape = 2.4114166, 
+res <- wuhan_sim(n.cores = 4,n.sim = 100,wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 10,
+          initial.clusters = 4, prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
+          r0within = 0.1, r0Am = 3, overkkmiss = 3, overkk = 0.19, vefficacy = 0.975,
+          vuptake = 0.90, ring.size = 100, time_to_protection = 3, incub_mean = 5, 
+          incub_var = 1, inf_mean = 5, inf_var = 1, delay_shape = 2.4114166, 
           delay_rate = 0.3261129,time_to_isolation=1)
+
+
+ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
+  geom_line(show.legend = FALSE, alpha=0.1)+
+  scale_y_continuous(name="Number of cases")+ theme_bw()+
+  geom_line(aes(x=day, y=mean.number), col="black")
+
+
+ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
+  geom_line(show.legend = FALSE, alpha=0.3)+
+  scale_y_continuous(name="Number of cases")+ theme_bw()+
+  geom_line(aes(x=week, y=mean.number), col="black")
 ```
 
 
