@@ -59,18 +59,21 @@ To check your package is working correctly, try to run some simulations with the
 
 ```r
 # Run 100 simulations
-res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 5,
-          initial.clusters = 5, prop.ascertain = 0.9, cap_cases = 4500, cap_max_days = 350,
-          r0within = 0.5, r0Am = 2, overkkmiss = 1, overkk = 0.19, vefficacy = 1,
-          vuptake = 0.90, ring.size = 100, time_to_protection = 2, incub_mean = 5, 
-          incub_var = 1.5, inf_mean = 5, inf_var = 1.5, delay_shape = 2.4114166, 
-          delay_rate = 0.3261129,time_to_isolation=1,outbreak_df_out = TRUE)
+res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 13*7,initial.cases.pcluster = 15,
+          initial.clusters = 10, prop.ascertain = 0.5, cap_cases = 4500, cap_max_days = 350,
+          r0within = 0.4, r0Am = 2.5, overkkmiss = 2, overkk = 2, vefficacy = 0.975,
+          vuptake = 0.90, ring.size = 150, time_to_protection = 0, incub_mean = 5.7, 
+          incub_var = 1, inf_mean = 5, inf_var = 1.5, delay_var = 1.5, 
+          delay_mean = 4,time_to_isolation=1,outbreak_df_out = TRUE)
+
+
+# plot(x=seq(0,10,0.1),y=dgamma(seq(0,10,0.1),shape = 1.4114166,rate=0.3261129),type="l")
 
 # Plot of daily cases
-ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
-  geom_line(show.legend = FALSE, alpha=0.1)+
-  scale_y_continuous(name="Number of cases")+ theme_bw()+
-  geom_line(aes(x=day, y=mean.number), col="black")
+# ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
+#   geom_line(show.legend = FALSE, alpha=0.1)+
+#   scale_y_continuous(name="Number of cases")+ theme_bw()+
+#   geom_line(aes(x=day, y=mean.number), col="black")
 
 # Plot of weekly cases
 ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
@@ -78,9 +81,9 @@ ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
   scale_y_continuous(name="Number of cases")+ theme_bw()+
   geom_line(aes(x=week, y=mean.number), col="black")
 
-# Cumulative weekly cases
 res$outbreak_df_week %>% arrange(n.sim) %>% group_by(n.sim) %>% mutate(cs=c(cumsum(number))) %>%
-  ggplot(aes(x=week,y=cs,col=as.factor(n.sim))) + geom_line(show.legend = FALSE,alpha=0.3) + theme_bw() + ylab("Cumulate cases") + xlab("weeks since outbreak start")
+  ggplot(aes(x=week,y=cs,col=as.factor(n.sim))) + geom_line(show.legend = FALSE,alpha=0.3) + theme_bw() + ylab("Cumulate cases") + xlab("weeks since outbreak start") +
+  scale_x_continuous(breaks=0:20)
 
 # Proportion of runs that have 0 weekly cases in weeks 10-12 after outbreak
 extinct_prob(res$outbreak_df_week)
