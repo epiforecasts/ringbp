@@ -78,6 +78,10 @@ ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
   scale_y_continuous(name="Number of cases")+ theme_bw()+
   geom_line(aes(x=week, y=mean.number), col="black")
 
+# Cumulative weekly cases
+res$outbreak_df_week %>% arrange(n.sim) %>% group_by(n.sim) %>% mutate(cs=c(cumsum(number))) %>%
+  ggplot(aes(x=week,y=cs,col=as.factor(n.sim))) + geom_line(show.legend = FALSE,alpha=0.3) + theme_bw() + ylab("Cumulate cases") + xlab("weeks since outbreak start")
+
 # Proportion of runs that have 0 weekly cases in weeks 10-12 after outbreak
 extinct_prob(res$outbreak_df_week)
 ```
