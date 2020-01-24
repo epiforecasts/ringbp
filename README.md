@@ -20,6 +20,9 @@ The analysis as I understand it so far is this:
 * Compare these values to current estimates of reproduction number for Wuhan ncov outbreak from other sources
 
 
+## Summary report
+https://docs.google.com/document/d/1JXZ2hG8YQEWC7CufQuIyr5WE4ymz3io4_n_CQdfyRaQ/edit?invite=CJKy66IK&ts=5e2b3ea3
+
 ## Parameters
 
 ### Parameter overview from Fraser et al. 
