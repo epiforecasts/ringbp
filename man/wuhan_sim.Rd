@@ -22,6 +22,7 @@ wuhan_sim(
   vuptake,
   ring.size,
   time_to_protection,
+  time_to_isolation,
   incub_mean,
   incub_var,
   inf_mean,

@@ -21,7 +21,7 @@ outbreak_model(
   cap_max_days,
   cap_cases,
   rep_fn,
-  time_to_vaccination,
+  time_to_isolation,
   time_to_protection,
   ring.size,
   hc.vacc,
