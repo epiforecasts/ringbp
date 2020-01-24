@@ -37,7 +37,8 @@
 #' @importFrom tibble as_tibble
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
                       cap_cases,cap_max_days,r0within,r0Am,overkkmiss,overkk,vefficacy,vuptake,ring.size,
-                      time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate){
+                      time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate,
+                      outbreak_df_out=FALSE){
 
   # n.cores = number of cores for parallel processing
   # n.sim = number of simulation runs
@@ -175,5 +176,10 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
   max(outbreak_df_week$week)
   outbreak_df_week <- outbreak_df_week %>% filter(week != max(outbreak_df_week$week))
 
-  return(list(output_df=output_df,outbreak_df=outbreak_df,outbreak_df_week=outbreak_df_week))
+  if(outbreak_df_out==TRUE){
+    out <- list(output_df=output_df,outbreak_df=outbreak_df,outbreak_df_week=outbreak_df_week)
+  }else{
+    out <- output_df
+  }
+  return(out)
 }

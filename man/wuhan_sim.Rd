@@ -28,7 +28,8 @@ wuhan_sim(
   inf_mean,
   inf_var,
   delay_shape,
-  delay_rate
+  delay_rate,
+  outbreak_df_out = FALSE
 )
 }
 \arguments{
