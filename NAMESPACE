@@ -2,6 +2,7 @@
 
 export("%>%")
 export(c_text)
+export(extinct_prob)
 export(ff_cases)
 export(ff_clust)
 export(known.chain)
