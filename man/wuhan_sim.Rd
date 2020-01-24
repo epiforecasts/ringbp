@@ -27,13 +27,13 @@ wuhan_sim(
   incub_var,
   inf_mean,
   inf_var,
-  delay_shape,
-  delay_rate,
+  delay_mean,
+  delay_var,
   outbreak_df_out = FALSE
 )
 }
 \arguments{
-\item{delay_rate}{}
+\item{delay_var}{}
 }
 \value{
 

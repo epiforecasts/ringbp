@@ -320,10 +320,10 @@ outbreak_model<-function(nrun,initc, initclust,r0Amiss,r0Cmiss,r0A,r0B,pr.id,wva
 
   # NEED TO OUTPUT ONSET DATES
 
-  if(chain.output==T){
-    write.csv(clust.chain.all,file=paste(chains,"/cluster_chainsV",wvacc,"_P",100*pr.id,"_nrun",10000+nrun,".csv",sep=""))
-    write.csv(clust.track,file=paste(chains,"/cluster_trackV",wvacc,"_P",100*pr.id,"_nrun",10000+nrun,".csv",sep=""))
-  }
+  # if(chain.output==T){
+  #   write.csv(clust.chain.all,file=paste(chains,"/cluster_chainsV",wvacc,"_P",100*pr.id,"_nrun",10000+nrun,".csv",sep=""))
+  #   write.csv(clust.track,file=paste(chains,"/cluster_trackV",wvacc,"_P",100*pr.id,"_nrun",10000+nrun,".csv",sep=""))
+  # }
 
 
   return(list(clusertab=clust.tab,onsets=onset.store.tab,chains_all=clust.chain.all,clusters_tracked=clust.track))

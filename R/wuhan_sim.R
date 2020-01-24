@@ -22,8 +22,8 @@
 #' @param incub_var
 #' @param inf_mean
 #' @param inf_var
-#' @param delay_shape
-#' @param delay_rate
+#' @param delay_mean
+#' @param delay_var
 #'
 #' @return
 #' @export
@@ -37,7 +37,7 @@
 #' @importFrom tibble as_tibble
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
                       cap_cases,cap_max_days,r0within,r0Am,overkkmiss,overkk,vefficacy,vuptake,ring.size,
-                      time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate,
+                      time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_mean,delay_var,
                       outbreak_df_out=FALSE){
 
   # n.cores = number of cores for parallel processing
@@ -88,18 +88,19 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
 
   # Incubation period distribution
   incub_param=c(incub_mean,incub_var)
-  incubfn<-function(x){rgamma(x,shape=incub_param[1]/(incub_param[2]^2/incub_param[1]),
+  incubfn <- function(x){rgamma(x,shape=incub_param[1]/(incub_param[2]^2/incub_param[1]),
                               scale=(incub_param[2]^2/incub_param[1]))}
 
   # Infectiousness distribution
   inf_param=c(inf_mean,inf_var)
-  infecfn<-function(x){rgamma(x,shape=inf_param[1]/(inf_param[2]^2/inf_param[1]),
+  infecfn <- function(x){rgamma(x,shape=inf_param[1]/(inf_param[2]^2/inf_param[1]),
                               scale=(inf_param[2]^2/inf_param[1]))}
 
   # Distribution for delay from symptom onset to isolation
-  rep_fn <- function(x){ #0 # Set to zero, as incorporated using function below instead
-    rgamma(x,shape=delay_shape, rate=delay_rate)
-  }
+  delay_param=c(delay_mean,delay_var)
+  rep_fn <- function(x){rgamma(x,shape=delay_param[1]/(delay_param[2]^2/delay_param[1]),
+                     scale=(delay_param[2]^2/delay_param[1]))}
+
 
   # Intervention in health centers set to 0
   r0Cm <- 0
