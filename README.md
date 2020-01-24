@@ -82,7 +82,7 @@ extinct_prob(res$outbreak_df_week)
 
 ## Table of parameters from branching process
 
-Parameters passed to `wuhan_sim` function:
+Parameters passed to `wuhan_sim` function, **bold = unsure** :
 
 | Parameter name | Parameter explanation | Canonical value |
 | -------------- | --------------------- | ------------------------- |
@@ -102,10 +102,10 @@ Parameters passed to `wuhan_sim` function:
 | `ring.size` | Limits maximum ring size | 100 |
 | `time_to_protection` | Time from intervention until its effectiveness | 0 |
 | `time_to_isolation` | Time from ascertainment until isolation | Varies |
-| `incub_mean` | mean of gamma distribution for incubation period | 7 |
-| `incub_var` | variance of gamma distribution for incubation period | 5 |
+| `incub_mean` | mean of gamma distribution for incubation period | **7** |
+| `incub_var` | variance of gamma distribution for incubation period | **5** |
 | `inf_mean` | mean of gamma distribution for infectiousness | Varies |
-| `inf_var` | variance of gamma distribution for infectiousness | 5? |
+| `inf_var` | variance of gamma distribution for infectiousness | **5** |
 | `delay_mean` | mean of gamma distribution for delay from symptom onset to isolation | Varies |
 | `delay_var` | variance of gamma distribution for delay from symptom onset to isolation | 1.5 |
 
