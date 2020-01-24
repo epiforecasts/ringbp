@@ -1,8 +1,11 @@
 # Wuhan novel coronavirus analysis
 
 ## Master to-do list
-- [ ] Put together/acquire time series of cases for Wuhan outbreak
+- [ ] Put together/acquire time series of cases for Wuhan outbreak (Take from alreafdy collated time series (Sunky/Eurosurveillance paper?))
 - [ ] Source new parameter values for branching process model based on SARS/flu (see parameters in table below)
+- [ ] Source new parameter values for nCov
+- [ ] Find nice way to link theta value to chosen incubation period estimation
+- [ ] Find nice way to summarise how controllable outbreak with given parameters is (prob of extinction within certain period?)
 - [ ] Run simulations
 - [ ] Write up
 - [ ] Publish somewhere (need to decide where, blog? letter to journal? paper?)
@@ -31,6 +34,14 @@ The analysis as I understand it so far is this:
 * *Bayesian inference of transmission chains using timing of symptoms, pathogen genomes and contact data* by Campbell et al
 	* Table 2 has references for many epidemiological parameters of SARS-cov
 	* https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006930#sec006
+
+### Wuhan data
+
+* http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/337
+* https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0
+
+### Other ideas
+* Robin has data describing the proportion of cases for Wuhan with specific symptoms (fever, cough, shortness of breath, breathing difficulties (requires oxygen), chest pain, low white blood cell count). By comparing these with SARS, influenza etc we could potentially get a (very rough) idea of the level of symptoms for Wuhan vs other diseases, which could in turn (with some assumptions) inform the percentage of transmissions occurring from missed cases/in isolation (since that is already known for other pathogens)? Would need some thought...
 	
 ## Usage
 
@@ -58,7 +69,6 @@ Parameters passed to `wuhan_sim` function:
 
 | Parameter name | Parameter explanation | Will we need to alter it? |
 | -------------- | --------------------- | ------------------------- |
-| `FOSA.vac` | Yes/no patients/visitors are vaccinated at health centres | Set to FALSE? |
 | `wvaccYN` | Yes/no vaccination in model | set to TRUE |
 | `define_6m` | "Period when weekly average is below 10" | Not sure |
 | `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
