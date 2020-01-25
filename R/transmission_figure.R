@@ -2,37 +2,51 @@
 #'
 #' @return
 #' @export
-#' @importFrom dplyr mutate
-#' @importFrom ggplot2 ggplot geom_ribbon xlab theme_bw aes
+#' @importFrom dplyr mutate filter
+#' @importFromm tibble tibble
+#' @importFrom tidyr gather
+#' @importFrom ggplot2 ggplot theme_minimal aes geom_density scale_fill_viridis_d theme labs guides guide_legend
 #' @examples
 #'
+#' ## Generate figure
+#'transmission_figure()
+#'
+#' ## Save the figure using the following
+#' # ggplot2::ggsave("figure_1.png", dpi = 320, width = 8, height = 8)
 transmission_figure <- function(){
-  incub_param <- c(6,2)
-  incub <- function(x){
-    pgamma(x,shape=incub_param[1]/(incub_param[2]^2/incub_param[1]),
-           scale=(incub_param[2]^2/incub_param[1]))
+
+  ## Set up gamma with correct shape and cale
+  make_gamma <- function(x, shape_scale_params = NULL, gamma = NULL) {
+    gamma(x, shape = shape_scale_params[1] / (shape_scale_params[2]^2 / shape_scale_params[1]),
+           scale = (shape_scale_params[2]^2 / shape_scale_params[1]))
   }
 
-  infect_param <- c(6,2)
-  infect <- function(x){
-    dgamma(x,shape=infect_param[1]/(infect_param[2]^2/infect_param[1]),
-           scale=(infect_param[2]^2/infect_param[1]))
-  }
+  ## Make distributions
+  dists <- tibble::tibble(days_since_infection = seq(0,15,0.1)) %>%
+    dplyr::mutate(
+      incub = make_gamma(days_since_infection,  c(6,2), pgamma),
+      infect = make_gamma(days_since_infection,c(6,2), dgamma),
+      delay = make_gamma(days_since_infection,  c(8,2), pgamma)
+    ) %>%
+    dplyr::mutate(pre_symp_trans = (1-incub) * infect,
+                  post_symp_trans = infect-pre_symp_trans,
+                  all_trans = pre_symp_trans + post_symp_trans * (1-delay))
 
-  delay_param <- c(8,2)
-  delayf <- function(x){
-    pgamma(x,shape=delay_param[1]/(delay_param[2]^2/delay_param[1]),
-           scale=(delay_param[2]^2/delay_param[1]))
-  }
 
-  dists <- data.frame(delay=delayf(seq(0,15,0.1)),infect=infect(seq(0,15,0.1)),incub=incub(seq(0,15,0.1)),x=seq(0,15,0.1)) %>%
-    mutate(pre_symp_trans=(1-incub)*infect,post_symp_trans=infect-pre_symp_trans)
-
-  dists %>%# full_join(trans_prevented_by_iso,by="x") %>%
-    ggplot(aes(x=x)) + xlab("days since infection") +
-    geom_ribbon(aes(ymax=infect,ymin=pre_symp_trans+post_symp_trans*(1-delay)),fill="green4") +
-    geom_ribbon(aes(ymax=pre_symp_trans,ymin=0),fill="blue") +
-    geom_ribbon(aes(ymax=pre_symp_trans+post_symp_trans*(1-delay),ymin=pre_symp_trans),fill="red") +
-    theme_bw()
+  dists %>%
+    tidyr::gather(key = "type", value = "value", -days_since_infection) %>%
+    dplyr::filter(!type %in% c("delay", "incub", "post_symp_trans")) %>%
+    dplyr::mutate(type = factor(type, levels = c("infect", "all_trans", "pre_symp_trans")) %>%
+                    forcats::fct_recode(`Prevented by isolation` = "infect",
+                                        `Post symptom onset but pre isolation` = "all_trans",
+                                        `Pre symptom onset` = "pre_symp_trans")) %>%
+    ggplot2::ggplot(aes(x = days_since_infection, y = value, fill = type)) +
+    ggplot2::geom_density(alpha = 0.8, stat = "identity") +
+    ggplot2::theme_minimal() +
+    ggplot2::scale_fill_viridis_d("plasma") +
+    ggplot2::theme(legend.position = "top") +
+    ggplot2::labs(x = "Days since infection",
+         y = "Infectiousness") +
+    ggplot2::guides(fill = ggplot2::guide_legend(title = "Transmission", ncol = 2, nrow = 2))
 }
 
