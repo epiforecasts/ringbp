@@ -2,9 +2,10 @@
 #'
 #' @return
 #' @export
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate filter
 #' @importFromm tibble tibble
-#' @importFrom ggplot2 ggplot geom_ribbon xlab theme_bw aes
+#' @importFrom tidyr gather
+#' @importFrom ggplot2 ggplot theme_minimal aes geom_density scale_fill_viridis_d theme labs guides guide_legend
 #' @examples
 #'
 #' ## Generate figure
@@ -25,14 +26,21 @@ transmission_figure <- function(){
       delay = make_gamma(days_since_infection,  c(8,2), pgamma)
     ) %>%
     dplyr::mutate(pre_symp_trans = (1-incub) * infect,
-                  post_symp_trans = infect-pre_symp_trans)
+                  post_symp_trans = infect-pre_symp_trans,
+                  all_trans = pre_symp_trans + post_symp_trans * (1-delay))
 
-  dists %>%# full_join(trans_prevented_by_iso,by="x") %>%
-    ggplot(aes(x=days_since_infection)) +
-    xlab("days since infection") +
-    geom_ribbon(aes(ymax=infect, ymin = pre_symp_trans + post_symp_trans*(1-delay)), fill="green4") +
-    geom_ribbon(aes(ymax=pre_symp_trans,ymin=0),fill="blue") +
-    geom_ribbon(aes(ymax=pre_symp_trans+post_symp_trans*(1-delay),ymin=pre_symp_trans),fill="red") +
-    theme_bw()
+
+  dists %>%
+    tidyr::gather(key = "type", value = "value", -days_since_infection) %>%
+    dplyr::filter(!type %in% c("delay", "incub", "post_symp_trans")) %>%
+    dplyr::mutate(type = factor(type, levels = c("infect", "all_trans", "pre_symp_trans"))) %>%
+    ggplot2::ggplot(aes(x = days_since_infection, y = value, fill = type)) +
+    ggplot2::geom_density(alpha = 0.8, stat = "identity") +
+    ggplot2::theme_minimal() +
+    ggplot2::scale_fill_viridis_d("plasma") +
+    ggplot2::theme(legend.position = "top") +
+    ggplot2::labs(x = "Days since infection",
+         y = "Infectiousness") +
+    ggplot2::guides(fill = ggplot2::guide_legend(title = "Rate"))
 }
 

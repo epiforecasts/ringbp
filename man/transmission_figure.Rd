@@ -14,4 +14,6 @@ Produces first figure from summary
 }
 \examples{
 
+## Generate figure
+transmission_figure()
 }
