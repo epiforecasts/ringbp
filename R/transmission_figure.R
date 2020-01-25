@@ -10,6 +10,9 @@
 #'
 #' ## Generate figure
 #'transmission_figure()
+#'
+#' ## Save the figure using the following
+#' # ggplot2::ggsave("figure_1.png", dpi = 320, width = 8, height = 8)
 transmission_figure <- function(){
 
   ## Set up gamma with correct shape and cale
@@ -33,7 +36,10 @@ transmission_figure <- function(){
   dists %>%
     tidyr::gather(key = "type", value = "value", -days_since_infection) %>%
     dplyr::filter(!type %in% c("delay", "incub", "post_symp_trans")) %>%
-    dplyr::mutate(type = factor(type, levels = c("infect", "all_trans", "pre_symp_trans"))) %>%
+    dplyr::mutate(type = factor(type, levels = c("infect", "all_trans", "pre_symp_trans")) %>%
+                    forcats::fct_recode(`Prevented by isolation` = "infect",
+                                        `Post symptom onset but pre isolation` = "all_trans",
+                                        `Pre symptom onset` = "pre_symp_trans")) %>%
     ggplot2::ggplot(aes(x = days_since_infection, y = value, fill = type)) +
     ggplot2::geom_density(alpha = 0.8, stat = "identity") +
     ggplot2::theme_minimal() +
@@ -41,6 +47,6 @@ transmission_figure <- function(){
     ggplot2::theme(legend.position = "top") +
     ggplot2::labs(x = "Days since infection",
          y = "Infectiousness") +
-    ggplot2::guides(fill = ggplot2::guide_legend(title = "Rate"))
+    ggplot2::guides(fill = ggplot2::guide_legend(title = "Transmission", ncol = 2, nrow = 2))
 }
 
