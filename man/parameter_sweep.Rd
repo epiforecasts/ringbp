@@ -8,8 +8,7 @@ parameter_sweep(
   scenarios = NULL,
   samples = 1,
   sim_fn = NULL,
-  show_progress = TRUE,
-  ...
+  show_progress = TRUE
 )
 }
 \arguments{
@@ -20,40 +19,55 @@ Defaults to NULL.}
 
 \item{sim_fn}{Function, defaults to NULL. The vectorised model simulation function - see the examples
 for usage.}
+
+\item{show_progress}{Logical, defaults to \code{TRUE}. Show the progress of the parameter sweep.}
 }
 \value{
-
+A nested tibble containing the parameters for each scenario and a nested list of output
+from \code{wuhan_sim}.
 }
 \description{
-Sweep across parameters
+Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
+are included in the grid are currently hard coded. Use the \code{future} package to control parallisation
+outside of the function.
 }
 \examples{
 
+library(ringbp)
 
 ## Set up scenario gird
 scenarios <- tidyr::expand_grid(
-event_size = c(20, 40, 60, 80, 100),
-event_duration = c(7, 14, 28),
-case_detection_plus_isolation = c(0.2, 0.4, 0.6, 0.8, 1)) \%>\%
-dplyr::mutate(scenario = 1:dplyr::n())
+    ## Put parameters that are grouped by disease into this data.frame
+    grouped_parameters = list(tibble::tibble(
+                         disease = c("SARs", "Transition", "Flu"),
+                         index_R0 = c(1.5, 2.5, 3.5),
+                         inf_mean = c(9, 5, 2),
+                         overkkmiss= c(0.16, 0.5, 1)
+    )),
+    delay_mean = seq(3, 7, 1),
+    control_effectiveness = seq(0, 1, 0.2)) \%>\%
+ tidyr::unnest("grouped_parameters") \%>\%
+ dplyr::mutate(scenario = 1:dplyr::n())
 
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::wuhan_sim,
-                                  wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 5,
-                                  initial.clusters = 5, prop.ascertain = 0.9, cap_cases = 4500, cap_max_days = 350,
-                                  r0within = 0.5, r0Am = 2, overkkmiss = 1, overkk = 0.19, vefficacy = 1,
+                                  n.cores = 1, wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 5,
+                                  initial.clusters = 5, cap_cases = 4500, cap_max_days = 350,
+                                  r0within = 0.5, overkk = 0.19, vefficacy = 1,
                                   vuptake = 0.90, ring.size = 100, time_to_protection = 2, incub_mean = 5,
-                                  incub_var = 1.5, inf_mean = 5, inf_var = 1.5, delay_shape = 2.4114166,
-                                  delay_rate = 0.3261129,time_to_isolation=1,outbreak_df_out = TRUE)
+                                  incub_var = 1.5, inf_var = 1.5, delay_rate = 0.3261129,
+                                  time_to_isolation=1, outbreak_df_out = TRUE)
 
 
-## Set up multicore if using see ?future::plan for details
+## Default is to run sequntially on a single core
 future::plan(future::sequential)
+## Set up multicore if using see ?future::plan for details
+#future::plan(future::multiprocess)
 
 
 ## Run paramter sweep
-sweep_ <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 5)
+sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 5)
 
 
-sweep
+sweep_results
 }

@@ -24,7 +24,7 @@
 #' @param inf_var
 #' @param delay_shape
 #' @param delay_rate
-#'
+#' @param ... Pass additional arguments
 #' @return
 #' @export
 #'
@@ -38,7 +38,7 @@
 wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster,initial.clusters,prop.ascertain,
                       cap_cases,cap_max_days,r0within,r0Am,overkkmiss,overkk,vefficacy,vuptake,ring.size,
                       time_to_protection,time_to_isolation,incub_mean,incub_var,inf_mean,inf_var,delay_shape,delay_rate,
-                      outbreak_df_out=FALSE){
+                      outbreak_df_out=FALSE, ...){
 
   # n.cores = number of cores for parallel processing
   # n.sim = number of simulation runs
