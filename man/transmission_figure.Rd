@@ -14,4 +14,9 @@ Produces first figure from summary
 }
 \examples{
 
+## Generate figure
+transmission_figure()
+
+## Save the figure using the following
+# ggplot2::ggsave("figure_1.png", dpi = 320, width = 8, height = 8)
 }
