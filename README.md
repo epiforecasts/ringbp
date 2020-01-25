@@ -20,6 +20,9 @@ The analysis as I understand it so far is this:
 * Compare these values to current estimates of reproduction number for Wuhan ncov outbreak from other sources
 
 
+## Summary report
+https://docs.google.com/document/d/1JXZ2hG8YQEWC7CufQuIyr5WE4ymz3io4_n_CQdfyRaQ/edit?invite=CJKy66IK&ts=5e2b3ea3
+
 ## Parameters
 
 ### Parameter overview from Fraser et al. 
@@ -56,24 +59,31 @@ To check your package is working correctly, try to run some simulations with the
 
 ```r
 # Run 100 simulations
-res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 5,
-          initial.clusters = 5, prop.ascertain = 0.9, cap_cases = 4500, cap_max_days = 350,
-          r0within = 0.5, r0Am = 2, overkkmiss = 1, overkk = 0.19, vefficacy = 1,
-          vuptake = 0.90, ring.size = 100, time_to_protection = 2, incub_mean = 5, 
-          incub_var = 1.5, inf_mean = 5, inf_var = 1.5, delay_shape = 2.4114166, 
-          delay_rate = 0.3261129,time_to_isolation=1,outbreak_df_out = TRUE)
+res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 20*7,initial.cases.pcluster = 6,
+          initial.clusters = 10, prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
+          r0within = 0.3, r0Am = 2.5, overkkmiss = 2, overkk = 0.16, vefficacy = 0.975,
+          vuptake = 0.90, ring.size = 150, time_to_protection = 0, incub_mean = 7, 
+          incub_var = 5, inf_mean = 7, inf_var = 5, delay_var = 2, 
+          delay_mean = 7,time_to_isolation=0,outbreak_df_out = TRUE)
+
+
+# plot(x=seq(0,10,0.1),y=dgamma(seq(0,10,0.1),shape = 1.4114166,rate=0.3261129),type="l")
 
 # Plot of daily cases
-ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
-  geom_line(show.legend = FALSE, alpha=0.1)+
-  scale_y_continuous(name="Number of cases")+ theme_bw()+
-  geom_line(aes(x=day, y=mean.number), col="black")
+# ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
+#   geom_line(show.legend = FALSE, alpha=0.1)+
+#   scale_y_continuous(name="Number of cases")+ theme_bw()+
+#   geom_line(aes(x=day, y=mean.number), col="black")
 
 # Plot of weekly cases
 ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
   geom_line(show.legend = FALSE, alpha=0.3)+
   scale_y_continuous(name="Number of cases")+ theme_bw()+
   geom_line(aes(x=week, y=mean.number), col="black")
+
+res$outbreak_df_week %>% arrange(n.sim) %>% group_by(n.sim) %>% mutate(cs=c(cumsum(number))) %>%
+  ggplot(aes(x=week,y=cs,col=as.factor(n.sim))) + geom_line(show.legend = FALSE,alpha=0.3) + theme_bw() + ylab("Cumulate cases") + xlab("weeks since outbreak start") +
+  scale_x_continuous(breaks=0:20)
 
 # Proportion of runs that have 0 weekly cases in weeks 10-12 after outbreak
 extinct_prob(res$outbreak_df_week)
@@ -82,32 +92,58 @@ extinct_prob(res$outbreak_df_week)
 
 ## Table of parameters from branching process
 
-Parameters passed to `wuhan_sim` function:
+Parameters passed to `wuhan_sim` function, **bold = unsure** :
 
-| Parameter name | Parameter explanation | Will we need to alter it? |
+| Parameter name | Parameter explanation | Canonical value |
 | -------------- | --------------------- | ------------------------- |
-| `wvaccYN` | Yes/no vaccination in model | set to TRUE |
-| `define_6m` | "Period when weekly average is below 10" | Not sure |
+| `wvaccYN` | Yes/no vaccination in model | `TRUE` |
+| `define_6m` | "Period when weekly average is below 10" | 140 (20 weeks) |
 | `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
 | `initial.clusters` | Initial number of different case clusters | Yes |
-| `prop.ascertain` | proportion of cases identified | Yes |
-| `cap_cases` | Limits the number of cases in simulation | Yes |
-| `cap_max_days` | Limits days since start of outbreak in simulation | Yes |
-| `r0within` | R0 for cases within ring | Yes |
-| `r0Am` | R0 for missed (i.e. index cases) | Yes |
-| `overkkmiss` | Dispersion of negative binomial for missed cases | Yes? |
-| `overkk` | Dispersion of negative binomial for cases within ring | Yes? |
-| `vefficacy` | vaccine efficacy | Set to 100%? |
-| `vuptake` | vaccine uptake | Set to 100%? |
-| `ring.size` | Limits maximum ring size | Yes |
-| `time_to_protection` | Time from intervention until its effectiveness | Yes |
-| `time_to_isolation` | Time from ascertainment until isolation | Yes |
-| `incub_mean` | mean of gamma distribution for incubation period | Yes |
-| `incub_var` | variance of gamma distribution for incubation period | Yes |
-| `inf_mean` | mean of gamma distribution for infectiousness | Yes |
-| `inf_var` | variance of gamma distribution for infectiousness | Yes |
-| `delay_shape` | shape parameter of gamma distribution for delay from symptom onset to isolation | Yes |
-| `delay_rate` | rate parameter of gamma distribution for delay from symptom onset to isolation | Yes |
+| `prop.ascertain` | proportion of cases identified | Varies |
+| `cap_cases` | Limits the number of cases in simulation | 5000 |
+| `cap_max_days` | Limits days since start of outbreak in simulation | 350 |
+| `r0within` | R0 for cases within ring | 0.1? |
+| `r0Am` | R0 for missed (i.e. index cases) | Varies |
+| `overkkmiss` | Dispersion of negative binomial for missed cases | Varies |
+| `overkk` | Dispersion of negative binomial for cases within ring | 0.16 |
+| `vefficacy` | vaccine efficacy | 0.975 |
+| `vuptake` | vaccine uptake | 0.9 |
+| `ring.size` | Limits maximum ring size | 100 |
+| `time_to_protection` | Time from intervention until its effectiveness | 0 |
+| `time_to_isolation` | Time from ascertainment until isolation | Varies |
+| `incub_mean` | mean of gamma distribution for incubation period | **7** |
+| `incub_var` | variance of gamma distribution for incubation period | **5** |
+| `inf_mean` | mean of gamma distribution for infectiousness | Varies |
+| `inf_var` | variance of gamma distribution for infectiousness | **5** |
+| `delay_mean` | mean of gamma distribution for delay from symptom onset to isolation | Varies |
+| `delay_var` | variance of gamma distribution for delay from symptom onset to isolation | 1.5 |
+
+
+## Table of parameters that are changed across scenarios
+
+### Theta varies scenario
+
+| param | SARS | middle | flu |
+| ------- | ------- | ------ | ---- |
+| `inf_mean` | 9 | 5 | 2 |
+| `overkkmiss` | 0.16 | 0.5 | 1 |
+
+### R0 varies scenario
+| param | lower | middle | upper |
+| ------- | ------- | ------ | ---- |
+| `r0Am` | 1.5 | 2.5 | 3.5 |
+
+### Delay distribution mean scenario
+| param | lower | middle | upper |
+| ------- | ------- | ------ | ---- |
+| `delay_mean` | 3 | 5 | 7 |
+
+### Contact tracing effectiveness scenario
+| param | lower | middle | upper |
+| ------- | ------- | ------ | ---- |
+| `prop_ascertain` | 0.2 | 0.4 | 0.6 |
+
 
 ## Docker 
 
