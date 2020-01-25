@@ -113,8 +113,8 @@ wuhan_sim <- function(n.cores=6,n.sim=1,wvaccYN,define_6m,initial.cases.pcluster
                                   initclust = initial.clusters,
                                   r0Amiss = r0Am, # R0 for missed (i.e. index) cases
                                   r0Cmiss = r0Cm, # R0 for missed (i.e. index) cases vaccinated in FOSA
-                                  r0A = r0within, # R0 within ring
-                                  r0B = r0Bwithin, # R0 within ring after vaccination
+                                  r0A = r0Am, #r0within, # R0 within ring before vaccination
+                                  r0B = 0, # r0Bwithin, # R0 within ring after vaccination
                                   pr.id = prop.ascertain, # Proportion ascertained
                                   wvacc = wvaccYN, # Use ring vaccination
                                   massvac = 0, # Use mass vaccination?
