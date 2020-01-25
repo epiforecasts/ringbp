@@ -20,4 +20,8 @@ Imports:
     parallel,
     doMC,
     dplyr,
-    tibble
+    tibble,
+    tidyr,
+    furrr
+Suggests:
+    future
