@@ -15,7 +15,7 @@
 #' @return A nested tibble containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
 #' @export
-#' @importFrom dplyr group_by mutate ungroup
+#' @importFrom dplyr group_by mutate ungroup sample_frac
 #' @importFrom tidyr nest unnest
 #' @importFrom furrr future_map
 #' @examples
@@ -64,6 +64,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     dplyr::group_by(scenario) %>%
     tidyr::nest() %>%
     dplyr::ungroup() %>%
+    ##Randomise the order of scenarios - helps share the load across cores
+    dplyr::sample_frac(size = 1, replace = FALSE) %>%
     dplyr::mutate(sims = furrr::future_map(
       data,
       ~ sim_fn(n.sim = samples,
