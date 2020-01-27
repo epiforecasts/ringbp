@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 figure_1.png
-.RDS
+*.RDS
