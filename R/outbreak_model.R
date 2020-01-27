@@ -11,6 +11,8 @@ infecfn <- function(x){rgamma(x,shape=inf_param[1]/(inf_param[2]^2/inf_param[1])
 delay_param=c(3,1)
 rep_fn <- function(x){rgamma(x,shape=delay_param[1]/(delay_param[2]^2/delay_param[1]),
                              scale=(delay_param[2]^2/delay_param[1]))}
+
+
 secondary_draw <- function(index_case,r0isolated,r0community,disp.iso,disp.com){
 
   if(index_case$isolated==TRUE){
@@ -45,7 +47,7 @@ secondary_draw <- function(index_case,r0isolated,r0community,disp.iso,disp.com){
 
 new_cluster <- function(index_case,r0community,disp.com,total.clusters){
 
-  ind <- index_case %>% dplyr::select(-caseid)
+  ind <- dplyr::select(index_case, -caseid)
 
 
   if(index_case$cluster < total.clusters){
@@ -88,6 +90,7 @@ num.initial.clusters <- 15
 total.clusters <- num.initial.clusters
 total.cases <- num.initial.cases*num.initial.clusters
 prop.ascertain <- 0.5
+latest.onset <- 0
 
 case_data <- data.frame(exposure = rep(0,num.initial.cases*num.initial.clusters), # Exposure time of 0 for all initial cases
                         onset = incubfn(num.initial.cases*num.initial.clusters), # Draw symptom onset for all initial
@@ -103,7 +106,7 @@ case_data <- data.frame(exposure = rep(0,num.initial.cases*num.initial.clusters)
 
 
 cap_max_days <- 365
-cap_cases <- 5000
+cap_cases <- 1000
 extinct <- FALSE
 
 while(latest.onset < cap_max_days & total.cases<cap_cases & !extinct){
