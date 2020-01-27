@@ -38,7 +38,7 @@ secondary_draw <- function(index_case,r0isolated,r0community,disp.iso,disp.com){
              # set isolated time from onset, same as infector if you remain within cluster
              isolated_time = ifelse(missed==TRUE, onset + rep_fn(new.cases), index_case$isolated_time),
              isolated = ifelse(missed==TRUE,FALSE,TRUE)) %>%
-      full_join(ind,by = c("cluster", "onset", "exposure", "latent", "missed", "isolated_time", "isolated")) # append original infector back on the end
+      bind_rows(ind) # append original infector back on the end
 
     return(out) # return the dataframe
 
@@ -70,7 +70,7 @@ new_cluster <- function(index_case,r0community,disp.com,total.clusters){
 
       mutate(isolated_time = min(onset) + rep_fn(1), # cluster is isolated at minimum onset time + delay
              isolated=ifelse(latent>isolated_time,TRUE,FALSE)) %>% # cases that don't infect before isolation are marked isolated
-      full_join(ind,by = c("cluster", "onset", "exposure", "latent", "missed", "isolated_time", "isolated")) # add index case of cluster back to dataset
+      bind_rows(ind) # add index case of cluster back to dataset
 
 
     return(cluster_data)
