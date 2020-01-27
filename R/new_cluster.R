@@ -4,12 +4,15 @@
 #' @param r0community basic reproduction number for non-isolated cases
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
 #' @param total.clusters current number of clusters
+#' @param incubfn function to sample from incubation period distribution
+#' @param infecfn function to sample from infectiousness distribution
+#' @param delayfn function to sample from distribution for delay from symptom onset to isolation
 #'
 #' @return
 #' @export
 #' @importFrom dplyr mutate bind_rows
 #' @examples
-new_cluster <- function(index_case, r0community, disp.com, total.clusters) {
+new_cluster <- function(index_case, r0community, disp.com, total.clusters, incubfn, infecfn, delayfn) {
 
   if (index_case$cluster < total.clusters) {
     return(index_case) # filters out old clusters and returns them unchanged
@@ -35,7 +38,7 @@ new_cluster <- function(index_case, r0community, disp.com, total.clusters) {
         missed = rep(FALSE, new_cases)
       ) %>% # none missed since they are all in this new cluster
 
-      dplyr::mutate(isolated_time = min(onset) + rep_fn(1), # cluster is isolated at minimum onset time + delay
+      dplyr::mutate(isolated_time = min(onset) + delayfn(1), # cluster is isolated at minimum onset time + delay
              isolated = ifelse(latent > isolated_time, TRUE, FALSE)) %>% # cases that don't infect before isolation are marked isolated
       dplyr::bind_rows(index_case) # add index case of cluster back to dataset
 

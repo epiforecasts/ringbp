@@ -10,7 +10,10 @@ secondary_draw(
   r0community,
   disp.iso,
   disp.com,
-  prop.ascertain
+  prop.ascertain,
+  incubfn,
+  infecfn,
+  delayfn
 )
 }
 \arguments{
@@ -25,6 +28,12 @@ secondary_draw(
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
 \item{prop.ascertain}{probability that contact tracing will discover infected contact}
+
+\item{incubfn}{function to sample from incubation period distribution}
+
+\item{infecfn}{function to sample from infectiousness distribution}
+
+\item{delayfn}{function to sample from distribution for delay from symptom onset to isolation}
 }
 \value{
 
