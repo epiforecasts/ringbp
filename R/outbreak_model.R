@@ -1,65 +1,87 @@
 
-incub_param=c(6.7,2)
-incubfn <- function(x){rgamma(x,shape=incub_param[1]/(incub_param[2]^2/incub_param[1]),
-                              scale=(incub_param[2]^2/incub_param[1]))}
+incubfn <- function(x){
+  incub_param=c(6.7,2)
+
+  rgamma(x,shape=incub_param[1]/(incub_param[2]^2/incub_param[1]),
+                              scale=(incub_param[2]^2/incub_param[1]))
+  }
 
 # Infectiousness distribution
-inf_param=c(6.7,2)
-infecfn <- function(x){rgamma(x,shape=inf_param[1]/(inf_param[2]^2/inf_param[1]),
-                              scale=(inf_param[2]^2/inf_param[1]))}
+infecfn <- function(x){
+  inf_param=c(6.7,2)
 
-delay_param=c(3,1)
-rep_fn <- function(x){rgamma(x,shape=delay_param[1]/(delay_param[2]^2/delay_param[1]),
-                             scale=(delay_param[2]^2/delay_param[1]))}
+  rgamma(x,shape=inf_param[1]/(inf_param[2]^2/inf_param[1]),
+                              scale=(inf_param[2]^2/inf_param[1]))
+  }
+
+
+rep_fn <- function(x){
+
+  delay_param=c(3,1)
+
+  rgamma(x,shape=delay_param[1]/(delay_param[2]^2/delay_param[1]),
+                             scale=(delay_param[2]^2/delay_param[1]))
+
+  }
 
 
 secondary_draw <- function(index_case,r0isolated,r0community,disp.iso,disp.com){
 
-  if(index_case$isolated==TRUE){
-    new.cases <- rnbinom(1,size=disp.iso,mu=r0isolated)
-  }else{
-    new.cases <- rnbinom(1,size=disp.com,mu=r0community)
+  vect_isTRUE <- function(x) {
+    purrr::map_lgl(x, isTRUE)
   }
 
-  ind <- index_case
-  ind$isolated <- TRUE # this case has had a chance to infect, so now it is isolated
+  index_case <- dplyr::mutate(index_case,
+                new.cases = purrr::map2_dbl(ifelse(vect_isTRUE(isolated), disp.iso, disp.com),
+                                            ifelse(vect_isTRUE(isolated), r0isolated, r0community),
+                                             ~ rnbinom(1, size = .x,
+                                    mu = .y)),
+                isolated = TRUE)
 
-  if(new.cases==0){
-    return(ind) # if there are no new cases then just pass back the infector
+
+  new_cases <- dplyr::filter(index_case, new.cases > 0)
+
+
+  if (nrow(new_cases) > 0) {
+
+    new_cases <- dplyr::group_by(new_cases, caseid)
+
+    new_cases <- dplyr::group_split(new_cases)
+
+    new_cases <- map(new_cases,
+      ~  ## whether these cases remain in cluster or are missed
+        mutate(data.frame(exposure = rep(.$latent, times = .$new.cases), # exposure is taken from infector data
+                          missed = rbernoulli(n = .$new.cases, p = prop.ascertain)),
+               onset = exposure + incubfn(.$new.cases), # onset of new cases
+               latent = exposure + infecfn(.$new.cases), # when new cases infect people
+               cluster=ifelse(vect_isTRUE(missed), NA, .$cluster), # remain within cluster with prob = prop.ascertain
+               # set isolated time from onset, same as infector if you remain within cluster
+               isolated_time = ifelse(vect_isTRUE(missed), onset + rep_fn(.$new.cases), .$isolated_time + rep_fn(.$new.cases)),
+               isolated = !vect_isTRUE(missed)))
+
+
+    index_case <- dplyr::bind_rows(dplyr::select(index_case, -new.cases),
+                                    new_cases)
   }else{
+    index_case <- dplyr::select(index_case, -new.cases)
+  }
 
-    # If there are new cases, construct data frame
-    out <- data.frame(exposure = rep(index_case$latent, times = new.cases), # exposure is taken from infector data
-                      missed = rbernoulli(n = new.cases, p = prop.ascertain)) %>% # # whether these cases remain in cluster or are missed
-
-      mutate(onset = exposure + incubfn(new.cases), # onset of new cases
-             latent = exposure + infecfn(new.cases), # when new cases infect people
-             cluster=ifelse(missed==TRUE, NA, index_case$cluster), # remain within cluster with prob = prop.ascertain
-             # set isolated time from onset, same as infector if you remain within cluster
-             isolated_time = ifelse(missed==TRUE, onset + rep_fn(new.cases), index_case$isolated_time),
-             isolated = ifelse(missed==TRUE,FALSE,TRUE)) %>%
-      bind_rows(ind) # append original infector back on the end
-
-    return(out) # return the dataframe
-
-  } # End if loop
+  return(index_case)
 } # End function
 
 new_cluster <- function(index_case,r0community,disp.com,total.clusters){
 
-  ind <- dplyr::select(index_case, -caseid)
-
 
   if(index_case$cluster < total.clusters){
-    return(ind) # filters out old clusters and returns them unchanged
+    return(index_case) # filters out old clusters and returns them unchanged
   }
 
-  ind$isolated <- TRUE # this case has had a chance to infect, so now it is isolated
+  index_case$isolated <- TRUE # this case has had a chance to infect, so now it is isolated
 
   new_cases <- rnbinom(1,size=disp.com,mu=r0community) # number of new cases in the cluster formed from missed case
 
   if(new_cases==0){
-    return(ind)
+    return(index_case)
   }else{
 
     cluster_data <- data.frame(cluster = rep(index_case$cluster,new_cases), # set cluster number to index case cluster number
@@ -70,7 +92,7 @@ new_cluster <- function(index_case,r0community,disp.com,total.clusters){
 
       mutate(isolated_time = min(onset) + rep_fn(1), # cluster is isolated at minimum onset time + delay
              isolated=ifelse(latent>isolated_time,TRUE,FALSE)) %>% # cases that don't infect before isolation are marked isolated
-      bind_rows(ind) # add index case of cluster back to dataset
+      bind_rows(index_case) # add index case of cluster back to dataset
 
 
     return(cluster_data)
@@ -106,7 +128,7 @@ case_data <- data.frame(exposure = rep(0,num.initial.cases*num.initial.clusters)
 
 
 cap_max_days <- 365
-cap_cases <- 1000
+cap_cases <- 5000
 extinct <- FALSE
 
 while(latest.onset < cap_max_days & total.cases<cap_cases & !extinct){
@@ -114,27 +136,34 @@ while(latest.onset < cap_max_days & total.cases<cap_cases & !extinct){
   ########################################################
   # STEP 2 - DRAW SECONDARY CASES FOR NON-ISOLATED CASES #
   ########################################################
-  case_data %<>% group_by(caseid) %>%
-    group_modify(~ secondary_draw(index_case = .,
-                                  r0isolated = 0,
-                                  r0community = 2,
-                                  disp.iso = 0.1,
-                                  disp.com = 0.5),keep=FALSE) # add a new generation
+  case_data <- secondary_draw(index_case = case_data,
+                              r0isolated = 0,
+                              r0community = 2,
+                              disp.iso = 0.1,
+                              disp.com = 0.5) # add a new generation
 
 
   ########################################################
   # STEP 3 - UDPATE CLUSTER NUMBERS FOR NEW MISSED CASES #
   ########################################################
 
-  case_data %<>% ungroup() %>% mutate(caseid=1:nrow(case_data)) # ungroup and reset caseid
+  case_data <- mutate(case_data, caseid=1:nrow(case_data)) # ungroup and reset caseid
 
   num.new.clusters <- sum(is.na(case_data$cluster)) # number of new clusters
   case_data$cluster[is.na(case_data$cluster)==TRUE] <- (total.clusters+1):(num.new.clusters+total.clusters) # set new cluster numbers
 
-  case_data %>% group_by(caseid) %>% group_modify(~new_cluster(index_case = .,
-                                                               total.clusters = total.clusters,
-                                                               r0community = 2,
-                                                               disp.com = 0.5), keep = TRUE) # set new numbers of cases in each new cluster
+  case_data <- dplyr::group_by(case_data, caseid)
+
+  case_data <- group_map(case_data, ~new_cluster(index_case = .,
+                                                    total.clusters = total.clusters,
+                                                    r0community = 2,
+                                                    disp.com = 0.5), keep = FALSE) # set new numbers of cases in each new cluster
+
+
+  case_data <- dplyr::bind_rows(case_data)
+
+  case_data <- mutate(case_data, caseid=1:nrow(case_data)) # ungroup and reset caseid
+
 
   total.clusters <- total.clusters + num.new.clusters # update total cluster variable
   total.cases <- nrow(case_data) # update total number of cases
