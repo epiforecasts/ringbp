@@ -2,45 +2,39 @@
 % Please edit documentation in R/wuhan_sim.R
 \name{wuhan_sim}
 \alias{wuhan_sim}
-\title{Title}
+\title{Run a specified number of simulations with identical parameters}
 \usage{
 wuhan_sim(
-  n.cores = 6,
-  n.sim = 1,
-  wvaccYN,
-  define_6m,
-  initial.cases.pcluster,
-  initial.clusters,
+  n.sim,
   prop.ascertain,
-  cap_cases,
   cap_max_days,
-  r0within,
-  r0Am,
-  overkkmiss,
-  overkk,
-  vefficacy,
-  vuptake,
-  ring.size,
-  time_to_protection,
-  time_to_isolation,
+  cap_cases,
+  r0isolated,
+  r0community,
+  disp.iso,
+  disp.com,
   incub_mean,
   incub_var,
   inf_mean,
   inf_var,
   delay_mean,
   delay_var,
-  outbreak_df_out = FALSE
+  num.initial.cases,
+  num.initial.clusters
 )
 }
 \arguments{
-\item{delay_var}{}
+\item{num.initial.clusters}{}
 }
 \value{
 
 }
 \description{
-Title
+Run a specified number of simulations with identical parameters
 }
 \examples{
 
+}
+\author{
+Joel Hellewell
 }

@@ -13,7 +13,7 @@
 #' @return
 #' @export
 #' @importFrom dplyr mutate filter group_by group_split bind_rows select
-#' @importFrom purrr map_lgl map
+#' @importFrom purrr map_lgl map rbernoulli
 #' @examples
 secondary_draw <- function(index_case, r0isolated, r0community, disp.iso, disp.com,prop.ascertain,
                            incubfn, infecfn, delayfn) {
@@ -33,23 +33,41 @@ secondary_draw <- function(index_case, r0isolated, r0community, disp.iso, disp.c
 
 
   if (nrow(new_cases) > 0) {
-    new_cases <- dplyr::group_by(new_cases, caseid)
 
+    total_new_cases <- sum(new_cases$new.cases)
+
+    prob_samples <- tibble::tibble(
+      old_case = unlist(map2(new_cases$caseid, new_cases$new.cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
+                          bernoilli_sample = purrr::rbernoulli(n = total_new_cases, p = prop.ascertain),
+                          incubfn_sample = incubfn(total_new_cases),
+                          infecfn_sample = infecfn(total_new_cases),
+                          delay_sample = delayfn(total_new_cases)
+      )
+
+    new_cases <- dplyr::mutate(new_cases, index = caseid)
+    new_cases <- dplyr::group_by(new_cases, caseid)
     new_cases <- dplyr::group_split(new_cases)
 
-    new_cases <- purrr::map(new_cases,~mutate(data.frame(exposure = rep(.$latent, times = .$new.cases),
-                                                  # exposure is taken from infector data
-                                                  missed = rbernoulli(n = .$new.cases, p = prop.ascertain)),
-                                       ## whether these cases remain in cluster or are missed
-                                       onset = exposure + incubfn(.$new.cases),
-                                       # onset of new cases
-                                       latent = exposure + infecfn(.$new.cases),
-                                       # when new cases infect people
-                                       cluster = ifelse(vect_isTRUE(missed), NA, .$cluster),
-                                       # remain within cluster with prob = prop.ascertain
-                                       # set isolated time from onset, same as infector if you remain within cluster
-                                       isolated_time = ifelse(vect_isTRUE(missed),onset + delayfn(.$new.cases),
-                                                              .$isolated_time + delayfn(.$new.cases)),isolated = !vect_isTRUE(missed)))
+    new_cases <- purrr::map(new_cases, function(.) {
+
+      case_samples <- dplyr::filter(prob_samples, old_case == .$index)
+
+      out <- mutate(data.frame(exposure = rep(.$latent, times = .$new.cases),
+                        # exposure is taken from infector data
+                        missed = case_samples$bernoilli_sample),
+             ## whether these cases remain in cluster or are missed
+             onset = exposure + case_samples$incubfn_sample,
+             # onset of new cases
+             latent = exposure + case_samples$infecfn_sample,
+             # when new cases infect people
+             cluster = ifelse(vect_isTRUE(missed), NA, .$cluster),
+             # remain within cluster with prob = prop.ascertain
+             # set isolated time from onset, same as infector if you remain within cluster
+             isolated_time = ifelse(vect_isTRUE(missed),onset + case_samples$delay_sample,
+                                    .$isolated_time + case_samples$delay_sample),isolated = !vect_isTRUE(missed))
+
+      return(out)
+    })
 
     index_case <- dplyr::bind_rows(dplyr::select(index_case,-new.cases), new_cases)
 
