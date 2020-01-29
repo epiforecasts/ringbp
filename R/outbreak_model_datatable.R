@@ -66,8 +66,7 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
   }
 
   # Prepare output
-  weekly_cases <- case_data %>% mutate(week = floor(onset / 7)) %>% group_by(week) %>%
-    summarise(weekly_cases = sum(n())) %>% mutate(cumulative = cumsum(weekly_cases))
+  weekly_cases <- case_data[,week := floor(onset / 7),][, .(weekly_cases = .N),by=week][,cumulative:=cumsum(weekly_cases)]
 
   max_week <- floor(cap_max_days/7)
   outbreak_length <- nrow(weekly_cases)

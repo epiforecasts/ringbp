@@ -18,8 +18,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
   vect_isTRUE <- function(x) {
     purrr::map_lgl(x, isTRUE)
   }
-  # print("intial case data")
-  # print(case_data)
+
   case_data[,new_cases := purrr::map2_dbl(
     ifelse(vect_isTRUE(isolated), disp.iso, disp.com),
     ifelse(vect_isTRUE(isolated), r0isolated, r0community), ~ rnbinom(1, size = .x, mu = .y))
@@ -62,8 +61,6 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
 
 
   case_data$isolated <- TRUE
-  # print("secondary cases")
-  # print(prob_samples)
 
   prob_cpy <- prob_samples[vect_isTRUE(missed)]
 
@@ -99,14 +96,11 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
   new_clusters[,c("incubfn_sample","infecfn_sample"):=NULL]
   new_clusters$caseid <- (nrow(case_data)+nrow(prob_samples)+1):(nrow(case_data)+nrow(prob_samples)+nrow(new_clusters))
 
-  # print("new clusters")
-  # print(new_clusters)
+
   case_data[,new_cases:=NULL]
   prob_samples$isolated <- TRUE
   case_data <- rbindlist(list(case_data,prob_samples,new_clusters),use.names=TRUE)
 
-  # print("passing out")
-  # print(case_data)
   return(case_data)
 
 }
