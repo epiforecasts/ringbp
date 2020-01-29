@@ -1,21 +1,21 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n.sim
-#' @param prop.ascertain
-#' @param cap_max_days
-#' @param cap_cases
-#' @param r0isolated
-#' @param r0community
-#' @param disp.iso
-#' @param disp.com
-#' @param incub_mean
-#' @param incub_var
-#' @param inf_mean
-#' @param inf_var
-#' @param delay_mean
-#' @param delay_var
-#' @param num.initial.cases
-#' @param num.initial.clusters
+#' @param n.sim number of simulations to run
+#' @param num.initial.cases Initial number of cases in each initial cluster
+#' @param num.initial.clusters Number of initial clusters
+#' @param prop.ascertain Probability that cases are ascertained by contact tracing
+#' @param cap_max_days Maximum number of days to run process for
+#' @param cap_cases Maximum number of cases to run process for
+#' @param r0isolated basic reproduction number for isolated cases
+#' @param r0community basic reproduction number for non-isolated cases
+#' @param disp.iso dispersion parameter for negative binomial distribution for isolated cases
+#' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
+#' @param incub_shape Mean of incubation period distribution
+#' @param incub_scale scale of incubation period distribution
+#' @param inf_shape shape of time until infectious distribution
+#' @param inf_scale scale of time until infectious distribution
+#' @param delay_shape shape of distribution for delay between symptom onset and isolation
+#' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #'
 #' @return
 #' @export
@@ -23,8 +23,8 @@
 #' @examples
 #'
 wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
-                      r0community,disp.iso,disp.com,incub_mean,incub_var,
-                      inf_mean,inf_var,delay_mean,delay_var,num.initial.cases,
+                      r0community,disp.iso,disp.com,incub_shape,incub_scale,
+                      inf_shape,inf_scale,delay_shape,delay_scale,num.initial.cases,
                       num.initial.clusters){
 
   # Run n.sim number of model runs and put them all together in a big data.frame
@@ -37,12 +37,12 @@ wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
                                              r0community = r0community,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
-                                             incub_mean = incub_mean,
-                                             incub_var = incub_var,
-                                             inf_mean = inf_mean,
-                                             inf_var = inf_var,
-                                             delay_mean = delay_mean,
-                                             delay_var = delay_var))
+                                             incub_shape = incub_shape,
+                                             incub_scale = incub_scale,
+                                             inf_shape = inf_shape,
+                                             inf_scale = inf_scale,
+                                             delay_shape = delay_shape,
+                                             delay_scale = delay_scale))
 
 
   # bind output together and add simulation index

@@ -8,10 +8,9 @@
 #' @importFrom purrr partial
 #' @examples
 #'
-dist_setup <- function(dist_mean,dist_var){
-  dist_param <- c(dist_mean,dist_var)
-  out <- partial(rgamma,
-                 shape = dist_param[1] / (dist_param[2] ^ 2 / dist_param[1]),
-                 scale = (dist_param[2] ^ 2 / dist_param[1]))
+dist_setup <- function(dist_shape,dist_scale){
+  out <- partial(rweibull,
+                 shape = dist_shape,
+                 scale = dist_scale)
   return(out)
 }

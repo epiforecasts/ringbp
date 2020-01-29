@@ -9,12 +9,12 @@
 #' @param r0community basic reproduction number for non-isolated cases
 #' @param disp.iso dispersion parameter for negative binomial distribution for isolated cases
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
-#' @param incub_mean Mean of incubation period distribution
-#' @param incub_var Variance of incubation period distribution
-#' @param inf_mean Mean of time until infectious distribution
-#' @param inf_var Variance of time until infectious distribution
-#' @param delay_mean Mean of distribution for delay between symptom onset and isolation
-#' @param delay_var Variance of distribution for delay between symptom onset and isolation
+#' @param incub_shape shape of incubation period distribution
+#' @param incub_scale scale of incubation period distribution
+#' @param inf_shape shape of time until infectious distribution
+#' @param inf_scale scale of time until infectious distribution
+#' @param delay_shape shape of distribution for delay between symptom onset and isolation
+#' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #'
 #' @return
 #' @export
@@ -23,12 +23,12 @@
 #'
 outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascertain,
                            cap_max_days, cap_cases, r0isolated, r0community, disp.iso, disp.com,
-                           incub_mean, incub_var, inf_mean, inf_var, delay_mean, delay_var) {
+                           incub_shape, incub_scale, inf_shape, inf_scale, delay_shape, delay_scale) {
 
   # Set up functions to sample from distributions
-  incubfn <- dist_setup(incub_mean, incub_var)
-  infecfn <- dist_setup(inf_mean, inf_var)
-  delayfn <- dist_setup(delay_mean, delay_var)
+  incubfn <- dist_setup(incub_shape, incub_scale)
+  infecfn <- dist_setup(inf_shape, inf_scale)
+  delayfn <- dist_setup(delay_shape, delay_scale)
 
   # Set initial values for loop indices
   total.clusters <- num.initial.clusters
@@ -66,7 +66,10 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
   }
 
   # Prepare output
-  weekly_cases <- case_data[,week := floor(onset / 7),][, .(weekly_cases = .N),by=week][,cumulative:=cumsum(weekly_cases)]
+  weekly_cases <- case_data[,week := floor(onset / 7),
+                            ][, .(weekly_cases = .N),by=week
+                              ][order(week)
+                                ][,cumulative:=cumsum(weekly_cases)]
 
   max_week <- floor(cap_max_days/7)
   outbreak_length <- nrow(weekly_cases)

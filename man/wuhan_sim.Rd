@@ -13,18 +13,48 @@ wuhan_sim(
   r0community,
   disp.iso,
   disp.com,
-  incub_mean,
-  incub_var,
-  inf_mean,
-  inf_var,
-  delay_mean,
-  delay_var,
+  incub_shape,
+  incub_scale,
+  inf_shape,
+  inf_scale,
+  delay_shape,
+  delay_scale,
   num.initial.cases,
   num.initial.clusters
 )
 }
 \arguments{
-\item{num.initial.clusters}{}
+\item{n.sim}{number of simulations to run}
+
+\item{prop.ascertain}{Probability that cases are ascertained by contact tracing}
+
+\item{cap_max_days}{Maximum number of days to run process for}
+
+\item{cap_cases}{Maximum number of cases to run process for}
+
+\item{r0isolated}{basic reproduction number for isolated cases}
+
+\item{r0community}{basic reproduction number for non-isolated cases}
+
+\item{disp.iso}{dispersion parameter for negative binomial distribution for isolated cases}
+
+\item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
+
+\item{incub_shape}{Mean of incubation period distribution}
+
+\item{incub_scale}{scale of incubation period distribution}
+
+\item{inf_shape}{shape of time until infectious distribution}
+
+\item{inf_scale}{scale of time until infectious distribution}
+
+\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
+
+\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
+
+\item{num.initial.cases}{Initial number of cases in each initial cluster}
+
+\item{num.initial.clusters}{Number of initial clusters}
 }
 \value{
 

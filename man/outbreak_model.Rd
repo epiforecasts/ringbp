@@ -14,12 +14,12 @@ outbreak_model(
   r0community,
   disp.iso,
   disp.com,
-  incub_mean,
-  incub_var,
-  inf_mean,
-  inf_var,
-  delay_mean,
-  delay_var
+  incub_shape,
+  incub_scale,
+  inf_shape,
+  inf_scale,
+  delay_shape,
+  delay_scale
 )
 }
 \arguments{
@@ -41,17 +41,17 @@ outbreak_model(
 
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
-\item{incub_mean}{Mean of incubation period distribution}
+\item{incub_shape}{shape of incubation period distribution}
 
-\item{incub_var}{Variance of incubation period distribution}
+\item{incub_scale}{scale of incubation period distribution}
 
-\item{inf_mean}{Mean of time until infectious distribution}
+\item{inf_shape}{shape of time until infectious distribution}
 
-\item{inf_var}{Variance of time until infectious distribution}
+\item{inf_scale}{scale of time until infectious distribution}
 
-\item{delay_mean}{Mean of distribution for delay between symptom onset and isolation}
+\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
 
-\item{delay_var}{Variance of distribution for delay between symptom onset and isolation}
+\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
 }
 \value{
 

@@ -4,7 +4,7 @@
 \alias{dist_setup}
 \title{Create partial function to sample from gamma distributions}
 \usage{
-dist_setup(dist_mean, dist_var)
+dist_setup(dist_shape, dist_scale)
 }
 \arguments{
 \item{dist_mean}{mean of gamma distribution}

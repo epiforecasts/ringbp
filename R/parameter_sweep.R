@@ -68,9 +68,11 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       data,
       ~ sim_fn(n.sim = samples,
                r0community = .$index_R0,
-               inf_mean = .$inf_mean,
+               inf_shape = .$inf_shape,
+               inf_scale = .$inf_scale,
+               delay_shape = .$delay_shape,
+               delay_scale = .$delay_scale,
                disp.com = .$disp.com,
-               delay_mean = .$delay_mean,
                prop.ascertain = .$control_effectiveness
       ),
       .progress = show_progress
