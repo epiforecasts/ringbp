@@ -37,7 +37,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
     exposure = unlist(map2(new_case_data$latent, new_case_data$new_cases,  function(x,y) {rep(x, as.integer(y))})),
     infector = unlist(map2(new_case_data$caseid, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     cluster = unlist(map2(new_case_data$cluster, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
-    bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = prop.ascertain),
+    bernoulli_sample = 1-purrr::rbernoulli(n = total_new_cases, p = prop.ascertain),
     incubfn_sample = incubfn(total_new_cases),
     infecfn_sample = infecfn(total_new_cases)
   )
