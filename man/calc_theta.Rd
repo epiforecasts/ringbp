@@ -4,10 +4,10 @@
 \alias{calc_theta}
 \title{Estimates theta from given R0 and infectiousness distribtion}
 \usage{
-calc_theta(R0, inf_mean)
+calc_theta(R0, inf_shape, inf_scale, inc_shape, inc_scale)
 }
 \arguments{
-\item{inf_mean}{}
+\item{inc_scale}{}
 }
 \value{
 

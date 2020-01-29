@@ -2,7 +2,7 @@
 % Please edit documentation in R/branch_step.R
 \name{branch_step}
 \alias{branch_step}
-\title{Title}
+\title{Step forward a generation in the branching process}
 \usage{
 branch_step(
   case_data,
@@ -26,8 +26,11 @@ branch_step(
 
 }
 \description{
-Title
+Step forward a generation in the branching process
 }
 \examples{
 
+}
+\author{
+Joel Hellewell
 }
