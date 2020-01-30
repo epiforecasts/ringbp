@@ -69,10 +69,12 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     dplyr::mutate(sims = furrr::future_map(
       data,
       ~ sim_fn(n.sim = samples,
-               r0Am = .$index_R0,
-               inf_mean = .$inf_mean,
-               overkkmiss = .$overkkmiss,
-               delay_mean = .$delay_mean,
+               r0community = .$index_R0,
+               inf_shape = .$inf_shape,
+               inf_scale = .$inf_scale,
+               delay_shape = .$delay_shape,
+               delay_scale = .$delay_scale,
+               disp.com = .$disp.com,
                prop.ascertain = .$control_effectiveness
       ),
       .progress = show_progress
