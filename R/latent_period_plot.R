@@ -1,4 +1,4 @@
-latent_period_plot <- function(){
+# latent_period_plot <- function(){
 
 incubfn <- function(x){dweibull(x,shape = 2.3,scale=6.5)}
 infecfn_early <- function(x){dweibull(x,shape=4.174,scale=10.64)}
@@ -28,26 +28,26 @@ inc_out <- data.table(x2=seq(0,30,0.01))[,`:=`(value2=incubfn(x2)),]
 #   mutate(dist=forcats::fct_recode(dist,`Short latent period`="latent_early",
 #                                   `Long latent period`="latent_late"))\
 
-value1 <- "0%"
-value2 <- "15%"
+value1 <- "15%"
+value2 <- "0%"
 value3 <- "30%"
 mylabs <- list(bquote(theta==.(value1)),bquote(theta==.(value2)),bquote(theta==.(value3)))
-
+cols <- c("darkorchid3","deepskyblue4","brown2")
 out %>% mutate(dist=factor(dist,levels=c("latent_early","latent_medium","latent_late"),
-                             labels=c(expression(paste(theta, " = 30%)")),
+                             labels=c(expression(paste(theta, " = 0%)")),
                                       expression(paste(theta, " = 15%)")),
-                                      expression(paste(theta, " = 0%)"))))) %>%
+                                      expression(paste(theta, " = 30%)"))))) %>%
   ggplot(aes(x=x,y=value,col=as.factor(dist))) +
   geom_ribbon(data=inc_out,inherit.aes = FALSE,aes(x=x2,ymax=value2,ymin=0),alpha=0.7) +
   geom_line(alpha=0.6)  + theme_bw() + xlab("Days since infection") +
-  ylab("Probability density") + scale_colour_discrete(guide="none") +
+  ylab("Probability density") + scale_colour_manual(guide="none",values=cols) +
   geom_ribbon(aes(ymin=0,ymax=value,fill=as.factor(dist)),alpha=0.3) +
-  scale_fill_discrete(labels=mylabs,name="Percentage of transmission pre-symptoms") +
+  scale_fill_manual(labels=mylabs,name="Percentage of transmission pre-symptoms",values=cols) +
   theme(legend.position="bottom",axis.text = element_text(size=10),axis.title = element_text(size=12),
         legend.text = element_text(size=10))
 
 
 
 
-}
+# }
 
