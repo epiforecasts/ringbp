@@ -1,20 +1,21 @@
-heatmap_results <- function(){
+#' Heatmap results
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+heatmap_results <- function(results){
 
-plot_df <- sweep_results %>% group_by(scenario) %>% mutate(prob_extinct = extinct_prob(sims[[1]],cap_cases = 5000),
-                                                theta = round(calc_theta(R0 = index_R0,inf_shape = inf_shape,
-                                                                   inf_scale = inf_scale,inc_shape = 2.322737,
-                                                                   inc_scale = 6.492272),2))
+plot_df <- results %>%
+  group_by(scenario) %>%
+  mutate(prob_extinct = extinct_prob(sims[[1]],cap_cases = 5000),
+         theta = round(calc_theta(R0 = index_R0,inf_shape = inf_shape,
+                                  inf_scale = inf_scale,inc_shape = 2.322737,
+                                  inc_scale = 6.492272),2))
 
 fig1 <- plot_df %>%
-  mutate(latent=factor(latent,levels=c("short","medium","long","very long"),
-                       labels=c(expression(paste("Short pre-infectious period (", theta, "=56%)")),
-                                expression(paste("Medium pre-infectious period (", theta, "=44%)")),
-                                expression(paste("Long pre-infectious period (", theta, "=29%)")),
-                                expression(paste("Very long pre-infectious period (", theta, "=20%)"))))) %>%
-  mutate(delay=factor(delay, levels=c("short","medium","long"),
-                      labels= c(expression(paste("Short delay from onset to isolation (mean = 3.1 days)")),
-                                expression(paste("Medium delay from onset to isolation (mean = 4.9 days)")),
-                                expression(paste("Long delay from onset to isolation (mean = 6.6 days)"))))) %>%
+  rename_variables_for_plotting() %>%
   ggplot() + geom_tile(aes(x=as.factor(control_effectiveness),y=as.factor(index_R0),fill=prob_extinct)) +
   facet_grid(latent ~ delay, labeller = label_parsed) + #scale_fill_viridis_c(option="plasma",direction = 1,begin=0.25) +
   ylab("Basic reproduction number for missed cases") +
