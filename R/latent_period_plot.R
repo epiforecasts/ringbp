@@ -1,4 +1,4 @@
-# latent_period_plot <- function(){
+latent_period_plot <- function(){
 
 incubfn <- function(x){dweibull(x,shape = 2.3,scale=6.5)}
 infecfn_early <- function(x){dweibull(x,shape=4.174,scale=10.64)}
@@ -49,5 +49,5 @@ out %>% mutate(dist=factor(dist,levels=c("latent_early","latent_medium","latent_
 
 
 
-# }
+}
 

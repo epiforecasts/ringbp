@@ -9,7 +9,7 @@
 #' @examples
 #' @importFrom dplyr group_by mutate ungroup filter left_join summarise select
 #' @importFrom tidyr unnest
-#' @importFrom ggplot2 ggplot aes guide_colorbar guides theme labs theme_b
+#' @importFrom ggplot2 ggplot aes guide_colorbar guides theme labs theme_bw
 #'
 plot_max_weekly_cases <- function(results = NULL, cap_cases = 5000, extinct_thresold = 0.5) {
 
