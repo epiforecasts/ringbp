@@ -32,7 +32,7 @@ value1 <- "15%"
 value2 <- "0%"
 value3 <- "30%"
 mylabs <- list(bquote(theta==.(value1)),bquote(theta==.(value2)),bquote(theta==.(value3)))
-cols <- c("darkorchid3","deepskyblue4","brown2")
+cols <- c("darkgoldenrod3","deepskyblue4","brown1")
 out %>% mutate(dist=factor(dist,levels=c("latent_early","latent_medium","latent_late"),
                              labels=c(expression(paste(theta, " = 0%)")),
                                       expression(paste(theta, " = 15%)")),
