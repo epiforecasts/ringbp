@@ -9,9 +9,6 @@ rename_variables_for_plotting(df)
 \arguments{
 \item{df}{Dataframe of results}
 }
-\value{
-
-}
 \description{
 Rename variables for plotting
 }

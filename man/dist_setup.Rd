@@ -11,9 +11,6 @@ dist_setup(dist_shape, dist_scale)
 
 \item{dist_var}{variance of gamma distribution}
 }
-\value{
-
-}
 \description{
 Create partial function to sample from gamma distributions
 }

@@ -4,15 +4,8 @@
 \alias{new_cluster}
 \title{Draw new cluster cases from index case}
 \usage{
-new_cluster(
-  index_case,
-  r0community,
-  disp.com,
-  total.clusters,
-  incubfn,
-  infecfn,
-  delayfn
-)
+new_cluster(index_case, r0community, disp.com, total.clusters, incubfn,
+  infecfn, delayfn)
 }
 \arguments{
 \item{index_case}{Index case of cluster}
@@ -28,9 +21,6 @@ new_cluster(
 \item{infecfn}{function to sample from infectiousness distribution}
 
 \item{delayfn}{function to sample from distribution for delay from symptom onset to isolation}
-}
-\value{
-
 }
 \description{
 Draw new cluster cases from index case

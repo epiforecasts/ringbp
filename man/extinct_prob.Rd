@@ -6,9 +6,6 @@
 \usage{
 extinct_prob(outbreak_df_week, cap_cases)
 }
-\value{
-
-}
 \description{
 Calculate proportion of runs that have controlled outbreak
 }
