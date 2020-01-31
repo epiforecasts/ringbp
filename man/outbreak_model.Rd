@@ -14,10 +14,11 @@ outbreak_model(
   r0community,
   disp.iso,
   disp.com,
-  incub_shape,
-  incub_scale,
-  inf_shape,
-  inf_scale,
+  mu_si,
+  mu_ip,
+  sd_si,
+  sd_ip,
+  k,
   delay_shape,
   delay_scale
 )
@@ -41,6 +42,10 @@ outbreak_model(
 
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
+\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
+
+\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
+
 \item{incub_shape}{shape of incubation period distribution}
 
 \item{incub_scale}{scale of incubation period distribution}
@@ -48,10 +53,6 @@ outbreak_model(
 \item{inf_shape}{shape of time until infectious distribution}
 
 \item{inf_scale}{scale of time until infectious distribution}
-
-\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
-
-\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
 }
 \value{
 

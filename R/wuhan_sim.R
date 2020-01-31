@@ -23,8 +23,8 @@
 #' @examples
 #'
 wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
-                      r0community,disp.iso,disp.com,incub_shape,incub_scale,
-                      inf_shape,inf_scale,delay_shape,delay_scale,num.initial.cases,
+                      r0community,disp.iso,disp.com,mu_ip,sd_ip,k,
+                      mu_si,sd_si,delay_shape,delay_scale,num.initial.cases,
                       num.initial.clusters){
 
   # Run n.sim number of model runs and put them all together in a big data.frame
@@ -37,12 +37,13 @@ wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
                                              r0community = r0community,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
-                                             incub_shape = incub_shape,
-                                             incub_scale = incub_scale,
-                                             inf_shape = inf_shape,
-                                             inf_scale = inf_scale,
+                                             mu_si = mu_si,
+                                             sd_si = sd_si,
+                                             mu_ip = mu_ip,
+                                             sd_ip = sd_ip,
                                              delay_shape = delay_shape,
-                                             delay_scale = delay_scale))
+                                             delay_scale = delay_scale,
+                                             k = k))
 
 
   # bind output together and add simulation index

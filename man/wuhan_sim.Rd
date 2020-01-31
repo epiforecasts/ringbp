@@ -13,10 +13,11 @@ wuhan_sim(
   r0community,
   disp.iso,
   disp.com,
-  incub_shape,
-  incub_scale,
-  inf_shape,
-  inf_scale,
+  mu_ip,
+  sd_ip,
+  k,
+  mu_si,
+  sd_si,
   delay_shape,
   delay_scale,
   num.initial.cases,
@@ -40,14 +41,6 @@ wuhan_sim(
 
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
-\item{incub_shape}{Mean of incubation period distribution}
-
-\item{incub_scale}{scale of incubation period distribution}
-
-\item{inf_shape}{shape of time until infectious distribution}
-
-\item{inf_scale}{scale of time until infectious distribution}
-
 \item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
 
 \item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
@@ -55,6 +48,14 @@ wuhan_sim(
 \item{num.initial.cases}{Initial number of cases in each initial cluster}
 
 \item{num.initial.clusters}{Number of initial clusters}
+
+\item{incub_shape}{Mean of incubation period distribution}
+
+\item{incub_scale}{scale of incubation period distribution}
+
+\item{inf_shape}{shape of time until infectious distribution}
+
+\item{inf_scale}{scale of time until infectious distribution}
 }
 \value{
 

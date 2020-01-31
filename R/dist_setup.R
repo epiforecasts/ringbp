@@ -14,3 +14,24 @@ dist_setup <- function(dist_shape,dist_scale){
                  scale = dist_scale)
   return(out)
 }
+
+
+#' Sample from multivariate normal
+#'
+#' @param mu_ip
+#' @param mu_si
+#' @param sd_ip
+#' @param sd_si
+#' @param k
+#'
+#' @return
+#' @export
+#' @importFrom mvtnorm rmvnorm
+#' @examples
+dist_setup_mvt <- function(mu_ip,mu_si,sd_ip,sd_si,k){
+  out <- partial(mvtnorm::rmvnorm,
+                 mean = c(mu_ip, mu_si),
+                 sigma = matrix(c(sd_ip^2,k*sd_ip*sd_si,k*sd_ip*sd_si,sd_si^2),byrow=TRUE,ncol=2))
+  return(out)
+}
+

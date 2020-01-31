@@ -13,8 +13,7 @@ branch_step(
   disp.com,
   r0isolated,
   r0community,
-  incubfn,
-  infecfn,
+  intervalfn,
   delayfn,
   prop.ascertain
 )
