@@ -2,11 +2,11 @@
 
 ## Master to-do list
 - [ ] Put together/acquire time series of cases for Wuhan outbreak (Take from alreafdy collated time series (Sunky/Eurosurveillance paper?))
-- [ ] Source new parameter values for branching process model based on SARS/flu (see parameters in table below)
-- [ ] Source new parameter values for nCov
-- [ ] Find nice way to link theta value to chosen incubation period estimation
-- [ ] Find nice way to summarise how controllable outbreak with given parameters is (prob of extinction within certain period?)
-- [ ] Run simulations
+- [x] Source new parameter values for branching process model based on SARS/flu (see parameters in table below)
+- [x] Source new parameter values for nCov
+- [x] Find nice way to link theta value to chosen incubation period estimation
+- [x] Find nice way to summarise how controllable outbreak with given parameters is (prob of extinction within certain period?)
+- [x] Run simulations
 - [ ] Write up
 - [ ] Publish somewhere (need to decide where, blog? letter to journal? paper?)
 
