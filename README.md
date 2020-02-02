@@ -24,34 +24,19 @@ To check your package is working correctly, try to run some simulations with the
 
 ```r
 # Run 100 simulations
-res <- wuhan_sim(n.cores = 6,n.sim = 100,wvaccYN = 0,define_6m = 20*7,initial.cases.pcluster = 6,
-          initial.clusters = 10, prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
-          r0within = 0.3, r0Am = 2.5, overkkmiss = 2, overkk = 0.16, vefficacy = 0.975,
-          vuptake = 0.90, ring.size = 150, time_to_protection = 0, incub_mean = 7, 
-          incub_var = 5, inf_mean = 7, inf_var = 5, delay_var = 2, 
-          delay_mean = 7,time_to_isolation=0,outbreak_df_out = TRUE)
-
-
-# plot(x=seq(0,10,0.1),y=dgamma(seq(0,10,0.1),shape = 1.4114166,rate=0.3261129),type="l")
-
-# Plot of daily cases
-# ggplot(data=res$outbreak_df, aes(x=day, y=number, col=as.factor(n.sim)))+
-#   geom_line(show.legend = FALSE, alpha=0.1)+
-#   scale_y_continuous(name="Number of cases")+ theme_bw()+
-#   geom_line(aes(x=day, y=mean.number), col="black")
+res <- wuhan_sim(n.sim = 100,num.initial.cases = 1,num.initial.clusters = 10,
+                 prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
+                 r0isolated = 0, r0community = 2.5, disp.com = 0.16, disp.iso = 1,
+                 mu_ip = 5.8, sd_ip = 2.6, mu_si = 7.5, sd_si = 3.4, delay_shape = 1.651524,
+                 delay_scale = 4.287786,k = 0)
 
 # Plot of weekly cases
-ggplot(data=res$outbreak_df_week, aes(x=week, y=number, col=as.factor(n.sim)))+
+ggplot(data=res, aes(x=week, y=cumulative, col=as.factor(sim)))+
   geom_line(show.legend = FALSE, alpha=0.3)+
-  scale_y_continuous(name="Number of cases")+ theme_bw()+
-  geom_line(aes(x=week, y=mean.number), col="black")
+  scale_y_continuous(name="Number of cases")+ theme_bw()
 
-res$outbreak_df_week %>% arrange(n.sim) %>% group_by(n.sim) %>% mutate(cs=c(cumsum(number))) %>%
-  ggplot(aes(x=week,y=cs,col=as.factor(n.sim))) + geom_line(show.legend = FALSE,alpha=0.3) + theme_bw() + ylab("Cumulate cases") + xlab("weeks since outbreak start") +
-  scale_x_continuous(breaks=0:20)
+extinct_prob(res,cap_cases = 4500)
 
-# Proportion of runs that have 0 weekly cases in weeks 10-12 after outbreak
-extinct_prob(res$outbreak_df_week)
 ```
 
 ## Table of parameters from branching process
