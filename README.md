@@ -13,31 +13,6 @@ https://wwwnc.cdc.gov/eid/article/22/1/15-1410_article
 ## Summary report
 https://docs.google.com/document/d/1JXZ2hG8YQEWC7CufQuIyr5WE4ymz3io4_n_CQdfyRaQ/edit?invite=CJKy66IK&ts=5e2b3ea3
 
-## Parameters
-
-### Parameter overview from Fraser et al. 
-
-* Parameter estimates from SARs: 
-	* R0: 2-4
-	* Incubation period of 4.25 days with a variance of 14.25
-	* Infectiousness over time: "can be inferred from viral shedding data (5), which peaks 5–10 days after onset of symptoms. To maximize , we chose a low variance distribution (var = 0.1 * mean^2) and a peak at 9.25 days after infection, yielding theta < 11%"
-
-### Parameter overview from Campbell et al.
-
-* *Bayesian inference of transmission chains using timing of symptoms, pathogen genomes and contact data* by Campbell et al
-	* Table 2 has references for many epidemiological parameters of SARS-cov
-	* https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006930#sec006
-
-### Wuhan data
-
-* http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/337
-* https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0
-
-### Other ideas
-* Robin has data describing the proportion of cases for Wuhan with specific symptoms (fever, cough, shortness of breath, breathing difficulties (requires oxygen), chest pain, low white blood cell count). By comparing these with SARS, influenza etc we could potentially get a (very rough) idea of the level of symptoms for Wuhan vs other diseases, which could in turn (with some assumptions) inform the percentage of transmissions occurring from missed cases/in isolation (since that is already known for other pathogens)? Would need some thought...
-	
-## Usage
-
 ### Set up
 * Installing the package is annoying because this is a private repository. You will need to set up a github personal access token (PAT), there is a step by step guide here: https://happygitwithr.com/github-pat.html
 * You can then run the command `devtools::install_github("epiforecasts/ringbp")`
@@ -79,7 +54,6 @@ res$outbreak_df_week %>% arrange(n.sim) %>% group_by(n.sim) %>% mutate(cs=c(cums
 extinct_prob(res$outbreak_df_week)
 ```
 
-
 ## Table of parameters from branching process
 
 Parameters passed to `wuhan_sim` function, **bold = unsure** :
@@ -97,8 +71,6 @@ Parameters passed to `wuhan_sim` function, **bold = unsure** :
 | `r0community` | R0 for missed (i.e. index cases) | Varies |
 | `overkkmiss` | Dispersion of negative binomial for missed cases | 0.16 |
 | `overkk` | Dispersion of negative binomial for isolated cases | 0.01 |
-| `time_to_protection` | Time from intervention until its effectiveness | 0 |
-| `time_to_isolation` | Time from ascertainment until isolation | Varies |
 | `mu_ip` | mean of multivariate normal distribution for incubation period | **7** |
 | `sd_ip` | standard deviation of multivariate normal distribution for incubation period | **5** |
 | `inf_mean` | mean of multivariate normal distribution for pre-infectious period | Varies |
@@ -120,7 +92,7 @@ Parameters passed to `wuhan_sim` function, **bold = unsure** :
 ### R0 varies scenario
 | param | lower | middle | upper |
 | ------- | ------- | ------ | ---- |
-| `r0Am` | 1.5 | 2.5 | 3.5 |
+| `r0community` | 1.5 | 2.5 | 3.5 |
 
 ### Delay distribution mean scenario
 | param | lower | middle | upper |
@@ -130,7 +102,7 @@ Parameters passed to `wuhan_sim` function, **bold = unsure** :
 ### Contact tracing effectiveness scenario
 | param | lower | middle | upper |
 | ------- | ------- | ------ | ---- |
-| `prop_ascertain` | 0.2 | 0.4 | 0.6 |
+| `prop_ascertain` | 0 | to | 1 |
 
 
 ## Docker 
