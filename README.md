@@ -1,24 +1,14 @@
 # Wuhan novel coronavirus analysis
 
 ## Master to-do list
-- [ ] Put together/acquire time series of cases for Wuhan outbreak (Take from alreafdy collated time series (Sunky/Eurosurveillance paper?))
-- [x] Source new parameter values for branching process model based on SARS/flu (see parameters in table below)
-- [x] Source new parameter values for nCov
-- [x] Find nice way to link theta value to chosen incubation period estimation
-- [x] Find nice way to summarise how controllable outbreak with given parameters is (prob of extinction within certain period?)
-- [x] Run simulations
-- [ ] Write up
-- [ ] Publish somewhere (need to decide where, blog? letter to journal? paper?)
+- [ ] Work out how changes in the value of `k`, the correlation between serial interval and incubation period, change model runs.
+- [ ] Produce new graphs, descriptions of each in comments in the google doc
+- [ ] Write up results
+- [ ] Send round nCov working group
+- [ ] Pre-print first draft
 
 This outbreak contains code sent over by Adam and Alicia for branching process simulation from *Effectiveness of Ring Vaccination as a Control Strategy for Ebola Virus Disease* by Kucharski et al (2016):
 https://wwwnc.cdc.gov/eid/article/22/1/15-1410_article
-
-The analysis as I understand it so far is this:
-* Using the theoretical understanding of parameter that determines percentage of transmission that occurs before symptoms occur (theta) to understand the effectiveness of responding to outbreaks by isolating cases or both isolating cases and tracing and quarantining their contacts. This is fleshed out in *Factors that make an infectious disease outbreak controllable* by Fraser et al 2004 (https://www.pnas.org/content/101/16/6146)
-* Use priors for the value of Rm (Reproduction number for 'missed cases'), Rw (Reproduction number for detected and isolated cases), and theta that are similar to SARS, increasing them to be similar to flu. Simulate outbreaks that are close to Wuhan-ncov in nature.
-* Determine what values of theta and Rm will allow the Wuhan outbreak to be controlled by isolating cases (and tracing contacts) 
-* Compare these values to current estimates of reproduction number for Wuhan ncov outbreak from other sources
-
 
 ## Summary report
 https://docs.google.com/document/d/1JXZ2hG8YQEWC7CufQuIyr5WE4ymz3io4_n_CQdfyRaQ/edit?invite=CJKy66IK&ts=5e2b3ea3
@@ -103,21 +93,19 @@ Parameters passed to `wuhan_sim` function, **bold = unsure** :
 | `prop.ascertain` | proportion of cases identified | Varies |
 | `cap_cases` | Limits the number of cases in simulation | 5000 |
 | `cap_max_days` | Limits days since start of outbreak in simulation | 350 |
-| `r0within` | R0 for cases within ring | 0.1? |
-| `r0Am` | R0 for missed (i.e. index cases) | Varies |
-| `overkkmiss` | Dispersion of negative binomial for missed cases | Varies |
-| `overkk` | Dispersion of negative binomial for cases within ring | 0.16 |
-| `vefficacy` | vaccine efficacy | 0.975 |
-| `vuptake` | vaccine uptake | 0.9 |
-| `ring.size` | Limits maximum ring size | 100 |
+| `r0isolated` | R0 for isolated cases | 0 |
+| `r0community` | R0 for missed (i.e. index cases) | Varies |
+| `overkkmiss` | Dispersion of negative binomial for missed cases | 0.16 |
+| `overkk` | Dispersion of negative binomial for isolated cases | 0.01 |
 | `time_to_protection` | Time from intervention until its effectiveness | 0 |
 | `time_to_isolation` | Time from ascertainment until isolation | Varies |
-| `incub_mean` | mean of gamma distribution for incubation period | **7** |
-| `incub_var` | variance of gamma distribution for incubation period | **5** |
-| `inf_mean` | mean of gamma distribution for infectiousness | Varies |
-| `inf_var` | variance of gamma distribution for infectiousness | **5** |
-| `delay_mean` | mean of gamma distribution for delay from symptom onset to isolation | Varies |
-| `delay_var` | variance of gamma distribution for delay from symptom onset to isolation | 1.5 |
+| `mu_ip` | mean of multivariate normal distribution for incubation period | **7** |
+| `sd_ip` | standard deviation of multivariate normal distribution for incubation period | **5** |
+| `inf_mean` | mean of multivariate normal distribution for pre-infectious period | Varies |
+| `inf_var` | standard deviation of multivariate normal distribution for pre-infectious period | **5** |
+| `delay_mean` | mean of distribution for delay from symptom onset to isolation | Varies |
+| `delay_var` | variance of distribution for delay from symptom onset to isolation | 1.5 |
+
 
 
 ## Table of parameters that are changed across scenarios
