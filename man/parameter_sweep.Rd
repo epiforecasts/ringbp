@@ -60,9 +60,10 @@ sim_with_params <- purrr::partial(ringbp::wuhan_sim,
 
 
 ## Default is to run sequntially on a single core
-future::plan(future::sequential)
+future::plan("sequential")
 ## Set up multicore if using see ?future::plan for details
-#future::plan(future::multiprocess)
+## Use the workers argument to control the number of cores used.
+#future::plan("multiprocess")
 
 
 ## Run paramter sweep
