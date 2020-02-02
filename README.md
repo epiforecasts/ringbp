@@ -60,8 +60,6 @@ Parameters passed to `wuhan_sim` function, **bold = unsure** :
 
 | Parameter name | Parameter explanation | Canonical value |
 | -------------- | --------------------- | ------------------------- |
-| `wvaccYN` | Yes/no vaccination in model | `TRUE` |
-| `define_6m` | "Period when weekly average is below 10" | 140 (20 weeks) |
 | `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
 | `initial.clusters` | Initial number of different case clusters | Yes |
 | `prop.ascertain` | proportion of cases identified | Varies |
