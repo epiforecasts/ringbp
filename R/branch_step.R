@@ -54,7 +54,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
     # assigns the cluster of the infector to the new person
     cluster = unlist(map2(new_case_data$cluster, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     # draws a sample to see if this person remains in the cluster
-    bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = prop.ascertain),
+    bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
     # sample from the incubation period for each new person
     incubfn_sample = dist_samples[,1],
     # sample from the latent period for each new person
@@ -66,7 +66,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
                      # their onset is exposure + incubation period sample
                      onset = exposure + incubfn_sample,
                      # They are missed with probability 1-prob(detected by contact tracing)
-                     missed = !bernoulli_sample)]
+                     missed = bernoulli_sample)]
 
   # Isolation time for each cluster is the minimum onset in the cluster + a draw from delay distribution
   prob_samples[,isolated_time := min(onset) + delayfn(1),infector]

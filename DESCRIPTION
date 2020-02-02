@@ -24,6 +24,7 @@ Imports:
     dplyr,
     tibble,
     tidyr,
-    furrr
+    furrr,
+    mvtnorm
 Suggests:
     future
