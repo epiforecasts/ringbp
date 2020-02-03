@@ -2,7 +2,7 @@
 #'
 #' @return
 #' @export
-#' @importFrom ggplot2 ggplot geom_point theme_bw geom_abline coord_cartesian theme scale_x_continuous scale_y_continuous xlab ylab ggtitle geom_vline coord_flip coord_cartesian
+#' @importFrom ggplot2 ggplot geom_point theme_bw geom_abline coord_cartesian theme scale_x_continuous scale_y_continuous xlab ylab ggtitle geom_vline coord_flip coord_cartesian element_blank element_text
 #' @importFrom ggthemes scale_color_colorblind
 #' @importFrom patchwork guide_area plot_layout
 #' @examples
@@ -27,7 +27,7 @@ p1 <- as.data.frame(tab) %>%
 p2 <- data.frame(x=seq(0,13,0.1),y=dnorm(x = seq(0,13,0.1),mean=5.8,sd = 2.6)) %>%
   ggplot(aes(x=x,y=y)) + geom_line() + xlab("") + ylab("") + theme_bw() + geom_vline(xintercept=5.8,lty=2) +
   theme(axis.title=element_blank(),plot.title = element_text(hjust = 0.5),
-        axis.text=element_blank()) + ggtitle("Incubation Period")
+        axis.text=element_blank(),axis.ticks.y=element_blank()) + ggtitle("Incubation Period")
 
 p3 <- data.frame(x=seq(0,16,0.1),y=dnorm(x = seq(0,16,0.1),mean=7.5,sd = 3.4)) %>%
   ggplot(aes(x=x,y=y)) + geom_line() + xlab("Serial Interval") + ylab("") + theme_bw() + geom_vline(xintercept=7.5,lty=2) +

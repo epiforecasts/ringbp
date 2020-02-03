@@ -22,35 +22,43 @@
 #'
 #' library(ringbp)
 #'
-#' ## Set up scenario gird
 #' scenarios <- tidyr::expand_grid(
-#'     ## Put parameters that are grouped by disease into this data.frame
-#'     grouped_parameters = list(tibble::tibble(
-#'                          disease = c("SARs", "Transition", "Flu"),
-#'                          index_R0 = c(1.5, 2.5, 3.5),
-#'                          inf_mean = c(9, 5, 2),
-#'                          overkkmiss= c(0.16, 0.5, 1)
-#'     )),
-#'     delay_mean = seq(3, 7, 1),
-#'     control_effectiveness = seq(0, 1, 0.2)) %>%
-#'  tidyr::unnest("grouped_parameters") %>%
+#' ## Put parameters that are grouped by disease into this data.frame
+#' delay_group = list(tibble::tibble(
+#'  delay = c("SARS","Wuhan"),
+#'  delay_shape = c(1.651524,2.305172),
+#'  delay_scale = c(4.287786,9.483875)
+#' )),
+#' k_group = list(tibble::tibble(
+#'  theta = c("<1%","15%","30%"),
+#'  k = c(1,0.88,0.47)
+#' )),
+#' index_R0 = c(1.5,2.5,3.5),
+#' control_effectiveness = seq(0,1,0.2),
+#' num.initial.clusters = c(5,20,40)) %>%
+#'  tidyr::unnest("k_group") %>%
+#'  tidyr::unnest("delay_group") %>%
 #'  dplyr::mutate(scenario = 1:dplyr::n())
 #'
 #' ## Parameterise fixed paramters
 #' sim_with_params <- purrr::partial(ringbp::wuhan_sim,
-#'                                   n.cores = 1, wvaccYN = 0,define_6m = 239,initial.cases.pcluster = 5,
-#'                                   initial.clusters = 5, cap_cases = 4500, cap_max_days = 350,
-#'                                   r0within = 0.5, overkk = 0.19, vefficacy = 1,
-#'                                   vuptake = 0.90, ring.size = 100, time_to_protection = 2, incub_mean = 5,
-#'                                   incub_var = 1.5, inf_var = 1.5, delay_var = 2,
-#'                                   time_to_isolation=1, outbreak_df_out = TRUE)
+#'                                  num.initial.cases=1,
+#'                                  cap_max_days = 365,
+#'                                  cap_cases = 5000,
+#'                                  r0isolated = 0,
+#'                                  disp.iso=1,
+#'                                  disp.com = 0.16,
+#'                                  mu_ip = 5.8, # incubation period mean
+#'                                  sd_ip = 2.6, # incubation period sd
+#'                                                                   mu_si = 7.5, # serial interval mean
+#'                                                                   sd_si = 3.4) # serial interval sd
 #'
 #'
 #' ## Default is to run sequntially on a single core
 #' future::plan("sequential")
 #' ## Set up multicore if using see ?future::plan for details
 #' ## Use the workers argument to control the number of cores used.
-#' #future::plan("multiprocess")
+#' future::plan("multiprocess")
 #'
 #'
 #' ## Run paramter sweep
@@ -70,6 +78,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     dplyr::mutate(sims = furrr::future_map(
       data,
       ~ sim_fn(n.sim = samples,
+               num.initial.clusters = .$num.initial.clusters,
                r0community = .$index_R0,
                k = .$k,
                delay_shape = .$delay_shape,
