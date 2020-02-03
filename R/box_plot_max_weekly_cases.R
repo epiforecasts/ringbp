@@ -33,10 +33,10 @@ box_plot_max_weekly_cases <- function(results = NULL,
   ## make plot
   plot <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
-    dplyr::filter(latent %in% c("short", "medium")) %>%
+    dplyr::filter(theta %in% c("15%")) %>%
     dplyr::group_by(scenario) %>%
     dplyr::ungroup() %>%
-    dplyr::filter(delay %in% "short") %>%
+    # dplyr::filter(delay %in% "short") %>%
     rename_variables_for_plotting()  %>%
     ggplot2::ggplot(ggplot2::aes(y = max_weekly_cases,
                                  x = factor(control_effectiveness),
@@ -48,7 +48,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                          alpha = 0.1,
                          width = 0.4,
                          height = 0.005) +
-    ggplot2::facet_grid(rows = ggplot2::vars(latent),
+    ggplot2::facet_grid(rows = ggplot2::vars(delay),
                         cols = ggplot2::vars(index_R0),
                         labeller = ggplot2::label_parsed) +
     ggplot2::theme_bw() +
@@ -56,11 +56,15 @@ box_plot_max_weekly_cases <- function(results = NULL,
                   x = "Proportion of infected contacts ascertained by contact tracing") +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_y_continuous(breaks = seq(0,1000,50)) +
+    # CHOOSE COLOR SCALE MANUALLY
+    # ggthemes::scale_color_colorblind() +
     ggthemes::scale_color_economist() +
+    # ggplot2::scale_color_discrete(colorblind_pal()(8)[-c(1)]) + # no black
+    # ggplot2::scale_color_discrete(economist_pal()(8)[-c(1)]) + # no grey
     ggplot2::labs(fill = "Proportion of infected contacts ascertained by contact tracing",
       color = "Control Effectiveness")
 
-  if(flip_coords) { plot <- plot + ggplot2::coord_flip() }
+  if (flip_coords) { plot <- plot + ggplot2::coord_flip() }
 
   return(plot)
 }

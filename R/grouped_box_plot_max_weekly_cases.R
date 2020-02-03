@@ -32,17 +32,16 @@ grouped_box_plot_max_weekly_cases <- function(results = NULL,
   ## make plot
   plot <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
-    dplyr::filter(latent %in% c("short", "medium")) %>%
+    dplyr::filter(theta %in% c("15%")) %>%
     dplyr::group_by(scenario) %>%
     dplyr::ungroup() %>%
-    # dplyr::filter(delay %in% "short") %>%
     rename_variables_for_plotting()  %>%
     ggplot2::ggplot(ggplot2::aes(y = max_weekly_cases,
                                  x = factor(control_effectiveness),
-                                 color = as.factor(delay)
+                                 color = factor(control_effectiveness)
                                  )) +
     ggplot2::geom_boxplot(alpha = 0.4) +
-    ggplot2::facet_grid(rows = ggplot2::vars(latent),
+    ggplot2::facet_grid(rows = ggplot2::vars(delay),
                         cols = ggplot2::vars(index_R0),
                         labeller = ggplot2::label_parsed) +
     ggplot2::theme_bw() +

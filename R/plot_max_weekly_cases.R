@@ -45,7 +45,7 @@ filt_results <- results %>%
 ## make plot
 plot <- filt_results %>%
   dplyr::filter(control_effectiveness >= 0.8) %>%
-  dplyr::filter(latent %in% c("short", "medium")) %>%
+  dplyr::filter(theta %in% c("15%")) %>%
   dplyr::group_by(scenario) %>%
   dplyr::filter(max_weekly_cases > quantile(max_weekly_cases, 0.025),
                 max_weekly_cases < quantile(max_weekly_cases, 0.975)) %>%
