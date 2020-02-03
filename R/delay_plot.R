@@ -21,22 +21,20 @@ delay_plot <- function(){
 
 
   out %>% mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
-                               labels=c("Delay distribution towards the end of 2003 SARS outbreak",
-                                        "Empirical delay distribution from Wuhan data")))
+                               labels=c("SARS outbreak 2003","Wuhan nCoV 2019")))
 
 
   means <- data.frame(x=c(3.83,9.1),dist=c("delay_sars","delay_wuhan")) %>%
     mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
-                         labels=c("Delay distribution towards the end of 2003 SARS outbreak",
-                                  "Empirical delay distribution from Wuhan data")))
+                         labels=c("SARS outbreak 2003","Wuhan nCoV 2019")))
 
-  out %>% ggplot(aes(x=x,y=value,col=as.factor(dist),ymin=0,ymax=value,fill=as.factor(dist))) + geom_ribbon(alpha=0.3) +
+  out %>% ggplot(aes(x=x,y=value,ymin=0,ymax=value,fill=as.factor(dist))) + geom_ribbon(alpha=0.4) +
     theme_bw() +
     theme(legend.position="bottom",axis.text = element_text(size=10),axis.title = element_text(size=12),
           legend.text = element_text(size=10)) +
     xlab("Days since infection") + scale_fill_discrete(name="",labels=c("SARS outbreak 2003","Wuhan nCoV 2019")) +
     ylab("Probability density") + scale_colour_discrete(guide="none") +
-    geom_vline(data=means,aes(xintercept=x),col="orange",lty=2,size=0.8)
+    geom_vline(data=means,aes(xintercept=x,col=as.factor(dist)),lty=2,size=0.8)
 
 }
 

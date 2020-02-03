@@ -16,6 +16,6 @@ rename_variables_for_plotting <- function(df) {
                                 expression(paste("30% of transmission before symptom onset"))))) %>%
     dplyr::mutate(delay=factor(delay, levels=c("Best case","SARS","Wuhan"),
                         labels= c(expression(paste("Best case delay from onset to isolation (mean = 2 days)")),
-                                  expression(paste("Delay from onset to isolation from SARS outbreak (mean = 3.8 days)")),
-                                  expression(paste("Delay from onset to isolation from Wuhan nCoV outbreak (mean = 9.1 days)")))))
+                                  expression(paste("3.8 day mean delay ")),
+                                  expression(paste("9.1 day mean delay")))))
 }
