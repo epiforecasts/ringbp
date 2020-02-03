@@ -13,9 +13,10 @@ branch_step(
   disp.com,
   r0isolated,
   r0community,
-  intervalfn,
+  incfn,
   delayfn,
-  prop.ascertain
+  prop.ascertain,
+  k
 )
 }
 \arguments{

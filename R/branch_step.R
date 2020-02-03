@@ -13,7 +13,7 @@
 #'
 branch_step <- function(case_data,total.clusters,total.cases,extinct,
                         disp.iso,disp.com,r0isolated,r0community,
-                        intervalfn,delayfn,prop.ascertain){
+                        incfn,delayfn,prop.ascertain,k){
 
   # A vectorised version of isTRUE
   vect_isTRUE <- function(x) {
@@ -42,9 +42,8 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
   }
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
-  dist_samples = intervalfn(total_new_cases)
-  # make sure above 0
-  dist_samples[dist_samples<0] <- 0.01
+  inc_samples <- incfn(total_new_cases)
+  lat_samples <- inf_fn(inc_samples,k)
 
   prob_samples <- data.table(
     # new people are given the exposure time equal to their infector's draw from the latent period
@@ -56,9 +55,9 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
     # draws a sample to see if this person remains in the cluster
     bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
     # sample from the incubation period for each new person
-    incubfn_sample = dist_samples[,1],
+    incubfn_sample = inc_samples,
     # sample from the latent period for each new person
-    infecfn_sample = dist_samples[,2]
+    infecfn_sample = lat_samples
   )
 
   # new person's time when they infect is their exposure + latent period sample
@@ -108,8 +107,8 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
 
   # Get number of new clusters
   num.new.clusters <- new_case_data[,sum(new_cases),]
-  dist_samples = intervalfn(num.new.clusters)
-  dist_samples[dist_samples<0] <- 0.01
+  inc_samples <- incfn(num.new.clusters)
+  lat_samples <- inf_fn(inc_samples,k)
 
   # Set exposure time, infector, cluster id, and get incubation + latent samples for each new person in each new cluster
   new_clusters <- data.table(
@@ -117,9 +116,9 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
     infector = unlist(map2(new_case_data$caseid, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     cluster = unlist(map2(new_case_data$cluster, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     # sample from the incubation period for each new person
-    incubfn_sample = dist_samples[,1],
+    incubfn_sample = inc_samples,
     # sample from the latent period for each new person
-    infecfn_sample = dist_samples[,2],
+    infecfn_sample = lat_samples,
     missed = FALSE # everyone here is missed by default since they are in a new cluster
   )
 

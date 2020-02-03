@@ -25,6 +25,9 @@ Imports:
     tibble,
     tidyr,
     furrr,
-    mvtnorm
+    mvtnorm,
+    ggthemes,
+    patchwork,
+    sn
 Suggests:
     future

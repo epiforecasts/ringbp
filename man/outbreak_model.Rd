@@ -14,10 +14,6 @@ outbreak_model(
   r0community,
   disp.iso,
   disp.com,
-  mu_si,
-  mu_ip,
-  sd_si,
-  sd_ip,
   k,
   delay_shape,
   delay_scale

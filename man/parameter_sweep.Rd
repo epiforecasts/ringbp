@@ -57,7 +57,7 @@ num.initial.clusters = c(5,20,40)) \%>\%
 sim_with_params <- purrr::partial(ringbp::wuhan_sim,
                                  num.initial.cases=1,
                                  cap_max_days = 365,
-                                 cap_max_cases = 5000,
+                                 cap_cases = 5000,
                                  r0isolated = 0,
                                  disp.iso=1,
                                  disp.com = 0.16,

@@ -4,7 +4,7 @@
 \alias{branch_setup}
 \title{Title}
 \usage{
-branch_setup(num.initial.cases, num.initial.clusters, intervalfn, delayfn)
+branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
 }
 \arguments{
 \item{delayfn}{}

@@ -23,10 +23,10 @@
 #'
 outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascertain,
                            cap_max_days, cap_cases, r0isolated, r0community, disp.iso, disp.com,
-                           mu_si, mu_ip, sd_si, sd_ip, k, delay_shape, delay_scale) {
+                           k, delay_shape, delay_scale) {
 
   # Set up functions to sample from distributions
-  intervalfn <- dist_setup_mvt(mu_ip = mu_ip, mu_si = mu_si, sd_ip = sd_ip, sd_si = sd_si, k = k)
+  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272) # incubation period sampling function
   delayfn <- dist_setup(delay_shape, delay_scale)
 
   # Set initial values for loop indices
@@ -38,8 +38,8 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
   # Initial setup
   case_data <- branch_setup(num.initial.cases = num.initial.cases,
                             num.initial.clusters = num.initial.clusters,
-                            intervalfn = intervalfn,
-                            delayfn = delayfn)
+                            incfn = incfn,
+                            delayfn = delayfn,k = k)
 
   # Model loop
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
@@ -52,9 +52,10 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
                              disp.com = disp.com,
                              r0isolated = r0isolated,
                              r0community = r0community,
-                             intervalfn = intervalfn,
+                             incfn = incfn,
                              delayfn = delayfn,
-                             prop.ascertain = prop.ascertain)
+                             prop.ascertain = prop.ascertain,
+                             k = k)
 
     total.cases <- nrow(case_data)
     total.clusters <- max(case_data$cluster)
