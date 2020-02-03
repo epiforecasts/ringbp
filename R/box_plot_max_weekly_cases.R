@@ -41,13 +41,13 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggplot2::ggplot(ggplot2::aes(y = max_weekly_cases,
                                  x = factor(control_effectiveness),
                                  color = factor(control_effectiveness))) +
-    ggplot2::geom_boxplot(alpha = 0.4) +
-    ggplot2::geom_jitter(
-                         color = "grey34",
-                         size = 0.005,
-                         alpha = 0.1,
-                         width = 0.4,
-                         height = 0.005) +
+    # ggplot2::geom_jitter(
+    #                      color = "grey34",
+    #                      size = 0.005,
+    #                      alpha = 0.3,
+    #                      width = 0.4,
+    #                      height = 0.005) +
+    ggplot2::geom_boxplot() +
     ggplot2::facet_grid(rows = ggplot2::vars(delay),
                         cols = ggplot2::vars(index_R0),
                         labeller = ggplot2::label_parsed) +
@@ -57,8 +57,8 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_y_continuous(breaks = seq(0,1000,50)) +
     # CHOOSE COLOR SCALE MANUALLY
-    # ggthemes::scale_color_colorblind() +
-    ggthemes::scale_color_economist() +
+    ggthemes::scale_color_colorblind() + # colorblind including black
+    # ggthemes::scale_color_economist() +
     # ggplot2::scale_color_discrete(colorblind_pal()(8)[-c(1)]) + # no black
     # ggplot2::scale_color_discrete(economist_pal()(8)[-c(1)]) + # no grey
     ggplot2::labs(fill = "Proportion of infected contacts ascertained by contact tracing",
