@@ -9,9 +9,6 @@ calc_theta(R0, inf_shape, inf_scale, inc_shape, inc_scale)
 \arguments{
 \item{inc_scale}{}
 }
-\value{
-
-}
 \description{
 Estimates theta from given R0 and infectiousness distribtion
 }

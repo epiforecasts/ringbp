@@ -4,12 +4,8 @@
 \alias{parameter_sweep}
 \title{Sweep across parameters}
 \usage{
-parameter_sweep(
-  scenarios = NULL,
-  samples = 1,
-  sim_fn = NULL,
-  show_progress = TRUE
-)
+parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL,
+  show_progress = TRUE)
 }
 \arguments{
 \item{scenarios}{A dataframe containing all gridded  scenarios - see the examples for the required structure.
@@ -70,9 +66,9 @@ sim_with_params <- purrr::partial(ringbp::wuhan_sim,
 ## Default is to run sequntially on a single core
 future::plan("sequential")
 ## Set up multicore if using see ?future::plan for details
-## Use the workers argument to control the number of cores used.
-future::plan("multiprocess")
+## Use the workers argument to control the number of cores used
 
+future::plan("multiprocess")
 
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)

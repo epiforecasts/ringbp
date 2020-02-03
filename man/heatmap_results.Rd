@@ -6,9 +6,6 @@
 \usage{
 heatmap_results(results)
 }
-\value{
-
-}
 \description{
 Heatmap results
 }

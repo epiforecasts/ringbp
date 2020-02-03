@@ -4,6 +4,7 @@
 \alias{branch_step}
 \title{Step forward a generation in the branching process}
 \usage{
+
 branch_step(
   case_data,
   total.clusters,
@@ -21,9 +22,6 @@ branch_step(
 }
 \arguments{
 \item{extinct}{}
-}
-\value{
-
 }
 \description{
 Step forward a generation in the branching process
