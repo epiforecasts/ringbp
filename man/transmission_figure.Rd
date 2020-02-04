@@ -6,6 +6,9 @@
 \usage{
 transmission_figure()
 }
+\value{
+
+}
 \description{
 Produces first figure from summary
 }

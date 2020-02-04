@@ -4,9 +4,16 @@
 \alias{plot_max_weekly_cases}
 \title{Plot maximum weekly cases in extinct outbreaks}
 \usage{
-plot_max_weekly_cases(results = NULL, cap_cases = 5000,
-  extinct_thresold = 0.5, low_color = "white",
-  high_color = "#0072b2")
+plot_max_weekly_cases(
+  results = NULL,
+  cap_cases = 5000,
+  extinct_thresold = 0.5,
+  low_color = "white",
+  high_color = "#0072b2"
+)
+}
+\value{
+
 }
 \description{
 Plot maximum weekly cases in extinct outbreaks

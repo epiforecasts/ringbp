@@ -57,6 +57,9 @@ wuhan_sim(
 
 \item{inf_scale}{scale of time until infectious distribution}
 }
+\value{
+
+}
 \description{
 Run a specified number of simulations with identical parameters
 }
