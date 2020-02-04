@@ -47,7 +47,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
 
   prob_samples <- data.table(
     # new people are given the exposure time equal to their infector's draw from the latent period
-    exposure = unlist(map2(new_case_data$latent, new_case_data$new_cases,  function(x,y) {rep(x, as.integer(y))})),
+    exposure = unlist(map2(new_case_data$exposure, new_case_data$new_cases,  function(x,y) {x + incfn(y))})),
     # records the infector of each new person
     infector = unlist(map2(new_case_data$caseid, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     # assigns the cluster of the infector to the new person
@@ -112,7 +112,7 @@ branch_step <- function(case_data,total.clusters,total.cases,extinct,
 
   # Set exposure time, infector, cluster id, and get incubation + latent samples for each new person in each new cluster
   new_clusters <- data.table(
-    exposure = unlist(map2(new_case_data$latent, new_case_data$new_cases,  function(x,y) {rep(x, as.integer(y))})),
+    exposure = unlist(map2(new_case_data$exposure, new_case_data$new_cases,  function(x,y) {x + incfn(y)})),
     infector = unlist(map2(new_case_data$caseid, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     cluster = unlist(map2(new_case_data$cluster, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     # sample from the incubation period for each new person
