@@ -1,17 +1,18 @@
-#' Set up the initial cases in the branching process
-#'
+#' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @param num.initial.cases
-#' @param num.initial.clusters
-#' @param incubfn
-#' @param infecfn
-#' @param delayfn
+#' @param num.initial.cases Number of initial cases
+#' @param num.initial.clusters Number of initial clusters
+#' @param incfn A function that samples from the incubation period
+#' @param delayfn A function that samples from the onset-to-hospitalisation delay
+#' @param k The skew parameter for sampling the serial interval from the incubation period
 #'
 #' @return
 #' @export
 #' @importFrom data.table data.table
+#'
 #' @examples
+#'
 branch_setup <- function(num.initial.cases,num.initial.clusters,incfn,delayfn,k){
   # Set up table of initial cases
   inc_samples = incfn(num.initial.cases * num.initial.clusters)

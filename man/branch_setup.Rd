@@ -2,18 +2,29 @@
 % Please edit documentation in R/branch_setup.R
 \name{branch_setup}
 \alias{branch_setup}
-\title{Set up the initial cases in the branching process}
+\title{Set up initial cases for branching process}
 \usage{
 branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
 }
 \arguments{
-\item{delayfn}{}
+\item{num.initial.cases}{Number of initial cases}
+
+\item{num.initial.clusters}{Number of initial clusters}
+
+\item{incfn}{A function that samples from the incubation period}
+
+\item{delayfn}{A function that samples from the onset-to-hospitalisation delay}
+
+\item{k}{The skew parameter for sampling the serial interval from the incubation period}
 }
 \value{
 
 }
 \description{
-Set up the initial cases in the branching process
+Set up initial cases for branching process
+}
+\examples{
+
 }
 \author{
 Joel Hellewell

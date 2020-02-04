@@ -22,10 +22,11 @@ Imports:
     parallel,
     doMC,
     dplyr,
-    tibble,
+    data.table,
     tidyr,
     furrr,
-    mvtnorm,
+    purrr,
+    ggplot2,
     ggthemes,
     patchwork,
     sn

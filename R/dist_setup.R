@@ -9,12 +9,23 @@
 #' @examples
 #'
 dist_setup <- function(dist_shape,dist_scale){
-  out <- partial(rweibull,
+  out <- purrr::partial(rweibull,
                  shape = dist_shape,
                  scale = dist_scale)
   return(out)
 }
 
+
+#' Samples the serial interval
+#'
+#' @param inc_samp A vector of samples from the incubation period
+#' @param k The skew parameter for sampling the serial interval from the incubation period
+#'
+#' @return
+#' @export
+#' @importFrom sn rsn
+#' @examples
+#'
 inf_fn <- function(inc_samp,k){
   out <- sn::rsn(n=length(inc_samp),xi = inc_samp,omega = 2,alpha = k)
   out <- ifelse(out<1,1,out)
@@ -33,12 +44,12 @@ inf_fn <- function(inc_samp,k){
 #' @export
 #' @importFrom mvtnorm rmvnorm
 #' @examples
-dist_setup_mvt <- function(mu_ip,mu_si,sd_ip,sd_si,k){
-  out <- partial(mvtnorm::rmvnorm,
-                 mean = c(mu_ip, mu_si),
-                 sigma = matrix(c(sd_ip^2,k*sd_ip*sd_si,k*sd_ip*sd_si,sd_si^2),byrow=TRUE,ncol=2))
-  return(out)
-}
+# dist_setup_mvt <- function(mu_ip,mu_si,sd_ip,sd_si,k){
+#   out <- partial(mvtnorm::rmvnorm,
+#                  mean = c(mu_ip, mu_si),
+#                  sigma = matrix(c(sd_ip^2,k*sd_ip*sd_si,k*sd_ip*sd_si,sd_si^2),byrow=TRUE,ncol=2))
+#   return(out)
+# }
 
 
 

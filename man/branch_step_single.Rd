@@ -21,13 +21,40 @@ branch_step_single(
 )
 }
 \arguments{
-\item{quarantine}{}
+\item{case_data}{A tibble of cases so far, can be created initially with branch_setup}
+
+\item{total.clusters}{Number of clusters in case_data}
+
+\item{total.cases}{Number of cases in case_data}
+
+\item{extinct}{Whether the outbreak is extinct}
+
+\item{disp.iso}{The dispersion parameter for isolated cases}
+
+\item{disp.com}{The dispersion parameter for non-isolated cases}
+
+\item{r0isolated}{The reproduction number for isolated cases}
+
+\item{r0community}{The reproduction number for non-isolated cases}
+
+\item{incfn}{A function that samples from the incubation period}
+
+\item{delayfn}{A function that samples from the onset-to-hospitalisation delay}
+
+\item{prop.ascertain}{The proportion of infectious contacts ascertained by contact tracing}
+
+\item{k}{The skew parameter for sampling the serial interval from the incubation period}
+
+\item{quarantine}{Whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
 \value{
 
 }
 \description{
 Move forward one generation in the branching process
+}
+\examples{
+
 }
 \author{
 Joel Hellewell

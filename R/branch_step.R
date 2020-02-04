@@ -2,19 +2,19 @@
 #'
 #' @author Joel Hellewell
 #'
-#' @param case_data
-#' @param total.clusters
-#' @param total.cases
-#' @param extinct
-#' @param disp.iso
-#' @param disp.com
-#' @param r0isolated
-#' @param r0community
-#' @param incfn
-#' @param delayfn
-#' @param prop.ascertain
-#' @param k
-#' @param quarantine
+#' @param case_data A tibble of cases so far, can be created initially with branch_setup
+#' @param total.clusters Number of clusters in case_data
+#' @param total.cases Number of cases in case_data
+#' @param extinct Whether the outbreak is extinct
+#' @param disp.iso The dispersion parameter for isolated cases
+#' @param disp.com The dispersion parameter for non-isolated cases
+#' @param r0isolated The reproduction number for isolated cases
+#' @param r0community The reproduction number for non-isolated cases
+#' @param incfn A function that samples from the incubation period
+#' @param delayfn A function that samples from the onset-to-hospitalisation delay
+#' @param prop.ascertain The proportion of infectious contacts ascertained by contact tracing
+#' @param k The skew parameter for sampling the serial interval from the incubation period
+#' @param quarantine Whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl
@@ -23,6 +23,7 @@
 #' @export
 #'
 #' @examples
+#'
 branch_step_single <- function(case_data,total.clusters,total.cases,extinct,
                         disp.iso,disp.com,r0isolated,r0community,
                         incfn,delayfn,prop.ascertain,k,quarantine){

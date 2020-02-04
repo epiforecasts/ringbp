@@ -12,9 +12,22 @@ plot_max_weekly_cases(
   high_color = "#0072b2"
 )
 }
+\arguments{
+\item{results}{Results from parameter sweep}
+
+\item{cap_cases}{The cumulative number of cases at which the branching process was terminated}
+
+\item{extinct_thresold}{Threshold to show boxplots when extinction probability is above}
+}
 \value{
 
 }
 \description{
 Plot maximum weekly cases in extinct outbreaks
+}
+\examples{
+
+}
+\author{
+Sam Abbott
 }

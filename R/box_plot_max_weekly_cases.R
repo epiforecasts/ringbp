@@ -1,4 +1,16 @@
-
+#' Plot boxplots of weekly cases during outbreak
+#' @author Amy Gimma
+#' @param results Results of parameter sweep
+#' @param cap_cases The cumulative number of cases at which the branching process was terminated
+#' @param extinct_thresold Threshold to show boxplots when extinction probability is above
+#' @param filt_control_effectiveness Cuts off minimum control effectiveness
+#' @param flip_coords Binary variable to flip coordinates
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 box_plot_max_weekly_cases <- function(results = NULL,
                                       cap_cases = 5000,
                                       extinct_thresold = 0.5,

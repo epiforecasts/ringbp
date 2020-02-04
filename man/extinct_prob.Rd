@@ -6,11 +6,19 @@
 \usage{
 extinct_prob(outbreak_df_week, cap_cases)
 }
+\arguments{
+\item{outbreak_df_week}{A tibble of weekly cases producted by the outbreak model}
+
+\item{cap_cases}{The cumulative number of cases at which the branching process was terminated}
+}
 \value{
 
 }
 \description{
 Calculate proportion of runs that have controlled outbreak
+}
+\examples{
+
 }
 \author{
 Joel Hellewell

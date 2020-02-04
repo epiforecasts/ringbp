@@ -1,12 +1,13 @@
 #' Plot maximum weekly cases in extinct outbreaks
-#'
-#' @param results
-#' @param cap_cases
-#' @param extinct_thresold
+#' @author Sam Abbott
+#' @param results Results from parameter sweep
+#' @param cap_cases The cumulative number of cases at which the branching process was terminated
+#' @param extinct_thresold Threshold to show boxplots when extinction probability is above
 #' @return
 #' @export
 #'
 #' @examples
+#'
 #' @importFrom dplyr group_by mutate ungroup filter left_join summarise select
 #' @importFrom tidyr unnest
 #' @importFrom ggplot2 ggplot aes guide_colorbar guides theme labs theme_bw

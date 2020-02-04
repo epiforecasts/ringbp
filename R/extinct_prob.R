@@ -5,6 +5,7 @@
 #' @export
 #' @inheritParams detect_extinct
 #' @examples
+#'
 extinct_prob <- function(outbreak_df_week,cap_cases){
   n.sim = max(outbreak_df_week$sim)
   out <- outbreak_df_week %>%

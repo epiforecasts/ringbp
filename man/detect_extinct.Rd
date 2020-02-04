@@ -2,16 +2,24 @@
 % Please edit documentation in R/detect_extinct.R
 \name{detect_extinct}
 \alias{detect_extinct}
-\title{Detect if a simulation is extinct}
+\title{Calculate proportion of outbreaks that went extinct}
 \usage{
 detect_extinct(outbreak_df_week, cap_cases)
+}
+\arguments{
+\item{outbreak_df_week}{A tibble of weekly cases producted by the outbreak model}
+
+\item{cap_cases}{The cumulative number of cases at which the branching process was terminated}
 }
 \value{
 
 }
 \description{
-Detect if a simulation is extinct
+Calculate proportion of outbreaks that went extinct
+}
+\examples{
+
 }
 \author{
-Sam Abbott
+Joel Hellewell
 }
