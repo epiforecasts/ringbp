@@ -2,7 +2,7 @@
 % Please edit documentation in R/branch_setup.R
 \name{branch_setup}
 \alias{branch_setup}
-\title{Title}
+\title{Set up the initial cases in the branching process}
 \usage{
 branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
 }
@@ -13,5 +13,8 @@ branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
 
 }
 \description{
-Title
+Set up the initial cases in the branching process
+}
+\author{
+Joel Hellewell
 }

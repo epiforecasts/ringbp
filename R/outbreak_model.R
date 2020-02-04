@@ -80,7 +80,7 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
                                                 cumulative = rep(outbreak_max,(max_week-outbreak_length))))
   }else{
     # chop weekly cases down to size required for wuhan_sim to bind rows
-    weekly_cases <- weekly_cases[,week <= max_week]
+    weekly_cases <- weekly_cases[week <= max_week]
   }
 
   return(weekly_cases)

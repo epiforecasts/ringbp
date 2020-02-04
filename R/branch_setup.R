@@ -1,5 +1,6 @@
-
-#' Title
+#' Set up the initial cases in the branching process
+#'
+#' @author Joel Hellewell
 #'
 #' @param num.initial.cases
 #' @param num.initial.clusters
