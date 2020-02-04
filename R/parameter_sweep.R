@@ -10,7 +10,7 @@
 #' @param sim_fn Function, defaults to NULL. The vectorised model simulation function - see the examples
 #' for usage.
 #' @param show_progress Logical, defaults to `TRUE`. Show the progress of the parameter sweep.
-#'
+#' @author Sam Abbott
 #'
 #' @return A nested tibble containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
@@ -18,6 +18,7 @@
 #' @importFrom dplyr group_by mutate ungroup sample_frac
 #' @importFrom tidyr nest unnest
 #' @importFrom furrr future_map
+#' @importFrom purrr safely
 #' @examples
 #'
 #' library(ringbp)
@@ -69,22 +70,24 @@
 parameter_sweep <- function(scenarios = NULL, samples = 1,
                             sim_fn = NULL, show_progress = TRUE){
 
+  safe_sim_fn <- purrr::safely(sim_fn)
+
   scenario_sims <- scenarios %>%
     dplyr::group_by(scenario) %>%
     tidyr::nest() %>%
     dplyr::ungroup() %>%
     ##Randomise the order of scenarios - helps share the load across cores
-    dplyr::sample_frac(size = 1, replace = FALSE) %>%
+    # dplyr::sample_frac(size = 1, replace = FALSE) %>%
     dplyr::mutate(sims = furrr::future_map(
       data,
-      ~ sim_fn(n.sim = samples,
+      ~ safe_sim_fn(n.sim = samples,
                num.initial.clusters = .$num.initial.clusters,
                r0community = .$index_R0,
                k = .$k,
                delay_shape = .$delay_shape,
                delay_scale = .$delay_scale,
                prop.ascertain = .$control_effectiveness
-      ),
+      )[[1]],
       .progress = show_progress
     )) %>%
     tidyr::unnest(cols = "data")

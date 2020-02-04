@@ -48,5 +48,4 @@ mvt_plot <- function(){
 
   ( p4 + p1 + p2 + p3) + patchwork::guide_area() +  plot_layout(design=layout,guides="collect")
 
-
 }

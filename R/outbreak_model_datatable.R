@@ -44,7 +44,7 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
   # Model loop
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
-    case_data <- branch_step(case_data=case_data,
+    case_data <- branch_step_single(case_data=case_data,
                              total.clusters = total.clusters,
                              total.cases = total.cases,
                              extinct = extinct,
@@ -55,7 +55,7 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
                              incfn = incfn,
                              delayfn = delayfn,
                              prop.ascertain = prop.ascertain,
-                             k = k)
+                             k = k,quarantine = FALSE)
 
     total.cases <- nrow(case_data)
     total.clusters <- max(case_data$cluster)
@@ -64,11 +64,10 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
   }
 
   # Prepare output
-  weekly_cases <- case_data[,week := floor(onset / 7),
-                            ][, .(weekly_cases = .N),by=week
-                              ][order(week)
-                                ][,cumulative:=cumsum(weekly_cases)]
-
+  weekly_cases <- case_data[,week := floor(onset / 7)][, .(weekly_cases = .N),by=week]
+  # print(weekly_cases)
+  weekly_cases <- weekly_cases[order(week)][,cumulative := cumsum(weekly_cases)]
+  # print(weekly_cases)
   max_week <- floor(cap_max_days/7)
   outbreak_length <- nrow(weekly_cases)
   outbreak_max <- max(weekly_cases$cumulative)
@@ -81,7 +80,7 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
                                                 cumulative = rep(outbreak_max,(max_week-outbreak_length))))
   }else{
     # chop weekly cases down to size required for wuhan_sim to bind rows
-    weekly_cases <- weekly_cases[1:max_week,]
+    weekly_cases <- weekly_cases[,week <= max_week]
   }
 
   return(weekly_cases)

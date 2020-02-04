@@ -5,12 +5,8 @@
 \title{Title}
 \usage{
 branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
-}
 \arguments{
 \item{delayfn}{}
-}
-\value{
-
 }
 \description{
 Title

@@ -11,7 +11,8 @@
 #' @importFrom tidyr unnest
 #' @importFrom ggplot2 ggplot aes guide_colorbar guides theme labs theme_bw
 #'
-plot_max_weekly_cases <- function(results = NULL, cap_cases = 5000, extinct_thresold = 0.5) {
+plot_max_weekly_cases <- function(results = NULL, cap_cases = 5000, extinct_thresold = 0.5,
+                                  low_color = "white", high_color = "#0072b2") {
 
 
 # Pull out max weekly cases and total_cases from
@@ -44,7 +45,7 @@ filt_results <- results %>%
 ## make plot
 plot <- filt_results %>%
   dplyr::filter(control_effectiveness >= 0.8) %>%
-  dplyr::filter(latent %in% c("short", "medium")) %>%
+  dplyr::filter(theta %in% c("15%")) %>%
   dplyr::group_by(scenario) %>%
   dplyr::filter(max_weekly_cases > quantile(max_weekly_cases, 0.025),
                 max_weekly_cases < quantile(max_weekly_cases, 0.975)) %>%
@@ -65,12 +66,11 @@ plot <- filt_results %>%
   ggplot2::facet_grid(rows = ggplot2::vars(latent),
                       cols = ggplot2::vars(control_effectiveness),
                       labeller = ggplot2::label_parsed) +
-  ggplot2::scale_fill_continuous(type = "viridis", direction = -1, option = "plasma") +
   ggplot2::theme_bw() +
   ggplot2::labs(x = "Maximum weekly cases",
                 y = "Proportion of infected contacts ascertained by contact tracing") +
   ggplot2::theme(legend.position = "bottom") +
-  ggplot2::guides(fill = ggplot2::guide_colorbar(title = ""))
+  scale_fill_gradient(low = low_color, high = high_color, guide="none")
 
 return(plot)
 }

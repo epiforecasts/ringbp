@@ -4,17 +4,8 @@
 \alias{secondary_draw}
 \title{Draw secondary cases from cases in a cluster}
 \usage{
-secondary_draw(
-  index_case,
-  r0isolated,
-  r0community,
-  disp.iso,
-  disp.com,
-  prop.ascertain,
-  incubfn,
-  infecfn,
-  delayfn
-)
+secondary_draw(index_case, r0isolated, r0community, disp.iso, disp.com,
+  prop.ascertain, incubfn, infecfn, delayfn)
 }
 \arguments{
 \item{index_case}{data from of cases within cluster}
@@ -34,9 +25,6 @@ secondary_draw(
 \item{infecfn}{function to sample from infectiousness distribution}
 
 \item{delayfn}{function to sample from distribution for delay from symptom onset to isolation}
-}
-\value{
-
 }
 \description{
 Draw secondary cases from cases in a cluster

@@ -17,6 +17,7 @@
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
 #' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #'
+#' @importFrom purrr safely
 #' @return
 #' @export
 #'

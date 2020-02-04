@@ -6,9 +6,6 @@
 \usage{
 detect_extinct(outbreak_df_week, cap_cases)
 }
-\value{
-
-}
 \description{
 Detect if a simulation is extinct
 }
