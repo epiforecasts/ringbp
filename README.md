@@ -1,15 +1,5 @@
 # Wuhan novel coronavirus analysis
 
-## Master to-do list
-- [ ] Work out how changes in the value of `k`, the correlation between serial interval and incubation period, change model runs.
-- [ ] Produce new graphs, descriptions of each in comments in the google doc
-- [ ] Write up results
-- [ ] Send round nCov working group
-- [ ] Pre-print first draft
-
-This outbreak contains code sent over by Adam and Alicia for branching process simulation from *Effectiveness of Ring Vaccination as a Control Strategy for Ebola Virus Disease* by Kucharski et al (2016):
-https://wwwnc.cdc.gov/eid/article/22/1/15-1410_article
-
 ## Summary report
 https://docs.google.com/document/d/1JXZ2hG8YQEWC7CufQuIyr5WE4ymz3io4_n_CQdfyRaQ/edit?invite=CJKy66IK&ts=5e2b3ea3
 
@@ -38,55 +28,6 @@ ggplot(data=res, aes(x=week, y=cumulative, col=as.factor(sim)))+
 extinct_prob(res,cap_cases = 4500)
 
 ```
-
-## Table of parameters from branching process
-
-Parameters passed to `wuhan_sim` function, **bold = unsure** :
-
-| Parameter name | Parameter explanation | Canonical value |
-| -------------- | --------------------- | ------------------------- |
-| `initial.cases.pcluster` | Initial cases per ring (in ring = treatment) | Yes |
-| `initial.clusters` | Initial number of different case clusters | Yes |
-| `prop.ascertain` | proportion of cases identified | Varies |
-| `cap_cases` | Limits the number of cases in simulation | 5000 |
-| `cap_max_days` | Limits days since start of outbreak in simulation | 350 |
-| `r0isolated` | R0 for isolated cases | 0 |
-| `r0community` | R0 for missed (i.e. index cases) | Varies |
-| `overkkmiss` | Dispersion of negative binomial for missed cases | 0.16 |
-| `overkk` | Dispersion of negative binomial for isolated cases | 0.01 |
-| `mu_ip` | mean of multivariate normal distribution for incubation period | **7** |
-| `sd_ip` | standard deviation of multivariate normal distribution for incubation period | **5** |
-| `inf_mean` | mean of multivariate normal distribution for pre-infectious period | Varies |
-| `inf_var` | standard deviation of multivariate normal distribution for pre-infectious period | **5** |
-| `delay_mean` | mean of distribution for delay from symptom onset to isolation | Varies |
-| `delay_var` | variance of distribution for delay from symptom onset to isolation | 1.5 |
-
-
-
-## Table of parameters that are changed across scenarios
-
-### Theta varies scenario
-
-| param | SARS | middle | flu |
-| ------- | ------- | ------ | ---- |
-| `inf_mean` | 9 | 5 | 2 |
-| `overkkmiss` | 0.16 | 0.5 | 1 |
-
-### R0 varies scenario
-| param | lower | middle | upper |
-| ------- | ------- | ------ | ---- |
-| `r0community` | 1.5 | 2.5 | 3.5 |
-
-### Delay distribution mean scenario
-| param | lower | middle | upper |
-| ------- | ------- | ------ | ---- |
-| `delay_mean` | 3 | 5 | 7 |
-
-### Contact tracing effectiveness scenario
-| param | lower | middle | upper |
-| ------- | ------- | ------ | ---- |
-| `prop_ascertain` | 0 | to | 1 |
-
 
 ## Docker 
 
