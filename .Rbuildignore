@@ -3,3 +3,4 @@
 ^inst/scripts$
 ^Dockerfile$
 ^data-raw$
+^LICENSE\.md$
