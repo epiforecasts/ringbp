@@ -63,25 +63,22 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
     extinct <- all(case_data$isolated)
   }
 
-  # Prepare output
-  weekly_cases <- case_data[,week := floor(onset / 7)][, .(weekly_cases = .N),by=week]
-  # print(weekly_cases)
-  weekly_cases <- weekly_cases[order(week)][,cumulative := cumsum(weekly_cases)]
-  # print(weekly_cases)
+  # Prepare output, group into weeks
+  weekly_cases <- case_data[,week := floor(onset / 7)
+                            ][, .(weekly_cases = .N),by=week
+                              ]
+  # maximum outbreak week
   max_week <- floor(cap_max_days/7)
-  outbreak_length <- nrow(weekly_cases)
-  outbreak_max <- max(weekly_cases$cumulative)
-
-  if(max_week > nrow(weekly_cases)){
-    # Adds on extra weeks of 0 weekly cases and same cumulative cases until end of specified maximum time period
-    weekly_cases <- dplyr::bind_rows(weekly_cases,
-                                     data.frame(week = ((outbreak_length+1):max_week),
-                                                weekly_cases = rep(0,(max_week-outbreak_length)),
-                                                cumulative = rep(outbreak_max,(max_week-outbreak_length))))
-  }else{
-    # chop weekly cases down to size required for wuhan_sim to bind rows
-    weekly_cases <- weekly_cases[week <= max_week]
+  # weeks with 0 cases in 0:max_week
+  missing_weeks <- (0:max_week)[!(0:max_week %in% weekly_cases$week)]
+  # add in missing weeks if any are missing
+  if(length(missing_weeks>0)){
+    weekly_cases <- rbindlist(list(weekly_cases,data.table(week=missing_weeks,weekly_cases=0)))
   }
-
+  # order and sum up
+  weekly_cases <- weekly_cases[order(week)][,cumulative := cumsum(weekly_cases)]
+  # cut at max_week
+  weekly_cases <- weekly_cases[week <= max_week]
+  # return
   return(weekly_cases)
 }

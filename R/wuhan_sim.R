@@ -45,8 +45,8 @@ wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
 
   # bind output together and add simulation index
   res <- data.table::rbindlist(res)
-  res[,sim := rep(1:n.sim,rep(floor(cap_max_days/7),n.sim)),]
-
+  res[,sim := rep(1:n.sim,rep(floor(cap_max_days/7)+1,n.sim)),]
+  return(res)
 }
 
 
