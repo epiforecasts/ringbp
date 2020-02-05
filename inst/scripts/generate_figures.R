@@ -11,7 +11,7 @@ library(ringbp)
 
 ringbp::mvt_plot()
 
-ggplot2::ggsave("inst/plots/fig_2.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/fig_2.png", height = 8, width = 16)
 
 # Load in results  -------------------------------------------------------
 
@@ -48,7 +48,7 @@ make_figure_3 <- function(theta_value = "15%"){
 
 make_figure_3()
 
-ggplot2::ggsave("inst/plots/fig_3.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/fig_3.png", height = 8, width = 12)
 
 
 # Figure 4 ----------------------------------------------------------------
@@ -77,7 +77,7 @@ make_figure_4 <- function(initial_cases = 40) {
 
 make_figure_4()
 
-ggplot2::ggsave("inst/plots/fig_4.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/fig_4.png", height = 8, width = 12)
 
 
 
@@ -87,7 +87,7 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/fig_5.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/fig_5.png", height = 8, width = 12)
 
 
 # Supplementary figures ---------------------------------------------------
@@ -96,22 +96,22 @@ ggplot2::ggsave("inst/plots/fig_5.png", height = 8, width = 8)
 
 make_figure_3(theta_value = "<1%")
 
-ggplot2::ggsave("inst/plots/S_fig_1_A.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_1_A.png", height = 8, width = 12)
 
 make_figure_3(theta_value = "30%")
 
-ggplot2::ggsave("inst/plots/S_fig_1_B.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_1_B.png", height = 8, width = 12)
 
 
 ## S2 A and B
 
 make_figure_4(initial_cases = 5)
 
-ggplot2::ggsave("inst/plots/S_fig_2_A.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_2_A.png", height = 8, width = 12)
 
 make_figure_4(initial_cases = 20)
 
-ggplot2::ggsave("inst/plots/S_fig_2_B.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_2_B.png", height = 8, width = 12)
 
 ## S3 A and B
 
@@ -119,14 +119,14 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 5, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 8, width = 12)
 
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 12)
 
 ## S4
 

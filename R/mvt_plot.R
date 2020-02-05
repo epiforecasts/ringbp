@@ -34,7 +34,8 @@ mvt_plot <- function(){
   p2 <- data.frame(x=seq(0,15,0.1),y=dweibull(x=seq(0,15,0.1),shape = 2.322737,scale = 6.492272)) %>% ggplot(aes(x=x,y=y)) + geom_line() +
     xlab("") + ylab("") + theme_bw() + geom_vline(xintercept=5.8,lty=2) + coord_cartesian(xlim=c(0,13)) +
     theme(axis.title=element_blank(),plot.title = element_text(hjust = 0.5),
-          axis.text=element_blank(),axis.ticks.y=element_blank()) + ggtitle("Incubation Period")
+          axis.text=element_blank(),axis.ticks.y=element_blank()) + ggtitle("Incubation Period") +
+    labs(tag = "B")
 
   p3 <- tab %>% ggplot(aes(x=si,fill=as.factor(skew))) + geom_density(alpha=0.4) + theme_bw() + coord_flip(xlim=c(0,16)) +
     theme(axis.title.x=element_blank(),axis.title.y=element_text(size=14),
@@ -42,15 +43,24 @@ mvt_plot <- function(){
     scale_x_continuous(position="left") + xlab("Serial Interval") + scale_fill_colorblind(name="Skew parameter",guide="none") +
     geom_vline(data=tab2,aes(xintercept=mean,col=as.factor(skew)),lty=2) + scale_color_colorblind(guide="none")
 
-  p4 <- delay_plot() + theme(plot.title = element_text(hjust = 0.5)) + ggtitle("Delay from onset to isolation")
+  p4 <- delay_plot() +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    ggtitle("Delay from onset to isolation") +
+    labs(tag = "A")
 
+  layout_1 <- "CCC#
+               BBBD
+               BBBD
+               BBBD"
 
-  layout <- "AAAACCC#
-             AAAABBBD
-             AAAABBBD
-             AAAABBBD
-             EEEEEEEE"
+  p5 <- p1 + p2 + p3 + plot_layout(design = layout_1)
 
-  ( p4 + p1 + p2 + p3) + patchwork::guide_area() +  plot_layout(design=layout,guides="collect")
+  layout_2 <- "AAAA#BBBB
+               AAAA#BBBB
+               AAAA#BBBB
+               AAAA#BBBB"
+
+  p4 + p5 +
+    plot_layout(tag_level = "keep", design = layout_2)
 
 }
