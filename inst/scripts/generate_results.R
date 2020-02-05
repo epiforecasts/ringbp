@@ -1,5 +1,3 @@
-library(tidyverse)
-library(ringbp)
 
 # Make the log file
 logs <- file.path("log.txt")
@@ -46,7 +44,7 @@ future::plan("multiprocess")
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 2000)
 
-saveRDS(sweep_results,file = "sweep_results.RDS")
+saveRDS(sweep_results,file = "data-raw/res.rds")
 
 sink(type = "message")
 sink()

@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^inst/scripts$
 ^Dockerfile$
+^data-raw$
