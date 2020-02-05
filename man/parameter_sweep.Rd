@@ -33,7 +33,10 @@ outside of the function.
 }
 \examples{
 
+
+\dontrun{
 library(ringbp)
+library(tibble)
 
 scenarios <- tidyr::expand_grid(
 ## Put parameters that are grouped by disease into this data.frame
@@ -54,7 +57,7 @@ num.initial.clusters = c(5,20,40)) \%>\%
  dplyr::mutate(scenario = 1:dplyr::n())
 
 ## Parameterise fixed paramters
-sim_with_params <- purrr::partial(ringbp::wuhan_sim,
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                  num.initial.cases=1,
                                  cap_max_days = 365,
                                  cap_cases = 5000,
@@ -63,8 +66,8 @@ sim_with_params <- purrr::partial(ringbp::wuhan_sim,
                                  disp.com = 0.16,
                                  mu_ip = 5.8, # incubation period mean
                                  sd_ip = 2.6, # incubation period sd
-                                                                  mu_si = 7.5, # serial interval mean
-                                                                  sd_si = 3.4) # serial interval sd
+                                 mu_si = 7.5, # serial interval mean
+                                 sd_si = 3.4) # serial interval sd
 
 
 ## Default is to run sequntially on a single core
@@ -79,6 +82,7 @@ sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, sa
 
 
 sweep_results
+}
 }
 \author{
 Sam Abbott

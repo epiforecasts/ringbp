@@ -18,3 +18,6 @@ Rename variables for plotting
 \examples{
 
 }
+\author{
+Sam Abbott
+}

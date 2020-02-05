@@ -1,15 +1,21 @@
 Package: ringbp
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts
 Version: 0.1.0
 Authors@R: c(
     person(given = "Joel Hellewell",
            role = c("aut", "cre"),
            email = "Joel.Hellewell@lshtm.ac.uk",
-           comment = c(ORCID = "0000-0003-2683-0849")))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+           comment = c(ORCID = "0000-0003-2683-0849")),
+    person(given = "Sam Abbott",
+           role = c("aut"),
+           email = "contact@samabbott.co.uk",
+           comment = c(ORCID = "0000-0001-8057-8037")),
+    person("Amy", "Gimma", 
+           email = "amy.gimma@lshtm.ac.uk", 
+           role = c("aut")))
+Description: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

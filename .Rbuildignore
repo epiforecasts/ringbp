@@ -1,3 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^inst/scripts$
+^Dockerfile$
+^data-raw$
+^LICENSE\.md$
+^inst$
+^\.travis\.yml$

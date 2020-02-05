@@ -1,5 +1,3 @@
-library(tidyverse)
-library(ringbp)
 
 # Make the log file
 logs <- file.path("log.txt")
@@ -27,7 +25,7 @@ scenarios <- tidyr::expand_grid(
   dplyr::mutate(scenario = 1:dplyr::n())
 
 ## Parameterise fixed paramters
-sim_with_params <- purrr::partial(ringbp::wuhan_sim,
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   num.initial.cases=1,
                                   cap_max_days = 365,
                                   cap_cases = 5000,
@@ -46,7 +44,7 @@ future::plan("multiprocess")
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 2000)
 
-saveRDS(sweep_results,file = "sweep_results.RDS")
+saveRDS(sweep_results,file = "data-raw/res.rds")
 
 sink(type = "message")
 sink()

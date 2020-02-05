@@ -23,7 +23,7 @@
 #'
 #' @examples
 #'
-wuhan_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
+scenario_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
                       r0community,disp.iso,disp.com,mu_ip,sd_ip,k,
                       mu_si,sd_si,delay_shape,delay_scale,num.initial.cases,
                       num.initial.clusters){

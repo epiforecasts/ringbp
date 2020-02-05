@@ -14,4 +14,7 @@ Multivariate plot
 }
 \examples{
 
+\dontrun{
+mvt_plot()
+}
 }

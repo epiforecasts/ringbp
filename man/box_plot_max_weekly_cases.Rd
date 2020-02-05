@@ -2,34 +2,45 @@
 % Please edit documentation in R/box_plot_max_weekly_cases.R
 \name{box_plot_max_weekly_cases}
 \alias{box_plot_max_weekly_cases}
-\title{Plot boxplots of weekly cases during outbreak}
+\title{Create box plots of maximum weekly cases by scenario}
 \usage{
 box_plot_max_weekly_cases(
   results = NULL,
   cap_cases = 5000,
-  extinct_thresold = 0.5,
+  extinct_thresold = 0.8,
+  theta_value = "15\%",
+  facet_scales = "fixed",
   filt_control_effectiveness = 0.4,
-  flip_coords = FALSE
+  flip_coords = FALSE,
+  num_initial_clusters = 40,
+  record_params = FALSE
 )
 }
 \arguments{
-\item{results}{Results of parameter sweep}
+\item{results}{results of the branching model in a data.frame or tibble}
 
-\item{cap_cases}{The cumulative number of cases at which the branching process was terminated}
+\item{cap_cases}{the maximimum number of cases per outbreak scenario; default is 5000}
 
-\item{extinct_thresold}{Threshold to show boxplots when extinction probability is above}
+\item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
+sypmtom onset.}
 
-\item{filt_control_effectiveness}{Cuts off minimum control effectiveness}
+\item{facet_scales}{passed to facet_grid’s scales parameter; default is "fixed"}
 
-\item{flip_coords}{Binary variable to flip coordinates}
-}
-\value{
+\item{filt_control_effectiveness}{filters by the minimum control effectiveness proportion; default is 0.4}
 
+\item{flip_coords}{flip coordinates of the box plot; default is FALSE}
+
+\item{num_initial_clusters}{filters by the number of initial clusters in the scenario; default is 40}
+
+\item{record_params}{option to display the params as a caption (used for testing); default FALSE}
+
+\item{extinct_threshold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
 }
 \description{
-Plot boxplots of weekly cases during outbreak
+Create box plots of maximum weekly cases by scenario
 }
 \examples{
+
 
 }
 \author{

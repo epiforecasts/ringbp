@@ -9,6 +9,9 @@
 #' @importFrom patchwork guide_area plot_layout
 #' @examples
 #'
+#'\dontrun{
+#'mvt_plot()
+#'}
 mvt_plot <- function(){
 
   tab <- data.frame(inc = rweibull(n = 200,shape = 2.322737,scale = 6.492272))
