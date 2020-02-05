@@ -13,7 +13,7 @@ ringbp::mvt_plot()
 
 ggplot2::ggsave("inst/plots/fig_2.png", height = 8, width = 8)
 
-# Munge code for fig 3 and 4 ----------------------------------------------
+# Load in results  -------------------------------------------------------
 
 sweep_results <- readRDS("data-raw/res.rds")
 

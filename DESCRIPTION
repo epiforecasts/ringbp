@@ -35,6 +35,7 @@ Imports:
     ggplot2,
     ggthemes,
     patchwork,
-    sn
+    sn,
+    ggrepel
 Suggests:
     future
