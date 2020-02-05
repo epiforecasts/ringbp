@@ -128,3 +128,8 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
 
 ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 8)
 
+## S4
+
+ringbp::serial_interval_plot()
+
+ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 8)
