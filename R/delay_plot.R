@@ -7,7 +7,8 @@
 #' @importFrom tidyr gather
 #' @importFrom magrittr %<>%
 #' @importFrom dplyr mutate
-#' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_discrete scale_fill_discrete
+#' @importFrom data.table data.table
+#' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer
 #' @examples
 #'
 delay_plot <- function(){
@@ -15,7 +16,7 @@ delay_plot <- function(){
   delay_sars <- function(x){dweibull(x,shape=1.651524,scale=4.287786)} # Weibull estimation of dgamma(x,shape=2.448898,rate = 0.639399)
   delay_wuhan <- function(x){dweibull(x,shape=2.305172,scale = 9.483875)}
 
-  out <- data.table(x=seq(0,15,0.01))
+  out <- data.table::data.table(x=seq(0,15,0.01))
   out[,`:=`(delay_wuhan=delay_wuhan(x),delay_sars=delay_sars(x)),]
   out %<>% tidyr::gather("dist","value",-x)
 
@@ -32,8 +33,8 @@ delay_plot <- function(){
     theme_bw() +
     theme(legend.position="bottom",axis.text = element_text(size=10),axis.title = element_text(size=12),
           legend.text = element_text(size=10)) +
-    xlab("Days since infection") + scale_fill_discrete(name="",labels=c("SARS outbreak 2003","Wuhan nCoV 2019")) +
-    ylab("Probability density") + scale_colour_discrete(guide="none") +
+    xlab("Days since infection") + scale_fill_brewer(name="",labels=c("SARS outbreak 2003","Wuhan nCoV 2019"),palette="Set1") +
+    ylab("Probability density") + scale_colour_brewer(guide="none",palette="Set1") +
     geom_vline(data=means,aes(xintercept=x,col=as.factor(dist)),lty=2,size=0.8)
 
 }
