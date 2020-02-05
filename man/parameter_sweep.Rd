@@ -54,7 +54,7 @@ num.initial.clusters = c(5,20,40)) \%>\%
  dplyr::mutate(scenario = 1:dplyr::n())
 
 ## Parameterise fixed paramters
-sim_with_params <- purrr::partial(ringbp::wuhan_sim,
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                  num.initial.cases=1,
                                  cap_max_days = 365,
                                  cap_cases = 5000,

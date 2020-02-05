@@ -30,7 +30,7 @@ Run a single scenario for a 100 simulations.
 library(ringbp)
 library(ggplot2)
 
-res <- ringbp::wuhan_sim(n.sim = 100,num.initial.cases = 1,num.initial.clusters = 10,
+res <- ringbp::scenario_sim(n.sim = 100,num.initial.cases = 1,num.initial.clusters = 10,
                  prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
                  r0isolated = 0, r0community = 2.5, disp.com = 0.16, disp.iso = 1,
                  mu_ip = 5.8, sd_ip = 2.6, mu_si = 7.5, sd_si = 3.4, delay_shape = 1.651524,

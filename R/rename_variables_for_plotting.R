@@ -5,6 +5,7 @@
 #' @return
 #' @export
 #' @importFrom dplyr mutate
+#' @author Sam Abbott
 #' @examples
 #'
 rename_variables_for_plotting <- function(df) {

@@ -14,4 +14,12 @@ Heatmap results
 }
 \examples{
 
+
+\dontrun{
+## Load results from package directory
+res <- readRDS("data-raw/res.rds")
+
+
+heatmap_results(res)
+}
 }
