@@ -49,7 +49,7 @@ make_figure_3 <- function(theta_value = "15%"){
 
 make_figure_3()
 
-ggplot2::ggsave("inst/plots/fig_3.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
 
 
 # Figure 4 ----------------------------------------------------------------

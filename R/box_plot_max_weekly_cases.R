@@ -72,7 +72,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggthemes::scale_color_colorblind() + # colorblind including black
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
-    ggplot2::labs(fill = "Proportion of infected contacts ascertained by contact tracing") +
+    ggplot2::labs(fill = "Percentage of contacts traced") +
     ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
     ggplot2::labs(y = "Maximum weekly cases",
                 x = "Proportion of infected contacts ascertained by contact tracing")
