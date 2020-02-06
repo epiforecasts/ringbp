@@ -24,7 +24,7 @@ mvt_plot <- function(){
 
   p1 <- tab %>% ggplot(aes(x=inc,y=si,col=as.factor(skew))) + geom_point() +
     geom_abline(slope=1,intercept=0) + coord_cartesian(ylim=c(0,16),xlim=c(0,13)) +
-    scale_color_colorblind(name="Percentage of transmission before symptom onset",labels=c("35%","12%")) + theme_bw() +
+    scale_color_colorblind(name="Proportion of transmission \n before symptom onset",labels=c("35%","12%")) + theme_bw() +
     coord_cartesian(xlim=c(0,13),ylim=c(0,16)) + theme(legend.position="bottom",axis.title=element_blank()) +
     scale_x_continuous(position="top") +
     scale_y_continuous(position="right") +
