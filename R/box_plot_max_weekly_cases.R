@@ -82,8 +82,8 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggplot2::scale_y_continuous(breaks = seq(0,1000,25)) +
     ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"%")) +
     ggplot2::theme_bw() +
-    ggplot2::theme(legend.position = "bottom", plot.title = ggplot2::element_text(hjust = 0.5)) +
-    ggplot2::labs(fill = "Proportion of infected contacts ascertained by contact tracing") +
+    ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
+    ggplot2::labs(fill = "Percentage of contacts traced") +
     ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
     ggplot2::labs(y = "Maximum weekly cases",
                 x = "Proportion of infected contacts ascertained by contact tracing")
