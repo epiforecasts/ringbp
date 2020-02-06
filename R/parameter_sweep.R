@@ -85,12 +85,13 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     dplyr::mutate(sims = furrr::future_map(
       data,
       ~ safe_sim_fn(n.sim = samples,
-               num.initial.clusters = .$num.initial.clusters,
+               num.initial.cases = .$num.initial.cases,
                r0community = .$index_R0,
                k = .$k,
                delay_shape = .$delay_shape,
                delay_scale = .$delay_scale,
-               prop.ascertain = .$control_effectiveness
+               prop.ascertain = .$control_effectiveness,
+               prop.asym = .$prop.asym
       )[[1]],
       .progress = show_progress
     )) %>%
