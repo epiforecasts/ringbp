@@ -11,10 +11,8 @@
 rename_variables_for_plotting <- function(df) {
 
   df %>%
-    dplyr::mutate(delay=factor(delay, levels=c("Best case","SARS","Wuhan"),
-                        labels= c(expression(paste("Best case delay from onset to isolation (mean = 2 days)")),
-                                  expression(paste("Short delay")),
-                                  expression(paste("Long delay"))))) %>%
+    dplyr::mutate(delay=factor(delay, levels=c("SARS","Wuhan"),
+                        labels= c("Short delay","Long delay"))) %>%
     dplyr::mutate(index_R0 = index_R0 %>%
                     paste0("R0 = ", .))
 }

@@ -11,7 +11,7 @@ library(ringbp)
 
 ringbp::mvt_plot()
 
-ggplot2::ggsave("inst/plots/fig_2.png", height = 8, width = 16)
+ggplot2::ggsave("inst/plots/fig_2.png", height = 7, width = 16)
 
 # Load in results  -------------------------------------------------------
 
@@ -79,7 +79,7 @@ make_figure_4 <- function(initial_cases = 20) {
 
 make_figure_4()
 
-ggplot2::ggsave("inst/plots/fig_4.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/fig_4.png", height = 5, width = 12)
 
 
 
