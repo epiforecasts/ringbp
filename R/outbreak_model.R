@@ -1,7 +1,6 @@
 #' Run branching process
 #' @author Joel Hellewell
-#' @param num.initial.cases Initial number of cases in each initial cluster
-#' @param num.initial.clusters Number of initial clusters
+#' @param num.initial.cases Initial number of cases
 #' @param prop.ascertain Probability that cases are ascertained by contact tracing
 #' @param cap_max_days Maximum number of days to run process for
 #' @param cap_cases Maximum number of cases to run process for
