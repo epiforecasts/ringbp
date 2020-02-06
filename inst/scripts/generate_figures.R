@@ -86,23 +86,39 @@ ggplot2::ggsave("inst/plots/fig_4.png", height = 5, width = 12)
 # Figure 5 ----------------------------------------------------------------
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/fig_5.png", height = 6.5, width = 12)
+ggplot2::ggsave("inst/plots/fig_5.png", height = 7, width = 12)
 
 
 # Supplementary figures ---------------------------------------------------
 
 ## S1 A and B
 
-make_figure_3(theta_value = "<1%")
+make_figure_S1 <- function(){
+  res %>%
+    dplyr::mutate(num.initial.clusters = factor(num.initial.clusters,levels=c(5,20,40),
+                                                labels = c("5 cases","20 cases","40 cases"))) %>%
+    dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
+                                    labels = c("R0 = 1.5","R0 = 2.5","R0 = 3.5"))) %>%
+    dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
+    ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(delay))) +
+    ggplot2::geom_line(aes(linetype=theta)) +
+    ggplot2::geom_point() +
+    ggplot2::facet_grid(num.initial.clusters~ index_R0) +
+    ggplot2::scale_color_brewer(palette = "Set1",name="Delay from onset\n to hospitalisation") +
+    ggplot2::theme_bw() +
+    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
+    ggplot2::xlab("Percentage of contacts traced") +
+    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
+    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
+    ggplot2::scale_linetype_discrete(name="Percentage of\npre-symptomatic\ntranmission")
+}
 
-ggplot2::ggsave("inst/plots/S_fig_1_A.png", height = 8, width = 12)
+make_figure_S1()
 
-make_figure_3(theta_value = "30%")
-
-ggplot2::ggsave("inst/plots/S_fig_1_B.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_1.png", height = 8, width = 12)
 
 
 ## S2 A and B
@@ -125,7 +141,7 @@ ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 8, width = 12)
 
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
 ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 12)

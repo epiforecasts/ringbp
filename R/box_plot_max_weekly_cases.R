@@ -26,7 +26,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                       facet_scales = "fixed",
                                       filt_control_effectiveness = 0.4,
                                       flip_coords = FALSE,
-                                      num_initial_clusters = 40,
+                                      num_initial_clusters = 20,
                                       record_params = FALSE) {
   filt_results <- results %>%
     dplyr::group_by(scenario) %>%
