@@ -39,7 +39,7 @@ make_figure_3 <- function(theta_value = "15%"){
     ggplot2::facet_grid(num.initial.clusters~ index_R0) +
     ggplot2::scale_color_brewer(palette = "Set1",name="Delay from onset\n to hospitalisation") +
     ggplot2::theme_bw() +
-    ggplot2::ylab("Percentage of outbreaks controlled") +
+    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
     ggplot2::xlab("Percentage of contacts traced") +
     ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
     ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20)))
@@ -68,7 +68,7 @@ make_figure_4 <- function(initial_cases = 20) {
     ggplot2::facet_grid(delay ~ theta) +
     ggplot2::scale_color_brewer(palette = "Dark2",name="Reproduction number") +
     ggplot2::theme_bw() +
-    ggplot2::ylab("Percentage of outbreaks controlled") +
+    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
     ggplot2::xlab("Percentage of contacts traced") +
     ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
     ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20)))
