@@ -89,7 +89,7 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/fig_5.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/fig_5.png", height = 6.5, width = 12)
 
 
 # Supplementary figures ---------------------------------------------------
