@@ -86,7 +86,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggplot2::labs(fill = "Percentage of contacts traced") +
     ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
     ggplot2::labs(y = "Maximum weekly cases",
-                x = "Percentage of contacts")
+                x = "Percentage of contacts traced")
   if (flip_coords) {
     plot <- plot + ggplot2::coord_flip()
   }
