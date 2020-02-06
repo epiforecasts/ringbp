@@ -28,6 +28,8 @@ res <- sweep_results %>%
 make_figure_3 <- function(theta_value = "15%"){
   res %>%
     dplyr::filter(theta==theta_value) %>%
+    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
+                                 labels = c("Short delay", "Long delay"))) %>%
     dplyr::mutate(num.initial.clusters = factor(num.initial.clusters,levels=c(5,20,40),
                                                 labels = c("5 cases","20 cases","40 cases"))) %>%
     dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
@@ -38,10 +40,10 @@ make_figure_3 <- function(theta_value = "15%"){
     ggplot2::facet_grid(num.initial.clusters~ index_R0) +
     ggplot2::scale_color_brewer(palette = "Set1",name="Delay from onset\n to hospitalisation") +
     ggplot2::theme_bw() +
-    ggplot2::ylab("Proportion of outbreak simulations that were extinct \n within 3 months of initial exposure") +
-    ggplot2::xlab("Proportion of reported contacts ascertained through contact tracing") +
-    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"%")) +
-    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"%"))
+    ggplot2::ylab("Percentage of outbreak simulations that were extinct \n within 3 months of initial exposure") +
+    ggplot2::xlab("Percentage of reported contacts ascertained through contact tracing") +
+    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"")) +
+    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),""))
 
 
 }
@@ -56,8 +58,8 @@ ggplot2::ggsave("inst/plots/fig_3.png", height = 8, width = 12)
 make_figure_4 <- function(initial_cases = 40) {
   res %>%
     dplyr::filter(num.initial.clusters == initial_cases) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("Wuhan","SARS"),
-                                 labels = c("Wuhan delay","SARS delay"))) %>%
+    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
+                                 labels = c("Short delay", "Long delay"))) %>%
     dplyr::mutate(theta = factor(theta,levels = c("<1%","15%","30%"),
                                  labels = c("<1% transmission \n  before symptoms",
                                             "15% transmission \n  before symptoms",
@@ -68,10 +70,10 @@ make_figure_4 <- function(initial_cases = 40) {
     ggplot2::facet_grid(delay ~ theta) +
     ggplot2::scale_color_brewer(palette = "Dark2",name="Reproduction number") +
     ggplot2::theme_bw() +
-    ggplot2::ylab("Proportion of outbreak simulations that were extinct \n within 3 months of initial exposure") +
-    ggplot2::xlab("Proportion of reported contacts ascertained through contact tracing") +
-    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"%")) +
-    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"%"))
+    ggplot2::ylab("Percentage of outbreak simulations that were extinct \n within 3 months of initial exposure") +
+    ggplot2::xlab("Percentage of reported contacts ascertained through contact tracing") +
+    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),"")) +
+    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20),""))
 }
 
 
@@ -132,4 +134,4 @@ ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 12)
 
 ringbp::serial_interval_plot()
 
-ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 12)
