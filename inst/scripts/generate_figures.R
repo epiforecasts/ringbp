@@ -88,10 +88,10 @@ ggplot2::ggsave("inst/plots/fig_4.png", height = 8, width = 12)
 # Figure 5 ----------------------------------------------------------------
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/fig_5.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/fig_5.png", height = 5, width = 10)
 
 
 # Supplementary figures ---------------------------------------------------
@@ -123,14 +123,14 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 5, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 5, width = 10)
 
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 5, width = 10)
 
 ## S4
 
