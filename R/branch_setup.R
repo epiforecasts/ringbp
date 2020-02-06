@@ -22,7 +22,7 @@ branch_setup <- function(num.initial.cases,incfn,delayfn,k,prop.asym){
                           asym = purrr::rbernoulli(num.initial.cases, prop.asym),
                           caseid = 1:(num.initial.cases), # set case id
                           infector = 0,
-                          missed = FALSE,
+                          missed = TRUE,
                           onset = inc_samples)
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution

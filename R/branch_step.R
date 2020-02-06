@@ -32,6 +32,14 @@ branch_step_single <- function(case_data,total.cases,extinct,
     purrr::map_lgl(x, isTRUE)
   }
 
+  vect_max <- function(x,y) {
+    purrr::map2_dbl(x,y,max)
+  }
+
+  vect_min <- function(x,y) {
+    purrr::map2_dbl(x,y,min)
+  }
+
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[,new_cases := purrr::map2_dbl(
@@ -45,7 +53,7 @@ branch_step_single <- function(case_data,total.cases,extinct,
   total_new_cases <- case_data[,sum(new_cases),]
 
   # If no new cases drawn, outbreak is over so return case_data
-  if(nrow(new_case_data)==0){
+  if(total_new_cases==0){
     # new_cases removed so it can be sewn back on to other data.tables
     case_data[,new_cases:=NULL]
     # If everyone is isolated it means that either control has worked or everyone has had a chance to infect but didn't
@@ -68,7 +76,7 @@ branch_step_single <- function(case_data,total.cases,extinct,
     # draws a sample to see if this person is asymptomatic
     asym = purrr::rbernoulli(n = total_new_cases, p = prop.asym),
     # draws a sample to see if this person is traced
-    bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
+    missed = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE
@@ -78,13 +86,11 @@ branch_step_single <- function(case_data,total.cases,extinct,
 
   prob_samples <- prob_samples[exposure < infector_iso_time][, # filter out new cases prevented by isolation
                                              `:=`(# onset of new case is exposure + incubation period sample
-                                               onset = exposure + incubfn_sample,
-                                               # They are missed with probability 1-prob(detected by contact tracing)
-                                               missed = bernoulli_sample)]
+                                               onset = exposure + incubfn_sample)]
 
 
   # cases whose parents are asymptomatic are automatically missed
-  prob_samples$missed[prob_samples$infector_asym] <- TRUE
+  prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
 
   # If you are asymptomatic, your isolation time is Inf
   prob_samples[,isolated_time := ifelse(vect_isTRUE(asym),Inf,
@@ -92,12 +98,14 @@ branch_step_single <- function(case_data,total.cases,extinct,
                                         # you are isolated at your symptom onset
                                         ifelse(vect_isTRUE(missed),onset + delayfn(1),
                                                # If you are not asymptomatic and you are traced,
-                                               # you are isolated at max(onset,infector isolation time)
-                                               ifelse(isFALSE(quarantine),max(onset,infector_iso_time),infector_iso_time)))]
+                                               # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
+                                               ifelse(!vect_isTRUE(rep(quarantine,total_new_cases)),vect_min(onset + delayfn(1),
+                                                                                                             vect_max(onset,infector_iso_time)),
+                                                      infector_iso_time)))]
 
 
   # Chop out unneeded sample columns
-  prob_samples[,c("incubfn_sample","bernoulli_sample","infector_iso_time","infector_asym"):=NULL]
+  prob_samples[,c("incubfn_sample","infector_iso_time","infector_asym"):=NULL]
   # Set new case ids for new people
   prob_samples$caseid <- (nrow(case_data)+1):(nrow(case_data)+nrow(prob_samples))
 
