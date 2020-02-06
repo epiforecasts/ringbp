@@ -44,5 +44,5 @@ Create box plots of maximum weekly cases by scenario
 
 }
 \author{
-Amy Gimma
+Amy Gimma and Sam Abbott
 }

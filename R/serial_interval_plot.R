@@ -2,7 +2,10 @@
 #' @author Joel Hellewell
 #' @return
 #' @export
-#'
+#' @importFrom data.table data.table rbindlist
+#' @importFrom sn rsn
+#' @importFrom dplyr mutate group_by summarise
+#' @importFrom ggplot2 ggplot aes geom_density theme_bw geom_vline scale_x_continuous coord_cartesian xlab ylab scale_fill_discrete scale_color_discrete theme
 #' @examples
 #'
 serial_interval_plot <- function(){
@@ -29,10 +32,14 @@ serial_interval_plot <- function(){
 
   tab_sm <- tab %>% group_by(theta) %>% summarise(mean=mean(samp))
 
-  tab %>% ggplot(aes(x=samp,fill=as.factor(theta),col=as.factor(theta))) + geom_density(alpha=0.2) + theme_bw() +
+  tab %>% ggplot(aes(x=samp,fill=as.factor(theta),col=as.factor(theta))) +
+    geom_density(alpha=0.2) +
+    theme_bw() +
     geom_vline(data=tab_sm,aes(xintercept=mean,col=as.factor(theta)),lty=2) +
-    scale_x_continuous(breaks=seq(0,20,2)) + coord_cartesian(xlim=c(0,20)) +
-    xlab("Days since exposure") + ylab("Probability density") +
+    scale_x_continuous(breaks=seq(0,20,2)) +
+    coord_cartesian(xlim=c(0,20)) +
+    xlab("Days since exposure") +
+    ylab("Probability density") +
     scale_fill_discrete(name="Proportion of transmission that occurs before symptom onset") +
     scale_color_discrete(guide="none") +
     theme(legend.position = "bottom")
