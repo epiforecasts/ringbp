@@ -12,7 +12,7 @@ rename_variables_for_plotting <- function(df) {
 
   df %>%
     dplyr::mutate(delay=factor(delay, levels=c("SARS","Wuhan"),
-                        labels= c("Short delay","Long delay"))) %>%
+                        labels= c("Short isolation delay","Long isolation delay"))) %>%
     dplyr::mutate(index_R0 = index_R0 %>%
                     paste0("R0 = ", .))
 }
