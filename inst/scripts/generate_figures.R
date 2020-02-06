@@ -25,8 +25,8 @@ res <- sweep_results %>%
 
 # Figure 3 ----------------------------------------------------------------
 
-make_figure_3 <- function(theta_value = "15%"){
-  res %>%
+make_figure_3 <- function(df = NULL, theta_value = "15%"){
+  df %>%
     dplyr::filter(theta==theta_value) %>%
     dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
                                  labels = c("Short delay", "Long delay"))) %>%
@@ -34,7 +34,6 @@ make_figure_3 <- function(theta_value = "15%"){
                                                 labels = c("5 cases","20 cases","40 cases"))) %>%
     dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
                                     labels = c("R0 = 1.5","R0 = 2.5","R0 = 3.5"))) %>%
-    # dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
     ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(delay))) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
@@ -49,7 +48,7 @@ make_figure_3 <- function(theta_value = "15%"){
 
 }
 
-make_figure_3()
+make_figure_3(df = res)
 
 
 ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
@@ -58,8 +57,8 @@ ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
 
 # Figure 4 ----------------------------------------------------------------
 
-make_figure_4 <- function(initial_cases = 20) {
-  res %>%
+make_figure_4 <- function(df = NULL, initial_cases = 20) {
+  df %>%
     dplyr::filter(num.initial.clusters == initial_cases) %>%
     dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
                                  labels = c("Short delay", "Long delay"))) %>%
@@ -67,7 +66,6 @@ make_figure_4 <- function(initial_cases = 20) {
                                  labels = c("<1% transmission \n  before symptoms",
                                             "15% transmission \n  before symptoms",
                                             "30% transmission \n  before symptoms"))) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
     ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(index_R0))) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
@@ -81,7 +79,7 @@ make_figure_4 <- function(initial_cases = 20) {
 }
 
 
-make_figure_4()
+make_figure_4(df = res)
 
 ggplot2::ggsave("inst/plots/fig_4.png", height = 8, width = 12)
 
@@ -100,22 +98,22 @@ ggplot2::ggsave("inst/plots/fig_5.png", height = 5, width = 10)
 
 ## S1 A and B
 
-make_figure_3(theta_value = "<1%")
+make_figure_3(res = res, theta_value = "<1%")
 
 ggplot2::ggsave("inst/plots/S_fig_1_A.png", height = 8, width = 12)
 
-make_figure_3(theta_value = "30%")
+make_figure_3(res = res, theta_value = "30%")
 
 ggplot2::ggsave("inst/plots/S_fig_1_B.png", height = 8, width = 12)
 
 
 ## S2 A and B
 
-make_figure_4(initial_cases = 5)
+make_figure_4(res = res, initial_cases = 5)
 
 ggplot2::ggsave("inst/plots/S_fig_2_A.png", height = 8, width = 12)
 
-make_figure_4(initial_cases = 40)
+make_figure_4(res = res, initial_cases = 40)
 
 ggplot2::ggsave("inst/plots/S_fig_2_B.png", height = 8, width = 12)
 
@@ -139,3 +137,28 @@ ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 5, width = 10)
 ringbp::serial_interval_plot()
 
 ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 12)
+
+## Get data for supplement looking at flu like dispersion
+
+results_dispersion_flu <- readRDS("data-raw/res_dispersion_flu.rds")
+
+res_flu <- results_dispersion_flu  %>%
+  dplyr::group_by(scenario) %>%
+  dplyr::mutate(pext=extinct_prob(sims[[1]],cap_cases = 5000)) %>%
+  dplyr::ungroup(scenario)
+
+## S5
+
+make_figure_4(df = res_flu)
+
+ggplot2::ggsave("inst/plots/S_fig_5.png", height = 8, width = 12)
+
+
+## S6
+
+ringbp::box_plot_max_weekly_cases(results = results_dispersion_flu, cap_cases = 5000, extinct_thresold = 0.05,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
+                                  facet_scales = "fixed", record_params = F)
+
+ggplot2::ggsave("inst/plots/S_fig_6.png", height = 8, width = 12)
+
