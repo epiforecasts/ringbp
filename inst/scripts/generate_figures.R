@@ -34,7 +34,7 @@ make_figure_3 <- function(theta_value = "15%"){
                                                 labels = c("5 cases","20 cases","40 cases"))) %>%
     dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
                                     labels = c("R0 = 1.5","R0 = 2.5","R0 = 3.5"))) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
+    # dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
     ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(delay))) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
