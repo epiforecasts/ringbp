@@ -80,7 +80,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                       scales = facet_scales) +
     scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
     ggplot2::scale_y_continuous(breaks = seq(0,1000,25)) +
-    ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"%")) +
+    ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"")) +
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
     ggplot2::labs(fill = "Percentage of contacts traced") +
@@ -119,6 +119,6 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                 col='black', fill = "white",
                                 size=4,
                                 point.padding = NA)
-return(plot)
+  return(plot)
 }
 
