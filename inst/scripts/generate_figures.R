@@ -165,9 +165,13 @@ res_flu <- results_dispersion_flu  %>%
 
 ## S5
 
+dispersion_plot()
+
+ggplot2::ggsave("inst/plots/S_fig_5a.png", height = 4, width = 12)
+
 make_figure_4(df = res_flu)
 
-ggplot2::ggsave("inst/plots/S_fig_5.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_5b.png", height = 8, width = 12)
 
 
 ## S6
