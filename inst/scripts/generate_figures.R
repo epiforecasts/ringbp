@@ -28,6 +28,8 @@ res <- sweep_results %>%
 make_figure_3 <- function(theta_value = "15%"){
   res %>%
     dplyr::filter(theta==theta_value) %>%
+    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
+                                 labels = c("Short delay", "Long delay"))) %>%
     dplyr::mutate(num.initial.clusters = factor(num.initial.clusters,levels=c(5,20,40),
                                                 labels = c("5 cases","20 cases","40 cases"))) %>%
     dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
@@ -59,6 +61,8 @@ ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
 make_figure_4 <- function(initial_cases = 20) {
   res %>%
     dplyr::filter(num.initial.clusters == initial_cases) %>%
+    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
+                                 labels = c("Short delay", "Long delay"))) %>%
     dplyr::mutate(theta = factor(theta,levels = c("<1%","15%","30%"),
                                  labels = c("<1% transmission \n  before symptoms",
                                             "15% transmission \n  before symptoms",
@@ -134,4 +138,4 @@ ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 8, width = 12)
 
 ringbp::serial_interval_plot()
 
-ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 8)
+ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 12)
