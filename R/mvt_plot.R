@@ -55,10 +55,10 @@ mvt_plot <- function(){
 
   p5 <- p1 + p2 + p3 + plot_layout(design = layout_1)
 
-  layout_2 <- "AAAA#BBBB
-               AAAA#BBBB
-               AAAA#BBBB
-               AAAA#BBBB"
+  layout_2 <- "AAAABBBB
+               AAAABBBB
+               AAAABBBB
+               AAAABBBB"
 
   p4 + p5 +
     plot_layout(tag_level = "keep", design = layout_2)

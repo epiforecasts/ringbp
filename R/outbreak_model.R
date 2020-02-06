@@ -1,7 +1,6 @@
 #' Run branching process
 #' @author Joel Hellewell
-#' @param num.initial.cases Initial number of cases in each initial cluster
-#' @param num.initial.clusters Number of initial clusters
+#' @param num.initial.cases Initial number of cases
 #' @param prop.ascertain Probability that cases are ascertained by contact tracing
 #' @param cap_max_days Maximum number of days to run process for
 #' @param cap_cases Maximum number of cases to run process for
@@ -21,31 +20,30 @@
 #' @importFrom dplyr group_by mutate ungroup group_map summarise n
 #' @examples
 #'
-outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascertain,
+outbreak_model <- function(num.initial.cases, prop.ascertain,
                            cap_max_days, cap_cases, r0isolated, r0community, disp.iso, disp.com,
-                           k, delay_shape, delay_scale) {
+                           k, delay_shape, delay_scale, prop.asym) {
 
   # Set up functions to sample from distributions
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272) # incubation period sampling function
   delayfn <- dist_setup(delay_shape, delay_scale)
 
   # Set initial values for loop indices
-  total.clusters <- num.initial.clusters
-  total.cases <- num.initial.cases * num.initial.clusters
+  total.cases <- num.initial.cases
   latest.onset <- 0
   extinct <- FALSE
 
   # Initial setup
   case_data <- branch_setup(num.initial.cases = num.initial.cases,
-                            num.initial.clusters = num.initial.clusters,
                             incfn = incfn,
-                            delayfn = delayfn,k = k)
+                            prop.asym= prop.asym,
+                            delayfn = delayfn,
+                            k = k)
 
   # Model loop
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
     case_data <- branch_step_single(case_data=case_data,
-                             total.clusters = total.clusters,
                              total.cases = total.cases,
                              extinct = extinct,
                              disp.iso = disp.iso,
@@ -55,10 +53,10 @@ outbreak_model <- function(num.initial.cases, num.initial.clusters, prop.ascerta
                              incfn = incfn,
                              delayfn = delayfn,
                              prop.ascertain = prop.ascertain,
-                             k = k,quarantine = FALSE)
+                             k = k,quarantine = FALSE,
+                             prop.asym = prop.asym)
 
     total.cases <- nrow(case_data)
-    total.clusters <- max(case_data$cluster)
     latest.onset <- max(case_data$onset)
     extinct <- all(case_data$isolated)
   }

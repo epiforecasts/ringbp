@@ -22,18 +22,18 @@ delay_plot <- function(){
 
 
   out %>% mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
-                               labels=c("SARS outbreak 2003","Wuhan nCoV 2019")))
+                               labels=c("Short delay","Long delay")))
 
 
   means <- data.frame(x=c(3.83,9.1),dist=c("delay_sars","delay_wuhan")) %>%
     mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
-                         labels=c("SARS outbreak 2003","Wuhan nCoV 2019")))
+                         labels=c("Short delay","Long delay")))
 
   out %>% ggplot(aes(x=x,y=value,ymin=0,ymax=value,fill=as.factor(dist))) + geom_ribbon(alpha=0.4) +
     theme_bw() +
     theme(legend.position="bottom",axis.text = element_text(size=10),axis.title = element_text(size=12),
           legend.text = element_text(size=10)) +
-    xlab("Days since infection") + scale_fill_brewer(name="",labels=c("SARS outbreak 2003","Wuhan nCoV 2019"),palette="Set1") +
+    xlab("Days since infection") + scale_fill_brewer(name="",labels=c("Short delay","Long delay"),palette="Set1") +
     ylab("Probability density") + scale_colour_brewer(guide="none",palette="Set1") +
     geom_vline(data=means,aes(xintercept=x,col=as.factor(dist)),lty=2,size=0.8)
 

@@ -3,7 +3,6 @@
 #' @author Joel Hellewell
 #'
 #' @param case_data A tibble of cases so far, can be created initially with branch_setup
-#' @param total.clusters Number of clusters in case_data
 #' @param total.cases Number of cases in case_data
 #' @param extinct Whether the outbreak is extinct
 #' @param disp.iso The dispersion parameter for isolated cases
@@ -24,8 +23,8 @@
 #'
 #' @examples
 #'
-branch_step_single <- function(case_data,total.clusters,total.cases,extinct,
-                        disp.iso,disp.com,r0isolated,r0community,
+branch_step_single <- function(case_data,total.cases,extinct,
+                        disp.iso,disp.com,r0isolated,r0community,prop.asym,
                         incfn,delayfn,prop.ascertain,k,quarantine){
 
   # A vectorised version of isTRUE
@@ -64,14 +63,17 @@ branch_step_single <- function(case_data,total.clusters,total.cases,extinct,
     infector = unlist(purrr::map2(new_case_data$caseid, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
     # records when infector was isolated
     infector_iso_time = unlist(purrr::map2(new_case_data$isolated_time,new_case_data$new_cases, function(x,y) {rep(x, as.integer(y))})),
-    # assigns the cluster of the infector to the new person
-    cluster = unlist(purrr::map2(new_case_data$cluster, new_case_data$new_cases,  function(x,y) {rep(as.integer(x), as.integer(y))})),
-    # draws a sample to see if this person remains in the cluster
+    # records if infector asymptomatic
+    infector_asym = unlist(purrr::map2(new_case_data$asym,new_case_data$new_cases, function(x,y){rep(x,y)})),
+    # draws a sample to see if this person is asymptomatic
+    asym = purrr::rbernoulli(n = total_new_cases, p = prop.asym),
+    # draws a sample to see if this person is traced
     bernoulli_sample = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE
   )
+
 
 
   prob_samples <- prob_samples[exposure < infector_iso_time][, # filter out new cases prevented by isolation
@@ -81,25 +83,23 @@ branch_step_single <- function(case_data,total.clusters,total.cases,extinct,
                                                missed = bernoulli_sample)]
 
 
-  if(isFALSE(quarantine)){
-    # SCENARIO 1: If you are contact traced, you are isolated when symptomatic
-    prob_samples[,isolated_time := ifelse(vect_isTRUE(missed), onset + delayfn(1), onset)]
-  }else{
-    # SCENARIO 2: If you are contact traced, you are isolated regardless of symptoms
-    prob_samples[,isolated_time := ifelse(vect_isTRUE(missed), onset + delayfn(1), infector_iso_time)]
-  }
+  # cases whose parents are asymptomatic are automatically missed
+  prob_samples$missed[prob_samples$infector_asym] <- TRUE
+
+  # If you are asymptomatic, your isolation time is Inf
+  prob_samples[,isolated_time := ifelse(vect_isTRUE(asym),Inf,
+                                        # If you are not asymptomatic, but you are missed,
+                                        # you are isolated at your symptom onset
+                                        ifelse(vect_isTRUE(missed),onset + delayfn(1),
+                                               # If you are not asymptomatic and you are traced,
+                                               # you are isolated at max(onset,infector isolation time)
+                                               ifelse(isFALSE(quarantine),max(onset,infector_iso_time),infector_iso_time)))]
+
 
   # Chop out unneeded sample columns
-  prob_samples[,c("incubfn_sample","bernoulli_sample","infector_iso_time"):=NULL]
+  prob_samples[,c("incubfn_sample","bernoulli_sample","infector_iso_time","infector_asym"):=NULL]
   # Set new case ids for new people
   prob_samples$caseid <- (nrow(case_data)+1):(nrow(case_data)+nrow(prob_samples))
-  # Sets the cluster number for new people that are missed to NA
-  prob_samples$cluster <- ifelse(vect_isTRUE(prob_samples$missed),NA,prob_samples$cluster)
-
-  ## get number of new clusters
-  num.new.clusters <- sum(is.na(prob_samples$cluster))
-  ## assign new cluster numbers to missed cases
-  prob_samples$cluster[is.na(prob_samples$cluster) == TRUE] <- (total.clusters + 1):(num.new.clusters + total.clusters)
 
   # Everyone in case_data so far has had their chance to infect and are therefore considered isolated
   case_data$isolated <- TRUE
