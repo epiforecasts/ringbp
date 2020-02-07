@@ -59,11 +59,9 @@ ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8, useDingbats=FALSE
 # Figure 4 ----------------------------------------------------------------
 
 
-
-
 make_figure_4(df = res)
 
-ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12)
+ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12, useDingbats=FALSE)
 
 
 
