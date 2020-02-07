@@ -26,7 +26,7 @@ res <- sweep_results %>%
 # Figure 3 ----------------------------------------------------------------
 
 make_figure_3 <- function(df){
-  res %>%
+  df %>%
     dplyr::filter(num.initial.cases==20,
                   theta == "15%",
                   delay == "SARS",
@@ -88,7 +88,7 @@ ggplot2::ggsave("inst/plots/S_fig_2.pdf", height = 7, width = 9)
 
 make_figure_S3(res)
 
-ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 7, width = 9)
+ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 5.5, width = 9)
 
 ## S4
 
@@ -118,7 +118,7 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
 
 ggplot2::ggsave("inst/plots/S_fig_3_C.pdf", height = 5, width = 10)
 
-## S4
+## S6
 
 ringbp::serial_interval_plot()
 
@@ -126,23 +126,26 @@ ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
 
 ## Get data for supplement looking at flu like dispersion
 
-results_dispersion_flu <- readRDS("data-raw/sweep_results_disp2.RDS.rds")
+results_dispersion_flu <- readRDS("data-raw/res_dispersion_flu.rds")
 
 res_flu <- results_dispersion_flu  %>%
   dplyr::group_by(scenario) %>%
   dplyr::mutate(pext=extinct_prob(sims[[1]],cap_cases = 5000)) %>%
   dplyr::ungroup(scenario)
 
-## S5
+## S7
 
 dispersion_plot()
 
-ggplot2::ggsave("inst/plots/S_fig_5a.pdf", height = 4, width = 12)
-
+# remaking fig 3 with flu dispersion
 make_figure_3(df = res_flu)
-make_figure_4(df = res_flu)
+ggplot2::ggsave("inst/plots/S_fig_7b.png", height = 4, width = 6)
 
-ggplot2::ggsave("inst/plots/S_fig_5.pdf", height = 8, width = 12)
+
+
+# remaking fig 4 with flu dispersion
+make_figure_4(res = res_flu)
+ggplot2::ggsave("inst/plots/S_fig_7c.png", height = 5, width = 7)
 
 
 ## S6

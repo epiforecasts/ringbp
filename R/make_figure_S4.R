@@ -23,7 +23,7 @@ theta_asym <- res %>%
   scale_color_manual(values=c("mediumpurple2","black","mediumpurple4"), name = "Percentage of\ntransmission\nbefore symptoms") +
   theme_cowplot() + facet_wrap(prop.asym ~ .) + theme(axis.title = element_text(size=12)) +
   labs(y="Simulated outbreaks controlled (%)",x="Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-  scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+  scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
 theta_asym
 }

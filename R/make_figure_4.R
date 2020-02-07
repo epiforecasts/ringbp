@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-make_figure_4 <- function(df){
+make_figure_4 <- function(res){
 
   f4p1 <- res %>%
     dplyr::filter(delay == "SARS",

@@ -24,7 +24,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   init_delay2 <- res %>%
     dplyr::filter(theta == "15%",
@@ -37,7 +37,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
 
   init_theta1 <- res %>%
@@ -51,7 +51,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   init_theta2 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -64,7 +64,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   init_theta3 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -77,7 +77,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
 
 
@@ -92,7 +92,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(guide="none",values = c("dodgerblue","black","dodgerblue4"))+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   init_asym2 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -105,7 +105,7 @@ make_figure_S2 <- function(res){
     scale_fill_manual(guide="none",values = c("dodgerblue","black","dodgerblue4")) +
     scale_colour_manual(values = c("dodgerblue","black","dodgerblue4"),name="Number of\ninitial cases")+
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
 
   pl <- ((plot_spacer() + init_delay1 + init_delay2) / (init_theta1 + init_theta2 + init_theta3) / (plot_spacer() + init_asym1 + init_asym2)) + plot_layout(guide="collect")

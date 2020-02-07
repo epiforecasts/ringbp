@@ -25,7 +25,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_init2 <- res %>%
     dplyr::filter(theta == "15%",
@@ -39,7 +39,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_init3 <- res %>%
     dplyr::filter(theta == "15%",
@@ -53,7 +53,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_delay1 <- res %>%
     dplyr::filter(theta == "15%",
@@ -67,7 +67,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_delay2 <- res %>%
     dplyr::filter(theta == "15%",
@@ -81,7 +81,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_theta1 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -95,7 +95,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_theta2 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -109,7 +109,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_theta3 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -123,7 +123,7 @@ make_figure_S1 <- function(res){
     # scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
 
   r0_asym1 <- res %>%
@@ -139,7 +139,7 @@ make_figure_S1 <- function(res){
     # theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
   r0_asym2 <- res %>%
     dplyr::filter(delay == "SARS",
@@ -154,7 +154,7 @@ make_figure_S1 <- function(res){
     # theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border()
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + panel_border() + coord_cartesian(ylim=c(0,1))
 
 
  (r0_init1 + r0_init2 + r0_init3) /

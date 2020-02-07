@@ -24,7 +24,7 @@ make_figure_S3 <- function(res){
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
     scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot() + facet_wrap(theta~.) +
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   delay_theta2 <- res %>%
     dplyr::filter(num.initial.cases==20,
@@ -38,7 +38,7 @@ make_figure_S3 <- function(res){
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
     scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot() + facet_wrap(theta~.) +
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   delay_theta3 <- res %>%
     dplyr::filter(num.initial.cases==20,
@@ -52,7 +52,7 @@ make_figure_S3 <- function(res){
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
     scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot() + facet_wrap(theta~.) +
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   delay_asym1 <- res %>%
     dplyr::filter(num.initial.cases==20,
@@ -67,7 +67,7 @@ make_figure_S3 <- function(res){
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
     scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot() + facet_wrap(prop.asym~.) +
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
   delay_asym2 <- res %>%
     dplyr::filter(num.initial.cases==20,
@@ -82,7 +82,7 @@ make_figure_S3 <- function(res){
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
     scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot() + facet_wrap(prop.asym~.) +
     scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) + coord_cartesian(ylim=c(0,1))
 
 
 
