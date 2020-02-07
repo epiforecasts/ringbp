@@ -35,7 +35,7 @@ make_figure_3 <- function(df){
     ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(index_R0))) + geom_line(size=0.75) +
     geom_point(shape=21,col="black",aes(fill=as.factor(index_R0)),size=3) +
     scale_fill_manual(guide="none",values = c("red","black","firebrick4")) +
-    scale_color_manual(values = c("red","black","firebrick5"),name="Reproduction\nnumber")  + theme_cowplot() +
+    scale_color_manual(values = c("red","black","firebrick4"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
     scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
@@ -76,25 +76,25 @@ ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
 
 make_figure_S1(res)
 
-ggplot2::ggsave("inst/plots/S_fig_1.png", height = 7, width = 9)
+ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 7, width = 9)
 
 ## S2
 
 make_figure_S2(res)
 
-ggplot2::ggsave("inst/plots/S_fig_2.png", height = 7, width = 9)
+ggplot2::ggsave("inst/plots/S_fig_2.pdf", height = 7, width = 9)
 
 ## S3
 
 make_figure_S3(res)
 
-ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 7, width = 9)
 
 ## S4
 
 make_figure_S4(res)
 
-ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 3, width = 6.5)
 
 
 ## S5
@@ -137,7 +137,7 @@ res_flu <- results_dispersion_flu  %>%
 
 dispersion_plot()
 
-ggplot2::ggsave("inst/plots/S_fig_5a.png", height = 4, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_5a.pdf", height = 4, width = 12)
 
 make_figure_3(df = res_flu)
 make_figure_4(df = res_flu)
