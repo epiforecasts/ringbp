@@ -34,8 +34,8 @@ make_figure_3 <- function(df){
     dplyr::select(control_effectiveness,index_R0,pext) %>%
     ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(index_R0))) + geom_line(size=0.75) +
     geom_point(shape=21,col="black",aes(fill=as.factor(index_R0)),size=3) +
-    scale_fill_manual(guide="none",values = c("firebrick","black","firebrick3")) +
-    scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
+    scale_fill_manual(guide="none",values = c("red","black","firebrick4")) +
+    scale_color_manual(values = c("red","black","firebrick5"),name="Reproduction\nnumber")  + theme_cowplot() +
     ylab("Simulated outbreaks controlled (%)") +
     xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
     scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
@@ -70,60 +70,17 @@ ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
 
 # Supplementary figures ---------------------------------------------------
 
-make_figure_supp <- function(df = NULL, theta_value = "15%"){
-  df %>%
-    dplyr::filter(theta==theta_value) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
-                                 labels = c("Short delay", "Long delay"))) %>%
-    dplyr::mutate(num.initial.clusters = factor(num.initial.clusters,levels=c(5,20,40),
-                                                labels = c("5 cases","20 cases","40 cases"))) %>%
-    dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
-                                    labels = c("R0 = 1.5","R0 = 2.5","R0 = 3.5"))) %>%
-    ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(delay))) +
-    ggplot2::geom_line() +
-    ggplot2::geom_point() +
-    ggplot2::facet_grid(num.initial.clusters~ index_R0) +
-    ggplot2::scale_color_brewer(palette = "Set1",name="Delay from onset\n to hospitalisation") +
-    ggplot2::theme_bw() +
-    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
-    ggplot2::xlab("Percentage of contacts traced") +
-    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
-    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20)))
-
-
-}
-
-make_figure_supp2 <- function(df = NULL, initial_cases = 20) {
-  df %>%
-    dplyr::filter(num.initial.clusters == initial_cases) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
-                                 labels = c("Short delay", "Long delay"))) %>%
-    dplyr::mutate(theta = factor(theta,levels = c("<1%","15%","30%"),
-                                 labels = c("<1% transmission \n  before symptoms",
-                                            "15% transmission \n  before symptoms",
-                                            "30% transmission \n  before symptoms"))) %>%
-    ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(index_R0))) +
-    ggplot2::geom_line() +
-    ggplot2::geom_point() +
-    ggplot2::facet_grid(delay ~ theta) +
-    ggplot2::scale_color_brewer(palette = "Dark2",name="Reproduction number") +
-    ggplot2::theme_bw() +
-    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
-    ggplot2::xlab("Percentage of contacts traced") +
-    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
-    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20)))
-}
 ## S1
 
 make_figure_S1(res)
 
-ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_1.png", height = 7, width = 9)
 
 ## S2
 
 make_figure_S2(res)
 
-ggplot2::ggsave("inst/plots/S_fig_2.pdf", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_2.png", height = 7, width = 9)
 
 ## S3
 
