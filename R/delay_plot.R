@@ -29,6 +29,7 @@ delay_plot <- function(){
     mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
                          labels=c("Short delay","Long delay")))
 
+
   out %>% ggplot(aes(x=x,y=value,ymin=0,ymax=value,fill=as.factor(dist))) + geom_ribbon(alpha=0.4) +
     cowplot::theme_cowplot() +
     geom_line(aes(x,value)) +
