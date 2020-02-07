@@ -70,7 +70,7 @@ ggplot2::ggsave("inst/plots/fig_4.png", height = 5, width = 9)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.1,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 20, flip_coords = FALSE,
-                                  facet_scales = "fixed", record_params = F, prop_asym = 0)
+                                  facet_scales = "fixed", record_params = F, prop_asym = 0, y_lim = 225)
 
 ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/fig_5.png", height = 7, width = 12)
@@ -108,21 +108,21 @@ ggplot2::ggsave("inst/plots/S_fig_4.png", height = 3, width = 6.5)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 5,
-                                  facet_scales = "fixed", record_params = F)
+                                  facet_scales = "fixed", record_params = F, y_lim = 100)
 
 ggplot2::ggsave("inst/plots/S_fig_3_A.pdf", height = 5, width = 10, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 40,
-                                  facet_scales = "fixed", record_params = F)
+                                  facet_scales = "fixed", record_params = F, y_lim = 450)
 
 ggplot2::ggsave("inst/plots/S_fig_3_B.pdf", height = 5, width = 10, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0.1,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 20,
-                                  facet_scales = "fixed", record_params = F)
+                                  facet_scales = "fixed", record_params = F, y_lim = 1000)
 
 ggplot2::ggsave("inst/plots/S_fig_3_C.pdf", height = 5, width = 10, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/S_fig_3_C.png", height = 5, width = 10)
@@ -164,7 +164,8 @@ ggplot2::ggsave("inst/plots/S_fig_7c.png", height = 5, width = 7)
 
 ringbp::box_plot_max_weekly_cases(results = results_dispersion_flu, cap_cases = 5000, extinct_thresold = 0.05,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 40,
-                                  flip_coords = T, prop_asym = 0, facet_scales = "fixed", record_params = F)
+                                  flip_coords = T, prop_asym = 0, facet_scales = "fixed",
+                                  record_params = F, y_lim = 400)
 
 ggplot2::ggsave("inst/plots/S_fig_6.pdf", height = 8, width = 12, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/S_fig_6.png", height = 8, width = 12)
