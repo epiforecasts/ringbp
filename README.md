@@ -1,7 +1,5 @@
 # Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts
 
-[![Travis build status](https://travis-ci.org/epiforecasts/ringbp.svg?branch=master)](https://travis-ci.org/epiforecasts/ringbp)
-
 ## Abstract
 
 
