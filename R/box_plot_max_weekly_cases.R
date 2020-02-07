@@ -12,6 +12,7 @@
 #' @param flip_coords flip coordinates of the box plot; default is FALSE
 #' @param num_initial_cases filters by the number of initial cases in the scenario; default is 40
 #' @param record_params option to display the params as a caption (used for testing); default FALSE
+#' @param y_lim Numeric the limit of the y axis to show.
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom dplyr group_by mutate ungroup filter mutate left_join summarise select
 #' @importFrom tidyr unnest
@@ -23,14 +24,15 @@
 #'
 box_plot_max_weekly_cases <- function(results = NULL,
                                       cap_cases = 5000,
-                                      extinct_thresold = 0.8,
+                                      extinct_thresold = 0.1,
                                       theta_value = "15%",
                                       prop_asym = 0,
                                       facet_scales = "fixed",
                                       filt_control_effectiveness = 0.4,
                                       flip_coords = FALSE,
                                       num_initial_cases = 20,
-                                      record_params = FALSE) {
+                                      record_params = FALSE,
+                                      y_lim = NULL) {
   filt_results <- results %>%
     dplyr::group_by(scenario) %>%
     dplyr::mutate(prob_extinct = extinct_prob(sims[[1]],cap_cases = cap_cases)) %>%
@@ -56,13 +58,6 @@ box_plot_max_weekly_cases <- function(results = NULL,
 
 
 
-  quantiles_95 <- function(x) {
-    r <- quantile(x, probs=c(0.05, 0.25, 0.5, 0.75, 0.95))
-    names(r) <- c("ymin", "lower", "middle", "upper", "ymax")
-    r
-  }
-
-
   ## Clean data
   df <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
@@ -74,15 +69,30 @@ box_plot_max_weekly_cases <- function(results = NULL,
     rename_variables_for_plotting()
 
 
-  plot <- df %>%
-    ggplot2::ggplot(ggplot2::aes(y = max_weekly_cases,
+  df_summary <- df %>%
+    dplyr::group_by(index_R0, control_effectiveness, prob_extinct, delay) %>%
+    dplyr::summarise(
+      y0 = quantile(max_weekly_cases, 0.025),
+      y25 = quantile(max_weekly_cases, 0.25),
+      y50 = median(max_weekly_cases),
+      y75 = quantile(max_weekly_cases, 0.75),
+      y100 = quantile(max_weekly_cases, 0.975)
+    ) %>%
+    dplyr::mutate(y100 = ifelse(y100 > y_lim, y_lim, y100))
+
+
+  plot <- df_summary %>%
+    ggplot2::ggplot(ggplot2::aes(y = y50,
                                  x = factor(control_effectiveness),
                                  fill = prob_extinct), alpha = 0.9) +
-    ggplot2::stat_summary(fun.data = quantiles_95, geom="boxplot") +
+    ggplot2::geom_boxplot(
+      ggplot2::aes(ymin = y0, lower = y25, middle = y50, upper = y75, ymax = y100),
+      stat = "identity"
+    ) +
     ggplot2::facet_grid(rows = ggplot2::vars(factor(delay)),
                         cols = ggplot2::vars(index_R0),
                         scales = facet_scales) +
-    scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
+    ggplot2::scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
     ggplot2::scale_y_continuous(breaks = seq(0,1000,50)) +
     ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"")) +
     #ggplot2::theme_bw() +
@@ -110,7 +120,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
   text_positions <- df %>%
     dplyr::select(index_R0, control_effectiveness, prob_extinct, delay, max_weekly_cases) %>%
     dplyr::group_by(index_R0, control_effectiveness, prob_extinct, delay) %>%
-    dplyr::summarise(max_weekly_cases = quantile(max_weekly_cases, 0.5, na.rm = TRUE)) %>%
+    dplyr::summarise(y50 = quantile(max_weekly_cases, 0.5, na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(label_extinct = round(prob_extinct * 100, 0) %>%
                     paste0("%"))
