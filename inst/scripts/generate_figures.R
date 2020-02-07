@@ -87,8 +87,8 @@ ggplot2::ggsave("inst/plots/fig_4.png", height = 5, width = 12)
 
 # Figure 5 ----------------------------------------------------------------
 
-ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = T,
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.1,
+                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = FALSE,
                                   facet_scales = "fixed", record_params = F)
 
 ggplot2::ggsave("inst/plots/fig_5.png", height = 7, width = 12)

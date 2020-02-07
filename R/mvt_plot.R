@@ -2,7 +2,7 @@
 #'
 #' @return
 #' @export
-#' @importFrom ggplot2 ggplot geom_point theme_bw geom_abline coord_cartesian theme
+#' @importFrom ggplot2 ggplot geom_point theme_bw geom_abline coord_cartesian theme scale_fill_manual
 #' @importFrom ggplot2 scale_x_continuous scale_y_continuous xlab ylab ggtitle geom_vline
 #' @importFrom ggplot2 coord_flip coord_cartesian element_blank element_text geom_hline geom_density
 #' @importFrom ggthemes scale_color_colorblind scale_fill_colorblind

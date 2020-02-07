@@ -6,7 +6,6 @@
 \usage{
 outbreak_model(
   num.initial.cases,
-  num.initial.clusters,
   prop.ascertain,
   cap_max_days,
   cap_cases,
@@ -16,13 +15,12 @@ outbreak_model(
   disp.com,
   k,
   delay_shape,
-  delay_scale
+  delay_scale,
+  prop.asym
 )
 }
 \arguments{
-\item{num.initial.cases}{Initial number of cases in each initial cluster}
-
-\item{num.initial.clusters}{Number of initial clusters}
+\item{num.initial.cases}{Initial number of cases}
 
 \item{prop.ascertain}{Probability that cases are ascertained by contact tracing}
 
