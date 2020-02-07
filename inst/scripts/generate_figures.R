@@ -11,7 +11,7 @@ library(ringbp)
 
 ringbp::mvt_plot()
 
-ggplot2::ggsave("inst/plots/fig_2.png", height = 5.5, width = 10)
+ggplot2::ggsave("inst/plots/fig_2.pdf", height = 5.5, width = 10)
 
 # Load in results  -------------------------------------------------------
 
@@ -51,7 +51,7 @@ make_figure_3 <- function(df = NULL, theta_value = "15%"){
 make_figure_3(df = res)
 
 
-ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
+ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8)
 
 
 
@@ -81,7 +81,7 @@ make_figure_4 <- function(df = NULL, initial_cases = 20) {
 
 make_figure_4(df = res)
 
-ggplot2::ggsave("inst/plots/fig_4.png", height = 5, width = 12)
+ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12)
 
 
 
@@ -91,7 +91,7 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = FALSE,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/fig_5.png", height = 7, width = 12)
+ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
 
 
 # Supplementary figures ---------------------------------------------------
@@ -120,18 +120,18 @@ make_figure_S1 <- function(){
 
 make_figure_S1()
 
-ggplot2::ggsave("inst/plots/S_fig_1.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 8, width = 12)
 
 
 ## S2 A and B
 
 make_figure_4(res = res, initial_cases = 5)
 
-ggplot2::ggsave("inst/plots/S_fig_2_A.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_2_A.pdf", height = 8, width = 12)
 
 make_figure_4(res = res, initial_cases = 40)
 
-ggplot2::ggsave("inst/plots/S_fig_2_B.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_2_B.pdf", height = 8, width = 12)
 
 ## S3 A and B
 
@@ -139,20 +139,20 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 5, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 5, width = 10)
+ggplot2::ggsave("inst/plots/S_fig_3_A.pdf", height = 5, width = 10)
 
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 5, width = 10)
+ggplot2::ggsave("inst/plots/S_fig_3_B.pdf", height = 5, width = 10)
 
 ## S4
 
 ringbp::serial_interval_plot()
 
-ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
 
 ## Get data for supplement looking at flu like dispersion
 
@@ -167,7 +167,7 @@ res_flu <- results_dispersion_flu  %>%
 
 make_figure_4(df = res_flu)
 
-ggplot2::ggsave("inst/plots/S_fig_5.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_5.pdf", height = 8, width = 12)
 
 
 ## S6
@@ -176,5 +176,5 @@ ringbp::box_plot_max_weekly_cases(results = results_dispersion_flu, cap_cases = 
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
                                   facet_scales = "fixed", record_params = F)
 
-ggplot2::ggsave("inst/plots/S_fig_6.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_6.pdf", height = 8, width = 12)
 
