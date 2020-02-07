@@ -160,7 +160,7 @@ ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
 
 ## Get data for supplement looking at flu like dispersion
 
-results_dispersion_flu <- readRDS("data-raw/res_dispersion_flu.rds")
+results_dispersion_flu <- readRDS("data-raw/sweep_results_disp2.RDS.rds")
 
 res_flu <- results_dispersion_flu  %>%
   dplyr::group_by(scenario) %>%
@@ -173,6 +173,7 @@ dispersion_plot()
 
 ggplot2::ggsave("inst/plots/S_fig_5a.png", height = 4, width = 12)
 
+make_figure_3(df = res_flu)
 make_figure_4(df = res_flu)
 
 ggplot2::ggsave("inst/plots/S_fig_5.pdf", height = 8, width = 12)
