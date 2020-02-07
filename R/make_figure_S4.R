@@ -5,10 +5,9 @@
 #' @return
 #' @export
 #' @importFrom dplyr filter mutate
-#' @importFrom ggplot2 ggplot geom_line facet_wrap geom_point ylab xlab scale_y_continuous scale_x_continuous theme
-#' @importFrom ggplot2 scale_color_manual scale_fill_manual
-#' @importFrom patchwork
-#' @importFrom cowplot panel_border plot_layout plot_spacer
+#' @import ggplot2
+#' @import patchwork
+#' @import cowplot
 #'
 #' @examples
 #'

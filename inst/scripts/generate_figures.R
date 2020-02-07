@@ -76,7 +76,7 @@ ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
 
 make_figure_S1(res)
 
-ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 7, width = 9)
+ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 7.5, width = 9)
 
 ## S2
 
