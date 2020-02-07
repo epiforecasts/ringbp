@@ -46,7 +46,9 @@ make_figure_3(df = res)
 
 ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8)
 
+make_figure3b(df = res)
 
+ggplot2::ggsave("inst/plots/fig_3b.pdf", height = 5, width = 8)
 
 # Figure 4 ----------------------------------------------------------------
 
