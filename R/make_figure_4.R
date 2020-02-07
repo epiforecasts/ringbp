@@ -1,3 +1,11 @@
+#' Make Fig 4
+#'
+#' @param df
+#'
+#' @return
+#' @export
+#'
+#' @examples
 make_figure_4 <- function(df){
 
   f4p1 <- res %>%

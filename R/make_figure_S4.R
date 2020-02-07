@@ -1,3 +1,12 @@
+#' Make Figure S4
+#'
+#' @param res
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
 make_figure_S4 <- function(res){
 theta_asym <- res %>%
   dplyr::filter(num.initial.cases==20,
@@ -14,3 +23,4 @@ theta_asym <- res %>%
 
 theta_asym
 }
+
