@@ -12,7 +12,7 @@
 dispersion_plot <- function(){
 
   disp_sars <- function(x, r0){dnbinom(x, size = 0.16, mu =r0)}
-  disp_diff <- function(x, r0){dnbinom(x,size=1, mu = r0)}
+  disp_diff <- function(x, r0){dnbinom(x,size=2, mu = r0)}
 
   out <- tibble::tibble(r0 = c(1.5, 2.5, 3.5), x = list(seq(0, 60, 1))) %>%
     dplyr::mutate(sars_samples = purrr::map2(r0, x, ~ disp_sars(x[[1]], .)),
@@ -21,7 +21,7 @@ dispersion_plot <- function(){
     tidyr::unnest(c("samples", "x")) %>%
     dplyr::mutate(disp = disp %>%
                     factor(levels = c("sars_samples", "diff_samples"),
-                           labels = c("SARS-like (Dispersion = 0.16)", "Flu-like (Dispersion = 1)")))
+                           labels = c("SARS-like (Dispersion = 0.16)", "Flu-like (Dispersion = 2)")))
 
 
 
