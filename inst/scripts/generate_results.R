@@ -20,7 +20,7 @@ scenarios <- tidyr::expand_grid(
     k = c(30,1.95,0.7)
   )),
   index_R0 = c(1.5,2.5,3.5),
-  prop.asym = c(0,0.25,0.5),
+  prop.asym = c(0,0.1),
   control_effectiveness = seq(0,1,0.2),
   num.initial.cases = c(5,20,40)) %>%
   tidyr::unnest("k_group") %>%
