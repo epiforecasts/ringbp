@@ -54,8 +54,6 @@ branch_step_single <- function(case_data,total.cases,extinct,
 
   # If no new cases drawn, outbreak is over so return case_data
   if(total_new_cases==0){
-    # new_cases removed so it can be sewn back on to other data.tables
-    case_data[,new_cases:=NULL]
     # If everyone is isolated it means that either control has worked or everyone has had a chance to infect but didn't
     case_data$isolated <- TRUE
     return(case_data)
@@ -79,7 +77,8 @@ branch_step_single <- function(case_data,total.cases,extinct,
     missed = purrr::rbernoulli(n = total_new_cases, p = 1-prop.ascertain),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
-    isolated = FALSE
+    isolated = FALSE,
+    new_cases = NA
   )
 
 
@@ -111,9 +110,6 @@ branch_step_single <- function(case_data,total.cases,extinct,
 
   # Everyone in case_data so far has had their chance to infect and are therefore considered isolated
   case_data$isolated <- TRUE
-
-  # Tidy up columns of original data passed in
-  case_data[,new_cases:=NULL]
 
   # bind original cases + new secondary cases
   case_data <- rbindlist(list(case_data,prob_samples),use.names=TRUE)

@@ -61,6 +61,10 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
     extinct <- all(case_data$isolated)
   }
 
+  ## Estimate the effective R0
+  cases_who_have_spread <- case_data$new_cases[!is.na(case_data$new_cases)]
+  effective_r0_const <- sum(cases_who_have_spread) / length(cases_who_have_spread)
+
   # Prepare output, group into weeks
   weekly_cases <- case_data[,week := floor(onset / 7)
                             ][, .(weekly_cases = .N),by=week
@@ -77,6 +81,10 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
   weekly_cases <- weekly_cases[order(week)][,cumulative := cumsum(weekly_cases)]
   # cut at max_week
   weekly_cases <- weekly_cases[week <= max_week]
+
+  # Add effective R0
+  weekly_cases <- weekly_cases[, effective_r0 := effective_r0_const]
+
   # return
   return(weekly_cases)
 }
