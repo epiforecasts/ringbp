@@ -164,7 +164,7 @@ ggplot2::ggsave("inst/plots/S_fig_7c.png", height = 5, width = 7)
 
 ringbp::box_plot_max_weekly_cases(results = results_dispersion_flu, cap_cases = 5000, extinct_thresold = 0.05,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 40,
-                                  flip_coords = T, prop_asym = 0, facet_scales = "fixed",
+                                  flip_coords = F, prop_asym = 0, facet_scales = "fixed",
                                   record_params = F, y_lim = 400)
 
 ggplot2::ggsave("inst/plots/S_fig_6.pdf", height = 8, width = 12, useDingbats=FALSE)
