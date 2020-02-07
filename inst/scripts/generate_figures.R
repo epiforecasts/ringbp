@@ -59,9 +59,9 @@ ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8, useDingbats=FALSE
 # Figure 4 ----------------------------------------------------------------
 
 
-make_figure_4(df = res)
+make_figure_4(res = res)
 
-ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12, useDingbats=FALSE)
+ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 9, useDingbats=FALSE)
 
 
 
@@ -92,11 +92,9 @@ ggplot2::ggsave("inst/plots/S_fig_2.pdf", height = 7, width = 9, useDingbats=FAL
 
 make_figure_S3(res)
 
-<<<<<<< HEAD
-ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 5.5, width = 9)
-=======
-ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 7, width = 9, useDingbats=FALSE)
->>>>>>> ed7323784b6d0e1051fa4374f8b37235c55f74e7
+
+ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 5.5, width = 9, useDingbats=FALSE)
+
 
 ## S4
 

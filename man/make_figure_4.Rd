@@ -4,7 +4,7 @@
 \alias{make_figure_4}
 \title{Make Fig 4}
 \usage{
-make_figure_4(df)
+make_figure_4(res)
 }
 \arguments{
 \item{df}{}

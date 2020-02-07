@@ -27,7 +27,7 @@ make_figure_4 <- function(res){
     ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(delay))) + geom_line(size=0.75) +
     geom_point(shape=21,col="black",aes(fill=as.factor(delay)),size=3) +
     scale_fill_manual(guide="none",values = c("black","forestgreen")) +
-    scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation delay") + theme_cowplot()
+    scale_color_manual(values=c("black","forestgreen"), name="Onset to\nisolation\ndelay") + theme_cowplot()
 
   f4p3 <- res %>%
     dplyr::filter(num.initial.cases==20,
@@ -37,7 +37,7 @@ make_figure_4 <- function(res){
     ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(theta))) + geom_line(size=0.75) +
     geom_point(shape=21,col="black",aes(fill=as.factor(theta)),size=3) +
     scale_fill_manual(guide="none",values = c("mediumpurple2","black","mediumpurple4")) +
-    scale_color_manual(values=c("mediumpurple2","black","mediumpurple4"), name = "Percentage of\ntransmission\nbefore symptoms") +
+    scale_color_manual(values=c("mediumpurple2","black","mediumpurple4"), name = "Pre-symptom\ntransmission") +
     theme_cowplot()
 
   f4p4 <- res %>%
@@ -49,11 +49,11 @@ make_figure_4 <- function(res){
     ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(prop.asym))) + geom_line(size=0.75) +
     geom_point(shape=21,col="black",aes(fill=as.factor(prop.asym)),size=3) +
     scale_fill_manual(guide="none",values = c("black","chocolate4")) +
-    scale_color_manual(values=c("black","chocolate4"),name="Proportion of\nasymptomatic\ncases")  + theme_cowplot()
+    scale_color_manual(values=c("black","chocolate4"),name="Proportion\nof cases\nwithout\nsymptoms")  + theme_cowplot()
 
   fig4 <- (f4p1 + f4p2) / (f4p3 + f4p4) + plot_annotation(tag_levels = "A") &
-    theme(legend.position = "right",
-          plot.tag.position = "topright",
+    theme(legend.position = "left",
+          plot.tag.position = "topleft",
           plot.tag = element_text(size=20,face="bold"),
           axis.text = element_text(size=11),
           axis.title = element_text(size=11),
