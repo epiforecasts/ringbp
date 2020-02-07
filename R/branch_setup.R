@@ -23,7 +23,8 @@ branch_setup <- function(num.initial.cases,incfn,delayfn,k,prop.asym){
                           caseid = 1:(num.initial.cases), # set case id
                           infector = 0,
                           missed = TRUE,
-                          onset = inc_samples)
+                          onset = inc_samples,
+                          new_cases = NA)
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
   case_data <- case_data[,isolated_time := onset + delayfn(1)

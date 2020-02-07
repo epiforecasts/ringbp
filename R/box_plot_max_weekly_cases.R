@@ -14,6 +14,7 @@
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom dplyr group_by mutate ungroup filter mutate left_join summarise select
 #' @importFrom tidyr unnest
+#' @importFrom cowplot theme_minimal_hgrid panel_border
 #' @importFrom ggplot2 ggplot aes stat_summary facet_grid vars scale_fill_gradient scale_y_continuous scale_x_discrete theme_bw theme labs ggtitle coord_flip
 #' @export
 #' @examples
@@ -69,24 +70,24 @@ box_plot_max_weekly_cases <- function(results = NULL,
     dplyr::ungroup() %>%
     rename_variables_for_plotting()
 
-  ## make plot
+
   plot <- df %>%
     ggplot2::ggplot(ggplot2::aes(y = max_weekly_cases,
-                               x = factor(control_effectiveness),
-                               fill = prob_extinct), alpha = 0.9) +
+                                 x = factor(control_effectiveness),
+                                 fill = prob_extinct), alpha = 0.9) +
     ggplot2::stat_summary(fun.data = quantiles_95, geom="boxplot") +
     ggplot2::facet_grid(rows = ggplot2::vars(factor(delay)),
-                      cols = ggplot2::vars(index_R0),
-                      scales = facet_scales) +
+                        cols = ggplot2::vars(index_R0),
+                        scales = facet_scales) +
     scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
     ggplot2::scale_y_continuous(breaks = seq(0,1000,25)) +
     ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"")) +
-    ggplot2::theme_bw() +
+    #ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
     ggplot2::labs(fill = "Percentage of contacts traced") +
-    ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
+    #ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
     ggplot2::labs(y = "Maximum weekly cases",
-                x = "Percentage of contacts traced")
+                  x = "Contacts traced (%)")
   if (flip_coords) {
     plot <- plot + ggplot2::coord_flip()
   }
@@ -100,25 +101,27 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                                  "; 95% conf interval",
                                                  sep = " "))
   }
-
+  plot <- plot + cowplot::theme_minimal_hgrid() + cowplot::panel_border()
 
   ##Text positions
-    text_positions <- df %>%
-      dplyr::select(index_R0, control_effectiveness, prob_extinct, delay, max_weekly_cases) %>%
-      dplyr::group_by(index_R0, control_effectiveness, prob_extinct, delay) %>%
-      dplyr::summarise(max_weekly_cases = quantile(max_weekly_cases, 0.5, na.rm = TRUE)) %>%
-      dplyr::ungroup() %>%
-      dplyr::mutate(label_extinct = round(prob_extinct * 100, 0) %>%
-                      paste0("%"))
+  text_positions <- df %>%
+    dplyr::select(index_R0, control_effectiveness, prob_extinct, delay, max_weekly_cases) %>%
+    dplyr::group_by(index_R0, control_effectiveness, prob_extinct, delay) %>%
+    dplyr::summarise(max_weekly_cases = quantile(max_weekly_cases, 0.5, na.rm = TRUE)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(label_extinct = round(prob_extinct * 100, 0) %>%
+                    paste0("%"))
 
 
 
-    plot <- plot +
-      ggrepel::geom_label_repel(data = text_positions,
-                                ggplot2::aes(label=label_extinct),
-                                col='black', fill = "white",
-                                size=4,
-                                point.padding = NA)
+  plot <- plot +
+    ggrepel::geom_label_repel(data = text_positions,
+                              ggplot2::aes(label=label_extinct),
+                              col='black', fill = "white",
+                              size=4,
+                              point.padding = NA)
+
+
   return(plot)
 }
 
