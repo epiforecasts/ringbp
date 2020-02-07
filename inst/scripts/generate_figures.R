@@ -11,7 +11,7 @@ library(ringbp)
 
 ringbp::mvt_plot()
 
-ggplot2::ggsave("inst/plots/fig_2.png", height = 7, width = 16)
+ggplot2::ggsave("inst/plots/fig_2.png", height = 5.5, width = 10)
 
 # Load in results  -------------------------------------------------------
 

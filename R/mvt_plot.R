@@ -14,53 +14,27 @@
 #'}
 mvt_plot <- function(){
 
-  tab <- data.frame(inc = rweibull(n = 200,shape = 2.322737,scale = 6.492272))
-  tab$inc <- ifelse(tab$inc<1,1,tab$inc)
-  tab$si <- c(sn::rsn(n=100,xi = tab$inc[1:100],omega = 1,alpha = 0.5),sn::rsn(n=100,xi = tab$inc[101:200],omega = 1,alpha = 3))
-  tab$si <- ifelse(tab$si<1,1,tab$si)
-  tab$skew <- c(rep(0.5,100),rep(3,100))
+  p2 <- data.frame(x=seq(0,15,0.1),y=dweibull(x=seq(0,15,0.1),shape = 2.322737,scale = 6.492272)) %>%
+    ggplot(aes(x=x,y=y)) + geom_line() + cowplot::theme_cowplot() + geom_vline(xintercept=5.8,lty=2) + coord_cartesian(xlim=c(0,13)) +
+    labs(tag = "B", x = "time since infection (days)",y = "probability density") +
+    geom_ribbon(aes(ymax=y,ymin=0),fill="chartreuse2",alpha=0.4)
 
-  tab2 <- tab %>% group_by(skew) %>% summarise(mean=mean(si))
 
-  p1 <- tab %>% ggplot(aes(x=inc,y=si,col=as.factor(skew))) + geom_point() +
-    geom_abline(slope=1,intercept=0) + coord_cartesian(ylim=c(0,16),xlim=c(0,13)) +
-    scale_color_colorblind(name="Proportion of transmission \n before symptom onset",labels=c("35%","12%")) + theme_bw() +
-    coord_cartesian(xlim=c(0,13),ylim=c(0,16)) + theme(legend.position="bottom",axis.title=element_blank()) +
-    scale_x_continuous(position="top") +
-    scale_y_continuous(position="right") +
-    geom_hline(data=tab2,aes(yintercept=mean,col=as.factor(skew)),lty=2) +
-    geom_vline(aes(xintercept=5.8),lty=2)
+  p3 <- data.frame(y=c(sn::dsn(x=seq(0,13,0.1),xi = 5,omega = 2,alpha = 0.7),
+                       sn::dsn(x=seq(0,13,0.1),xi = 5,omega = 2,alpha = 1.95),
+                       sn::dsn(x=seq(0,13,0.1),xi = 5,omega = 2,alpha = 30)),
+                   x = rep(rep(seq(0,13,0.1),3)),
+                   theta= rep(c("30%","15%","<1%"),rep(131,3))) %>% ggplot(aes(x,y,fill=theta)) +
+    geom_ribbon(aes(ymin=0,ymax=y),alpha=0.4) +
+    geom_line(aes(x,y)) +
+    cowplot::theme_cowplot() + coord_cartesian(xlim=c(0,13)) +
+    geom_vline(xintercept = 5) + theme(legend.position = "bottom") +
+    scale_fill_manual(values=c("grey65","goldenrod3","orchid"),name="Proportion of\ntransmission\nbefore symptoms") +
+    labs(tag = "C", x = "time since infection (days)",y = "probability density")
 
-  p2 <- data.frame(x=seq(0,15,0.1),y=dweibull(x=seq(0,15,0.1),shape = 2.322737,scale = 6.492272)) %>% ggplot(aes(x=x,y=y)) + geom_line() +
-    xlab("") + ylab("") + theme_bw() + geom_vline(xintercept=5.8,lty=2) + coord_cartesian(xlim=c(0,13)) +
-    theme(axis.title=element_blank(),plot.title = element_text(hjust = 0.5),
-          axis.text=element_blank(),axis.ticks.y=element_blank()) + ggtitle("Incubation Period") +
-    labs(tag = "B")
 
-  p3 <- tab %>% ggplot(aes(x=si,fill=as.factor(skew))) + geom_density(alpha=0.4) + theme_bw() + coord_flip(xlim=c(0,16)) +
-    theme(axis.title.x=element_blank(),axis.title.y=element_text(size=14),
-          axis.text=element_blank(),axis.ticks = element_blank()) +
-    scale_x_continuous(position="left") + xlab("Serial Interval") + scale_fill_colorblind(name="Skew parameter",guide="none") +
-    geom_vline(data=tab2,aes(xintercept=mean,col=as.factor(skew)),lty=2) + scale_color_colorblind(guide="none")
-
-  p4 <- delay_plot() +
-    theme(plot.title = element_text(hjust = 0.5)) +
-    ggtitle("Delay from onset to isolation") +
-    labs(tag = "A")
-
-  layout_1 <- "CCC#
-               BBBD
-               BBBD
-               BBBD"
-
-  p5 <- p1 + p2 + p3 + plot_layout(design = layout_1)
-
-  layout_2 <- "AAAABBBB
-               AAAABBBB
-               AAAABBBB
-               AAAABBBB"
-
-  p4 + p5 +
-    plot_layout(tag_level = "keep", design = layout_2)
+  (delay_plot() | (p2 / p3)) & theme(axis.text = element_text(size=10),
+                                     legend.title = element_text(size=11),
+                                     axis.title = element_text(size=11))
 
 }

@@ -30,12 +30,14 @@ delay_plot <- function(){
                          labels=c("Short delay","Long delay")))
 
   out %>% ggplot(aes(x=x,y=value,ymin=0,ymax=value,fill=as.factor(dist))) + geom_ribbon(alpha=0.4) +
-    theme_bw() +
+    cowplot::theme_cowplot() +
+    geom_line(aes(x,value)) +
     theme(legend.position="bottom",axis.text = element_text(size=10),axis.title = element_text(size=12),
           legend.text = element_text(size=10)) +
-    xlab("Days since infection") + scale_fill_brewer(name="",labels=c("Short delay","Long delay"),palette="Set1") +
-    ylab("Probability density") + scale_colour_brewer(guide="none",palette="Set1") +
-    geom_vline(data=means,aes(xintercept=x,col=as.factor(dist)),lty=2,size=0.8)
+    scale_fill_brewer(name="",labels=c("Short delay","Long delay"),palette="Set1") +
+    scale_colour_brewer(guide="none",palette="Set1") +
+    geom_vline(data=means,aes(xintercept=x,col=as.factor(dist)),lty=2,size=0.8) +
+    labs(tag = "A", x = "time since infection (days)",y = "probability density")
 
 }
 
