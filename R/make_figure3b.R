@@ -34,7 +34,7 @@ make_figure3b <- function(df){
                                  col=as.factor(index_R0),
                                  fill = as.factor(index_R0))) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = lower, ymax = upper, col = NULL), alpha = 0.1) +
-    ggplot2::geom_ribbon(ggplot2::aes(ymin = iqr_lower, ymax = iqr_upper, col = NULL), alpha = 0.2) +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = iqr_lower, ymax = iqr_upper, col = NULL), alpha = 0.3) +
     ggplot2::geom_line() +
     ggplot2::xlab("Contacts traced (%)") +
     ggplot2::ylab("Effective reproduction number") +
