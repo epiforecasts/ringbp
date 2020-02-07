@@ -9,10 +9,11 @@ box_plot_max_weekly_cases(
   cap_cases = 5000,
   extinct_thresold = 0.8,
   theta_value = "15\%",
+  prop_asym = 0,
   facet_scales = "fixed",
   filt_control_effectiveness = 0.4,
   flip_coords = FALSE,
-  num_initial_clusters = 20,
+  num_initial_cases = 20,
   record_params = FALSE
 )
 }
@@ -24,13 +25,15 @@ box_plot_max_weekly_cases(
 \item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
 sypmtom onset.}
 
+\item{prop_asym}{A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic}
+
 \item{facet_scales}{passed to facet_grid’s scales parameter; default is "fixed"}
 
 \item{filt_control_effectiveness}{filters by the minimum control effectiveness proportion; default is 0.4}
 
 \item{flip_coords}{flip coordinates of the box plot; default is FALSE}
 
-\item{num_initial_clusters}{filters by the number of initial clusters in the scenario; default is 40}
+\item{num_initial_cases}{filters by the number of initial cases in the scenario; default is 40}
 
 \item{record_params}{option to display the params as a caption (used for testing); default FALSE}
 

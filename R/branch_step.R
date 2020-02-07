@@ -56,7 +56,12 @@ branch_step_single <- function(case_data,total.cases,extinct,
   if(total_new_cases==0){
     # If everyone is isolated it means that either control has worked or everyone has had a chance to infect but didn't
     case_data$isolated <- TRUE
-    return(case_data)
+
+    effective_r0 <- 0
+    out <- list(case_data, effective_r0)
+    names(out) <- c("cases", "effective_r0")
+
+    return(out)
   }
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
@@ -80,7 +85,6 @@ branch_step_single <- function(case_data,total.cases,extinct,
     isolated = FALSE,
     new_cases = NA
   )
-
 
 
   prob_samples <- prob_samples[exposure < infector_iso_time][, # filter out new cases prevented by isolation
@@ -108,12 +112,19 @@ branch_step_single <- function(case_data,total.cases,extinct,
   # Set new case ids for new people
   prob_samples$caseid <- (nrow(case_data)+1):(nrow(case_data)+nrow(prob_samples))
 
+
+  ## Estimate the effective r0
+  effective_r0 <- nrow(prob_samples) / nrow(case_data[!vect_isTRUE(case_data$isolated)])
+
   # Everyone in case_data so far has had their chance to infect and are therefore considered isolated
   case_data$isolated <- TRUE
 
   # bind original cases + new secondary cases
   case_data <- rbindlist(list(case_data,prob_samples),use.names=TRUE)
-  # return
-  return(case_data)
 
+  # return
+  out <- list(case_data, effective_r0)
+  names(out) <- c("cases", "effective_r0")
+
+  return(out)
 }
