@@ -40,10 +40,15 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
                             delayfn = delayfn,
                             k = k)
 
+  # Preallocate
+  effective_r0_vect <- c()
+  cases_in_gen_vect <- c()
+
+
   # Model loop
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
-    case_data <- branch_step_single(case_data=case_data,
+    out <- branch_step_single(case_data=case_data,
                              total.cases = total.cases,
                              extinct = extinct,
                              disp.iso = disp.iso,
@@ -56,14 +61,14 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
                              k = k,quarantine = FALSE,
                              prop.asym = prop.asym)
 
+
+    case_data <- out[[1]]
+    effective_r0_vect <- c(effective_r0_vect, out[[2]])
+    cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
     total.cases <- nrow(case_data)
     latest.onset <- max(case_data$onset)
     extinct <- all(case_data$isolated)
   }
-
-  ## Estimate the effective R0
-  cases_who_have_spread <- case_data$new_cases[!is.na(case_data$new_cases)]
-  effective_r0_const <- sum(cases_who_have_spread) / length(cases_who_have_spread)
 
   # Prepare output, group into weeks
   weekly_cases <- case_data[,week := floor(onset / 7)
@@ -73,6 +78,7 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
   max_week <- floor(cap_max_days/7)
   # weeks with 0 cases in 0:max_week
   missing_weeks <- (0:max_week)[!(0:max_week %in% weekly_cases$week)]
+
   # add in missing weeks if any are missing
   if(length(missing_weeks>0)){
     weekly_cases <- rbindlist(list(weekly_cases,data.table(week=missing_weeks,weekly_cases=0)))
@@ -83,8 +89,8 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
   weekly_cases <- weekly_cases[week <= max_week]
 
   # Add effective R0
-  weekly_cases <- weekly_cases[, effective_r0 := effective_r0_const]
-
+  weekly_cases <- weekly_cases[,   `:=`(effective_r0 = mean(effective_r0_vect, na.rm = TRUE),
+                                        cases_per_gen = list(cases_in_gen_vect))]
   # return
   return(weekly_cases)
 }
