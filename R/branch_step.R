@@ -78,7 +78,7 @@ branch_step_single <- function(case_data,total.cases,extinct,
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE,
-    new_cases = NA,
+    new_cases = NA
   )
 
 
