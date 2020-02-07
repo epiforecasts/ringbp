@@ -42,6 +42,7 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
 
   # Preallocate
   effective_r0_vect <- c()
+  cases_in_gen_vect <- c()
 
 
   # Model loop
@@ -63,6 +64,7 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
 
     case_data <- out[[1]]
     effective_r0_vect <- c(effective_r0_vect, out[[2]])
+    cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
     total.cases <- nrow(case_data)
     latest.onset <- max(case_data$onset)
     extinct <- all(case_data$isolated)
@@ -87,7 +89,8 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
   weekly_cases <- weekly_cases[week <= max_week]
 
   # Add effective R0
-  weekly_cases <- weekly_cases[, effective_r0 := mean(effective_r0_vect, na.rm = TRUE)]
+  weekly_cases <- weekly_cases[,   `:=`(effective_r0 = mean(effective_r0_vect, na.rm = TRUE),
+                                        cases_per_gen = list(cases_in_gen_vect))]
   # return
   return(weekly_cases)
 }

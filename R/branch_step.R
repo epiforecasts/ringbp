@@ -58,8 +58,9 @@ branch_step_single <- function(case_data,total.cases,extinct,
     case_data$isolated <- TRUE
 
     effective_r0 <- 0
-    out <- list(case_data, effective_r0)
-    names(out) <- c("cases", "effective_r0")
+    cases_in_gen <- 0
+    out <- list(case_data, effective_r0, cases_in_gen)
+    names(out) <- c("cases", "effective_r0", "cases_in_gen")
 
     return(out)
   }
@@ -112,6 +113,8 @@ branch_step_single <- function(case_data,total.cases,extinct,
   # Set new case ids for new people
   prob_samples$caseid <- (nrow(case_data)+1):(nrow(case_data)+nrow(prob_samples))
 
+  ## Number of new cases
+  cases_in_gen <- nrow(prob_samples)
 
   ## Estimate the effective r0
   effective_r0 <- nrow(prob_samples) / nrow(case_data[!vect_isTRUE(case_data$isolated)])
@@ -122,9 +125,9 @@ branch_step_single <- function(case_data,total.cases,extinct,
   # bind original cases + new secondary cases
   case_data <- rbindlist(list(case_data,prob_samples),use.names=TRUE)
 
-  # return
-  out <- list(case_data, effective_r0)
-  names(out) <- c("cases", "effective_r0")
+  # Return
+  out <- list(case_data, effective_r0, cases_in_gen)
+  names(out) <- c("cases", "effective_r0", "cases_in_gen")
 
   return(out)
 }
