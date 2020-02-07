@@ -25,7 +25,52 @@ res <- sweep_results %>%
 
 # Figure 3 ----------------------------------------------------------------
 
-make_figure_3 <- function(df = NULL, theta_value = "15%"){
+make_figure_3 <- function(df){
+  res %>%
+    dplyr::filter(num.initial.cases==20,
+                  theta == "15%",
+                  delay == "SARS",
+                  prop.asym==0) %>%
+    dplyr::select(control_effectiveness,index_R0,pext) %>%
+    ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(index_R0))) + geom_line(size=0.75) +
+    geom_point(shape=21,col="black",aes(fill=as.factor(index_R0)),size=3) +
+    scale_fill_manual(guide="none",values = c("firebrick","black","firebrick3")) +
+    scale_color_manual(values = c("firebrick","black","firebrick3"),name="Reproduction\nnumber")  + theme_cowplot() +
+    ylab("Simulated outbreaks controlled (%)") +
+    xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
+    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20))
+}
+
+
+make_figure_3(df = res)
+
+ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8)
+
+
+
+# Figure 4 ----------------------------------------------------------------
+
+
+
+
+make_figure_4(df = res)
+
+ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12)
+
+
+
+# Figure 5 ----------------------------------------------------------------
+
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.1,
+                                  filt_control_effectiveness = 0.4, num_initial_cases = 20, flip_coords = FALSE,
+                                  facet_scales = "fixed", record_params = F, prop.asym = 0)
+
+ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
+
+
+# Supplementary figures ---------------------------------------------------
+
+make_figure_supp <- function(df = NULL, theta_value = "15%"){
   df %>%
     dplyr::filter(theta==theta_value) %>%
     dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
@@ -48,16 +93,7 @@ make_figure_3 <- function(df = NULL, theta_value = "15%"){
 
 }
 
-make_figure_3(df = res)
-
-
-ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8)
-
-
-
-# Figure 4 ----------------------------------------------------------------
-
-make_figure_4 <- function(df = NULL, initial_cases = 20) {
+make_figure_supp2 <- function(df = NULL, initial_cases = 20) {
   df %>%
     dplyr::filter(num.initial.clusters == initial_cases) %>%
     dplyr::mutate(delay = factor(delay,levels=c("SARS", "Wuhan"),
@@ -77,63 +113,31 @@ make_figure_4 <- function(df = NULL, initial_cases = 20) {
     ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
     ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20)))
 }
+## S1
 
-
-make_figure_4(df = res)
-
-ggplot2::ggsave("inst/plots/fig_4.pdf", height = 5, width = 12)
-
-
-
-# Figure 5 ----------------------------------------------------------------
-
-ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.1,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 20, flip_coords = FALSE,
-                                  facet_scales = "fixed", record_params = F)
-
-ggplot2::ggsave("inst/plots/fig_5.pdf", height = 7, width = 12)
-
-
-# Supplementary figures ---------------------------------------------------
-
-## S1 A and B
-
-make_figure_S1 <- function(){
-  res %>%
-    dplyr::mutate(num.initial.clusters = factor(num.initial.clusters,levels=c(5,20,40),
-                                                labels = c("5 cases","20 cases","40 cases"))) %>%
-    dplyr::mutate(index_R0 = factor(index_R0,levels = c(1.5,2.5,3.5),
-                                    labels = c("R0 = 1.5","R0 = 2.5","R0 = 3.5"))) %>%
-    dplyr::mutate(delay = factor(delay,levels=c("SARS","Wuhan"),labels = c("Short delay","Long delay"))) %>%
-    ggplot2::ggplot(ggplot2::aes(x=control_effectiveness,y=pext,col=as.factor(delay))) +
-    ggplot2::geom_line(aes(linetype=theta)) +
-    ggplot2::geom_point() +
-    ggplot2::facet_grid(num.initial.clusters~ index_R0) +
-    ggplot2::scale_color_brewer(palette = "Set1",name="Delay from onset\n to hospitalisation") +
-    ggplot2::theme_bw() +
-    ggplot2::ylab("Percentage of simulated outbreaks controlled") +
-    ggplot2::xlab("Percentage of contacts traced") +
-    ggplot2::scale_x_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
-    ggplot2::scale_y_continuous(breaks=seq(0,1,0.2),labels=paste0(seq(0,100,20))) +
-    ggplot2::scale_linetype_discrete(name="Percentage of\npre-symptomatic\ntranmission")
-}
-
-make_figure_S1()
+make_figure_S1(res)
 
 ggplot2::ggsave("inst/plots/S_fig_1.pdf", height = 8, width = 12)
 
+## S2
 
-## S2 A and B
+make_figure_S2(res)
 
-make_figure_4(res = res, initial_cases = 5)
+ggplot2::ggsave("inst/plots/S_fig_2.pdf", height = 8, width = 12)
 
-ggplot2::ggsave("inst/plots/S_fig_2_A.pdf", height = 8, width = 12)
+## S3
 
-make_figure_4(res = res, initial_cases = 40)
+make_figure_S3(res)
 
-ggplot2::ggsave("inst/plots/S_fig_2_B.pdf", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_3.pdf", height = 8, width = 12)
 
-## S3 A and B
+## S4
+
+make_figure_S4(res)
+
+ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
+
+## S5
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
                                   filt_control_effectiveness = 0.4, num_initial_clusters = 5, flip_coords = T,
