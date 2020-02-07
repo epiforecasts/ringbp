@@ -6,10 +6,11 @@
 #' @param extinct_threshold filters the minimum proportion of simulations that become extinct per scenario; default 0.8
 #' @param theta_value A Character string defaulting to "15%". Determines the proportion of infections that occur prior to
 #' sypmtom onset.
+#' @param prop_asym A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic
 #' @param facet_scales passed to facet_grid’s scales parameter; default is "fixed"
 #' @param filt_control_effectiveness filters by the minimum control effectiveness proportion; default is 0.4
 #' @param flip_coords flip coordinates of the box plot; default is FALSE
-#' @param num_initial_clusters filters by the number of initial clusters in the scenario; default is 40
+#' @param num_initial_cases filters by the number of initial cases in the scenario; default is 40
 #' @param record_params option to display the params as a caption (used for testing); default FALSE
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom dplyr group_by mutate ungroup filter mutate left_join summarise select
@@ -24,10 +25,11 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                       cap_cases = 5000,
                                       extinct_thresold = 0.8,
                                       theta_value = "15%",
+                                      prop_asym = 0,
                                       facet_scales = "fixed",
                                       filt_control_effectiveness = 0.4,
                                       flip_coords = FALSE,
-                                      num_initial_clusters = 20,
+                                      num_initial_cases = 20,
                                       record_params = FALSE) {
   filt_results <- results %>%
     dplyr::group_by(scenario) %>%
@@ -65,7 +67,8 @@ box_plot_max_weekly_cases <- function(results = NULL,
   df <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
     dplyr::filter(theta == theta_value) %>%
-    dplyr::filter(num.initial.clusters %in% num_initial_clusters) %>%
+    dplyr::filter(num.initial.cases %in% num_initial_cases) %>%
+    dplyr::filter(prop.asym == prop_asym) %>%
     dplyr::group_by(scenario) %>%
     dplyr::ungroup() %>%
     rename_variables_for_plotting()
@@ -80,13 +83,13 @@ box_plot_max_weekly_cases <- function(results = NULL,
                         cols = ggplot2::vars(index_R0),
                         scales = facet_scales) +
     scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
-    ggplot2::scale_y_continuous(breaks = seq(0,1000,25)) +
+    ggplot2::scale_y_continuous(breaks = seq(0,1000,50)) +
     ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"")) +
     #ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
     ggplot2::labs(fill = "Percentage of contacts traced") +
     #ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
-    ggplot2::labs(y = "Maximum weekly cases",
+    ggplot2::labs(y = "Maximum weekly cases in controlled outbreaks",
                   x = "Contacts traced (%)")
   if (flip_coords) {
     plot <- plot + ggplot2::coord_flip()
@@ -96,7 +99,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                                  "extinct_thresold:", extinct_thresold,
                                                  "; filt_control_effectiveness:", filt_control_effectiveness,
                                                  "; cap_cases: ", cap_cases,
-                                                 "; num_initial_clusters: ", num_initial_clusters,
+                                                 "; num_initial_cases: ", num_initial_cases,
                                                  "; facet_scales: ", facet_scales,
                                                  "; 95% conf interval",
                                                  sep = " "))

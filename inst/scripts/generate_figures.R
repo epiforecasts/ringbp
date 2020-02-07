@@ -137,20 +137,27 @@ make_figure_S4(res)
 
 ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12)
 
+
 ## S5
 
-ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 5, flip_coords = T,
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0,
+                                  filt_control_effectiveness = 0.4, num_initial_cases = 5,
                                   facet_scales = "fixed", record_params = F)
 
 ggplot2::ggsave("inst/plots/S_fig_3_A.pdf", height = 5, width = 10)
 
 
-ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0,
+                                  filt_control_effectiveness = 0.4, num_initial_cases = 40,
                                   facet_scales = "fixed", record_params = F)
 
 ggplot2::ggsave("inst/plots/S_fig_3_B.pdf", height = 5, width = 10)
+
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0.1,
+                                  filt_control_effectiveness = 0.4, num_initial_cases = 20,
+                                  facet_scales = "fixed", record_params = F)
+
+ggplot2::ggsave("inst/plots/S_fig_3_C.pdf", height = 5, width = 10)
 
 ## S4
 
@@ -182,8 +189,8 @@ ggplot2::ggsave("inst/plots/S_fig_5.pdf", height = 8, width = 12)
 ## S6
 
 ringbp::box_plot_max_weekly_cases(results = results_dispersion_flu, cap_cases = 5000, extinct_thresold = 0.05,
-                                  filt_control_effectiveness = 0.4, num_initial_clusters = 40, flip_coords = T,
-                                  facet_scales = "fixed", record_params = F)
+                                  filt_control_effectiveness = 0.4, num_initial_cases = 40,
+                                  flip_coords = T, prop_asym = 0, facet_scales = "fixed", record_params = F)
 
 ggplot2::ggsave("inst/plots/S_fig_6.pdf", height = 8, width = 12)
 
