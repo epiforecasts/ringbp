@@ -4,18 +4,18 @@
 \alias{branch_setup}
 \title{Set up initial cases for branching process}
 \usage{
-branch_setup(num.initial.cases, num.initial.clusters, incfn, delayfn, k)
+branch_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 }
 \arguments{
 \item{num.initial.cases}{Number of initial cases}
-
-\item{num.initial.clusters}{Number of initial clusters}
 
 \item{incfn}{A function that samples from the incubation period}
 
 \item{delayfn}{A function that samples from the onset-to-hospitalisation delay}
 
 \item{k}{The skew parameter for sampling the serial interval from the incubation period}
+
+\item{num.initial.clusters}{Number of initial clusters}
 }
 \value{
 

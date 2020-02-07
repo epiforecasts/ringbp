@@ -6,13 +6,13 @@
 \usage{
 branch_step_single(
   case_data,
-  total.clusters,
   total.cases,
   extinct,
   disp.iso,
   disp.com,
   r0isolated,
   r0community,
+  prop.asym,
   incfn,
   delayfn,
   prop.ascertain,
@@ -22,8 +22,6 @@ branch_step_single(
 }
 \arguments{
 \item{case_data}{A tibble of cases so far, can be created initially with branch_setup}
-
-\item{total.clusters}{Number of clusters in case_data}
 
 \item{total.cases}{Number of cases in case_data}
 

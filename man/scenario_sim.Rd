@@ -21,7 +21,7 @@ scenario_sim(
   delay_shape,
   delay_scale,
   num.initial.cases,
-  num.initial.clusters
+  prop.asym
 )
 }
 \arguments{
@@ -48,14 +48,6 @@ scenario_sim(
 \item{num.initial.cases}{Initial number of cases in each initial cluster}
 
 \item{num.initial.clusters}{Number of initial clusters}
-
-\item{incub_shape}{Mean of incubation period distribution}
-
-\item{incub_scale}{scale of incubation period distribution}
-
-\item{inf_shape}{shape of time until infectious distribution}
-
-\item{inf_scale}{scale of time until infectious distribution}
 }
 \value{
 
