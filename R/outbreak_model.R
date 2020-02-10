@@ -13,21 +13,35 @@
 #' @examples
 #'
 #'\dontrun{
-#'outbreak_model(num.initial.cases = 5,
-#'cap_max_days = 365,
-#'cap_cases = 2000,
-#'r0isolated = 0,
-#'r0community = 2.5,
-#'disp.iso = 1
-#'disp.com = 0.16
-#'k = 0.7
-#'delay_shape = 2.5
-#'delay_scale = 5
-#'prop.asym = 0)
+#' incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+#' # delay distribution sampling function
+#' delayfn <- dist_setup(2, 4)
+#' # generate initial cases
+#' case_data <- outbreak_setup(num.initial.cases = 5,
+#'                             incfn=incfn,
+#'                             delayfn = delayfn,
+#'                             k=1.95,
+#'                             prop.asym=0)
+#' # generate next generation of cases
+#' case_data <- outbreak_step(case_data = case_data,
+#'                            disp.iso = 1,
+#'                            disp.com = 0.16,
+#'                            r0isolated = 0,
+#'                            r0community = 2.5,
+#'                            prop.asym = 0,
+#'                            incfn = incfn,
+#'                            delayfn = delayfn,
+#'                            prop.ascertain = 0,
+#'                            k = 1.95,
+#'                            quarantine = FALSE)
 #'}
-outbreak_model <- function(num.initial.cases, prop.ascertain,
-                           cap_max_days, cap_cases, r0isolated, r0community, disp.iso, disp.com,
-                           k, delay_shape, delay_scale, prop.asym) {
+outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
+                           cap_max_days = NULL, cap_cases = NULL,
+                           r0isolated = NULL, r0community = NULL,
+                           disp.iso = NULL, disp.com = NULL,
+                           k = NULL, delay_shape = NULL,
+                           delay_scale = NULL, prop.asym = NULL,
+                           quarantine = NULL) {
 
   # Set up functions to sample from distributions
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272) # incubation period sampling function
@@ -61,7 +75,8 @@ outbreak_model <- function(num.initial.cases, prop.ascertain,
                              incfn = incfn,
                              delayfn = delayfn,
                              prop.ascertain = prop.ascertain,
-                             k = k,quarantine = FALSE,
+                             k = k,
+                             quarantine = quarantine,
                              prop.asym = prop.asym)
 
 

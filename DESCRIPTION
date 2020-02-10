@@ -24,16 +24,12 @@ Depends:
     R (>= 3.5.0)
 Imports: 
     magrittr,
-    foreach,
-    parallel,
-    doMC,
     dplyr,
     data.table,
     tidyr,
     furrr,
     purrr,
     ggplot2,
-    ggthemes,
     patchwork,
     sn,
     ggrepel,

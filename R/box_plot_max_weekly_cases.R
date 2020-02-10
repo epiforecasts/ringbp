@@ -148,7 +148,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
 #' @author Sam Abbott
 #' @examples
 #'
-rename_variables_for_plotting <- function(df) {
+rename_variables_for_plotting <- function(df = NULL) {
 
   df %>%
     dplyr::mutate(delay=factor(delay, levels=c("SARS","Wuhan"),

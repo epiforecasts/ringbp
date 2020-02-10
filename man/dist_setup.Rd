@@ -4,7 +4,7 @@
 \alias{dist_setup}
 \title{Create partial function to sample from gamma distributions}
 \usage{
-dist_setup(dist_shape, dist_scale)
+dist_setup(dist_shape = NULL, dist_scale = NULL)
 }
 \arguments{
 \item{dist_shape}{numeric shape parameter of Weibull distribution}

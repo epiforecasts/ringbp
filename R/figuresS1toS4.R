@@ -19,9 +19,9 @@
 #'
 #' make_figure_S1(results)
 #' }
-make_figure_S1 <- function(res=NULL){
+make_figure_S1 <- function(res = NULL){
 
-  sub_plotS1 <- purrr::partial(sub_plot,res.in = res,index_R0.in = c(1.5,2.5,3.5),col.by = "index_R0")
+  sub_plotS1 <- purrr::partial(ringbp::sub_plot,res.in = res,index_R0.in = c(1.5,2.5,3.5),col.by = "index_R0")
 
   # Initial cases
   index_ic <- sub_plotS1(facet.by = "num.initial.cases")
@@ -76,9 +76,9 @@ make_figure_S1 <- function(res=NULL){
 #'
 #' make_figure_S1(results)
 #' }
-make_figure_S2 <- function(res=NULL){
+make_figure_S2 <- function(res = NULL){
 
-  sub_plotS2 <- purrr::partial(sub_plot,res.in = res,num.initial.cases = c(5,20,40),col.by = "num.initial.cases")
+  sub_plotS2 <- purrr::partial(ringbp::sub_plot,res.in = res,num.initial.cases = c(5,20,40),col.by = "num.initial.cases")
 
   # delay
   index_dl <- sub_plotS2(facet.by = "delay")
@@ -132,9 +132,9 @@ make_figure_S2 <- function(res=NULL){
 #'
 #' make_figure_S1(results)
 #' }
-make_figure_S3 <- function(res=NULL){
+make_figure_S3 <- function(res = NULL){
 
-  sub_plotS3 <- purrr::partial(sub_plot,res.in = res,delay = c("SARS","Wuhan"),col.by = "delay")
+  sub_plotS3 <- purrr::partial(ringbp::sub_plot,res.in = res,delay = c("SARS","Wuhan"),col.by = "delay")
 
   # theta
   index_th <- sub_plotS3(facet.by="theta")
@@ -183,9 +183,9 @@ make_figure_S3 <- function(res=NULL){
 #'
 #' make_figure_S1(results)
 #' }
-make_figure_S4 <- function(res){
+make_figure_S4 <- function(res = NULL){
 
-  sub_plotS4 <- purrr::partial(sub_plot,res.in = res,theta.in = c("<1%","15%","30%"),col.by = "theta")
+  sub_plotS4 <- purrr::partial(ringbp::sub_plot,res.in = res,theta.in = c("<1%","15%","30%"),col.by = "theta")
 
   index_as <- sub_plotS4(facet.by = "prop.asym")
   as1 <- sub_plotS4(facet.by = "prop.asym",prop.asym.in=0.1)

@@ -4,7 +4,7 @@
 \alias{make_figure_3a}
 \title{Construct Figure 3a from manuscript}
 \usage{
-make_figure_3a(df)
+make_figure_3a(df = NULL)
 }
 \arguments{
 \item{df}{}

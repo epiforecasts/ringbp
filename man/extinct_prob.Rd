@@ -4,7 +4,7 @@
 \alias{extinct_prob}
 \title{Calculate proportion of runs that have controlled outbreak}
 \usage{
-extinct_prob(outbreak_df_week, cap_cases)
+extinct_prob(outbreak_df_week = NULL, cap_cases = NULL)
 }
 \arguments{
 \item{outbreak_df_week}{data.table  weekly cases producted by the outbreak model}

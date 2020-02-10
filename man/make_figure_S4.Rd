@@ -4,7 +4,7 @@
 \alias{make_figure_S4}
 \title{Construct Figure S4 from the supplementary material}
 \usage{
-make_figure_S4(res)
+make_figure_S4(res = NULL)
 }
 \arguments{
 \item{res}{Data frame of results from scenarios from generate_analysis.R}

@@ -8,7 +8,7 @@
 #' @importFrom purrr partial
 #' @examples
 #'
-dist_setup <- function(dist_shape,dist_scale){
+dist_setup <- function(dist_shape = NULL, dist_scale = NULL){
   out <- purrr::partial(rweibull,
                  shape = dist_shape,
                  scale = dist_scale)
@@ -26,7 +26,7 @@ dist_setup <- function(dist_shape,dist_scale){
 #' @importFrom sn rsn
 #' @examples
 #'
-inf_fn <- function(inc_samp,k){
+inf_fn <- function(inc_samp = NULL, k = NULL){
   out <- sn::rsn(n=length(inc_samp),xi = inc_samp,omega = 2,alpha = k)
   out <- ifelse(out<1,1,out)
   return(out)
@@ -40,7 +40,7 @@ inf_fn <- function(inc_samp,k){
 #' @inheritParams detect_extinct
 #' @examples
 #'
-extinct_prob <- function(outbreak_df_week,cap_cases){
+extinct_prob <- function(outbreak_df_week  = NULL,cap_cases  = NULL){
   n.sim = max(outbreak_df_week$sim)
   out <- outbreak_df_week %>%
     detect_extinct(cap_cases) %>% # new variable extinct = 1 if cases in weeks 10-12 all 0, 0 if not
@@ -59,7 +59,7 @@ extinct_prob <- function(outbreak_df_week,cap_cases){
 #' @importFrom dplyr group_by filter summarise ungroup
 #' @examples
 #'
-detect_extinct <- function(outbreak_df_week, cap_cases) {
+detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
   outbreak_df_week %>%
     dplyr::group_by(sim) %>% # group by simulation run
     dplyr::filter(week %in% 12:16) %>%

@@ -7,7 +7,7 @@
 make_figure_4(res = NULL)
 }
 \arguments{
-\item{df}{}
+\item{res}{}
 }
 \value{
 

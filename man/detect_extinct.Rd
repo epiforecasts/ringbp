@@ -4,7 +4,7 @@
 \alias{detect_extinct}
 \title{Calculate proportion of outbreaks that went extinct}
 \usage{
-detect_extinct(outbreak_df_week, cap_cases)
+detect_extinct(outbreak_df_week = NULL, cap_cases = NULL)
 }
 \arguments{
 \item{outbreak_df_week}{data.table  weekly cases producted by the outbreak model}

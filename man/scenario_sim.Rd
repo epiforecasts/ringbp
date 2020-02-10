@@ -5,23 +5,20 @@
 \title{Run a specified number of simulations with identical parameters}
 \usage{
 scenario_sim(
-  n.sim,
-  prop.ascertain,
-  cap_max_days,
-  cap_cases,
-  r0isolated,
-  r0community,
-  disp.iso,
-  disp.com,
-  mu_ip,
-  sd_ip,
-  k,
-  mu_si,
-  sd_si,
-  delay_shape,
-  delay_scale,
-  num.initial.cases,
-  prop.asym
+  n.sim = NULL,
+  prop.ascertain = NULL,
+  cap_max_days = NULL,
+  cap_cases = NULL,
+  r0isolated = NULL,
+  r0community = NULL,
+  disp.iso = NULL,
+  disp.com = NULL,
+  k = NULL,
+  delay_shape = NULL,
+  delay_scale = NULL,
+  num.initial.cases = NULL,
+  prop.asym = NULL,
+  quarantine = NULL
 )
 }
 \arguments{
@@ -56,6 +53,21 @@ scenario_sim(
 Run a specified number of simulations with identical parameters
 }
 \examples{
+\dontrun{
+res <- scenario_sim(n.sim = 5,
+num.initial.cases = 5,
+cap_max_days = 365,
+cap_cases = 2000,
+r0isolated = 0,
+r0community = 2.5,
+disp.iso = 1,
+disp.com = 0.16,
+k = 0.7,
+delay_shape = 2.5,
+delay_scale = 5,
+prop.asym = 0,
+prop.ascertain = 0)
+#' }
 
 }
 \author{

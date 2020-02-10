@@ -18,10 +18,26 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' res <- scenario_sim(n.sim = 5,
+#' num.initial.cases = 5,
+#' cap_max_days = 365,
+#' cap_cases = 2000,
+#' r0isolated = 0,
+#' r0community = 2.5,
+#' disp.iso = 1,
+#' disp.com = 0.16,
+#' k = 0.7,
+#' delay_shape = 2.5,
+#' delay_scale = 5,
+#' prop.asym = 0,
+#' prop.ascertain = 0)
+#' #' }
 #'
-scenario_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
-                      r0community,disp.iso,disp.com,mu_ip,sd_ip,k,
-                      mu_si,sd_si,delay_shape,delay_scale,num.initial.cases,prop.asym){
+scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
+                         r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,k = NULL,
+                         delay_shape = NULL, delay_scale = NULL, num.initial.cases = NULL, prop.asym = NULL,
+                         quarantine = NULL){
 
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
@@ -35,7 +51,8 @@ scenario_sim <- function(n.sim,prop.ascertain,cap_max_days,cap_cases,r0isolated,
                                              delay_shape = delay_shape,
                                              delay_scale = delay_scale,
                                              k = k,
-                                             prop.asym = prop.asym))
+                                             prop.asym = prop.asym,
+                                             quarantine = quarantine))
 
 
   # bind output together and add simulation index

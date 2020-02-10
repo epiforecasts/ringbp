@@ -4,7 +4,7 @@ library(tidyverse)
 # Make the log file
 logs <- file.path("log.txt")
 con <- file(logs, open = "wt")
-# Send Output to log
+# # Send Output to log
 sink(con)
 sink(con, type = "message")
 
@@ -33,7 +33,8 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   cap_cases = 5000,
                                   r0isolated = 0,
                                   disp.iso=1,
-                                  disp.com = 0.16) # serial interval sd
+                                  disp.com = 0.16,
+                                  quarantine = FALSE)
 
 
 ## Default is to run sequntially on a single core
@@ -44,7 +45,7 @@ future::plan("multiprocess")
 
 
 ## Run paramter sweep
-sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1000)
+sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1000,show_progress = TRUE)
 
 saveRDS(sweep_results,file = "data-raw/res.rds")
 

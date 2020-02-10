@@ -31,8 +31,8 @@
 #' # generate next generation of cases
 #' case_data <- outbreak_step(case_data,1,0.16,0,2.5,0,incfn,delayfn,0,1.95,FALSE)
 #'}
-outbreak_step <- function(case_data,disp.iso,disp.com,r0isolated,r0community,prop.asym,
-                        incfn,delayfn,prop.ascertain,k,quarantine){
+outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0isolated = NULL, r0community = NULL,
+                          prop.asym = NULL, incfn = NULL, delayfn = NULL, prop.ascertain = NULL, k = NULL, quarantine = NULL){
 
   # A vectorised version of isTRUE
   vect_isTRUE <- function(x) {

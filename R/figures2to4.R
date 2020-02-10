@@ -21,10 +21,6 @@ make_figure_2a <- function(){
   out %<>% tidyr::gather("dist","value",-x)
 
 
-  out %>% dplyr::mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
-                                      labels=c("Short delay","Long delay")))
-
-
   means <- data.frame(x=c(3.83,9.1),dist=c("delay_sars","delay_wuhan")) %>%
     dplyr::mutate(dist = factor(dist,levels=c("delay_sars","delay_wuhan"),
                                 labels=c("Short delay","Long delay")))
@@ -106,7 +102,7 @@ make_figure_2 <- function(){
 #'\dontrun{
 #'make_figure_3a()
 #'}
-make_figure_3a <- function(df){
+make_figure_3a <- function(df = NULL){
   pl <- df %>%
     dplyr::filter(num.initial.cases==20,
                   theta == "15%",
@@ -138,7 +134,7 @@ make_figure_3a <- function(df){
 #'\dontrun{
 #'make_figure_3b()
 #'}
-make_figure3b <- function(df){
+make_figure3b <- function(df = NULL){
   df_extracted <-  df %>%
     dplyr::mutate(effective_r0 = purrr::map(
       sims,
@@ -182,7 +178,7 @@ make_figure3b <- function(df){
 
 #' Construct Figure 4 from the manuscript
 #'
-#' @param df
+#' @param res
 #'
 #' @return
 #' @export
