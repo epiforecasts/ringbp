@@ -45,6 +45,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
 
   # Set up functions to sample from distributions
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272) # incubation period sampling function
+  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
   delayfn <- dist_setup(delay_shape, delay_scale)
 
   # Set initial values for loop indices
