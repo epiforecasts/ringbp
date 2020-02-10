@@ -13,7 +13,7 @@ library(cowplot)
 
 # Figure 2 ----------------------------------------------------------------
 
-ringbp::mvt_plot()
+ringbp::make_figure_2()
 
 ggplot2::ggsave("inst/plots/fig_2.pdf", height = 5.5, width = 10, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/fig_2.png", height = 5.5, width = 10)
@@ -30,29 +30,10 @@ res <- sweep_results %>%
 
 # Figure 3 ----------------------------------------------------------------
 
-make_figure_3 <- function(df){
-  df %>%
-    dplyr::filter(num.initial.cases==20,
-                  theta == "15%",
-                  delay == "SARS",
-                  prop.asym==0) %>%
-    dplyr::select(control_effectiveness,index_R0,pext) %>%
-    ggplot(aes(x=control_effectiveness,y=pext,color=as.factor(index_R0))) + geom_line(size=0.75) +
-    geom_point(shape=21,col="black",aes(fill=as.factor(index_R0)),size=3) +
-    scale_fill_manual(guide="none",values = c("red","black","firebrick4")) +
-    scale_color_manual(values = c("red","black","firebrick4"),name="Reproduction\nnumber")  + theme_cowplot() +
-    ylab("Simulated outbreaks controlled (%)") +
-    xlab("Contacts traced (%)") + scale_x_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    scale_y_continuous(breaks=seq(0,1,0.2),labels=seq(0,100,20)) +
-    theme(legend.position = "bottom") +
-    labs(tag = "A")
-}
+fig_3_a <- make_figure_3a(df = res)
+fig_3_b <- make_figure3b(df = res) + ggplot2::labs(tag = "B")
 
-
-fig_3_a <- make_figure_3(df = res)
-fig_3_b <- make_figure3b(df = res) + labs(tag = "B")
-
-fig_3_a + fig_3_b + plot_layout(guides = "keep")
+fig_3_a + fig_3_b + patchwork::plot_layout(guides = "keep")
 
 ggplot2::ggsave("inst/plots/fig_3.pdf", height = 5, width = 8, useDingbats=FALSE)
 ggplot2::ggsave("inst/plots/fig_3.png", height = 5, width = 8)
@@ -110,29 +91,29 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, ext
                                   filt_control_effectiveness = 0.4, num_initial_cases = 5,
                                   facet_scales = "fixed", record_params = F, y_lim = 100)
 
-ggplot2::ggsave("inst/plots/S_fig_3_A.pdf", height = 5, width = 10, useDingbats=FALSE)
-ggplot2::ggsave("inst/plots/S_fig_3_A.png", height = 5, width = 10)
+ggplot2::ggsave("inst/plots/S_fig_5_A.pdf", height = 5, width = 10, useDingbats=FALSE)
+ggplot2::ggsave("inst/plots/S_fig_5_A.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 40,
                                   facet_scales = "fixed", record_params = F, y_lim = 450)
 
-ggplot2::ggsave("inst/plots/S_fig_3_B.pdf", height = 5, width = 10, useDingbats=FALSE)
-ggplot2::ggsave("inst/plots/S_fig_3_B.png", height = 5, width = 10)
+ggplot2::ggsave("inst/plots/S_fig_5_B.pdf", height = 5, width = 10, useDingbats=FALSE)
+ggplot2::ggsave("inst/plots/S_fig_5_B.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000, extinct_thresold = 0.05, prop_asym = 0.1,
                                   filt_control_effectiveness = 0.4, num_initial_cases = 20,
                                   facet_scales = "fixed", record_params = F, y_lim = 1000)
 
-ggplot2::ggsave("inst/plots/S_fig_3_C.pdf", height = 5, width = 10, useDingbats=FALSE)
-ggplot2::ggsave("inst/plots/S_fig_3_C.png", height = 5, width = 10)
+ggplot2::ggsave("inst/plots/S_fig_5_C.pdf", height = 5, width = 10, useDingbats=FALSE)
+ggplot2::ggsave("inst/plots/S_fig_5_C.png", height = 5, width = 10)
 
 ## S6
 
-ringbp::serial_interval_plot()
+ringbp::make_figure_S6()
 
-ggplot2::ggsave("inst/plots/S_fig_4.pdf", height = 8, width = 12, useDingbats=FALSE)
-ggplot2::ggsave("inst/plots/S_fig_4.png", height = 8, width = 12)
+ggplot2::ggsave("inst/plots/S_fig_6.pdf", height = 8, width = 12, useDingbats=FALSE)
+ggplot2::ggsave("inst/plots/S_fig_6.png", height = 8, width = 12)
 
 ## Get data for supplement looking at flu like dispersion
 
@@ -145,7 +126,7 @@ res_flu <- results_dispersion_flu  %>%
 
 ## S7
 
-dispersion_plot()
+ringbp::make_figure_S7()
 
 # remaking fig 3 with flu dispersion
 

@@ -7,14 +7,15 @@
 box_plot_max_weekly_cases(
   results = NULL,
   cap_cases = 5000,
-  extinct_thresold = 0.8,
+  extinct_thresold = 0.1,
   theta_value = "15\%",
   prop_asym = 0,
   facet_scales = "fixed",
   filt_control_effectiveness = 0.4,
   flip_coords = FALSE,
   num_initial_cases = 20,
-  record_params = FALSE
+  record_params = FALSE,
+  y_lim = NULL
 )
 }
 \arguments{
@@ -36,6 +37,8 @@ sypmtom onset.}
 \item{num_initial_cases}{filters by the number of initial cases in the scenario; default is 40}
 
 \item{record_params}{option to display the params as a caption (used for testing); default FALSE}
+
+\item{y_lim}{Numeric the limit of the y axis to show.}
 
 \item{extinct_threshold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
 }

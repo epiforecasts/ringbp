@@ -2,7 +2,7 @@
 % Please edit documentation in R/outbreak_model.R
 \name{outbreak_model}
 \alias{outbreak_model}
-\title{Run branching process}
+\title{Run a single instance of the branching process model}
 \usage{
 outbreak_model(
   num.initial.cases,
@@ -20,42 +20,43 @@ outbreak_model(
 )
 }
 \arguments{
-\item{num.initial.cases}{Initial number of cases}
+\item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
-\item{prop.ascertain}{Probability that cases are ascertained by contact tracing}
+\item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
 
-\item{cap_max_days}{Maximum number of days to run process for}
+\item{r0community}{numeric reproduction number for non-isolated cases (must be >0)}
 
-\item{cap_cases}{Maximum number of cases to run process for}
+\item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
-\item{r0isolated}{basic reproduction number for isolated cases}
+\item{disp.com}{numeric dispersion parameter for non-isolated cases (must be >0)}
 
-\item{r0community}{basic reproduction number for non-isolated cases}
+\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 
-\item{disp.iso}{dispersion parameter for negative binomial distribution for isolated cases}
+\item{delay_shape}{numeric shape parameter of delay distribution}
 
-\item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
-
-\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
-
-\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
-
-\item{incub_shape}{shape of incubation period distribution}
-
-\item{incub_scale}{scale of incubation period distribution}
-
-\item{inf_shape}{shape of time until infectious distribution}
-
-\item{inf_scale}{scale of time until infectious distribution}
+\item{delay_scale}{numeric scale parameter of delay distribution}
 }
 \value{
-
+data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
 }
 \description{
-Run branching process
+Run a single instance of the branching process model
 }
 \examples{
 
+\dontrun{
+outbreak_model(num.initial.cases = 5,
+cap_max_days = 365,
+cap_cases = 2000,
+r0isolated = 0,
+r0community = 2.5,
+disp.iso = 1
+disp.com = 0.16
+k = 0.7
+delay_shape = 2.5
+delay_scale = 5
+prop.asym = 0)
+}
 }
 \author{
 Joel Hellewell
