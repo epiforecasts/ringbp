@@ -36,7 +36,7 @@ library(ggplot2)
 res <- ringbp::scenario_sim(n.sim = 10, num.initial.cases = 1,prop.asym=0,
                      prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
                      r0isolated = 0, r0community = 2.5, disp.com = 0.16, disp.iso = 1, delay_shape = 1.651524,
-                     delay_scale = 4.287786,k = 0)
+                     delay_scale = 4.287786,k = 0, quarantine = FALSE)
 
 # Plot of weekly cases
 ggplot2::ggplot(data=res, ggplot2::aes(x=week, y=cumulative, col = as.factor(sim))) +
