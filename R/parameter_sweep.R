@@ -72,7 +72,7 @@
 #' sweep_results
 #' }
 parameter_sweep <- function(scenarios = NULL, samples = 1,
-                            sim_fn = NULL, show_progress = TRUE){
+                            sim_fn = NULL, show_progress = TRUE) {
 
   safe_sim_fn <- purrr::safely(sim_fn)
 

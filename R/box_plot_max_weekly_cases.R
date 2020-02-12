@@ -35,7 +35,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                       y_lim = NULL) {
   filt_results <- results %>%
     dplyr::group_by(scenario) %>%
-    dplyr::mutate(prob_extinct = extinct_prob(sims[[1]],cap_cases = cap_cases)) %>%
+    dplyr::mutate(prob_extinct = extinct_prob(sims[[1]], cap_cases = cap_cases)) %>%
     dplyr::ungroup() %>%
     dplyr::filter(prob_extinct >= extinct_thresold) %>%
     dplyr::group_by(scenario) %>%
@@ -92,13 +92,13 @@ box_plot_max_weekly_cases <- function(results = NULL,
     ggplot2::facet_grid(rows = ggplot2::vars(factor(delay)),
                         cols = ggplot2::vars(index_R0),
                         scales = facet_scales) +
-    ggplot2::scale_fill_gradient(low = "white",high = "deepskyblue3",guide="none") +
-    ggplot2::scale_y_continuous(breaks = seq(0,1000,50)) +
-    ggplot2::scale_x_discrete(breaks = seq(0,1,0.2),labels = paste0(seq(0,100,20),"")) +
-    #ggplot2::theme_bw() +
-    ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5)) +
+    ggplot2::scale_fill_gradient(low = "white", high = "deepskyblue3", guide = "none") +
+    ggplot2::scale_y_continuous(breaks = seq(0, 1000, 50)) +
+    ggplot2::scale_x_discrete(breaks = seq(0, 1, 0.2),
+                              labels = paste0(seq(0, 100, 20), "")) +
+    ggplot2::theme(legend.position = "none",
+                   plot.title = ggplot2::element_text(hjust = 0.5)) +
     ggplot2::labs(fill = "Percentage of contacts traced") +
-    #ggplot2::ggtitle("Maximum number of weekly cases in controlled outbreaks") +
     ggplot2::labs(y = "Maximum weekly cases in controlled outbreaks",
                   x = "Contacts traced (%)")
   if (flip_coords) {
@@ -129,9 +129,9 @@ box_plot_max_weekly_cases <- function(results = NULL,
 
   plot <- plot +
     ggrepel::geom_label_repel(data = text_positions,
-                              ggplot2::aes(label=label_extinct),
-                              col='black', fill = "white",
-                              size=4,
+                              ggplot2::aes(label = label_extinct),
+                              col = "black", fill = "white",
+                              size = 4,
                               point.padding = NA)
 
 
@@ -151,8 +151,10 @@ box_plot_max_weekly_cases <- function(results = NULL,
 rename_variables_for_plotting <- function(df = NULL) {
 
   df %>%
-    dplyr::mutate(delay=factor(delay, levels=c("SARS","Wuhan"),
-                               labels= c("Short isolation delay","Long isolation delay"))) %>%
+    dplyr::mutate(delay = factor(delay,
+                                 levels = c("SARS", "Wuhan"),
+                                 labels = c("Short isolation delay",
+                                           "Long isolation delay"))) %>%
     dplyr::mutate(index_R0 = index_R0 %>%
                     paste0("R0 = ", .))
 }

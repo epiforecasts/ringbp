@@ -44,9 +44,13 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272) # incubation period sampling function
+  # incubation period sampling function
+  incfn <- dist_setup(dist_shape = 2.322737,
+                      dist_scale = 6.492272)
   # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
-  delayfn <- dist_setup(delay_shape, delay_scale)
+  # onset to isolation delay sampling function
+  delayfn <- dist_setup(delay_shape,
+                        delay_scale)
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
@@ -56,7 +60,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   # Initial setup
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
                             incfn = incfn,
-                            prop.asym= prop.asym,
+                            prop.asym = prop.asym,
                             delayfn = delayfn,
                             k = k)
 
@@ -68,7 +72,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   # Model loop
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
-    out <- outbreak_step(case_data=case_data,
+    out <- outbreak_step(case_data = case_data,
                              disp.iso = disp.iso,
                              disp.com = disp.com,
                              r0isolated = r0isolated,
@@ -90,25 +94,29 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   }
 
   # Prepare output, group into weeks
-  weekly_cases <- case_data[,week := floor(onset / 7)
-                            ][, .(weekly_cases = .N),by=week
+  weekly_cases <- case_data[, week := floor(onset / 7)
+                            ][, .(weekly_cases = .N), by = week
                               ]
   # maximum outbreak week
-  max_week <- floor(cap_max_days/7)
+  max_week <- floor(cap_max_days / 7)
   # weeks with 0 cases in 0:max_week
   missing_weeks <- (0:max_week)[!(0:max_week %in% weekly_cases$week)]
 
   # add in missing weeks if any are missing
-  if(length(missing_weeks>0)){
-    weekly_cases <- data.table::rbindlist(list(weekly_cases,data.table(week=missing_weeks,weekly_cases=0)))
+  if (length(missing_weeks > 0)) {
+    weekly_cases <- data.table::rbindlist(list(weekly_cases,
+                                               data.table(week = missing_weeks,
+                                                          weekly_cases = 0)))
   }
   # order and sum up
-  weekly_cases <- weekly_cases[order(week)][,cumulative := cumsum(weekly_cases)]
+  weekly_cases <- weekly_cases[order(week)
+                               ][, cumulative := cumsum(weekly_cases)]
   # cut at max_week
   weekly_cases <- weekly_cases[week <= max_week]
 
   # Add effective R0
-  weekly_cases <- weekly_cases[,   `:=`(effective_r0 = mean(effective_r0_vect, na.rm = TRUE),
+  weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
+                                                          na.rm = TRUE),
                                         cases_per_gen = list(cases_in_gen_vect))]
   # return
   return(weekly_cases)
