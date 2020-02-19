@@ -132,7 +132,8 @@ box_plot_max_weekly_cases <- function(results = NULL,
                               ggplot2::aes(label = label_extinct),
                               col = "black", fill = "white",
                               size = 4,
-                              point.padding = NA)
+                              point.padding = NA) +
+    ggplot2::coord_cartesian(ylim=c(0,y_lim))
 
 
   return(plot)

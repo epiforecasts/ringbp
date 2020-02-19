@@ -28,7 +28,7 @@ make_figure_2a <- function() {
   out %<>% tidyr::gather("dist", "value", -x)
 
 
-  means <- data.frame(x = c(3.83, 9.1),
+  medians <- data.frame(x = c(3.43, 8.09),
                       dist = c("delay_sars", "delay_wuhan")) %>%
     dplyr::mutate(dist = factor(dist,
                                 levels = c("delay_sars",
@@ -56,7 +56,7 @@ make_figure_2a <- function() {
                                palette = "Set1") +
     ggplot2::scale_colour_brewer(guide = "none",
                                  palette = "Set1") +
-    ggplot2::geom_vline(data = means,
+    ggplot2::geom_vline(data = medians,
                         ggplot2::aes(xintercept = x,
                                      col = as.factor(dist)),
                         lty = 2,
