@@ -35,7 +35,7 @@
 #'                            k = 1.95,
 #'                            quarantine = FALSE)
 #'}
-outbreak_model <- function(num.initial.cases, prop.ascertainL,
+outbreak_model <- function(num.initial.cases, prop.ascertain,
                            cap_max_days, cap_cases,
                            r0isolated, r0community,
                            disp.iso, disp.com,
