@@ -53,6 +53,41 @@ test_that("A basic sim returns the correct object", {
 
 
 
+
+test_that("Sim with multiple infectors makes senes", {
+  
+  set.seed(20212310)
+  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  # delay distribution sampling function
+  delayfn <- dist_setup(2, 4)
+  # generate initial cases
+  case_data <- outbreak_setup(num.initial.cases = 2,
+                              incfn=incfn,
+                              delayfn = delayfn,
+                              k=1.95,
+                              prop.asym=0)
+  
+  # generate next generation of cases
+  case_data2 <- outbreak_step(case_data = case_data,
+                              disp.iso = 1,
+                              disp.com = 0.16,
+                              r0isolated = 0,
+                              r0community = 10000, # almost guarentees that both index cases will create infections
+                              prop.asym = 0,
+                              incfn = incfn,
+                              delayfn = delayfn,
+                              prop.ascertain = 0,
+                              k = 1.95,
+                              quarantine = FALSE)
+  
+  expect_true(nrow(case_data2$cases) > 1)
+
+  expect_true(as.vector(table(case_data2$cases$infector))[1] == 2)
+  
+  expect_true(all(as.vector(table(case_data2$cases$infector))[2:3] > 1))
+})
+
+
 test_that("R0isolated is working properly", {
   
   set.seed(20200410)
@@ -98,4 +133,6 @@ test_that("R0isolated is working properly", {
                               quarantine = FALSE)
   
   expect_true(nrow(case_data3$cases) > 1)
+  
+})
   
