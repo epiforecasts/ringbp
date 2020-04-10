@@ -126,7 +126,7 @@ make_figure_2 <- function() {
 
 #' Construct Figure 3a from manuscript
 #'
-#' @param df
+#' @param df The results data frame
 #'
 #' @return
 #' @export
@@ -241,7 +241,7 @@ make_figure3b <- function(df = NULL) {
 
 #' Construct Figure 4 from the manuscript
 #'
-#' @param res
+#' @param res The results dataframe
 #'
 #' @return
 #' @export
