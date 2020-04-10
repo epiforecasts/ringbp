@@ -25,8 +25,13 @@ test_that("A basic sim setup returns the correct object", {
 })
 
 
-test_that("asym arg works properly"){
+test_that("asym arg works properly", {
   
+  
+  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  # delay distribution sampling function
+  delayfn <- dist_setup(2, 4)
+  # generate initial cases
   # All asymptomatics
   all_asym <- outbreak_setup(num.initial.cases = 5,
                               incfn=incfn,
