@@ -69,7 +69,6 @@ make_figure_S6 <- function() {
 #' @export
 #' @importFrom tidyr gather unnest
 #' @importFrom dplyr mutate filter
-#' @importFrom tibble tibble
 #' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer
 #' @examples
 #'
