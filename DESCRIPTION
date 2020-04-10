@@ -35,4 +35,5 @@ Imports:
     ggrepel,
     cowplot
 Suggests:
-    future
+    future,
+    testthat
