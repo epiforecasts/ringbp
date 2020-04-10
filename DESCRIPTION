@@ -1,7 +1,7 @@
 Package: ringbp
 Type: Package
 Title: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person(given = "Joel Hellewell",
            role = c("aut", "cre"),
@@ -32,6 +32,7 @@ Imports:
     ggplot2,
     patchwork,
     sn,
+    tibble,
     ggrepel,
     cowplot
 Suggests:
