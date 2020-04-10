@@ -7,7 +7,7 @@
 make_figure_3a(df = NULL)
 }
 \arguments{
-\item{df}{}
+\item{df}{The results data frame}
 }
 \value{
 

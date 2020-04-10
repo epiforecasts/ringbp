@@ -7,7 +7,7 @@
 make_figure_4(res = NULL)
 }
 \arguments{
-\item{res}{}
+\item{res}{The results dataframe}
 }
 \value{
 
