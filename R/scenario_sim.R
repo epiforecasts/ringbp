@@ -34,10 +34,10 @@
 #' prop.ascertain = 0)
 #' #' }
 #'
-scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
-                         r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL, k = NULL,
-                         delay_shape = NULL, delay_scale = NULL, num.initial.cases = NULL, prop.asym = NULL,
-                         quarantine = NULL) {
+scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
+                         r0isolated, r0community, disp.iso, disp.com, k,
+                         delay_shape, delay_scale, num.initial.cases, prop.asym,
+                         quarantine) {
 
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
