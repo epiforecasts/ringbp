@@ -37,13 +37,14 @@
 #'                            k = 1.95,
 #'                            quarantine = FALSE)
 #'}
-outbreak_model <- function(num.initial.cases, prop.ascertain,
-                           cap_max_days, cap_cases,
-                           r0isolated, r0community, r0subclin,
-                           disp.iso, disp.com, disp.subclin,
-                           k, delay_shape,
-                           delay_scale, prop.asym,
-                           quarantine) {
+outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
+                           cap_max_days = NULL, cap_cases = NULL,
+                           r0isolated = NULL, r0community = NULL,
+                           r0subclin = NULL, disp.iso = NULL,
+                           disp.com = NULL, disp.subclin = NULL,
+                           k, delay_shape = NULL,
+                           delay_scale = NULL, prop.asym = NULL,
+                           quarantine = NULL) {
 
   # Set up functions to sample from distributions
   # incubation period sampling function
