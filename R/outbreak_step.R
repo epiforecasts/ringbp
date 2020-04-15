@@ -115,7 +115,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                                                # If you are not asymptomatic and you are traced,
                                                # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
                                                ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time)),
+                                                      pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
                                                       infector_iso_time)))]
 
 
@@ -151,11 +151,11 @@ vect_isTRUE <- function(x) {
   purrr::map_lgl(x, isTRUE)
 }
 
-vect_max <- function(x, y) {
-  purrr::map2_dbl(x, y, max)
-}
+#vect_max <- function(x, y) {
+#  purrr::map2_dbl(x, y, max)
+#}
 
-vect_min <- function(x, y) {
-  purrr::map2_dbl(x, y, min)
-}
+#vect_min <- function(x, y) {
+#  purrr::map2_dbl(x, y, min)
+#ß}
 
