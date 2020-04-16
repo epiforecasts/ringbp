@@ -9,7 +9,6 @@
 #' @importFrom dplyr mutate
 #' @importFrom data.table data.table
 #' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer element_text aes
-#' @examples
 #'
 make_figure_2a <- function() {
 
