@@ -58,8 +58,8 @@
 #' 
 #' 
 #' box_plot_max_weekly_cases(sweep_results, cap_cases = 100, theta_value = "<1%",
-#                           prop_asym = c(0.1), filt_control_effectiveness = seq(0.2),
-#                           num_initial_cases = c(5), y_lim= 50)
+#'                           prop_asym = c(0.1), filt_control_effectiveness = seq(0.2),
+#'                           num_initial_cases = c(5), y_lim= 50)
 #' 
 #' 
 
