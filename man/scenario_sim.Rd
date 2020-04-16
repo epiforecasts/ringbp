@@ -47,7 +47,16 @@ scenario_sim(
 \item{num.initial.clusters}{Number of initial clusters}
 }
 \value{
-
+A data.table object returning the results for multiple simulations using
+the same set of parameters. The table has columns
+\itemize{
+\item week: The week in the simulation.
+\item weekly_cases: The number of new cases that week.
+\item cumulative: The cumulative cases.
+\item effective_r0: The effective reproduction rate for the whole simulation
+\item cases_per_gen: A list column with the cases per generation. This is repeated each row.
+\item sim: Index column for which simulation.
+}
 }
 \description{
 Run a specified number of simulations with identical parameters
@@ -67,7 +76,7 @@ delay_shape = 2.5,
 delay_scale = 5,
 prop.asym = 0,
 prop.ascertain = 0)
-#' }
+}
 
 }
 \author{
