@@ -37,6 +37,8 @@ outbreak_model(
 
 \item{delay_scale}{numeric scale parameter of delay distribution}
 
+\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
 \value{

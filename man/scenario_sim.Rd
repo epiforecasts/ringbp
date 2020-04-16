@@ -38,11 +38,17 @@ scenario_sim(
 
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
+\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
+
 \item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
 
 \item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
 
 \item{num.initial.cases}{Initial number of cases in each initial cluster}
+
+\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+
+\item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 
 \item{num.initial.clusters}{Number of initial clusters}
 }
