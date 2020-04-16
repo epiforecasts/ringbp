@@ -12,6 +12,7 @@
 #' @param prop.ascertain numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
+#' @param prop.asym proportion of cases that are completely asymptomatic.
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl rbernoulli

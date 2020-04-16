@@ -12,6 +12,9 @@
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
 #' @param delay_scale scale of distribution for delay between symptom onset and isolation
+#' @param k numeric skew parameter for sampling the serial interval from the incubation period
+#' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
+#' @param prop.asym proportion of cases that are completely asymptomatic.
 #'
 #' @importFrom purrr safely
 #' @importFrom stats as.formula
@@ -77,7 +80,7 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
 }
 
 
-utils::globalVariables(c(".N", ":=", "asym", "control_effectiveness", "cumulative", "data", "delay",
+utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumulative", "data", "delay",
                          "disp",  "exposure", "extinct", "full_join", "incubfn_sample",
                          "index_R0", "infector_iso_time", "iqr_lower", "iqr_upper", "isolated", "isolated_time",
                          "k", "label_extinct", "lower", "max_weekly_cases", "median_eff_r0", "missed",
