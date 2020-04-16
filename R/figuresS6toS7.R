@@ -1,6 +1,5 @@
 #' Constructs figure S6 from supplementary material
 #' @author Joel Hellewell
-#' @return
 #' @export
 #' @importFrom data.table data.table rbindlist
 #' @importFrom sn rsn

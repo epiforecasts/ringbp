@@ -184,11 +184,10 @@ box_plot_max_weekly_cases <- function(results = NULL,
 #'
 #' @param df Dataframe of results
 #'
-#' @return
+#' @return A dataframe with the same columns as df but with more useful column names.
 #' @export
 #' @importFrom dplyr mutate
 #' @author Sam Abbott
-#' @examples
 #'
 rename_variables_for_plotting <- function(df = NULL) {
 
