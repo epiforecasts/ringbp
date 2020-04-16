@@ -14,7 +14,14 @@
 #' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #'
 #' @importFrom purrr safely
-#' @return
+#' @return A data.table object returning the results for multiple simulations using
+#' the same set of parameters. The table has columns
+#' * week: The week in the simulation.
+#' * weekly_cases: The number of new cases that week.
+#' * cumulative: The cumulative cases.
+#' * effective_r0: The effective reproduction rate for the whole simulation
+#' * cases_per_gen: A list column with the cases per generation. This is repeated each row.
+#' * sim: Index column for which simulation.
 #' @export
 #'
 #' @examples
@@ -32,7 +39,7 @@
 #' delay_scale = 5,
 #' prop.asym = 0,
 #' prop.ascertain = 0)
-#' #' }
+#' }
 #'
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
