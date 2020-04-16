@@ -21,11 +21,9 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' @param inc_samp vector of samples from the incubation period distribution
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #'
-#' @return
 #' @export
 #' @importFrom sn rsn
-#' @examples
-#'
+
 inf_fn <- function(inc_samp = NULL, k = NULL) {
 
   out <- sn::rsn(n = length(inc_samp),
@@ -41,10 +39,8 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' Calculate proportion of runs that have controlled outbreak
 #'
 #' @author Joel Hellewell
-#' @return
 #' @export
 #' @inheritParams detect_extinct
-#' @examples
 #'
 extinct_prob <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 
@@ -66,10 +62,8 @@ extinct_prob <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 #' @param outbreak_df_week data.table  weekly cases producted by the outbreak model
 #' @param cap_cases integer number of cumulative cases at which the branching process was terminated
 #'
-#' @return
 #' @export
 #' @importFrom dplyr group_by filter summarise ungroup
-#' @examples
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 
@@ -94,13 +88,11 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 #' @param index_R0.in numeric filtering value for community R0 value
 #' @param res.in data.table of results from parameter sweep
 #'
-#' @return
 #' @export
 #' @importFrom dplyr filter mutate
 #' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap ylab xlab scale_x_continuous scale_y_continuous coord_cartesian
 #' @importFrom cowplot panel_border
 #'
-#' @examples
 #'
 sub_plot <- function(theta.in = "15%",
                      delay.in = "SARS",

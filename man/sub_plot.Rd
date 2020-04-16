@@ -28,12 +28,6 @@ sub_plot(
 
 \item{res.in}{data.table of results from parameter sweep}
 }
-\value{
-
-}
 \description{
 Create sub-plot for supplementary figures
-}
-\examples{
-
 }

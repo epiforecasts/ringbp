@@ -7,7 +7,7 @@
 make_figure_2()
 }
 \value{
-
+A patchwork object containing a number of ggplot2 plots
 }
 \description{
 Constructs figure 2 from the manuscript

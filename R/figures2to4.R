@@ -1,7 +1,7 @@
 #' Makes Figure 2a from manuscript
 #' @author Joel Hellewell
 #'
-#' @return
+#' @return A ggplot2 plot object
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom tidyr gather
@@ -70,7 +70,7 @@ make_figure_2a <- function() {
 
 #' Constructs figure 2 from the manuscript
 #' @author Joel Hellewell
-#' @return
+#' @return A patchwork object containing a number of ggplot2 plots
 #' @export
 #' @importFrom sn dsn
 #' @importFrom ggplot2 ggplot aes geom_line geom_vline coord_cartesian labs geom_ribbon scale_fill_manual theme element_text
@@ -128,7 +128,7 @@ make_figure_2 <- function() {
 #'
 #' @param df The results data frame
 #'
-#' @return
+#' @return A ggplot2 plot object
 #' @export
 #' @importFrom ggplot2 ggplot geom_line geom_point scale_fill_manual scale_color_manual scale_x_continuous scale_y_continuous theme labs
 #' @importFrom cowplot theme_cowplot
@@ -243,7 +243,7 @@ make_figure3b <- function(df = NULL) {
 #'
 #' @param res The results dataframe
 #'
-#' @return
+#' @return A ggplot2 plot object
 #' @export
 #' @importFrom ggplot2 ggplot geom_line geom_point scale_fill_manual scale_color_manual aes theme xlab ylab element_text
 #' @importFrom dplyr filter mutate
