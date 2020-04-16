@@ -17,9 +17,6 @@ partial function that takes a numeric argument for number of samples
 \description{
 Create partial function to sample from gamma distributions
 }
-\examples{
-
-}
 \author{
 Joel Hellewell
 }

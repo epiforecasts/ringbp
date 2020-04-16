@@ -6,7 +6,6 @@
 #' @return partial function that takes a numeric argument for number of samples
 #' @export
 #' @importFrom purrr partial
-#' @examples
 #'
 dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
   out <- purrr::partial(rweibull,
