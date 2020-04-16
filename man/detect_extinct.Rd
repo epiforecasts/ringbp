@@ -11,14 +11,8 @@ detect_extinct(outbreak_df_week = NULL, cap_cases = NULL)
 
 \item{cap_cases}{integer number of cumulative cases at which the branching process was terminated}
 }
-\value{
-
-}
 \description{
 Calculate proportion of outbreaks that went extinct
-}
-\examples{
-
 }
 \author{
 Joel Hellewell

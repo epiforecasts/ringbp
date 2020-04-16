@@ -65,7 +65,7 @@ make_figure_S6 <- function() {
 #' Plots the impact of dispersion on the distribution of new cases
 #' @author Sam Abbott
 #'
-#' @return
+#' @return A ggplot2 plot object
 #' @export
 #' @importFrom tidyr gather unnest
 #' @importFrom dplyr mutate filter

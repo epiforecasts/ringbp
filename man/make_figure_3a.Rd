@@ -10,7 +10,7 @@ make_figure_3a(df = NULL)
 \item{df}{The results data frame}
 }
 \value{
-
+A ggplot2 plot object
 }
 \description{
 Construct Figure 3a from manuscript
