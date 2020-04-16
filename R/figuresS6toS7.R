@@ -6,7 +6,6 @@
 #' @importFrom sn rsn
 #' @importFrom dplyr mutate group_by summarise
 #' @importFrom ggplot2 ggplot aes geom_density theme_bw geom_vline scale_x_continuous coord_cartesian xlab ylab scale_fill_discrete scale_color_discrete theme
-#' @examples
 #'
 make_figure_S6 <- function() {
 
@@ -70,7 +69,6 @@ make_figure_S6 <- function() {
 #' @importFrom tidyr gather unnest
 #' @importFrom dplyr mutate filter
 #' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer
-#' @examples
 #'
 make_figure_S7 <- function() {
 
