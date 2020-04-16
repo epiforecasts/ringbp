@@ -14,6 +14,14 @@
 #' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #'
 #' @importFrom purrr safely
+#' @importFrom stats as.formula
+#' @importFrom stats dist
+#' @importFrom stats dweibull
+#' @importFrom stats dnbinom
+#' @importFrom stats median
+#' @importFrom stats quantile
+#' @importFrom stats rweibull
+#' @importFrom utils data
 #' @return A data.table object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
 #' * week: The week in the simulation.
@@ -67,3 +75,15 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
   res[, sim := rep(1:n.sim, rep(floor(cap_max_days / 7) + 1, n.sim)), ]
   return(res)
 }
+
+
+utils::globalVariables(c(".N", ":=", "asym", "control_effectiveness", "cumulative", "data", "delay",
+                         "disp",  "exposure", "extinct", "full_join", "incubfn_sample",
+                         "index_R0", "infector_iso_time", "iqr_lower", "iqr_upper", "isolated", "isolated_time",
+                         "k", "label_extinct", "lower", "max_weekly_cases", "median_eff_r0", "missed",
+                         "new_cases", "num.initial.cases", "onset", "pext", "prob_extinct", "prop.asym",
+                         "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
+                         "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
+                         
+
+
