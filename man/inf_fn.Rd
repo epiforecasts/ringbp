@@ -11,12 +11,6 @@ inf_fn(inc_samp = NULL, k = NULL)
 
 \item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 }
-\value{
-
-}
 \description{
 Samples the serial interval for given incubation period samples
-}
-\examples{
-
 }
