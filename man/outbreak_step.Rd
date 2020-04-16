@@ -39,9 +39,6 @@ outbreak_step(
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
-\value{
-
-}
 \description{
 Move forward one generation in the branching process
 }
