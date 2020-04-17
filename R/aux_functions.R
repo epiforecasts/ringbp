@@ -86,6 +86,8 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 #' @param num.initial.cases.in integer filtering value for number of initial cases
 #' @param index_R0.in numeric filtering value for community R0 value
 #' @param res.in data.table of results from parameter sweep
+#' @param facet.by the column name to facet the plot by.
+#' @param col.by the column name to use for colours in the plot.
 #'
 #' @export
 #' @importFrom dplyr filter mutate

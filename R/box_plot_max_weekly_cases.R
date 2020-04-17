@@ -3,7 +3,7 @@
 #'
 #' @param results results of the branching model in a data.frame or tibble
 #' @param cap_cases the maximimum number of cases per outbreak scenario; default is 5000
-#' @param extinct_threshold filters the minimum proportion of simulations that become extinct per scenario; default 0.8
+#' @param extinct_thresold filters the minimum proportion of simulations that become extinct per scenario; default 0.8
 #' @param theta_value A Character string defaulting to "15%". Determines the proportion of infections that occur prior to
 #' sypmtom onset.
 #' @param prop_asym A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic

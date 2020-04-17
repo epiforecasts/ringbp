@@ -49,8 +49,6 @@ scenario_sim(
 \item{prop.asym}{proportion of cases that are completely asymptomatic.}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
-
-\item{num.initial.clusters}{Number of initial clusters}
 }
 \value{
 A data.table object returning the results for multiple simulations using
