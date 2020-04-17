@@ -23,6 +23,8 @@ box_plot_max_weekly_cases(
 
 \item{cap_cases}{the maximimum number of cases per outbreak scenario; default is 5000}
 
+\item{extinct_thresold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
+
 \item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
 sypmtom onset.}
 
@@ -39,8 +41,6 @@ sypmtom onset.}
 \item{record_params}{option to display the params as a caption (used for testing); default FALSE}
 
 \item{y_lim}{Numeric the limit of the y axis to show.}
-
-\item{extinct_threshold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
 }
 \description{
 Create box plots of maximum weekly cases by scenario

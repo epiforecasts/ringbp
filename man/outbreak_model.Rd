@@ -21,7 +21,13 @@ outbreak_model(
 )
 }
 \arguments{
+\item{num.initial.cases}{The number of initial or starting cases which are all assumed to be missed.}
+
 \item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+
+\item{cap_max_days}{Stop the simulation when this many days is reached.}
+
+\item{cap_cases}{Stop the simulation when this many cases is reached.}
 
 \item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
 
