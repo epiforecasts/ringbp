@@ -138,7 +138,43 @@ test_that('extinct_prob works as expected', {
   
   
   # Run some sims with almost certain outputs
+  # Very high r0, shouldn't ever go extinct.
+  res3 <- scenario_sim(n.sim = sims,
+                      num.initial.cases = 5,
+                      cap_max_days = 100,
+                      cap_cases = cap,
+                      r0isolated = 100,
+                      r0community = 100,
+                      disp.iso = 1,
+                      disp.com = 0.16,
+                      k = 0.7,
+                      delay_shape = 2.5,
+                      delay_scale = 5,
+                      prop.asym = 0,
+                      prop.ascertain = 0)
   
+  r3 <- extinct_prob(res3, cap)
+  expect_equal(r3, 0)
+  
+  
+  
+  # r0 of 0, should always go extinct.
+  res3 <- scenario_sim(n.sim = sims,
+                       num.initial.cases = 5,
+                       cap_max_days = 100,
+                       cap_cases = cap,
+                       r0isolated = 0,
+                       r0community = 0,
+                       disp.iso = 1,
+                       disp.com = 0.16,
+                       k = 0.7,
+                       delay_shape = 2.5,
+                       delay_scale = 5,
+                       prop.asym = 0,
+                       prop.ascertain = 0)
+  
+  r3 <- extinct_prob(res3, cap)
+  expect_equal(r3, 1)
   
 })
 
