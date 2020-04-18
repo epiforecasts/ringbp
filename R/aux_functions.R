@@ -61,7 +61,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 }
 
 
-#' Calculate proportion of outbreaks that went extinct
+#' Calculate whether outbreaks went extinct or not
 #' @author Joel Hellewell
 #' @param outbreak_df_week data.table  weekly cases produced by the outbreak model
 #' @param cap_cases integer number of cumulative cases at which the branching process was terminated
