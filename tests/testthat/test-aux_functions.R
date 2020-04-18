@@ -260,3 +260,115 @@ test_that('extinct_prob week_range argument works', {
 })
 
 
+
+
+
+
+test_that('detect_extinct works', {
+  
+  
+  set.seed(1516)
+  cap <- 100
+  sims <- 2
+  res <- scenario_sim(n.sim = 2,
+                      num.initial.cases = 5,
+                      cap_max_days = 100,
+                      cap_cases = cap,
+                      r0isolated = 0,
+                      r0community = 2.5,
+                      disp.iso = 1,
+                      disp.com = 0.16,
+                      k = 0.7,
+                      delay_shape = 2.5,
+                      delay_scale = 5,
+                      prop.asym = 0,
+                      prop.ascertain = 0)
+  
+  
+  # Manually build an output with known proportion of extinctions
+  res2 <- res[c(1, 2, 1, 2), ]
+  res2$sim <- c(1, 1, 2, 2)
+  
+  # enforce that second sim did not have cases in final week.
+  #   I am ignoring cases_per_gen becayse I think this function works on weekly cases.
+  res2$weekly_cases[4] <- 0
+  res2$cumulative[4] <- res2$cumulative[3]
+  
+  # enforce that first sim has cases both weeks.
+  #   I am ignoring cases_per_gen becayse I think this function works on weekly cases.
+  res2$weekly_cases[1:2] <- c(1, 1)
+  res2$cumulative[1:2] <- c(1, 2)
+  
+  r2 <- detect_extinct(res2, cap_cases = cap, week_range = 1)
+  # The types in the output is a bit random. So just force all to doubles.
+  r2 <- 
+    r2 %>% 
+      dplyr::mutate_all(as.double)
+  
+  expect2 <- tibble::tibble(sim = c(1.0, 2.0), extinct = c(0.0, 1.0))
+  expect_equal(r2, expect2)
+  
+  
+  # Now add a week and test week_range = 1:2
+  # Simple case of cases in week 1 and 2
+  res3 <- res[c(1, 2, 3), ]
+  res3$weekly_cases[1:3] <- c(1, 1, 1)
+  res3$cumulative[1:3] <- c(1, 2, 3)
+  r3 <- detect_extinct(res3, cap_cases = cap, week_range = 1:2)
+  # The types in the output is a bit random. So just force all to doubles.
+  r3 <- 
+    r3 %>% 
+    dplyr::mutate_all(as.double)
+  
+  expect3 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect_equal(r3, expect3)
+  
+  
+  # Simple case of no cases in week 1 or 2
+  res4 <- res[c(1, 2, 3), ]
+  res4$weekly_cases[1:3] <- c(1, 0, 0)
+  res4$cumulative[1:3] <- c(1, 1, 1)
+  r4 <- detect_extinct(res4, cap_cases = cap, week_range = 1:2)
+  # The types in the output is a bit random. So just force all to doubles.
+  r4 <- 
+    r4 %>% 
+    dplyr::mutate_all(as.double)
+  
+  expect4 <- tibble::tibble(sim = c(1.0), extinct = c(1.0))
+  expect_equal(r4, expect4)
+  
+  
+  # Case of cases in week 1 but not 2 (by the definition used in this function this is not an extinction)
+  #   test here that week_range 1:2 says extintion by week_range 2 does not.
+  res5 <- res[c(1, 2, 3), ]
+  res5$weekly_cases[1:3] <- c(1, 1, 0)
+  res5$cumulative[1:3] <- c(1, 2, 2)
+  r5 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
+  # The types in the output is a bit random. So just force all to doubles.
+  r5 <- 
+    r5 %>% 
+    dplyr::mutate_all(as.double)
+  
+  expect5 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect_equal(r5, expect5)
+  
+  
+  
+  # Case of cases in week 2 but not 1 (by all sensible definitions is not an extinction)
+  #   test here that week_range 1:2 says extintion and week_range 2 does as well.
+  res6 <- res[c(1, 2, 3), ]
+  res6$weekly_cases[1:3] <- c(1, 0, 1)
+  res6$cumulative[1:3] <- c(1, 1, 2)
+  r6 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
+  # The types in the output is a bit random. So just force all to doubles.
+  r6 <- 
+    r6 %>% 
+    dplyr::mutate_all(as.double)
+  
+  expect6 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect_equal(r6, expect5)
+  
+  
+})
+
+
