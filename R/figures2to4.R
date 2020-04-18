@@ -125,7 +125,7 @@ make_figure_2 <- function() {
 
 #' Construct Figure 3a from manuscript
 #'
-#' @param df The results data frame
+#' @param df A dataframe of results as produced by `parameter_sweep`
 #'
 #' @return A ggplot2 plot object
 #' @export
@@ -240,7 +240,7 @@ make_figure3b <- function(df = NULL) {
 
 #' Construct Figure 4 from the manuscript
 #'
-#' @param res The results dataframe
+#' @param res The results dataframe todo
 #'
 #' @return A ggplot2 plot object
 #' @export
