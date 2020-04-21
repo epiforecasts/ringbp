@@ -8,3 +8,7 @@ Rplot*
 .Rapp.history
 Rplots.pdf
 ringbp.Rproj
+*.log
+*.tex
+*.txt
+*.pdf
