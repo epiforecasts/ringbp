@@ -5,7 +5,7 @@
 #'    toc: true
 #'    toc_depth: 2
 #'title: "Further analysis of COVID branching process"
-#'author: Tim Lucas
+#'author: Tim Lucas and Emma Davis
 #'fontsize: 8pt
 #'geometry: margin=0.5in
 #'---
@@ -19,7 +19,6 @@ library(tidyverse)
 library(git2r)
 library(tictoc)
 library(ggplot2)
-library(dplyr)
 library(patchwork)
 library(cowplot)
 
@@ -28,11 +27,11 @@ devtools::load_all()
 git2r::revparse_single('.',"HEAD")$sha
 
 # Make the log file
-logs <- file.path("log_lucas.txt")
-con <- file(logs, open = "wt")
+#logs <- file.path("log_lucas.txt")
+#con <- file(logs, open = "wt")
 # # Send Output to log
-sink(con)
-sink(con, type = "message")
+#sink(con)
+#sink(con, type = "message")
 
 
 #+ create_parameters
@@ -56,10 +55,12 @@ scenarios <- tidyr::expand_grid(
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
+cap_cases <- 200
+max_days <- 200
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::scenario_sim,
-                                  cap_max_days = 100,
-                                  cap_cases = 500,
+                                  cap_max_days = max_days,
+                                  cap_cases = cap_cases,
                                   r0isolated = 0,
                                   disp.iso = 1,
                                   disp.com = 0.16,
@@ -69,7 +70,7 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
 #+ setup_multicore, cache = FALSE
 ## Set up multicore if using see ?future::plan for details
 ## Use the workers argument to control the number of cores used.
-future::plan("multiprocess")
+#future::plan("multiprocess")
 
 
 #+ full_run
@@ -78,7 +79,7 @@ tic()
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios,
                                          sim_fn = sim_with_params,
-                                         samples = 1000,
+                                         samples = 20,
                                          show_progress = TRUE)
 
 toc()
@@ -88,13 +89,13 @@ toc()
 
 saveRDS(sweep_results, file = "../../data-raw/lucas_res.rds")
 
-sink(type = "message")
-sink()
+#sink(type = "message")
+#sink()
 
 
 
 
-#+ plots
+#+ plots1
 
 
 # Figure 2 ----------------------------------------------------------------
@@ -105,15 +106,18 @@ ggplot2::ggsave("../plots/fig_2.pdf", height = 5.5, width = 10,
                 useDingbats = FALSE)
 ggplot2::ggsave("../plots/fig_2.png", height = 5.5, width = 10)
 
+
+#+ plots2
+
 # Load in results  -------------------------------------------------------
 
-sweep_results <- readRDS("../../data-raw/lucas_res.rds")
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = 5000)) %>%
+  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases)) %>%
   dplyr::ungroup(scenario)
 
+#+ plots3
 
 # Figure 3 ----------------------------------------------------------------
 
@@ -126,6 +130,9 @@ ggplot2::ggsave("../plots/fig_3.pdf", height = 5, width = 8,
                 useDingbats = FALSE)
 ggplot2::ggsave("../plots/fig_3.png", height = 5, width = 8)
 
+
+#+ plots4
+
 # Figure 4 ----------------------------------------------------------------
 
 
@@ -135,10 +142,11 @@ ggplot2::ggsave("../plots/fig_4.pdf", height = 5, width = 9,
                 useDingbats = FALSE)
 ggplot2::ggsave("../plots/fig_4.png", height = 5, width = 9)
 
+#+ plots5
 
 # Figure 5 ----------------------------------------------------------------
 
-ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000,
+ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases,
                                   extinct_thresold = 0.1,
                                   filt_control_effectiveness = 0.4,
                                   num_initial_cases = 20, flip_coords = FALSE,
@@ -148,6 +156,9 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = 5000,
 ggplot2::ggsave("../plots/fig_5.pdf", height = 7, width = 12,
                 useDingbats = FALSE)
 ggplot2::ggsave("../plots/fig_5.png", height = 7, width = 12)
+
+
+#+ plotsS
 
 # Supplementary figures ---------------------------------------------------
 
@@ -185,7 +196,7 @@ ggplot2::ggsave("../plots/S_fig_4.png", height = 3, width = 6.5)
 ## S5
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results,
-                                  cap_cases = 5000,
+                                  cap_cases = cap_cases,
                                   extinct_thresold = 0.05,
                                   prop_asym = 0,
                                   filt_control_effectiveness = 0.4,
@@ -199,7 +210,7 @@ ggplot2::ggsave("../plots/S_fig_5_A.pdf", height = 5, width = 10,
 ggplot2::ggsave("../plots/S_fig_5_A.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results,
-                                  cap_cases = 5000,
+                                  cap_cases = cap_cases,
                                   extinct_thresold = 0.05,
                                   prop_asym = 0,
                                   filt_control_effectiveness = 0.4,
@@ -213,7 +224,7 @@ ggplot2::ggsave("../plots/S_fig_5_B.pdf", height = 5, width = 10,
 ggplot2::ggsave("../plots/S_fig_5_B.png", height = 5, width = 10)
 
 ringbp::box_plot_max_weekly_cases(results = sweep_results,
-                                  cap_cases = 5000,
+                                  cap_cases = cap_cases,
                                   extinct_thresold = 0.05,
                                   prop_asym = 0.1,
                                   filt_control_effectiveness = 0.4,
@@ -234,36 +245,4 @@ ggplot2::ggsave("../plots/S_fig_6.pdf", height = 8, width = 12,
                 useDingbats = FALSE)
 ggplot2::ggsave("../plots/S_fig_6.png", height = 8, width = 12)
 
-## Get data for supplement looking at flu like dispersion
-
-results_dispersion_flu <- readRDS("../../data-raw/res_dispersion_flu.rds")
-
-res_flu <- results_dispersion_flu  %>%
-  dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = 5000)) %>%
-  dplyr::ungroup(scenario)
-
-## S7
-
-ringbp::make_figure_S7()
-
-# remaking fig 3 with flu dispersion
-
-make_figure_3a(df = res_flu)
-ggplot2::ggsave("../plots/S_fig_7b.pdf", height = 4, width = 6,
-                useDingbats = FALSE)
-ggplot2::ggsave("../plots/S_fig_7b.png", height = 4, width = 6)
-
-
-
-# remaking fig 4 with flu dispersion
-make_figure_4(res = res_flu)
-ggplot2::ggsave("../plots/S_fig_7c.pdf", height = 5, width = 7,
-                useDingbats = FALSE)
-ggplot2::ggsave("../plots/S_fig_7c.png", height = 5, width = 7)
-
-make_figure_S9()
-ggplot2::ggsave("../plots/S_fig_9.pdf", height = 4.5, width = 11,
-                useDingbats = FALSE)
-ggplot2::ggsave("../plots/S_fig_9.png", height = 4.5, width = 11)
 
