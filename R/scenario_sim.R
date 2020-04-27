@@ -12,6 +12,11 @@
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
 #' @param delay_scale scale of distribution for delay between symptom onset and isolation
+#' @param inc_shape shape of distribution for incubation period
+#' @param inc_scale scale of distribution for incubation period
+#' @param inf_shape shape of distribution for infection time
+#' @param inf_rate rate of distribution for infection time
+#' @param inf_shift shift of distribution for infection time into pre-symptomatic period (days)
 #'
 #' @importFrom purrr safely
 #' @return
@@ -35,9 +40,10 @@
 #' #' }
 #'
 scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
-                         r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL, k = NULL,
-                         delay_shape = NULL, delay_scale = NULL, num.initial.cases = NULL, prop.asym = NULL,
-                         quarantine = NULL) {
+                         r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
+                         delay_shape = NULL, delay_scale = NULL,  inc_meanlog = NULL, inc_sdlog = NULL,
+                         inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL, 
+                         prop.asym = NULL, quarantine = NULL) {
 
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
@@ -50,7 +56,11 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                                              disp.com = disp.com,
                                              delay_shape = delay_shape,
                                              delay_scale = delay_scale,
-                                             k = k,
+                                             inc_meanlog = inc_meanlog,
+                                             inc_sdlog = inc_sdlog,
+                                             inf_shape = inf_shape,
+                                             inf_rate = inf_rate,
+                                             inf_shift = inf_shift,
                                              prop.asym = prop.asym,
                                              quarantine = quarantine))
 
