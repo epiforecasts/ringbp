@@ -39,18 +39,22 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
                            disp.iso = NULL, disp.com = NULL,
-                           k = NULL, delay_shape = NULL,
-                           delay_scale = NULL, prop.asym = NULL,
+                           delay_shape = NULL, delay_scale = NULL,
+                           inc_meanlog = NULL, inc_sdlog = NULL,
+                           prop.asym = NULL, inf_shape = NULL,
+                           inf_rate = NULL, inf_shift = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
   # incubation period sampling function
-  incfn <- dist_setup(dist_shape = 2.322737,
-                      dist_scale = 6.492272)
+  incfn <- dist_setup(dist_param1 = inc_meanlog,
+                      dist_param2 = inc_sdlog,
+                      dist_type = 'lognormal')
   # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
   # onset to isolation delay sampling function
   delayfn <- dist_setup(delay_shape,
-                        delay_scale)
+                        delay_scale,
+                        "weibull")
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
@@ -61,8 +65,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
                             incfn = incfn,
                             prop.asym = prop.asym,
-                            delayfn = delayfn,
-                            k = k)
+                            delayfn = delayfn)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -80,7 +83,9 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              incfn = incfn,
                              delayfn = delayfn,
                              prop.ascertain = prop.ascertain,
-                             k = k,
+                             inf_shape = inf_shape,
+                             inf_rate = inf_rate,
+                             inf_shift = inf_shift,
                              quarantine = quarantine,
                              prop.asym = prop.asym)
 
