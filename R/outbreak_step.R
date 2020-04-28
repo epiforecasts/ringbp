@@ -12,11 +12,11 @@
 #' @param prop.ascertain numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
+#' @param prop.asym proportion of cases that are completely asymptomatic.
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl rbernoulli
 #'
-#' @return
 #' @export
 #'
 #' @examples
@@ -127,7 +127,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                                # If you are not asymptomatic and you are traced,
                                                # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
                                                ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time)),
+                                                      pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
                                                       infector_iso_time)))]
 
 
@@ -155,3 +155,18 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
 
   return(out)
 }
+
+
+
+# A vectorised version of isTRUE
+vect_isTRUE <- function(x) {
+  purrr::map_lgl(x, isTRUE)
+}
+
+#vect_max <- function(x, y) {
+#  purrr::map2_dbl(x, y, max)
+#}
+
+#vect_min <- function(x, y) {
+#  purrr::map2_dbl(x, y, min)
+#ß}

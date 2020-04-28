@@ -19,6 +19,10 @@ scenarios <- tidyr::expand_grid(
   #   theta = c("15%", "30%", ">30%"),
   #   k = c(1.95, 0.7, 0.5)
   # )),
+#  k_group = list(tibble::tibble(
+#    theta = c("<1%", "15%", "30%"),
+#    k = c(30, 1.95, 0.7)
+#  )),
   inc_meanlog = 1.434065,
   inc_sdlog = 0.6612,
   inf_shape = 2.115779,
@@ -28,7 +32,7 @@ scenarios <- tidyr::expand_grid(
   prop.asym = c(0.2, 0.7),
   control_effectiveness = seq(0, 1, 0.2),
   num.initial.cases = c(5, 20, 40)) %>%
-  # tidyr::unnest("k_group") %>%
+# tidyr::unnest("k_group") %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 

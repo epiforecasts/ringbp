@@ -13,7 +13,7 @@ outbreak_model(
   r0community = NULL,
   disp.iso = NULL,
   disp.com = NULL,
-  k = NULL,
+  k,
   delay_shape = NULL,
   delay_scale = NULL,
   prop.asym = NULL,
@@ -21,7 +21,13 @@ outbreak_model(
 )
 }
 \arguments{
+\item{num.initial.cases}{The number of initial or starting cases which are all assumed to be missed.}
+
 \item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+
+\item{cap_max_days}{Stop the simulation when this many days is reached.}
+
+\item{cap_cases}{Stop the simulation when this many cases is reached.}
 
 \item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
 
@@ -36,6 +42,8 @@ outbreak_model(
 \item{delay_shape}{numeric shape parameter of delay distribution}
 
 \item{delay_scale}{numeric scale parameter of delay distribution}
+
+\item{prop.asym}{proportion of cases that are completely asymptomatic.}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
