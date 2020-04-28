@@ -120,17 +120,24 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
   prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
 
   # If you are asymptomatic, your isolation time is Inf
-  prob_samples[, isolated_time := ifelse(vect_isTRUE(asym), Inf,
-                                        # If you are not asymptomatic, but you are missed,
-                                        # you are isolated at your symptom onset
-                                        ifelse(vect_isTRUE(missed), onset + delayfn(1),
-                                               # If you are not asymptomatic and you are traced,
-                                               # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
-                                               ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time)),
-                                                      infector_iso_time)))]
-
-
+  prob_samples[, isolated_time := ifelse(vect_isTRUE(missed),
+                                         # If you are not tracked (are missed)
+                                         ifelse(vect_isTRUE(asym),
+                                                # If you a are asymptotic you never isolate
+                                                inf,
+                                                # If you are not asymptotic you isolate after onset of symptoms plus a delay
+                                                onset + delayfn(1)),
+                                         # If you are tracked (are not missed)
+                                         ifelse(vect_isTRUE(rep(quarantine, total_new_cases)),
+                                                # With quarentine, isolate as soon as your infector was identified (a seperate delay to be added later)
+                                                infector_iso_time, 
+                                                # Without quarentine:
+                                                # onset < infector_iso < onset+delay  -> isolate when infector is identified and isolates
+                                                # onset < onset+delay  < infector_iso -> isolate after symptoms and a delay
+                                                # infector_iso < onset < onset+delay  -> isolate as soon as symptoms onset.
+                                                vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time))))]
+    
+  
   # Chop out unneeded sample columns
   prob_samples[, c("incubfn_sample", "infector_iso_time", "infector_asym") := NULL]
   # Set new case ids for new people
