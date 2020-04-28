@@ -1,17 +1,30 @@
 #' Create partial function to sample from gamma distributions
 #' @author Joel Hellewell
-#' @param dist_shape numeric shape parameter of Weibull distribution
-#' @param dist_scale numeric scale parameter of Weibull distribution
+#' @param dist_param1 numeric parameter of specified distribution
+#' @param dist_param2 numeric parameter of specified distribution
+#' @param dist_type type of distribution from: 'weibull', 'gamma', 'lognormal'
 #'
 #' @return partial function that takes a numeric argument for number of samples
 #' @export
 #' @importFrom purrr partial
 #' @examples
 #'
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                 shape = dist_shape,
-                 scale = dist_scale)
+dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL) {
+  if(dist_type == "weibull"){
+    out <- purrr::partial(rweibull,
+                          shape = dist_param1,
+                          scale = dist_param2)
+  }
+  if(dist_type == "gamma"){
+    out <- purrr::partial(rgamma,
+                          shape = dist_param1,
+                          rate = dist_param2)
+  }
+  if(dist_type == "lognormal"){
+    out <- purrr::partial(rlnorm,
+                          meanlog = dist_param1,
+                          sdlog = dist_param2)
+  }
   return(out)
 }
 
@@ -19,19 +32,20 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp vector of samples from the incubation period distribution
-#' @param k numeric skew parameter for sampling the serial interval from the incubation period
+#' @param inf_shape shape parameter for sampling the serial interval from the incubation period
+#' @param inf_rate rate parameter for sampling the serial interval from the incubation period
+#' @param inf_shift shift parameter, describing number of days pre-symptoms can be infectious
 #'
 #' @return
 #' @export
 #' @importFrom sn rsn
 #' @examples
 #'
-inf_fn <- function(inc_samp = NULL, k = NULL) {
+inf_fn <- function(inc_samp = NULL, inf_shape = NULL, inf_rate = NULL, inf_shift = NULL) {
 
-  out <- sn::rsn(n = length(inc_samp),
-                 xi = inc_samp,
-                 omega = 2,
-                 alpha = k)
+  out <- inc_samp - inf_shift + rgamma(n = length(inc_samp),
+                                shape = inf_shape,
+                                rate = inf_rate)
 
   out <- ifelse(out < 1, 1, out)
 
@@ -46,13 +60,13 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' @inheritParams detect_extinct
 #' @examples
 #'
-extinct_prob <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
+extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   n_sim <- max(outbreak_df_week$sim)
 
   out <- outbreak_df_week %>%
     # new variable extinct = 1 if cases in weeks 10-12 all 0, 0 if not
-    detect_extinct(cap_cases) %>%
+    detect_extinct(cap_cases, week_range) %>%
     # number of runs where extinct = TRUE / number of runs
     .$extinct %>%
     sum(.) / n_sim
@@ -71,11 +85,11 @@ extinct_prob <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 #' @importFrom dplyr group_by filter summarise ungroup
 #' @examples
 #'
-detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
+detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   outbreak_df_week %>%
     dplyr::group_by(sim) %>% # group by simulation run
-    dplyr::filter(week %in% 12:16) %>%
+    dplyr::filter(week %in% week_range) %>%
     dplyr::summarise(extinct =
                        ifelse(all(weekly_cases == 0 &
                                     cumulative < cap_cases),
@@ -102,7 +116,7 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL) {
 #'
 #' @examples
 #'
-sub_plot <- function(theta.in = "15%",
+sub_plot <- function(inf_shift.in = 3,
                      delay.in = "SARS",
                      prop.asym.in = 0,
                      num.initial.cases.in = 20,
@@ -114,7 +128,7 @@ sub_plot <- function(theta.in = "15%",
   col.by <- ggplot2::ensym(col.by)
 
   res.in %>%
-    dplyr::filter(theta %in% theta.in,
+    dplyr::filter(inf_shift %in% inf_shift.in,
                   delay %in% delay.in,
                   prop.asym %in% prop.asym.in,
                   num.initial.cases %in% num.initial.cases.in,
@@ -130,14 +144,12 @@ sub_plot <- function(theta.in = "15%",
                                  labels = c("Short isolation delay",
                                             "Long isolation delay"))) %>%
     dplyr::mutate(prop.asym = factor(prop.asym,
-                                     levels = c(0, 0.1),
-                                     labels = c("No asymptomatic cases ",
-                                                "10% cases asmyptomatic"))) %>%
+                                     levels = c(0.2, 0.4, 0.5, 0.7),
+                                     labels = c("20% cases asymptomatic",
+                                                "40%","50%","70%"))) %>%
     dplyr::mutate(theta = factor(theta,
-                                 levels = c("<1%", "15%", "30%"),
-                                 labels = c("<1% trans. pre-onset",
-                                            "15% trans. pre-onset",
-                                            "30% trans. pre-onset"))) %>%
+                                 levels = c(3),
+                                 labels = c("Trans up to 3 days pre-onset"))) %>%
     # Put plot together
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,

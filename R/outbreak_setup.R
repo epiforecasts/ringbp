@@ -20,7 +20,7 @@
 #' delayfn <- dist_setup(delay_shape, delay_scale)
 #' outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
 #'}
-outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
+outbreak_setup <- function(num.initial.cases, incfn, delayfn, prop.asym) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)
 

@@ -15,15 +15,20 @@ scenarios <- tidyr::expand_grid(
     delay_shape = c(1.651524, 2.305172),
     delay_scale = c(4.287786, 9.483875)
   )),
-  k_group = list(tibble::tibble(
-    theta = c("<1%", "15%", "30%"),
-    k = c(30, 1.95, 0.7)
-  )),
-  index_R0 = c(1.5, 2.5, 3.5),
-  prop.asym = c(0, 0.1),
+  # k_group = list(tibble::tibble(
+  #   theta = c("15%", "30%", ">30%"),
+  #   k = c(1.95, 0.7, 0.5)
+  # )),
+  inc_meanlog = 1.434065,
+  inc_sdlog = 0.6612,
+  inf_shape = 2.115779,
+  inf_rate = 0.6898583,
+  inf_shift = 3,
+  index_R0 = c(1.1, 2.0, 4.0),
+  prop.asym = c(0.2, 0.7),
   control_effectiveness = seq(0, 1, 0.2),
   num.initial.cases = c(5, 20, 40)) %>%
-  tidyr::unnest("k_group") %>%
+  # tidyr::unnest("k_group") %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 

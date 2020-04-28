@@ -25,8 +25,8 @@
 box_plot_max_weekly_cases <- function(results = NULL,
                                       cap_cases = 5000,
                                       extinct_thresold = 0.1,
-                                      theta_value = "15%",
-                                      prop_asym = 0,
+                                      inf_shift_value = 3,
+                                      prop_asym = 0.4,
                                       facet_scales = "fixed",
                                       filt_control_effectiveness = 0.4,
                                       flip_coords = FALSE,
@@ -61,7 +61,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
   ## Clean data
   df <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
-    dplyr::filter(theta == theta_value) %>%
+    dplyr::filter(inf_shift == inf_shift_value) %>%
     dplyr::filter(num.initial.cases %in% num_initial_cases) %>%
     dplyr::filter(prop.asym == prop_asym) %>%
     dplyr::group_by(scenario) %>%
@@ -114,7 +114,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                                  "; 95% conf interval",
                                                  sep = " "))
   }
-  plot <- plot + cowplot::theme_minimal_hgrid() + cowplot::panel_border()
+  #plot <- plot + cowplot::theme_minimal_hgrid() + cowplot::panel_border()
 
   ##Text positions
   text_positions <- df %>%
