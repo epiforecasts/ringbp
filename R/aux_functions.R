@@ -7,6 +7,7 @@
 #' @return partial function that takes a numeric argument for number of samples
 #' @export
 #' @importFrom purrr partial
+#' @examples
 #'
 dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL) {
   if(dist_type == "weibull"){
@@ -35,6 +36,7 @@ dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL)
 #' @param inf_rate rate parameter for sampling the serial interval from the incubation period
 #' @param inf_shift shift parameter, describing number of days pre-symptoms can be infectious
 #'
+#' @return
 #' @export
 #' @importFrom sn rsn
 #' @examples
@@ -53,14 +55,11 @@ inf_fn <- function(inc_samp = NULL, inf_shape = NULL, inf_rate = NULL, inf_shift
 #' Calculate proportion of runs that have controlled outbreak
 #'
 #' @author Joel Hellewell
+#' @return
 #' @export
 #' @inheritParams detect_extinct
-#' @example 
-#' 
-#' 
-#' 
-#' 
-#' 
+#' @examples
+#'
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   n_sim <- max(outbreak_df_week$sim)
@@ -76,14 +75,15 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 }
 
 
-#' Calculate whether outbreaks went extinct or not
+#' Calculate proportion of outbreaks that went extinct
 #' @author Joel Hellewell
-#' @param outbreak_df_week data.table  weekly cases produced by the outbreak model
+#' @param outbreak_df_week data.table  weekly cases producted by the outbreak model
 #' @param cap_cases integer number of cumulative cases at which the branching process was terminated
-#' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
 #'
+#' @return
 #' @export
 #' @importFrom dplyr group_by filter summarise ungroup
+#' @examples
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
 
@@ -107,16 +107,16 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_ran
 #' @param num.initial.cases.in integer filtering value for number of initial cases
 #' @param index_R0.in numeric filtering value for community R0 value
 #' @param res.in data.table of results from parameter sweep
-#' @param facet.by the column name to facet the plot by.
-#' @param col.by the column name to use for colours in the plot.
 #'
+#' @return
 #' @export
 #' @importFrom dplyr filter mutate
 #' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap ylab xlab scale_x_continuous scale_y_continuous coord_cartesian
 #' @importFrom cowplot panel_border
 #'
+#' @examples
 #'
-sub_plot <- function(theta.in = "15%",
+sub_plot <- function(inf_shift.in = 3,
                      delay.in = "SARS",
                      prop.asym.in = 0,
                      num.initial.cases.in = 20,
@@ -128,7 +128,7 @@ sub_plot <- function(theta.in = "15%",
   col.by <- ggplot2::ensym(col.by)
 
   res.in %>%
-    dplyr::filter(theta %in% theta.in,
+    dplyr::filter(inf_shift %in% inf_shift.in,
                   delay %in% delay.in,
                   prop.asym %in% prop.asym.in,
                   num.initial.cases %in% num.initial.cases.in,
@@ -144,14 +144,12 @@ sub_plot <- function(theta.in = "15%",
                                  labels = c("Short isolation delay",
                                             "Long isolation delay"))) %>%
     dplyr::mutate(prop.asym = factor(prop.asym,
-                                     levels = c(0, 0.1),
-                                     labels = c("No asymptomatic cases ",
-                                                "10% cases asmyptomatic"))) %>%
+                                     levels = c(0.2, 0.4, 0.5, 0.7),
+                                     labels = c("20% cases asymptomatic",
+                                                "40%","50%","70%"))) %>%
     dplyr::mutate(theta = factor(theta,
-                                 levels = c("<1%", "15%", "30%"),
-                                 labels = c("<1% trans. pre-onset",
-                                            "15% trans. pre-onset",
-                                            "30% trans. pre-onset"))) %>%
+                                 levels = c(3),
+                                 labels = c("Trans up to 3 days pre-onset"))) %>%
     # Put plot together
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,

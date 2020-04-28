@@ -27,11 +27,13 @@ sub_plot(
 \item{index_R0.in}{numeric filtering value for community R0 value}
 
 \item{res.in}{data.table of results from parameter sweep}
+}
+\value{
 
-\item{facet.by}{the column name to facet the plot by.}
-
-\item{col.by}{the column name to use for colours in the plot.}
 }
 \description{
 Create sub-plot for supplementary figures
+}
+\examples{
+
 }

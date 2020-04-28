@@ -1,7 +1,7 @@
 #' Makes Figure 2a from manuscript
 #' @author Joel Hellewell
 #'
-#' @return A ggplot2 plot object
+#' @return
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom tidyr gather
@@ -9,6 +9,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom data.table data.table
 #' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer element_text aes
+#' @examples
 #'
 make_figure_2a <- function() {
 
@@ -69,7 +70,7 @@ make_figure_2a <- function() {
 
 #' Constructs figure 2 from the manuscript
 #' @author Joel Hellewell
-#' @return A patchwork object containing a number of ggplot2 plots
+#' @return
 #' @export
 #' @importFrom sn dsn
 #' @importFrom ggplot2 ggplot aes geom_line geom_vline coord_cartesian labs geom_ribbon scale_fill_manual theme element_text
@@ -95,17 +96,15 @@ make_figure_2 <- function() {
                          alpha = 0.4)
 
 
-  p3 <- data.frame(y = c(sn::dsn(x = seq(0, 13, 0.1), xi = 5, omega = 2, alpha = 0.7),
-                       sn::dsn(x = seq(0, 13, 0.1), xi = 5, omega = 2, alpha = 1.95),
-                       sn::dsn(x = seq(0, 13, 0.1), xi = 5, omega = 2, alpha = 30)),
-                   x = rep(rep(seq(0, 13, 0.1), 3)),
-                   theta = rep(c("30%", "15%", "<1%"), rep(131, 3))) %>%
+  p3 <- data.frame(y = c(dgamma(seq(0, 13, 0.1), 2.115779, 0.6898583)),
+                   x = seq(0, 13, 0.1)-3,
+                   theta = rep(c("42%"), rep(131, 1))) %>%
     ggplot2::ggplot(aes(x, y, fill = theta)) +
     ggplot2::geom_ribbon(aes(ymin = 0, ymax = y), alpha = 0.4) +
     ggplot2::geom_line(aes(x, y)) +
     cowplot::theme_cowplot() +
-    ggplot2::coord_cartesian(xlim = c(0, 13)) +
-    ggplot2::geom_vline(xintercept = 5) +
+    ggplot2::coord_cartesian(xlim = c(-3, 10)) +
+    ggplot2::geom_vline(xintercept = -1.4) +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_fill_manual(values = c("grey65",
                                           "goldenrod3",
@@ -125,9 +124,9 @@ make_figure_2 <- function() {
 
 #' Construct Figure 3a from manuscript
 #'
-#' @param df A dataframe of results as produced by `parameter_sweep`
+#' @param df
 #'
-#' @return A ggplot2 plot object
+#' @return
 #' @export
 #' @importFrom ggplot2 ggplot geom_line geom_point scale_fill_manual scale_color_manual scale_x_continuous scale_y_continuous theme labs
 #' @importFrom cowplot theme_cowplot
@@ -136,15 +135,11 @@ make_figure_2 <- function() {
 #'\dontrun{
 #'make_figure_3a()
 #'}
-#'
-make_figure_3a <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15%",
-                           delay_val = "SARS",
-                           prop.asym_val = 0) {
+make_figure_3a <- function(df = NULL) {
   pl <- df %>%
-    dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
-                  delay == delay_val,
-                  prop.asym == prop.asym_val) %>%
+    dplyr::filter(num.initial.cases == 20,
+                  delay == "SARS",
+                  prop.asym == 0.4) %>%
     dplyr::select(control_effectiveness, index_R0, pext) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,
@@ -160,9 +155,9 @@ make_figure_3a <- function(df = NULL, num.initial.cases_val = 20, theta_val = "1
                                 name = "Reproduction\nnumber")  +
     cowplot::theme_cowplot() +
     ggplot2::scale_x_continuous(breaks = seq(0, 1, 0.2),
-                                labels = seq(0, 100, 20)) +
+                               labels = seq(0, 100, 20)) +
     ggplot2::scale_y_continuous(breaks = seq(0, 1, 0.2),
-                                labels = seq(0, 100, 20)) +
+                               labels = seq(0, 100, 20)) +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(tag = "A",
                   x = "Contacts traced (%)",
@@ -182,9 +177,7 @@ make_figure_3a <- function(df = NULL, num.initial.cases_val = 20, theta_val = "1
 #'\dontrun{
 #'make_figure_3b()
 #'}
-make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15%",
-                          delay_val = "SARS",
-                          prop.asym_val = 0) {
+make_figure3b <- function(df = NULL) {
   df_extracted <-  df %>%
     dplyr::mutate(effective_r0 = purrr::map(
       sims,
@@ -208,10 +201,9 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
     tidyr::unnest("effective_r0")
 
   df_extracted %>%
-    dplyr::filter(prop.asym == prop.asym_val,
-                  theta == theta_val,
-                  num.initial.cases == num.initial.cases_val,
-                  delay == delay_val) %>%
+    dplyr::filter(prop.asym == 0.4,
+                  num.initial.cases == 20,
+                  delay == "SARS") %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = median_eff_r0,
                                  col = as.factor(index_R0),
@@ -228,7 +220,7 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
     ggplot2::xlab("Contacts traced (%)") +
     ggplot2::ylab("Effective reproduction number") +
     ggplot2::scale_x_continuous(breaks = seq(0, 1, 0.2),
-                                labels = seq(0, 100, 20)) +
+                               labels = seq(0, 100, 20)) +
     ggplot2::scale_y_continuous(breaks = seq(0, 3.5, 0.5)) +
     ggplot2::geom_hline(yintercept = 1, lty = 2, size = 0.75) +
     ggplot2::geom_point(shape = 21, col = "black",
@@ -245,9 +237,9 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
 
 #' Construct Figure 4 from the manuscript
 #'
-#' @param res The results dataframe todo
+#' @param res
 #'
-#' @return A ggplot2 plot object
+#' @return
 #' @export
 #' @importFrom ggplot2 ggplot geom_line geom_point scale_fill_manual scale_color_manual aes theme xlab ylab element_text
 #' @importFrom dplyr filter mutate
@@ -258,15 +250,13 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
 #'\dontrun{
 #'make_figure_4()
 #'}
-make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "15%",
-                          delay_val = "SARS",
-                          prop.asym_val = 0, index_R0_val = 2.5) {
+make_figure_4 <- function(res = NULL) {
 
   f4p1 <- res %>%
-    dplyr::filter(delay == delay_val,
-                  theta == theta_val,
-                  index_R0 == index_R0_val,
-                  prop.asym == prop.asym_val) %>%
+    dplyr::filter(delay == "SARS",
+                  inf_shift == 3,
+                  index_R0 == 1.1,
+                  prop.asym == 0.4) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,
                                  color = as.factor(num.initial.cases))) +
@@ -282,13 +272,13 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
     cowplot::theme_cowplot()
 
   f4p2 <- res %>%
-    dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
-                  index_R0 == index_R0_val,
-                  prop.asym == prop.asym_val) %>%
+    dplyr::filter(num.initial.cases == 20,
+                  inf_shift == 3,
+                  index_R0 == 1.1,
+                  prop.asym == 0.4) %>%
     dplyr::mutate(delay = factor(delay,
-                                 levels = c("SARS", "Wuhan", "Post lockdown"),
-                                 labels = c("Short", "Long", "V. short"))) %>%
+                                 levels = c("SARS", "Wuhan"),
+                                 labels = c("Short", "Long"))) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,
                                  color = as.factor(delay))) +
@@ -304,17 +294,17 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
     cowplot::theme_cowplot()
 
   f4p3 <- res %>%
-    dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  delay == delay_val,
-                  index_R0 == index_R0_val,
-                  prop.asym == prop.asym_val) %>%
+    dplyr::filter(num.initial.cases == 20,
+                  delay == "SARS",
+                  index_R0 == 1.1,
+                  prop.asym == 0.4) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,
-                                 color = as.factor(theta))) +
+                                 color = as.factor(inf_shift))) +
     ggplot2::geom_line(size = 0.75) +
     ggplot2::geom_point(shape = 21,
                         col = "black",
-                        aes(fill = as.factor(theta)),
+                        aes(fill = as.factor(inf_shift)),
                         size = 3) +
     ggplot2::scale_fill_manual(guide = "none",
                                values = c("mediumpurple2", "black", "mediumpurple4")) +
@@ -323,13 +313,13 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
     cowplot::theme_cowplot()
 
   f4p4 <- res %>%
-    dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
-                  index_R0 == index_R0_val,
-                  delay == delay_val) %>%
+    dplyr::filter(delay == "SARS",
+                  inf_shift == 3,
+                  index_R0 == 1.1,
+                  num.initial.cases == 20) %>%
     dplyr::mutate(prop.asym = factor(prop.asym,
-                                     levels = sort(unique(prop.asym)),
-                                     labels = paste0(sort(unique(prop.asym)) * 100,'%'))) %>%
+                                     levels = c(0.2, 0.4,0.5,0.7),
+                                     labels = c("20%", "40%", "50%", "70%"))) %>%
     ggplot2::ggplot(aes(x = control_effectiveness,
                         y = pext,
                         color = as.factor(prop.asym))) +
@@ -338,7 +328,10 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
                         col = "black",
                         aes(fill = as.factor(prop.asym)),
                         size = 3) +
-    guides(colour=guide_legend(title="Proportion\nof cases\nwithout\nsymptoms"), fill = FALSE) +
+    ggplot2::scale_fill_manual(guide = "none",
+                               values = c("black", "chocolate4","mediumpurple2", "mediumpurple4")) +
+    ggplot2::scale_color_manual(values = c("black", "chocolate4","mediumpurple2", "mediumpurple4"),
+                                name = "Proportion\nof cases\nwithout\nsymptoms")  +
     cowplot::theme_cowplot()
 
   fig4 <- (f4p1 + f4p2) / (f4p3 + f4p4) + patchwork::plot_annotation(tag_levels = "A") &
@@ -350,7 +343,11 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
           legend.title = element_text(size = 11),
           legend.text = element_text(size = 11)) &
     ggplot2::ylab("Simulated outbreaks controlled (%)") &
-    ggplot2::xlab("Contacts traced (%)") 
+    ggplot2::xlab("Contacts traced (%)") &
+    ggplot2::scale_x_continuous(breaks = seq(0, 1, 0.2),
+                                labels = seq(0, 100, 20)) &
+    ggplot2::scale_y_continuous(breaks = seq(0, 1, 0.2),
+                                labels = seq(0, 100, 20))
 
   return(fig4)
 }

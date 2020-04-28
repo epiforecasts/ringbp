@@ -2,6 +2,7 @@
 #' @author Joel Hellewell
 #' @param n.sim number of simulations to run
 #' @param num.initial.cases Initial number of cases in each initial cluster
+#' @param num.initial.clusters Number of initial clusters
 #' @param prop.ascertain Probability that cases are ascertained by contact tracing
 #' @param cap_max_days Maximum number of days to run process for
 #' @param cap_cases Maximum number of cases to run process for
@@ -12,6 +13,7 @@
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #' @param prop.asym proportion of cases that are completely asymptomatic.
+#' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #' @param inc_shape shape of distribution for incubation period
 #' @param inc_scale scale of distribution for incubation period
 #' @param inf_shape shape of distribution for infection time
@@ -19,22 +21,7 @@
 #' @param inf_shift shift of distribution for infection time into pre-symptomatic period (days)
 #'
 #' @importFrom purrr safely
-#' @importFrom stats as.formula
-#' @importFrom stats dist
-#' @importFrom stats dweibull
-#' @importFrom stats dnbinom
-#' @importFrom stats median
-#' @importFrom stats quantile
-#' @importFrom stats rweibull
-#' @importFrom utils data
-#' @return A data.table object returning the results for multiple simulations using
-#' the same set of parameters. The table has columns
-#' * week: The week in the simulation.
-#' * weekly_cases: The number of new cases that week.
-#' * cumulative: The cumulative cases.
-#' * effective_r0: The effective reproduction rate for the whole simulation
-#' * cases_per_gen: A list column with the cases per generation. This is repeated each row.
-#' * sim: Index column for which simulation.
+#' @return
 #' @export
 #'
 #' @examples
@@ -52,12 +39,12 @@
 #' delay_scale = 5,
 #' prop.asym = 0,
 #' prop.ascertain = 0)
-#' }
+#' #' }
 #'
 scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
                          r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
-                         delay_shape = NULL, delay_scale = NULL,  inc_meanlog = NULL, inc_sdlog = NULL,
-                         inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL, 
+                         delay_shape = NULL, delay_scale = NULL, inc_meanlog = NULL, inc_sdlog = NULL,
+                         inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL,
                          prop.asym = NULL, quarantine = NULL) {
 
   # Run n.sim number of model runs and put them all together in a big data.frame
@@ -85,15 +72,3 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
   res[, sim := rep(1:n.sim, rep(floor(cap_max_days / 7) + 1, n.sim)), ]
   return(res)
 }
-
-
-utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumulative", "data", "delay",
-                         "disp",  "exposure", "extinct", "full_join", "incubfn_sample",
-                         "index_R0", "infector_iso_time", "iqr_lower", "iqr_upper", "isolated", "isolated_time",
-                         "k", "label_extinct", "lower", "max_weekly_cases", "median_eff_r0", "missed",
-                         "new_cases", "num.initial.cases", "onset", "pext", "prob_extinct", "prop.asym",
-                         "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
-                         "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
-                         
-
-

@@ -1,10 +1,12 @@
 #' Constructs figure S6 from supplementary material
 #' @author Joel Hellewell
+#' @return
 #' @export
 #' @importFrom data.table data.table rbindlist
 #' @importFrom sn rsn
 #' @importFrom dplyr mutate group_by summarise
 #' @importFrom ggplot2 ggplot aes geom_density theme_bw geom_vline scale_x_continuous coord_cartesian xlab ylab scale_fill_discrete scale_color_discrete theme
+#' @examples
 #'
 make_figure_S6 <- function() {
 
@@ -63,11 +65,13 @@ make_figure_S6 <- function() {
 #' Plots the impact of dispersion on the distribution of new cases
 #' @author Sam Abbott
 #'
-#' @return A ggplot2 plot object
+#' @return
 #' @export
 #' @importFrom tidyr gather unnest
 #' @importFrom dplyr mutate filter
+#' @importFrom tibble tibble
 #' @importFrom ggplot2 ggplot geom_ribbon theme_bw theme xlab ylab geom_line geom_vline scale_colour_brewer scale_fill_brewer
+#' @examples
 #'
 make_figure_S7 <- function() {
 

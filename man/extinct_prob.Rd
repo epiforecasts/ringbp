@@ -11,8 +11,14 @@ extinct_prob(outbreak_df_week = NULL, cap_cases = NULL)
 
 \item{cap_cases}{integer number of cumulative cases at which the branching process was terminated}
 }
+\value{
+
+}
 \description{
 Calculate proportion of runs that have controlled outbreak
+}
+\examples{
+
 }
 \author{
 Joel Hellewell

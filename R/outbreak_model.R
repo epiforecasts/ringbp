@@ -4,11 +4,6 @@
 #' @inheritParams outbreak_step
 #' @param delay_shape numeric shape parameter of delay distribution
 #' @param delay_scale numeric scale parameter of delay distribution
-#' @param num.initial.cases The number of initial or starting cases which are all assumed to be missed.
-#' @param cap_cases Stop the simulation when this many cases is reached.
-#' @param cap_max_days Stop the simulation when this many days is reached.
-#'
-#'
 #'
 #' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
 #' @export
@@ -87,10 +82,10 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              r0community = r0community,
                              incfn = incfn,
                              delayfn = delayfn,
-                             prop.ascertain = prop.ascertain,
                              inf_shape = inf_shape,
                              inf_rate = inf_rate,
                              inf_shift = inf_shift,
+                             prop.ascertain = prop.ascertain,
                              quarantine = quarantine,
                              prop.asym = prop.asym)
 

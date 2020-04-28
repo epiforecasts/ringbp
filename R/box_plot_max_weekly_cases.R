@@ -3,7 +3,7 @@
 #'
 #' @param results results of the branching model in a data.frame or tibble
 #' @param cap_cases the maximimum number of cases per outbreak scenario; default is 5000
-#' @param extinct_thresold filters the minimum proportion of simulations that become extinct per scenario; default 0.8
+#' @param extinct_threshold filters the minimum proportion of simulations that become extinct per scenario; default 0.8
 #' @param theta_value A Character string defaulting to "15%". Determines the proportion of infections that occur prior to
 #' sypmtom onset.
 #' @param prop_asym A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic
@@ -20,54 +20,13 @@
 #' @importFrom ggplot2 ggplot aes stat_summary facet_grid vars scale_fill_gradient scale_y_continuous scale_x_discrete theme_bw theme labs ggtitle coord_flip
 #' @export
 #' @examples
-#' 
-#' scenarios <- tidyr::expand_grid(
-#'   ## Put parameters that are grouped by disease into this data.frame
-#'   delay_group = list(tibble::tibble(
-#'     delay = c("Wuhan"),
-#'     delay_shape = c(2.305172),
-#'     delay_scale = c(9.483875)
-#'   )),
-#'   k_group = list(tibble::tibble(
-#'     theta = c("<1%", "30%"),
-#'     k = c(30, 1.95)
-#'   )),
-#'   index_R0 = c(3.5, 2),
-#'   prop.asym = c(0.1),
-#'   control_effectiveness = seq(0.2),
-#'   num.initial.cases = c(5)) %>%
-#'   tidyr::unnest("k_group") %>%
-#'   tidyr::unnest("delay_group") %>%
-#'   dplyr::mutate(scenario = 1:dplyr::n())
-#' 
-#' ## Parameterise fixed paramters
-#' sim_with_params <- purrr::partial(ringbp::scenario_sim,
-#'                                   cap_max_days = 100,
-#'                                   cap_cases = 100,
-#'                                   r0isolated = 0,
-#'                                   disp.iso = 1,
-#'                                   disp.com = 0.16,
-#'                                   quarantine = FALSE)
-#' 
-#' ## Run paramter sweep
-#' sweep_results <- ringbp::parameter_sweep(scenarios,
-#'                                          sim_fn = sim_with_params,
-#'                                          samples = 50,
-#'                                          show_progress = TRUE)
-#' 
-#' 
-#' 
-#' box_plot_max_weekly_cases(sweep_results, cap_cases = 100, theta_value = "<1%",
-#'                           prop_asym = c(0.1), filt_control_effectiveness = seq(0.2),
-#'                           num_initial_cases = c(5), y_lim= 50)
-#' 
-#' 
-
+#'
+#'
 box_plot_max_weekly_cases <- function(results = NULL,
                                       cap_cases = 5000,
                                       extinct_thresold = 0.1,
-                                      theta_value = "15%",
-                                      prop_asym = 0,
+                                      inf_shift_value = 3,
+                                      prop_asym = 0.4,
                                       facet_scales = "fixed",
                                       filt_control_effectiveness = 0.4,
                                       flip_coords = FALSE,
@@ -102,7 +61,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
   ## Clean data
   df <- filt_results %>%
     dplyr::filter(control_effectiveness >= filt_control_effectiveness) %>%
-    dplyr::filter(theta == theta_value) %>%
+    dplyr::filter(inf_shift == inf_shift_value) %>%
     dplyr::filter(num.initial.cases %in% num_initial_cases) %>%
     dplyr::filter(prop.asym == prop_asym) %>%
     dplyr::group_by(scenario) %>%
@@ -155,7 +114,7 @@ box_plot_max_weekly_cases <- function(results = NULL,
                                                  "; 95% conf interval",
                                                  sep = " "))
   }
-  plot <- plot + cowplot::theme_minimal_hgrid() + cowplot::panel_border()
+  #plot <- plot + cowplot::theme_minimal_hgrid() + cowplot::panel_border()
 
   ##Text positions
   text_positions <- df %>%
@@ -184,18 +143,19 @@ box_plot_max_weekly_cases <- function(results = NULL,
 #'
 #' @param df Dataframe of results
 #'
-#' @return A dataframe with the same columns as df but with more useful column names.
+#' @return
 #' @export
 #' @importFrom dplyr mutate
 #' @author Sam Abbott
+#' @examples
 #'
 rename_variables_for_plotting <- function(df = NULL) {
 
   df %>%
     dplyr::mutate(delay = factor(delay,
-                                 levels = c("SARS", "Wuhan", "Post lockdown"),
+                                 levels = c("SARS", "Wuhan"),
                                  labels = c("Short isolation delay",
-                                           "Long isolation delay", "Post lockdown"))) %>%
+                                           "Long isolation delay"))) %>%
     dplyr::mutate(index_R0 = index_R0 %>%
                     paste0("R0 = ", .))
 }
