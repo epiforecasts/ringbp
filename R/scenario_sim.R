@@ -10,7 +10,6 @@
 #' @param disp.iso dispersion parameter for negative binomial distribution for isolated cases
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
-#' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #' @param prop.asym proportion of cases that are completely asymptomatic.
 #' @param inc_shape shape of distribution for incubation period
