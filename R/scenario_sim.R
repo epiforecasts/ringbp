@@ -10,10 +10,14 @@
 #' @param disp.iso dispersion parameter for negative binomial distribution for isolated cases
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
 #' @param delay_shape shape of distribution for delay between symptom onset and isolation
-#' @param delay_scale scale of distribution for delay between symptom onset and isolation
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #' @param prop.asym proportion of cases that are completely asymptomatic.
+#' @param inc_shape shape of distribution for incubation period
+#' @param inc_scale scale of distribution for incubation period
+#' @param inf_shape shape of distribution for infection time
+#' @param inf_rate rate of distribution for infection time
+#' @param inf_shift shift of distribution for infection time into pre-symptomatic period (days)
 #'
 #' @importFrom purrr safely
 #' @importFrom stats as.formula
@@ -51,10 +55,11 @@
 #' prop.ascertain = 0)
 #' }
 #'
-scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp.iso, disp.com, k,
-                         delay_shape, delay_scale, num.initial.cases, prop.asym,
-                         quarantine) {
+scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
+                         r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
+                         delay_shape = NULL, delay_scale = NULL,  inc_meanlog = NULL, inc_sdlog = NULL,
+                         inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL, 
+                         prop.asym = NULL, quarantine = NULL) {
 
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
@@ -67,7 +72,11 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                                              disp.com = disp.com,
                                              delay_shape = delay_shape,
                                              delay_scale = delay_scale,
-                                             k = k,
+                                             inc_meanlog = inc_meanlog,
+                                             inc_sdlog = inc_sdlog,
+                                             inf_shape = inf_shape,
+                                             inf_rate = inf_rate,
+                                             inf_shift = inf_shift,
                                              prop.asym = prop.asym,
                                              quarantine = quarantine))
 

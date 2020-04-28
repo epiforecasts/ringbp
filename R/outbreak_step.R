@@ -31,10 +31,22 @@
 #' # generate next generation of cases
 #' case_data <- outbreak_step(case_data,1,0.16,0,2.5,0,incfn,delayfn,0,1.95,FALSE)
 #'}
-outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, 
-                          r0isolated = NULL, r0community = NULL,
-                          prop.asym = NULL, incfn = NULL, delayfn = NULL, 
-                          prop.ascertain = NULL, k = NULL, quarantine = NULL) {
+outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0isolated = NULL, r0community = NULL,
+                          prop.asym = NULL, incfn = NULL, delayfn = NULL, inf_rate = NULL, inf_shape = NULL, 
+                          inf_shift = NULL, prop.ascertain = NULL, k = NULL, quarantine = NULL) {
+
+  # A vectorised version of isTRUE
+  vect_isTRUE <- function(x) {
+    purrr::map_lgl(x, isTRUE)
+  }
+
+  vect_max <- function(x, y) {
+    purrr::map2_dbl(x, y, max)
+  }
+
+  vect_min <- function(x, y) {
+    purrr::map2_dbl(x, y, min)
+  }
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
@@ -71,7 +83,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     # time when new cases were exposed, a draw from serial interval based on infector's onset
     exposure = unlist(purrr::map2(new_case_data$new_cases, new_case_data$onset,
                                   function(x, y) {
-                                    inf_fn(rep(y, x), k)
+                                    inf_fn(rep(y, x), inf_shape, inf_rate, inf_shift)
                                     })),
     # records the infector of each new person
     infector = unlist(purrr::map2(new_case_data$caseid, new_case_data$new_cases,

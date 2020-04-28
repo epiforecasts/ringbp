@@ -1,16 +1,29 @@
 #' Create partial function to sample from gamma distributions
 #' @author Joel Hellewell
-#' @param dist_shape numeric shape parameter of Weibull distribution
-#' @param dist_scale numeric scale parameter of Weibull distribution
+#' @param dist_param1 numeric parameter of specified distribution
+#' @param dist_param2 numeric parameter of specified distribution
+#' @param dist_type type of distribution from: 'weibull', 'gamma', 'lognormal'
 #'
 #' @return partial function that takes a numeric argument for number of samples
 #' @export
 #' @importFrom purrr partial
 #'
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                 shape = dist_shape,
-                 scale = dist_scale)
+dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL) {
+  if(dist_type == "weibull"){
+    out <- purrr::partial(rweibull,
+                          shape = dist_param1,
+                          scale = dist_param2)
+  }
+  if(dist_type == "gamma"){
+    out <- purrr::partial(rgamma,
+                          shape = dist_param1,
+                          rate = dist_param2)
+  }
+  if(dist_type == "lognormal"){
+    out <- purrr::partial(rlnorm,
+                          meanlog = dist_param1,
+                          sdlog = dist_param2)
+  }
   return(out)
 }
 
@@ -18,17 +31,19 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp vector of samples from the incubation period distribution
-#' @param k numeric skew parameter for sampling the serial interval from the incubation period
+#' @param inf_shape shape parameter for sampling the serial interval from the incubation period
+#' @param inf_rate rate parameter for sampling the serial interval from the incubation period
+#' @param inf_shift shift parameter, describing number of days pre-symptoms can be infectious
 #'
 #' @export
 #' @importFrom sn rsn
+#' @examples
+#'
+inf_fn <- function(inc_samp = NULL, inf_shape = NULL, inf_rate = NULL, inf_shift = NULL) {
 
-inf_fn <- function(inc_samp = NULL, k = NULL) {
-
-  out <- sn::rsn(n = length(inc_samp),
-                 xi = inc_samp,
-                 omega = 2,
-                 alpha = k)
+  out <- inc_samp - inf_shift + rgamma(n = length(inc_samp),
+                                shape = inf_shape,
+                                rate = inf_rate)
 
   out <- ifelse(out < 1, 1, out)
 
