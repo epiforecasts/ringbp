@@ -7,3 +7,12 @@ log.txt
 Rplot*
 .Rapp.history
 Rplots.pdf
+inst/scripts/*cache
+inst/scripts/*files
+inst/scripts/*.pdf
+inst/scripts/*.log
+*.txt
+*DS_Store
+inst/plots/*.pdf
+inst/plots/*.png
+data-raw/*.rds
