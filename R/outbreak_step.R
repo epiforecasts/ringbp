@@ -12,11 +12,11 @@
 #' @param prop.ascertain numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
-#' @param prop.asym proportion of cases that are completely asymptomatic.
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl rbernoulli
 #'
+#' @return
 #' @export
 #'
 #' @examples
@@ -120,15 +120,22 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
   prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
 
   # If you are asymptomatic, your isolation time is Inf
-  prob_samples[, isolated_time := ifelse(vect_isTRUE(asym), Inf,
-                                        # If you are not asymptomatic, but you are missed,
-                                        # you are isolated at your symptom onset
-                                        ifelse(vect_isTRUE(missed), onset + delayfn(1),
-                                               # If you are not asymptomatic and you are traced,
-                                               # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
-                                               ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
-                                                      infector_iso_time)))]
+  prob_samples[, isolated_time := ifelse(vect_isTRUE(missed),
+                                         # If you are not tracked (are missed)
+                                         ifelse(vect_isTRUE(asym),
+                                                # If you a are asymptotic you never isolate
+                                                inf,
+                                                # If you are not asymptotic you isolate after onset of symptoms plus a delay
+                                                onset + delayfn(1)),
+                                         # If you are tracked (are not missed)
+                                         ifelse(vect_isTRUE(rep(quarantine, total_new_cases)),
+                                                # With quarentine, isolate as soon as your infector was identified (a seperate delay to be added later)
+                                                infector_iso_time,
+                                                # Without quarentine:
+                                                # onset < infector_iso < onset+delay  -> isolate when infector is identified and isolates
+                                                # onset < onset+delay  < infector_iso -> isolate after symptoms and a delay
+                                                # infector_iso < onset < onset+delay  -> isolate as soon as symptoms onset.
+                                                vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time))))]
 
 
   # Chop out unneeded sample columns
@@ -155,8 +162,6 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
 
   return(out)
 }
-
-
 
 # A vectorised version of isTRUE
 vect_isTRUE <- function(x) {

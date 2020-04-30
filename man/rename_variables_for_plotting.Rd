@@ -10,10 +10,13 @@ rename_variables_for_plotting(df = NULL)
 \item{df}{Dataframe of results}
 }
 \value{
-A dataframe with the same columns as df but with more useful column names.
+
 }
 \description{
 Rename variables for plotting
+}
+\examples{
+
 }
 \author{
 Sam Abbott

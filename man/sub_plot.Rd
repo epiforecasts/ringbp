@@ -5,7 +5,7 @@
 \title{Create sub-plot for supplementary figures}
 \usage{
 sub_plot(
-  theta.in = "15\%",
+  inf_shift.in = 3,
   delay.in = "SARS",
   prop.asym.in = 0,
   num.initial.cases.in = 20,
@@ -16,8 +16,6 @@ sub_plot(
 )
 }
 \arguments{
-\item{theta.in}{character filtering value for theta}
-
 \item{delay.in}{character filtering value for delay}
 
 \item{prop.asym.in}{numeric filtering value for proportion of asymptomatic cases}
@@ -28,10 +26,14 @@ sub_plot(
 
 \item{res.in}{data.table of results from parameter sweep}
 
-\item{facet.by}{the column name to facet the plot by.}
+\item{theta.in}{character filtering value for theta}
+}
+\value{
 
-\item{col.by}{the column name to use for colours in the plot.}
 }
 \description{
 Create sub-plot for supplementary figures
+}
+\examples{
+
 }

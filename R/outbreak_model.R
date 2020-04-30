@@ -4,11 +4,6 @@
 #' @inheritParams outbreak_step
 #' @param delay_shape numeric shape parameter of delay distribution
 #' @param delay_scale numeric scale parameter of delay distribution
-#' @param num.initial.cases The number of initial or starting cases which are all assumed to be missed.
-#' @param cap_cases Stop the simulation when this many cases is reached.
-#' @param cap_max_days Stop the simulation when this many days is reached.
-#'
-#'
 #'
 #' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
 #' @export
@@ -18,14 +13,13 @@
 #' @examples
 #'
 #'\dontrun{
-#' incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+#' incfn <- dist_setup(dist_param1 = 2.322, dist_param2 = 6.492, dist_type = 'weibull')
 #' # delay distribution sampling function
-#' delayfn <- dist_setup(2, 4)
+#' delayfn <- dist_setup(2, 4, 'weibull')
 #' # generate initial cases
 #' case_data <- outbreak_setup(num.initial.cases = 5,
 #'                             incfn=incfn,
 #'                             delayfn = delayfn,
-#'                             k=1.95,
 #'                             prop.asym=0)
 #' # generate next generation of cases
 #' case_data <- outbreak_step(case_data = case_data,
@@ -36,10 +30,13 @@
 #'                            prop.asym = 0,
 #'                            incfn = incfn,
 #'                            delayfn = delayfn,
+#'                            inf_rate = 2,
+#'                            inf_shape = 2,
+#'                            inf_shift = 3,
 #'                            prop.ascertain = 0,
-#'                            k = 1.95,
 #'                            quarantine = FALSE)
 #'}
+
 outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,

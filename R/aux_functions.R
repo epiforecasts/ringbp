@@ -75,14 +75,15 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 }
 
 
-#' Calculate whether outbreaks went extinct or not
+#' Calculate proportion of outbreaks that went extinct
 #' @author Joel Hellewell
-#' @param outbreak_df_week data.table  weekly cases produced by the outbreak model
+#' @param outbreak_df_week data.table  weekly cases producted by the outbreak model
 #' @param cap_cases integer number of cumulative cases at which the branching process was terminated
-#' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
 #'
+#' @return
 #' @export
 #' @importFrom dplyr group_by filter summarise ungroup
+#' @examples
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
 
@@ -106,14 +107,14 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_ran
 #' @param num.initial.cases.in integer filtering value for number of initial cases
 #' @param index_R0.in numeric filtering value for community R0 value
 #' @param res.in data.table of results from parameter sweep
-#' @param facet.by the column name to facet the plot by.
-#' @param col.by the column name to use for colours in the plot.
 #'
+#' @return
 #' @export
 #' @importFrom dplyr filter mutate
 #' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap ylab xlab scale_x_continuous scale_y_continuous coord_cartesian
 #' @importFrom cowplot panel_border
 #'
+#' @examples
 #'
 sub_plot <- function(inf_shift.in = 3,
                      delay.in = "SARS",
