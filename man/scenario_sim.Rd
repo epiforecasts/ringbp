@@ -5,20 +5,24 @@
 \title{Run a specified number of simulations with identical parameters}
 \usage{
 scenario_sim(
-  n.sim,
-  prop.ascertain,
-  cap_max_days,
-  cap_cases,
-  r0isolated,
-  r0community,
-  disp.iso,
-  disp.com,
-  k,
-  delay_shape,
-  delay_scale,
-  num.initial.cases,
-  prop.asym,
-  quarantine
+  n.sim = NULL,
+  prop.ascertain = NULL,
+  cap_max_days = NULL,
+  cap_cases = NULL,
+  r0isolated = NULL,
+  r0community = NULL,
+  disp.iso = NULL,
+  disp.com = NULL,
+  delay_shape = NULL,
+  delay_scale = NULL,
+  inc_meanlog = NULL,
+  inc_sdlog = NULL,
+  inf_shape = NULL,
+  inf_rate = NULL,
+  inf_shift = NULL,
+  num.initial.cases = NULL,
+  prop.asym = NULL,
+  quarantine = NULL
 )
 }
 \arguments{
@@ -38,48 +42,53 @@ scenario_sim(
 
 \item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
 
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
-
 \item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
 
 \item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
+
+\item{inf_shape}{shape of distribution for infection time}
+
+\item{inf_rate}{rate of distribution for infection time}
+
+\item{inf_shift}{shift of distribution for infection time into pre-symptomatic period (days)}
 
 \item{num.initial.cases}{Initial number of cases in each initial cluster}
 
 \item{prop.asym}{proportion of cases that are completely asymptomatic.}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+
+\item{num.initial.clusters}{Number of initial clusters}
+
+\item{inc_shape}{shape of distribution for incubation period}
+
+\item{inc_scale}{scale of distribution for incubation period}
 }
 \value{
-A data.table object returning the results for multiple simulations using
-the same set of parameters. The table has columns
-\itemize{
-\item week: The week in the simulation.
-\item weekly_cases: The number of new cases that week.
-\item cumulative: The cumulative cases.
-\item effective_r0: The effective reproduction rate for the whole simulation
-\item cases_per_gen: A list column with the cases per generation. This is repeated each row.
-\item sim: Index column for which simulation.
-}
+
 }
 \description{
 Run a specified number of simulations with identical parameters
 }
 \examples{
 \dontrun{
-res <- scenario_sim(n.sim = 5,
-num.initial.cases = 5,
-cap_max_days = 365,
-cap_cases = 2000,
-r0isolated = 0,
-r0community = 2.5,
-disp.iso = 1,
-disp.com = 0.16,
-k = 0.7,
-delay_shape = 2.5,
-delay_scale = 5,
-prop.asym = 0,
-prop.ascertain = 0)
+res <- scenario_sim(n.sim = 2,
+                    num.initial.cases = 5,
+                    cap_max_days = 365,
+                    cap_cases = 400,
+                    r0isolated = 0,
+                    r0community = 2.5,
+                    disp.iso = 1,
+                    disp.com = 0.16,
+                    delay_shape = 2.5,
+                    delay_scale = 5,
+                    inc_meanlog = 1, 
+                    inc_sdlog = 2,
+                    inf_shape = 2, 
+                    inf_rate = 2, 
+                    inf_shift = -2,
+                    prop.asym = 0,
+                    prop.ascertain = 0)
 }
 
 }

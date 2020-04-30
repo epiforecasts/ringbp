@@ -7,10 +7,13 @@
 make_figure_S7()
 }
 \value{
-A ggplot2 plot object
+
 }
 \description{
 Plots the impact of dispersion on the distribution of new cases
+}
+\examples{
+
 }
 \author{
 Sam Abbott

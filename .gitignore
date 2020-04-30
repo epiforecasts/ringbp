@@ -7,8 +7,12 @@ log.txt
 Rplot*
 .Rapp.history
 Rplots.pdf
-ringbp.Rproj
-*.log
-*.tex
+inst/scripts/*cache
+inst/scripts/*files
+inst/scripts/*.pdf
+inst/scripts/*.log
 *.txt
-*.pdf
+*DS_Store
+inst/plots/*.pdf
+inst/plots/*.png
+data-raw/*.rds

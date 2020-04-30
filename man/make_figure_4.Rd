@@ -7,10 +7,10 @@
 make_figure_4(res = NULL)
 }
 \arguments{
-\item{res}{The results dataframe}
+\item{res}{}
 }
 \value{
-A ggplot2 plot object
+
 }
 \description{
 Construct Figure 4 from the manuscript

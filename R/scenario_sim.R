@@ -54,7 +54,25 @@
 #' delay_scale = 5,
 #' prop.asym = 0,
 #' prop.ascertain = 0)
-#' #' }
+#' }
+#' res <- scenario_sim(n.sim = 2,
+#'                     num.initial.cases = 5,
+#'                     cap_max_days = 365,
+#'                     cap_cases = 400,
+#'                     r0isolated = 0,
+#'                     r0community = 2.5,
+#'                     disp.iso = 1,
+#'                     disp.com = 0.16,
+#'                     delay_shape = 2.5,
+#'                     delay_scale = 5,
+#'                     inc_meanlog = 1,
+#'                     inc_sdlog = 2,
+#'                     inf_shape = 2,
+#'                     inf_rate = 2,
+#'                     inf_shift = -2,
+#'                     prop.asym = 0,
+#'                     prop.ascertain = 0)
+#' }
 #'
 scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
                          r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
@@ -96,5 +114,4 @@ utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumu
                          "new_cases", "num.initial.cases", "onset", "pext", "prob_extinct", "prop.asym",
                          "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
                          "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
-
 

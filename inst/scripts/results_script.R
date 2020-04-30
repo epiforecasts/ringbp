@@ -24,7 +24,7 @@ library(cowplot)
 
 devtools::load_all()
 
-git2r::revparse_single('.',"HEAD")$sha
+#git2r::revparse_single('.',"HEAD")$sha
 
 # Make the log file
 #logs <- file.path("log_lucas.txt")
@@ -79,122 +79,122 @@ tic()
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios,
                                          sim_fn = sim_with_params,
-                                         samples = 2000,
+                                         samples = 5,
                                          show_progress = TRUE)
 
 toc()
 
 
 # #+ writeout
-# 
+#
 # saveRDS(sweep_results, file = "../../data-raw/lucas_res.rds")
-# 
+#
 # #sink(type = "message")
 # #sink()
-# 
-# 
-# 
-# 
+#
+#
+#
+#
 # #+ plots1
-# 
-# 
+#
+#
 # # Figure 2 ----------------------------------------------------------------
-# 
+#
 ringbp::make_figure_2()
-# 
+#
 # ggplot2::ggsave("../plots/fig_2.pdf", height = 5.5, width = 10,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/fig_2.png", height = 5.5, width = 10)
-# 
-# 
+#
+#
 # #+ plots2
-# 
+#
 # # Load in results  -------------------------------------------------------
-# 
-# 
+#
+#
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
   dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases)) %>%
   dplyr::ungroup(scenario)
-# 
+#
 # #+ plots3
-# 
+#
 # # Figure 3 ----------------------------------------------------------------
-# 
+#
 fig_3_a <- make_figure_3a(df = res)
 fig_3_b <- make_figure3b(df = res) + ggplot2::labs(tag = "B")
 
 fig_3_a + fig_3_b + patchwork::plot_layout(guides = "keep")
-# 
+#
 # ggplot2::ggsave("../plots/fig_3.pdf", height = 5, width = 8,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/fig_3.png", height = 5, width = 8)
-# 
-# 
+#
+#
 # #+ plots4
-# 
+#
 # # Figure 4 ----------------------------------------------------------------
-# 
-# 
+#
+#
 make_figure_4(res = res)
-# 
+#
 # ggplot2::ggsave("../plots/fig_4.pdf", height = 5, width = 9,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/fig_4.png", height = 5, width = 9)
-# 
+#
 # #+ plots5
-# 
+#
 # # Figure 5 ----------------------------------------------------------------
-# 
+#
 ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases,
                                   extinct_thresold = 0.1,
                                   filt_control_effectiveness = 0.4,
                                   num_initial_cases = 20, flip_coords = FALSE,
                                   facet_scales = "fixed", record_params = F,
                                   prop_asym = 0.4, y_lim = 125)
-# 
+#
 # ggplot2::ggsave("../plots/fig_5.pdf", height = 7, width = 12,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/fig_5.png", height = 7, width = 12)
-# 
-# 
+#
+#
 # #+ plotsS
-# 
+#
 # # Supplementary figures ---------------------------------------------------
-# 
+#
 # ## S1
-# 
+#
 # make_figure_S1(res)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_1.pdf", height = 7.5, width = 9,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_1.png", height = 7.5, width = 9)
 # ## S2
-# 
+#
 # make_figure_S2(res)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_2.pdf", height = 7, width = 9,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_2.png", height = 7, width = 9)
 # ## S3
-# 
+#
 # make_figure_S3(res)
-# 
-# 
+#
+#
 # ggplot2::ggsave("../plots/S_fig_3.pdf", height = 5.5, width = 9,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_3.png", height = 5.5, width = 9)
-# 
+#
 # ## S4
-# 
+#
 # make_figure_S4(res)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_4.pdf", height = 3, width = 6.5,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_4.png", height = 3, width = 6.5)
-# 
+#
 # ## S5
-# 
+#
 # ringbp::box_plot_max_weekly_cases(results = sweep_results,
 #                                   cap_cases = cap_cases,
 #                                   extinct_thresold = 0.05,
@@ -204,11 +204,11 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases
 #                                   facet_scales = "fixed",
 #                                   record_params = F,
 #                                   y_lim = 100)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_5_A.pdf", height = 5, width = 10,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_5_A.png", height = 5, width = 10)
-# 
+#
 # ringbp::box_plot_max_weekly_cases(results = sweep_results,
 #                                   cap_cases = cap_cases,
 #                                   extinct_thresold = 0.05,
@@ -218,11 +218,11 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases
 #                                   facet_scales = "fixed",
 #                                   record_params = F,
 #                                   y_lim = 200)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_5_B.pdf", height = 5, width = 10,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_5_B.png", height = 5, width = 10)
-# 
+#
 # ringbp::box_plot_max_weekly_cases(results = sweep_results,
 #                                   cap_cases = cap_cases,
 #                                   extinct_thresold = 0.05,
@@ -232,17 +232,17 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases
 #                                   facet_scales = "fixed",
 #                                   record_params = F,
 #                                   y_lim = 100)
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_5_C.pdf", height = 5, width = 10,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_5_C.png", height = 5, width = 10)
-# 
+#
 # ## S6
-# 
+#
 # ringbp::make_figure_S6()
-# 
+#
 # ggplot2::ggsave("../plots/S_fig_6.pdf", height = 8, width = 12,
 #                 useDingbats = FALSE)
 # ggplot2::ggsave("../plots/S_fig_6.png", height = 8, width = 12)
-# 
-# 
+#
+#

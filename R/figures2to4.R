@@ -81,13 +81,13 @@ make_figure_2a <- function() {
 make_figure_2 <- function() {
 
   p2 <- data.frame(x = seq(0, 15, 0.1),
-                   y = dweibull(x = seq(0, 15, 0.1),
-                                shape = 2.322737,
-                                scale = 6.492272)) %>%
+                   y = dlnorm(x = seq(0, 15, 0.1),
+                                meanlog = 1.434065,
+                                sdlog = 0.6612)) %>%
     ggplot2::ggplot(aes(x = x, y = y)) +
     ggplot2::geom_line() +
     cowplot::theme_cowplot() +
-    ggplot2::geom_vline(xintercept = 5.8, lty = 2) +
+    ggplot2::geom_vline(xintercept = exp(1.43), lty = 2) +
     ggplot2::coord_cartesian(xlim = c(0, 13)) +
     ggplot2::labs(tag = "B", x = "time since infection (days)", y = "probability density") +
     ggplot2::geom_ribbon(aes(ymax = y, ymin = 0),
@@ -103,7 +103,7 @@ make_figure_2 <- function() {
     ggplot2::geom_line(aes(x, y)) +
     cowplot::theme_cowplot() +
     ggplot2::coord_cartesian(xlim = c(-3, 10)) +
-    ggplot2::geom_vline(xintercept = -1.4) +
+    ggplot2::geom_vline(xintercept = -1.4,lty=2) +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::scale_fill_manual(values = c("grey65",
                                           "goldenrod3",
