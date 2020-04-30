@@ -116,11 +116,10 @@ detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_ran
 #'
 #' @examples
 #'
-sub_plot <- function(inf_shift.in = 3,
-                     delay.in = "SARS",
-                     prop.asym.in = 0,
+sub_plot <- function(delay.in = "SARS",
+                     prop.asym.in = 0.4,
                      num.initial.cases.in = 20,
-                     index_R0.in = 2.5,
+                     index_R0.in = 1.1,
                      res.in = NULL,
                      facet.by = NULL,
                      col.by = NULL) {
@@ -128,8 +127,7 @@ sub_plot <- function(inf_shift.in = 3,
   col.by <- ggplot2::ensym(col.by)
 
   res.in %>%
-    dplyr::filter(inf_shift %in% inf_shift.in,
-                  delay %in% delay.in,
+    dplyr::filter(delay %in% delay.in,
                   prop.asym %in% prop.asym.in,
                   num.initial.cases %in% num.initial.cases.in,
                   index_R0 %in% index_R0.in) %>%
@@ -147,9 +145,9 @@ sub_plot <- function(inf_shift.in = 3,
                                      levels = c(0.2, 0.4, 0.5, 0.7),
                                      labels = c("20% cases asymptomatic",
                                                 "40%","50%","70%"))) %>%
-    dplyr::mutate(theta = factor(theta,
-                                 levels = c(3),
-                                 labels = c("Trans up to 3 days pre-onset"))) %>%
+    # dplyr::mutate(theta = factor(theta,
+    #                              levels = c(3),
+    #                              labels = c("Trans up to 3 days pre-onset"))) %>%
     # Put plot together
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,

@@ -115,4 +115,3 @@ utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumu
                          "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
                          "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
 
-

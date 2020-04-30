@@ -23,7 +23,7 @@ make_figure_S1 <- function(res = NULL) {
 
   sub_plotS1 <- purrr::partial(ringbp::sub_plot,
                                res.in = res,
-                               index_R0.in = c(1.5, 2.5, 3.5),
+                               index_R0.in = unique(res$index_R0),
                                col.by = "index_R0")
 
   # Initial cases
@@ -38,30 +38,27 @@ make_figure_S1 <- function(res = NULL) {
   dl1 <- sub_plotS1(delay = "Wuhan",
                     facet.by = "delay")
 
-  # theta
-  index_th <- sub_plotS1(facet.by = "theta")
-  th1 <- sub_plotS1(theta = "<1%",
-                    facet.by = "theta")
-  th2 <- sub_plotS1(theta = "30%",
-                    facet.by = "theta")
 
   # asmyptomatic
   index_as <- sub_plotS1(facet.by = "prop.asym")
-  as1 <- sub_plotS1(prop.asym = 0.1,
+  as1 <- sub_plotS1(prop.asym = 0.2,
+                    facet.by = "prop.asym")
+  as2 <- sub_plotS1(prop.asym = 0.5,
+                    facet.by = "prop.asym")
+  as3 <- sub_plotS1(prop.asym = 0.7,
                     facet.by = "prop.asym")
 
   # Compose plot
-  (ic1 + index_ic + ic2) /
-    (patchwork::plot_spacer() + index_dl + dl1) /
-    (th1 + index_th + th2) /
-    (patchwork::plot_spacer() + index_as + as1) +
+  (index_as + as2 + as3) /
+    (ic1 + index_ic + ic2) /
+    (index_dl + patchwork::plot_spacer() + dl1) +
     patchwork::plot_layout(guides = "collect") &
     cowplot::theme_cowplot() &
     cowplot::panel_border() &
     ggplot2::theme(axis.title = ggplot2::element_blank()) &
     ggplot2::scale_fill_manual(guide = "none",
-                               values = c("red", "black", "firebrick4")) &
-    ggplot2::scale_color_manual(values = c("red", "black", "firebrick4"),
+                               values = c("red", "black")) &
+    ggplot2::scale_color_manual(values = c("red", "black"),
                                 name = "Reproduction\nnumber")
 
 }
@@ -91,7 +88,7 @@ make_figure_S2 <- function(res = NULL) {
 
   sub_plotS2 <- purrr::partial(ringbp::sub_plot,
                                res.in = res,
-                               num.initial.cases = c(5, 20, 40),
+                               num.initial.cases = unique(res$num.initial.cases),
                                col.by = "num.initial.cases")
 
   # delay
@@ -99,25 +96,26 @@ make_figure_S2 <- function(res = NULL) {
   dl1 <- sub_plotS2(delay = "Wuhan",
                     facet.by = "delay")
 
-  # theta
-  index_th <- sub_plotS2(facet.by = "theta")
+  # R0
+  ind_R0 <- sub_plotS2(facet.by = "index_R0")
 
-  th1 <- sub_plotS2(theta = "<1%",
-                    facet.by = "theta")
-
-  th2 <- sub_plotS2(theta = "30%",
-                    facet.by = "theta")
+  R01 <- sub_plotS2(index_R0=2.0,
+                    facet.by = "index_R0")
 
   # asymptomatic
-  index_as <- sub_plotS2(facet.by = "prop.asym")
-  as1 <- sub_plotS2(prop.asym = 0.1,
+  index_as <- sub_plotS1(facet.by = "prop.asym")
+  as1 <- sub_plotS1(prop.asym = 0.2,
+                    facet.by = "prop.asym")
+  as2 <- sub_plotS1(prop.asym = 0.5,
+                    facet.by = "prop.asym")
+  as3 <- sub_plotS1(prop.asym = 0.7,
                     facet.by = "prop.asym")
 
   # compose plot
 
   pl <- ((patchwork::plot_spacer() + index_dl + dl1) /
-           (th1 + index_th + th2) /
-           (patchwork::plot_spacer() + index_as + as1)) +
+           (patchwork::plot_spacer() + ind_R0 + R01) /
+           (index_as + as2 + as3)) +
     patchwork::plot_layout(guide = "collect")
 
 
@@ -161,21 +159,21 @@ make_figure_S3 <- function(res = NULL) {
                                col.by = "delay")
 
   # theta
-  index_th <- sub_plotS3(facet.by = "theta")
+  ind_R0 <- sub_plotS3(facet.by = "index_R0")
 
-  th1 <- sub_plotS3(theta = "<1%",
-                    facet.by = "theta")
-
-  th2 <- sub_plotS3(theta = "30%",
-                    facet.by = "theta")
+  R01 <- sub_plotS3(index_R0 = 2,
+                    facet.by = "index_R0")
 
   # asym
   index_as <- sub_plotS3(facet.by = "prop.asym")
-  as1 <- sub_plotS3(prop.asym = 0.1,
+  as1 <- sub_plotS3(prop.asym = 0.2,
+                    facet.by = "prop.asym")
+  as2 <- sub_plotS3(prop.asym = 0.5,
+                    facet.by = "prop.asym")
+  as3 <- sub_plotS3(prop.asym = 0.7,
                     facet.by = "prop.asym")
 
-
-  pl <- (th1 + index_th + th2) / (patchwork::plot_spacer() + index_as + as1) +
+  pl <- (index_as + as2 + as3) / (patchwork::plot_spacer() + ind_R0 + R01) +
     patchwork::plot_layout(guides = "collect")
 
 
@@ -212,28 +210,30 @@ make_figure_S3 <- function(res = NULL) {
 #'
 #' make_figure_S1(results)
 #' }
+#'
+#' No longer relevant because theta isn't a parameter and we aren't varying the proportion of transmission that happens before symptoms
 make_figure_S4 <- function(res = NULL) {
-
-  sub_plotS4 <- purrr::partial(ringbp::sub_plot,
-                               res.in = res,
-                               theta.in = c("<1%", "15%", "30%"),
-                               col.by = "theta")
-
-  index_as <- sub_plotS4(facet.by = "prop.asym")
-  as1 <- sub_plotS4(facet.by = "prop.asym",
-                    prop.asym.in = 0.1)
-
-  pl <- index_as + as1 +
-    patchwork::plot_layout(guides = "collect")
-
-  pl &
-    cowplot::theme_cowplot() &
-    cowplot::panel_border() &
-    ggplot2::theme(axis.title = ggplot2::element_blank()) &
-    ggplot2::scale_fill_manual(guide = "none",
-                               values = c("mediumpurple2", "black", "mediumpurple4")) &
-    ggplot2::scale_color_manual(values = c("mediumpurple2", "black", "mediumpurple4"),
-                                name = "Percentage of\ntransmission\nbefore symptoms",
-                                labels = c("<1%", "15%", "30%"))
-
+#
+#   sub_plotS4 <- purrr::partial(ringbp::sub_plot,
+#                                res.in = res,
+#                                theta.in = c("<1%", "15%", "30%"),
+#                                col.by = "theta")
+#
+#   index_as <- sub_plotS4(facet.by = "prop.asym")
+#   as1 <- sub_plotS4(facet.by = "prop.asym",
+#                     prop.asym.in = 0.1)
+#
+#   pl <- index_as + as1 +
+#     patchwork::plot_layout(guides = "collect")
+#
+#   pl &
+#     cowplot::theme_cowplot() &
+#     cowplot::panel_border() &
+#     ggplot2::theme(axis.title = ggplot2::element_blank()) &
+#     ggplot2::scale_fill_manual(guide = "none",
+#                                values = c("mediumpurple2", "black", "mediumpurple4")) &
+#     ggplot2::scale_color_manual(values = c("mediumpurple2", "black", "mediumpurple4"),
+#                                 name = "Percentage of\ntransmission\nbefore symptoms",
+#                                 labels = c("<1%", "15%", "30%"))
+#
 }
