@@ -164,7 +164,7 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases
 #
 # ## S1
 #
-# make_figure_S1(res)
+make_figure_S1(res)
 #
 # ggplot2::ggsave("../plots/S_fig_1.pdf", height = 7.5, width = 9,
 #                 useDingbats = FALSE)
