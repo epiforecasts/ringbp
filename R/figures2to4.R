@@ -135,15 +135,11 @@ make_figure_2 <- function() {
 #'make_figure_3a()
 #'}
 #'
-make_figure_3a <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15%",
+make_figure_3a <- function(df = NULL, num.initial.cases_val = 5,
                            delay_val = "SARS",
-                           prop.asym_val = 0) {
+                           prop.asym_val = 0.4) {
   pl <- df %>%
-    dplyr::filter(num.initial.cases == 20,
-                  delay == "SARS",
-                  prop.asym == 0.4) %>%
     dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
                   delay == delay_val,
                   prop.asym == prop.asym_val) %>%
     dplyr::select(control_effectiveness, index_R0, pext) %>%
@@ -183,9 +179,9 @@ make_figure_3a <- function(df = NULL, num.initial.cases_val = 20, theta_val = "1
 #'\dontrun{
 #'make_figure_3b()
 #'}
-make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15%",
+make_figure3b <- function(df = NULL, num.initial.cases_val = 5,
                           delay_val = "SARS",
-                          prop.asym_val = 0) {
+                          prop.asym_val = 0.4) {
   df_extracted <-  df %>%
     dplyr::mutate(effective_r0 = purrr::map(
       sims,
@@ -209,11 +205,7 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
     tidyr::unnest("effective_r0")
 
   df_extracted %>%
-    dplyr::filter(prop.asym == 0.4,
-                  num.initial.cases == 20,
-                  delay == "SARS") %>%
     dplyr::filter(prop.asym == prop.asym_val,
-                  theta == theta_val,
                   num.initial.cases == num.initial.cases_val,
                   delay == delay_val) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
@@ -262,17 +254,12 @@ make_figure3b <- function(df = NULL, num.initial.cases_val = 20, theta_val = "15
 #'\dontrun{
 #'make_figure_4()
 #'}
-make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "15%",
-                          delay_val = "SARS",
-                          prop.asym_val = 0, index_R0_val = 2.5) {
+make_figure_4 <- function(res = NULL, num.initial.cases_val = 5,
+                          delay_val = "SARS", prop.asym_val = 0.4,
+                          index_R0_val = 1.1) {
 
   f4p1 <- res %>%
-    dplyr::filter(delay == "SARS",
-                  inf_shift == 3,
-                  index_R0 == 1.1,
-                  prop.asym == 0.4) %>%
     dplyr::filter(delay == delay_val,
-                  theta == theta_val,
                   index_R0 == index_R0_val,
                   prop.asym == prop.asym_val) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
@@ -290,12 +277,7 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
     cowplot::theme_cowplot()
 
   f4p2 <- res %>%
-    dplyr::filter(num.initial.cases == 20,
-                  inf_shift == 3,
-                  index_R0 == 1.1,
-                  prop.asym == 0.4) %>%
     dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
                   index_R0 == index_R0_val,
                   prop.asym == prop.asym_val) %>%
     dplyr::mutate(delay = factor(delay,
@@ -316,38 +298,25 @@ make_figure_4 <- function(res = NULL, num.initial.cases_val = 20, theta_val = "1
     cowplot::theme_cowplot()
 
   f4p3 <- res %>%
-    dplyr::filter(num.initial.cases == 20,
-                  delay == "SARS",
-                  index_R0 == 1.1,
-                  prop.asym == 0.4) %>%
     dplyr::filter(num.initial.cases == num.initial.cases_val,
                   delay == delay_val,
-                  index_R0 == index_R0_val,
                   prop.asym == prop.asym_val) %>%
     ggplot2::ggplot(ggplot2::aes(x = control_effectiveness,
                                  y = pext,
-                                 color = as.factor(inf_shift))) +
+                                 color = as.factor(index_R0))) +
     ggplot2::geom_line(size = 0.75) +
     ggplot2::geom_point(shape = 21,
                         col = "black",
-                        aes(fill = as.factor(inf_shift)),
+                        aes(fill = as.factor(index_R0)),
                         size = 3) +
     ggplot2::scale_fill_manual(guide = "none",
                                values = c("mediumpurple2", "black", "mediumpurple4")) +
     ggplot2::scale_color_manual(values = c("mediumpurple2", "black", "mediumpurple4"),
-                                name = "Pre-symptom\ntransmission") +
+                                name = "Reproduction\nnumber") +
     cowplot::theme_cowplot()
 
   f4p4 <- res %>%
-    dplyr::filter(delay == "SARS",
-                  inf_shift == 3,
-                  index_R0 == 1.1,
-                  num.initial.cases == 20) %>%
-    dplyr::mutate(prop.asym = factor(prop.asym,
-                                     levels = c(0.2, 0.4,0.5,0.7),
-                                     labels = c("20%", "40%", "50%", "70%"))) %>%
     dplyr::filter(num.initial.cases == num.initial.cases_val,
-                  theta == theta_val,
                   index_R0 == index_R0_val,
                   delay == delay_val) %>%
     dplyr::mutate(prop.asym = factor(prop.asym,
