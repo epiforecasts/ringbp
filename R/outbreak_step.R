@@ -124,7 +124,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                          # If you are not tracked (are missed)
                                          ifelse(vect_isTRUE(asym),
                                                 # If you a are asymptotic you never isolate
-                                                inf,
+                                                Inf,
                                                 # If you are not asymptotic you isolate after onset of symptoms plus a delay
                                                 onset + delayfn(1)),
                                          # If you are tracked (are not missed)

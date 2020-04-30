@@ -88,9 +88,6 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              inf_rate = inf_rate,
                              inf_shift = inf_shift,
                              prop.ascertain = prop.ascertain,
-                             inf_shape = inf_shape,
-                             inf_rate = inf_rate,
-                             inf_shift = inf_shift,
                              quarantine = quarantine,
                              prop.asym = prop.asym)
 
