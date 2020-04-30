@@ -13,10 +13,14 @@ outbreak_model(
   r0community = NULL,
   disp.iso = NULL,
   disp.com = NULL,
-  k = NULL,
   delay_shape = NULL,
   delay_scale = NULL,
+  inc_meanlog = NULL,
+  inc_sdlog = NULL,
   prop.asym = NULL,
+  inf_shape = NULL,
+  inf_rate = NULL,
+  inf_shift = NULL,
   quarantine = NULL
 )
 }
@@ -30,8 +34,6 @@ outbreak_model(
 \item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
 \item{disp.com}{numeric dispersion parameter for non-isolated cases (must be >0)}
-
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 
 \item{delay_shape}{numeric shape parameter of delay distribution}
 

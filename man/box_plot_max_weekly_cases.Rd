@@ -8,8 +8,8 @@ box_plot_max_weekly_cases(
   results = NULL,
   cap_cases = 5000,
   extinct_thresold = 0.1,
-  theta_value = "15\%",
-  prop_asym = 0,
+  inf_shift_value = 3,
+  prop_asym = 0.4,
   facet_scales = "fixed",
   filt_control_effectiveness = 0.4,
   flip_coords = FALSE,
@@ -22,9 +22,6 @@ box_plot_max_weekly_cases(
 \item{results}{results of the branching model in a data.frame or tibble}
 
 \item{cap_cases}{the maximimum number of cases per outbreak scenario; default is 5000}
-
-\item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
-sypmtom onset.}
 
 \item{prop_asym}{A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic}
 
@@ -41,6 +38,9 @@ sypmtom onset.}
 \item{y_lim}{Numeric the limit of the y axis to show.}
 
 \item{extinct_threshold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
+
+\item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
+sypmtom onset.}
 }
 \description{
 Create box plots of maximum weekly cases by scenario

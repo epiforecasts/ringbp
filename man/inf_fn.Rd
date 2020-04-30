@@ -4,12 +4,16 @@
 \alias{inf_fn}
 \title{Samples the serial interval for given incubation period samples}
 \usage{
-inf_fn(inc_samp = NULL, k = NULL)
+inf_fn(inc_samp = NULL, inf_shape = NULL, inf_rate = NULL, inf_shift = NULL)
 }
 \arguments{
 \item{inc_samp}{vector of samples from the incubation period distribution}
 
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
+\item{inf_shape}{shape parameter for sampling the serial interval from the incubation period}
+
+\item{inf_rate}{rate parameter for sampling the serial interval from the incubation period}
+
+\item{inf_shift}{shift parameter, describing number of days pre-symptoms can be infectious}
 }
 \value{
 

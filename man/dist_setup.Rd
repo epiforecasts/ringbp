@@ -4,12 +4,14 @@
 \alias{dist_setup}
 \title{Create partial function to sample from gamma distributions}
 \usage{
-dist_setup(dist_shape = NULL, dist_scale = NULL)
+dist_setup(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL)
 }
 \arguments{
-\item{dist_shape}{numeric shape parameter of Weibull distribution}
+\item{dist_param1}{numeric parameter of specified distribution}
 
-\item{dist_scale}{numeric scale parameter of Weibull distribution}
+\item{dist_param2}{numeric parameter of specified distribution}
+
+\item{dist_type}{type of distribution from: 'weibull', 'gamma', 'lognormal'}
 }
 \value{
 partial function that takes a numeric argument for number of samples

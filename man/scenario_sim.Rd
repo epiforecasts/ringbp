@@ -13,9 +13,13 @@ scenario_sim(
   r0community = NULL,
   disp.iso = NULL,
   disp.com = NULL,
-  k = NULL,
   delay_shape = NULL,
   delay_scale = NULL,
+  inc_meanlog = NULL,
+  inc_sdlog = NULL,
+  inf_shape = NULL,
+  inf_rate = NULL,
+  inf_shift = NULL,
   num.initial.cases = NULL,
   prop.asym = NULL,
   quarantine = NULL
@@ -42,9 +46,23 @@ scenario_sim(
 
 \item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
 
+\item{inf_shape}{shape of distribution for infection time}
+
+\item{inf_rate}{rate of distribution for infection time}
+
+\item{inf_shift}{shift of distribution for infection time into pre-symptomatic period (days)}
+
 \item{num.initial.cases}{Initial number of cases in each initial cluster}
 
+\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+
+\item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+
 \item{num.initial.clusters}{Number of initial clusters}
+
+\item{inc_shape}{shape of distribution for incubation period}
+
+\item{inc_scale}{scale of distribution for incubation period}
 }
 \value{
 

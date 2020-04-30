@@ -5,7 +5,7 @@
 \title{Create sub-plot for supplementary figures}
 \usage{
 sub_plot(
-  theta.in = "15\%",
+  inf_shift.in = 3,
   delay.in = "SARS",
   prop.asym.in = 0,
   num.initial.cases.in = 20,
@@ -16,8 +16,6 @@ sub_plot(
 )
 }
 \arguments{
-\item{theta.in}{character filtering value for theta}
-
 \item{delay.in}{character filtering value for delay}
 
 \item{prop.asym.in}{numeric filtering value for proportion of asymptomatic cases}
@@ -27,6 +25,8 @@ sub_plot(
 \item{index_R0.in}{numeric filtering value for community R0 value}
 
 \item{res.in}{data.table of results from parameter sweep}
+
+\item{theta.in}{character filtering value for theta}
 }
 \value{
 

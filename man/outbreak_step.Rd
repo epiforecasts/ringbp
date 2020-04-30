@@ -13,6 +13,9 @@ outbreak_step(
   prop.asym = NULL,
   incfn = NULL,
   delayfn = NULL,
+  inf_rate = NULL,
+  inf_shape = NULL,
+  inf_shift = NULL,
   prop.ascertain = NULL,
   k = NULL,
   quarantine = NULL
