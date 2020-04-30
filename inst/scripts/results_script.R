@@ -36,6 +36,8 @@ devtools::load_all()
 
 #+ create_parameters
 
+no.samples <- 100
+
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
   delay_group = list(tibble::tibble(
@@ -79,7 +81,7 @@ tic()
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios,
                                          sim_fn = sim_with_params,
-                                         samples = 5,
+                                         samples = no.samples,
                                          show_progress = TRUE)
 
 toc()
@@ -165,6 +167,9 @@ ringbp::box_plot_max_weekly_cases(results = sweep_results, cap_cases = cap_cases
 # ## S1
 #
 make_figure_S1(res)
+make_figure_S2(res)
+make_figure_S3(res)
+make_figure_S9(res)
 #
 # ggplot2::ggsave("../plots/S_fig_1.pdf", height = 7.5, width = 9,
 #                 useDingbats = FALSE)
