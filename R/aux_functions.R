@@ -1,3 +1,18 @@
+#' Create function to calculate adherence times
+#' @author Emma Davis
+#' @param N number of samples/cases
+#' @param adherence adherence probability to isolation
+#' @param delay time from symptom to isolation if adhering
+#'
+#' @return numeric vector of adherence times (=delay if adhering, =1e10 if not adhering)
+#' @export
+#' @importFrom
+#' @examples
+#'
+adhere <- function(N,adherence=1,delay=1){
+  out <- delay+1e10*rbinom(N,prob=1-adherence,size=1)
+}
+
 #' Create partial function to sample from gamma distributions
 #' @author Joel Hellewell
 #' @param dist_param1 numeric parameter of specified distribution
@@ -10,6 +25,7 @@
 #' @examples
 #'
 dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL) {
+
   if(dist_type == "weibull"){
     out <- purrr::partial(rweibull,
                           shape = dist_param1,
@@ -25,6 +41,7 @@ dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL)
                           meanlog = dist_param1,
                           sdlog = dist_param2)
   }
+
   return(out)
 }
 

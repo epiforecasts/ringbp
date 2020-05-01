@@ -9,8 +9,8 @@
 #' @param r0community basic reproduction number for non-isolated cases
 #' @param disp.iso dispersion parameter for negative binomial distribution for isolated cases
 #' @param disp.com dispersion parameter for negative binomial distribution for non-isolated cases
-#' @param delay_shape shape of distribution for delay between symptom onset and isolation
-#' @param delay_scale scale of distribution for delay between symptom onset and isolation
+#' @param adherence adherence probability to isolation
+#' @param delay delay between symptom onset and isolation
 #' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #' @param prop.asym proportion of cases that are completely asymptomatic.
 #' @param inc_shape shape of distribution for incubation period
@@ -76,7 +76,7 @@
 #'
 scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
                          r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
-                         delay_shape = NULL, delay_scale = NULL, inc_meanlog = NULL, inc_sdlog = NULL,
+                         adherence = NULL, delay = NULL, inc_meanlog = NULL, inc_sdlog = NULL,
                          inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL,
                          prop.asym = NULL, quarantine = NULL) {
 
@@ -89,8 +89,8 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                                              r0community = r0community,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
-                                             delay_shape = delay_shape,
-                                             delay_scale = delay_scale,
+                                             adherence = adherence,
+                                             delay = delay,
                                              inc_meanlog = inc_meanlog,
                                              inc_sdlog = inc_sdlog,
                                              inf_shape = inf_shape,

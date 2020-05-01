@@ -2,14 +2,14 @@
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
 #' @inheritParams outbreak_step
-#' @param delay_shape numeric shape parameter of delay distribution
-#' @param delay_scale numeric scale parameter of delay distribution
+#' @param adherence adherence to isolation (probability)
+#' @param delay delay from symptoms to isolation (days)
 #'
 #' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
 #' @export
 #'
 #' @importFrom data.table rbindlist
-#'
+#' @importFrom purrr partial
 #' @examples
 #'
 #'\dontrun{
@@ -41,7 +41,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
                            disp.iso = NULL, disp.com = NULL,
-                           delay_shape = NULL, delay_scale = NULL,
+                           adherence = NULL, delay = NULL,
                            inc_meanlog = NULL, inc_sdlog = NULL,
                            prop.asym = NULL, inf_shape = NULL,
                            inf_rate = NULL, inf_shift = NULL,
@@ -52,11 +52,11 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   incfn <- dist_setup(dist_param1 = inc_meanlog,
                       dist_param2 = inc_sdlog,
                       dist_type = 'lognormal')
-  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
-  # onset to isolation delay sampling function
-  delayfn <- dist_setup(delay_shape,
-                        delay_scale,
-                        "weibull")
+
+  # onset to isolation delay and adherence: either delay days if adhering or never if not
+  delayfn <- purrr::partial(adhere,
+                            adherence = adherence,
+                            delay = delay)
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases

@@ -36,15 +36,12 @@ devtools::load_all()
 
 #+ create_parameters
 
-no.samples <- 100
+no.samples <- 2
 
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
-  delay_group = list(tibble::tibble(
-    delay = c("SARS", "Wuhan"),
-    delay_shape = c(1.651524, 2.305172),
-    delay_scale = c(4.287786, 9.483875)
-  )),
+  adherence = c(0.6,0.9,1.0),
+  delay = 1,
   inc_meanlog = 1.434065,
   inc_sdlog = 0.6612,
   inf_shape = 2.115779,
@@ -54,7 +51,6 @@ scenarios <- tidyr::expand_grid(
   prop.asym = c(0.2,0.4,0.5,0.7),
   control_effectiveness = seq(0, 1, 0.2),
   num.initial.cases = c(5, 20, 40)) %>%
-  tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
 cap_cases <- 200
