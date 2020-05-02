@@ -104,7 +104,7 @@ ringbp::make_figure_2()
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases)) %>%
+  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
   dplyr::ungroup(scenario)
 
 #+ plots3
@@ -125,6 +125,8 @@ res %>%
     ylab('Prob. large outbreak')
 
 
+#+ plots_wuhan, eval = FALSE, cache = FALSE, fig.height = 5, fig.width = 9
+
 res %>% 
   filter(delay == 'Wuhan') %>% 
   mutate(prop.asym = factor(prop.asym, labels = c('asympt = 20%', '40%', '50%', '70%'))) %>%
@@ -138,7 +140,7 @@ res %>%
 
 
 
-#+ by_size, eval = F, cache = TRUE, fig.height = 5, fig.width = 9
+#+ by_size, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
 
 res2 <- list()
 week_range <- 40:42
@@ -172,7 +174,6 @@ for(i in seq_len(nrow(sweep_results2))){
   
   res2[[i]] <- tmp              
 }
-
 res2 <- do.call(rbind, res2)
 
 
@@ -206,25 +207,28 @@ total_cumulative_distr <-
 
 
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
-  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2')))
+  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2'))) %>% 
+  filter(outbreaks != 0)
 
 
 ggplot(total_cumulative_distr, 
        aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) + 
   geom_line() + 
-  facet_wrap(~ factor(index_R0)) +
   xlim(0, 1000) +
+  facet_wrap(~ factor(index_R0), scale = 'free_y') +
   ylab('Prob. large outbreak') + 
   guides(colour=guide_legend(title="Prop. Traced"))
 
 
-#+ plots_by_max_weekly
+#+ plots_by_max_weekly, cache = FALSE
+
 total_cumulative_distr <- 
   res2 %>% 
   group_by(index_R0, control_effectiveness) %>% 
-  do(res = tibble(cumdistr = nrow(.) * ecdf(.$max_weekly)(1:max(.$max_weekly)),
+  do(res = tibble(cumdistr = sum(.$extinct) * ecdf(.$max_weekly[.$extinct == 1])(1:max(.$max_weekly)),
                   max_max_weekly = max(.$max_weekly),
                   max_weekly = 1:max(.$max_weekly),
+                  extinct = sum(.$extinct),
                   outbreaks = nrow(.) - sum(.$extinct),
                   runs = nrow(.),
                   index_R0 = .$index_R0[1],
@@ -234,7 +238,7 @@ total_cumulative_distr <-
 
 total_cumulative_distr <- 
   do.call(rbind, total_cumulative_distr$res) %>%
-    filter(poutbreak <= 1) %>%
+    filter(poutbreak < 1) %>%
     mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2')))
   
 
