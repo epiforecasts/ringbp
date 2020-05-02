@@ -137,7 +137,7 @@ res %>%
     ylab('Prob. large outbreak')
 
 
-#+ by_size, eval = F, cache = TRUE, fig.height = 5, fig.width = 9
+#+ by_size1, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
 
 res2 <- list()
 week_range <- 40:42
@@ -145,7 +145,7 @@ week_range <- 40:42
 sweep_results2 <- 
   sweep_results %>% 
     filter(delay == 'SARS') %>% 
-    filter(index_R0 < 2, prop.asym == 0.4) %>% 
+    filter(prop.asym == 0.4) %>% 
     filter(control_effectiveness > 0.5)
 
 for(i in seq_len(nrow(sweep_results2))){
@@ -176,10 +176,10 @@ res2 <- do.call(rbind, res2)
 
 
 
-#+ plots_by_size, eval = TRUE, cache= FALSE
+#+ plots_by_size1, eval = FALSE, cache= FALSE, echo = FALSE
 
-breaks <- c(-1, seq(2, 500, 50), Inf)
-labs <- c(0, seq(2, 500, 50))
+breaks <- c(-1, seq(2, 500, 20), Inf)
+labs <- c(0, seq(2, 500, 20))
 res2 %>% 
   mutate(max_weekly_bin = cut(max_weekly, breaks, labs)) %>% 
   group_by(max_weekly_bin, index_R0, control_effectiveness) %>% 
@@ -198,5 +198,121 @@ res2 %>%
     facet_wrap(~factor(control_effectiveness)) +
     scale_x_log10() 
 
+res2 %>% 
+  mutate(total = ifelse(total > 2000, 2000, total)) %>% 
+  ggplot(aes(total, colour = factor(control_effectiveness))) + 
+    stat_ecdf() + 
+    scale_x_log10() + 
+    facet_wrap(~factor(index_R0))
+
+
+
+#+ by_size, eval = F, cache = TRUE, fig.height = 5, fig.width = 9
+
+res2 <- list()
+week_range <- 40:42
+
+sweep_results2 <- 
+  sweep_results %>% 
+  filter(delay == 'SARS') %>% 
+  filter(prop.asym == 0.4) %>% 
+  filter(control_effectiveness > 0.3)
+
+for(i in seq_len(nrow(sweep_results2))){
+  print(i)
+  tmp <- sweep_results2$sims[i][[1]]
+  tmp <- 
+    tmp %>%
+    dplyr::group_by(sim) %>% # group by simulation run
+    mutate(max_weekly = max(weekly_cases),
+           total = max(cumulative)) %>% 
+    dplyr::filter(week %in% week_range) %>%
+    dplyr::summarise(extinct =
+                       ifelse(all(weekly_cases == 0 &
+                                    cumulative < cap_cases),
+                              1, 0),
+                     max_weekly = max(max_weekly),
+                     total = max(total)) %>%
+    dplyr::ungroup()
+  tmp <- 
+    tmp %>% 
+    mutate(index_R0 = sweep_results2$index_R0[i],
+           control_effectiveness = sweep_results2$control_effectiveness[i])
   
+  res2[[i]] <- tmp              
+}
+
+res2 <- do.call(rbind, res2)
+
+
+
+#+ plots_by_size2, eval = TRUE, cache= FALSE
+
+# Cumulation is *the number of runs, with that many total, that went extinct*.
+# At cumulative size = 4,
+#   cumulation is 0 (everything has more than 4 total cases)
+#   so p(outbreak) is total outbreaks / total runs
+
+# at cumulative size = 10
+#   cumulation is +ve (say 100)
+#   So 100 runs reached 10 but still went extinct.
+#   Therefore 1900 runs carried on. 
+#   so p(outbreak) is (total outbreaks) / (total runs - cumulation)
+
+# we want:
+# total outbreaks / n
+total_cumulative_distr <- 
+  res2 %>% 
+  mutate(total = ifelse(total > 2000, 2000, total)) %>% 
+  group_by(index_R0, control_effectiveness) %>% 
+  do(res = tibble(cumdistr = nrow(.) * ecdf(.$total)(4:2000),
+                  total = 4:2000,
+                  outbreaks = nrow(.) - sum(.$extinct),
+                  runs = nrow(.),
+                  index_R0 = .$index_R0[1],
+                  control_effectiveness = .$control_effectiveness[1],
+                  poutbreak = (outbreaks) / (runs - cumdistr))) 
+
+
+total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
+  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2')))
+
+
+ggplot(total_cumulative_distr, 
+       aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) + 
+  geom_line() + 
+  facet_wrap(~ factor(index_R0)) +
+  xlim(0, 1000) +
+  ylab('Prob. large outbreak') + 
+  guides(colour=guide_legend(title="Prop. Traced"))
+
+
+#+ plots_by_max_weekly
+total_cumulative_distr <- 
+  res2 %>% 
+  group_by(index_R0, control_effectiveness) %>% 
+  do(res = tibble(cumdistr = nrow(.) * ecdf(.$max_weekly)(1:max(.$max_weekly)),
+                  max_max_weekly = max(.$max_weekly),
+                  max_weekly = 1:max(.$max_weekly),
+                  outbreaks = nrow(.) - sum(.$extinct),
+                  runs = nrow(.),
+                  index_R0 = .$index_R0[1],
+                  control_effectiveness = .$control_effectiveness[1],
+                  poutbreak = (outbreaks) / (runs - cumdistr))) 
+
+
+total_cumulative_distr <- 
+  do.call(rbind, total_cumulative_distr$res) %>%
+    filter(poutbreak <= 1) %>%
+    mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2')))
   
+
+ggplot(total_cumulative_distr, 
+       aes(max_weekly, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) + 
+  geom_line() + 
+  facet_wrap(~ factor(index_R0), scale = 'free_x') +
+  ylab('Prob. large outbreak') + 
+  guides(colour=guide_legend(title="Prop. Traced"))
+
+
+
