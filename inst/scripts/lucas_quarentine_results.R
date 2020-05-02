@@ -95,6 +95,7 @@ toc()
 
 #+ plots1
 
+ringbp::make_figure_2()
 
 #+ plots2, cache = FALSE
 
@@ -109,26 +110,93 @@ res <- sweep_results %>%
 #+ plots3
 
 
-#+ plotsS, eval = TRUE, cache = FALSE
+#+ plotsS, eval = TRUE, cache = FALSE, fig.height = 5, fig.width = 9
 
 
 res %>% 
   filter(delay == 'SARS') %>% 
   mutate(prop.asym = factor(prop.asym, labels = c('asympt = 20%', '40%', '50%', '70%'))) %>%
-  ggplot(aes(control_effectiveness, pext, colour = factor(index_R0))) +
-  geom_line() + 
-  geom_point() + 
-  facet_grid(~ prop.asym) +
-  ggtitle('SARS')
+  mutate(index_R0 = factor(index_R0)) %>% 
+  ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
+    geom_line() + 
+    geom_point() + 
+    facet_grid(~ prop.asym) +
+    ggtitle('SARS') +
+    ylab('Prob. large outbreak')
 
 
 res %>% 
   filter(delay == 'Wuhan') %>% 
   mutate(prop.asym = factor(prop.asym, labels = c('asympt = 20%', '40%', '50%', '70%'))) %>%
-  ggplot(aes(control_effectiveness, pext, colour = factor(index_R0))) +
-  geom_line() + 
-  geom_point() + 
-  facet_grid(~ prop.asym) +
-  ggtitle('Wuhan')
+  mutate(index_R0 = factor(index_R0)) %>% 
+  ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
+    geom_line() + 
+    geom_point() + 
+    facet_grid(~ prop.asym) +
+    ggtitle('Wuhan')+
+    ylab('Prob. large outbreak')
 
 
+#+ by_size, eval = F, cache = TRUE, fig.height = 5, fig.width = 9
+
+res2 <- list()
+week_range <- 40:42
+
+sweep_results2 <- 
+  sweep_results %>% 
+    filter(delay == 'SARS') %>% 
+    filter(index_R0 < 2, prop.asym == 0.4) %>% 
+    filter(control_effectiveness > 0.5)
+
+for(i in seq_len(nrow(sweep_results2))){
+  print(i)
+  tmp <- sweep_results2$sims[i][[1]]
+  tmp <- 
+    tmp %>%
+    dplyr::group_by(sim) %>% # group by simulation run
+    mutate(max_weekly = max(weekly_cases),
+           total = max(cumulative)) %>% 
+    dplyr::filter(week %in% week_range) %>%
+    dplyr::summarise(extinct =
+                       ifelse(all(weekly_cases == 0 &
+                                    cumulative < cap_cases),
+                              1, 0),
+                     max_weekly = max(max_weekly),
+                     total = max(total)) %>%
+    dplyr::ungroup()
+  tmp <- 
+    tmp %>% 
+      mutate(index_R0 = sweep_results2$index_R0[i],
+             control_effectiveness = sweep_results2$control_effectiveness[i])
+
+  res2[[i]] <- tmp              
+}
+
+res2 <- do.call(rbind, res2)
+
+
+
+#+ plots_by_size, eval = TRUE, cache= FALSE
+
+breaks <- c(-1, seq(2, 500, 50), Inf)
+labs <- c(0, seq(2, 500, 50))
+res2 %>% 
+  mutate(max_weekly_bin = cut(max_weekly, breaks, labs)) %>% 
+  group_by(max_weekly_bin, index_R0, control_effectiveness) %>% 
+  summarise(pout = 1 - mean(extinct)) %>% 
+  ggplot(aes(max_weekly_bin, pout, colour = control_effectiveness, group = factor(control_effectiveness))) +
+    geom_line() +
+    ylab('Prob. large outbreak') + 
+    facet_wrap(~factor(index_R0))
+
+
+# instead do mean(extinct) for all with total < 10, 20, 50
+res2 %>% 
+  filter(extinct == 1) %>% 
+  ggplot(aes(total, colour = factor(index_R0), group = factor(index_R0))) + 
+    geom_density() + 
+    facet_wrap(~factor(control_effectiveness)) +
+    scale_x_log10() 
+
+  
+  
