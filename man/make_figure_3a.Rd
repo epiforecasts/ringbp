@@ -4,13 +4,18 @@
 \alias{make_figure_3a}
 \title{Construct Figure 3a from manuscript}
 \usage{
-make_figure_3a(df = NULL)
+make_figure_3a(
+  df = NULL,
+  num.initial.cases_val = 5,
+  delay_val = "SARS",
+  prop.asym_val = 0.4
+)
 }
 \arguments{
-\item{df}{}
+\item{df}{A dataframe of results as produced by \code{parameter_sweep}}
 }
 \value{
-
+A ggplot2 plot object
 }
 \description{
 Construct Figure 3a from manuscript
@@ -19,4 +24,5 @@ Construct Figure 3a from manuscript
 \dontrun{
 make_figure_3a()
 }
+
 }

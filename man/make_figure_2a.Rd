@@ -7,13 +7,10 @@
 make_figure_2a()
 }
 \value{
-
+A ggplot2 plot object
 }
 \description{
 Makes Figure 2a from manuscript
-}
-\examples{
-
 }
 \author{
 Joel Hellewell

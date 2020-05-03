@@ -23,9 +23,6 @@ box_plot_max_weekly_cases(
 
 \item{cap_cases}{the maximimum number of cases per outbreak scenario; default is 5000}
 
-\item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
-sypmtom onset.}
-
 \item{prop_asym}{A numeric string defaulting to 0. Filters the proportion of infectiouns are asymptomatic}
 
 \item{facet_scales}{passed to facet_grid’s scales parameter; default is "fixed"}
@@ -41,6 +38,9 @@ sypmtom onset.}
 \item{y_lim}{Numeric the limit of the y axis to show.}
 
 \item{extinct_threshold}{filters the minimum proportion of simulations that become extinct per scenario; default 0.8}
+
+\item{theta_value}{A Character string defaulting to "15\%". Determines the proportion of infections that occur prior to
+sypmtom onset.}
 }
 \description{
 Create box plots of maximum weekly cases by scenario

@@ -18,6 +18,8 @@ outbreak_step(
   inf_shift = NULL,
   prop.ascertain = NULL,
   k = NULL,
+  min_quar_delay = 1,
+  max_quar_delay = NULL,
   quarantine = NULL
 )
 }
@@ -40,6 +42,10 @@ outbreak_step(
 
 \item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 
+\item{min_quar_delay}{The minimum delay between a case being identified and their contacts being isolated (only applies when quarentine set to TRUE)}
+
+\item{max_quar_delay}{The maximum delay between a case being identified and their contacts being isolated (only applies when quarentine set to TRUE)}
+
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
 \value{
@@ -50,16 +56,6 @@ Move forward one generation in the branching process
 }
 \examples{
 
-\dontrun{
-# incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
-# delay distribution sampling function
-delayfn <- dist_setup(delay_shape, delay_scale)
-# generate initial cases
-case_data <- outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
-# generate next generation of cases
-case_data <- outbreak_step(case_data,1,0.16,0,2.5,0,incfn,delayfn,0,1.95,FALSE)
-}
 }
 \author{
 Joel Hellewell
