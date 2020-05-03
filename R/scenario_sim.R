@@ -78,6 +78,7 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                          r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL,
                          delay_shape = NULL, delay_scale = NULL, inc_meanlog = NULL, inc_sdlog = NULL,
                          inf_shape = NULL, inf_rate = NULL, inf_shift = NULL, num.initial.cases = NULL,
+                         min_quar_delay = 1, max_quar_delay = NULL, 
                          prop.asym = NULL, quarantine = NULL) {
 
   # Run n.sim number of model runs and put them all together in a big data.frame
@@ -97,6 +98,8 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                                              inf_rate = inf_rate,
                                              inf_shift = inf_shift,
                                              prop.asym = prop.asym,
+                                             min_quar_delay = min_quar_delay, 
+                                             max_quar_delay = max_quar_delay, 
                                              quarantine = quarantine))
 
 

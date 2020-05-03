@@ -45,6 +45,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            inc_meanlog = NULL, inc_sdlog = NULL,
                            prop.asym = NULL, inf_shape = NULL,
                            inf_rate = NULL, inf_shift = NULL,
+                           min_quar_delay = 1, max_quar_delay = NULL, 
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
@@ -89,7 +90,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              inf_shift = inf_shift,
                              prop.ascertain = prop.ascertain,
                              quarantine = quarantine,
-                             prop.asym = prop.asym)
+                             prop.asym = prop.asym,
+                             min_quar_delay = min_quar_delay, max_quar_delay = max_quar_delay )
 
 
     case_data <- out[[1]]

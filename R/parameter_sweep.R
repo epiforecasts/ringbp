@@ -94,6 +94,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
                inf_shape = .$inf_shape,
                inf_rate = .$inf_rate,
                inf_shift = .$inf_shift,
+               min_quar_delay = .$min_quar_delay, 
+               max_quar_delay = .$max_quar_delay, 
                prop.ascertain = .$control_effectiveness,
                prop.asym = .$prop.asym
       )[[1]],
