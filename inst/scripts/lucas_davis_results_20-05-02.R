@@ -41,23 +41,25 @@ no.samples <- 10
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
   delay_group = list(tibble::tibble(
-    delay = c("SARS", "Wuhan"),
-    delay_shape = c(1.651524, 2.305172),
-    delay_scale = c(4.287786, 9.483875)
+    delay = c("SARS"),
+    delay_shape = c(1.651524),
+    delay_scale = c(4.287786)
   )),
   inc_meanlog = 1.434065,
   inc_sdlog = 0.6612,
   inf_shape = 2.115779,
   inf_rate = 0.6898583,
   inf_shift = 3,
+  min_quar_delay = 1,
+  max_quar_delay = c(1, 4, 8),
   index_R0 = c(1.1, 1.6, 2),
-  prop.asym = c(0.2,0.4,0.5,0.7),
+  prop.asym = c(0.2,0.4,0.5),
   control_effectiveness = seq(0, 1, 0.2),
   num.initial.cases = c(5)) %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
-cap_cases <- 2000
+cap_cases <- 200
 max_days <- 300
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::scenario_sim,
