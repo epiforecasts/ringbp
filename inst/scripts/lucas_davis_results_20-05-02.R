@@ -40,7 +40,7 @@ set.seed(200503)
 
 #+ create_parameters
 
-no.samples <- 10
+no.samples <- 1500
 
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
@@ -63,8 +63,8 @@ scenarios <- tidyr::expand_grid(
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
-cap_cases <- 100
-max_days <- 50
+cap_cases <- 2000
+max_days <- 300
 
 
 
@@ -108,7 +108,7 @@ ringbp::make_figure_2()
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 5:7)) %>%
+  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
   dplyr::ungroup(scenario)
 
 #+ plots3
@@ -149,7 +149,7 @@ res %>%
 #+ by_size, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
 
 res2 <- list()
-week_range <- 5:7
+week_range <- 40:42
 
 sweep_results2 <- 
   sweep_results %>% 
