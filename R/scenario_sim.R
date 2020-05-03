@@ -1,5 +1,6 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
+#' @inheritParams outbreak_step
 #' @param n.sim number of simulations to run
 #' @param num.initial.cases Initial number of cases in each initial cluster
 #' @param prop.ascertain Probability that cases are ascertained by contact tracing
