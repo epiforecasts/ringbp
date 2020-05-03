@@ -2,8 +2,6 @@
 #'output:
 #'  pdf_document:
 #'    number_sections: true
-#'    toc: true
-#'    toc_depth: 2
 #'title: "Further analysis of COVID branching process"
 #'author: Tim Lucas and Emma Davis
 #'fontsize: 8pt
@@ -32,6 +30,8 @@ library(cowplot)
 devtools::load_all()
 
 git2r::revparse_single('.',"HEAD")$sha
+
+set.seed(200503)
 
 
 #' Delay shape is adherence probability
@@ -97,7 +97,7 @@ saveRDS(sweep_results, file = "../../data-raw/lucas_davis_res.rds")
 
 
 #' Panel A is now redundant and has been replaced with an adherence probability.
-#+ plots1
+#+ plots1, eval = TRUE
 
 ringbp::make_figure_2()
 
@@ -108,7 +108,7 @@ ringbp::make_figure_2()
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
+  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 5:7)) %>%
   dplyr::ungroup(scenario)
 
 #+ plots3
@@ -149,7 +149,7 @@ res %>%
 #+ by_size, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
 
 res2 <- list()
-week_range <- 40:42
+week_range <- 5:7
 
 sweep_results2 <- 
   sweep_results %>% 
@@ -158,7 +158,7 @@ sweep_results2 <-
          delay_shape == 0.9)
 
 for(i in seq_len(nrow(sweep_results2))){
-  print(i)
+  #print(i)
   tmp <- sweep_results2$sims[i][[1]]
   tmp <- 
     tmp %>%
