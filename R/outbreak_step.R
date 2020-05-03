@@ -36,19 +36,6 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                           inf_shift = NULL, prop.ascertain = NULL, k = NULL, min_quar_delay = 1, max_quar_delay = NULL, 
                           quarantine = NULL) {
 
-  # A vectorised version of isTRUE
-  vect_isTRUE <- function(x) {
-    purrr::map_lgl(x, isTRUE)
-  }
-
-  vect_max <- function(x, y) {
-    purrr::map2_dbl(x, y, max)
-  }
-
-  vect_min <- function(x, y) {
-    purrr::map2_dbl(x, y, min)
-  }
-
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := purrr::map2_dbl(
@@ -168,11 +155,3 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
 vect_isTRUE <- function(x) {
   purrr::map_lgl(x, isTRUE)
 }
-
-#vect_max <- function(x, y) {
-#  purrr::map2_dbl(x, y, max)
-#}
-
-#vect_min <- function(x, y) {
-#  purrr::map2_dbl(x, y, min)
-#ß}
