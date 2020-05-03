@@ -25,7 +25,17 @@ dist_setup <- function(dist_param1 = NULL, dist_param2 = NULL, dist_type = NULL)
                           meanlog = dist_param1,
                           sdlog = dist_param2)
   }
+  if(dist_type == "adherence"){
+    out <- purrr::partial(adherence,
+                          p = dist_param1)
+  }
+  
   return(out)
+}
+
+
+adherence <- function(n, p){
+  ifelse(rbinom(n, 1, p), 1, Inf)
 }
 
 
