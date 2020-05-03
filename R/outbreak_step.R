@@ -33,7 +33,8 @@
 #'}
 outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0isolated = NULL, r0community = NULL,
                           prop.asym = NULL, incfn = NULL, delayfn = NULL, inf_rate = NULL, inf_shape = NULL,
-                          inf_shift = NULL, prop.ascertain = NULL, k = NULL, quarantine = NULL) {
+                          inf_shift = NULL, prop.ascertain = NULL, k = NULL, min_quar_delay = 1, max_quar_delay = NULL, 
+                          quarantine = NULL) {
 
   # A vectorised version of isTRUE
   vect_isTRUE <- function(x) {
@@ -130,7 +131,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                          # If you are tracked (are not missed)
                                          ifelse(vect_isTRUE(rep(quarantine, total_new_cases)),
                                                 # With quarentine, isolate as soon as your infector was identified (a seperate delay to be added later)
-                                                infector_iso_time,
+                                                infector_iso_time + runif(1, min_quar_delay, max_quar_delay),
                                                 # Without quarentine:
                                                 # onset < infector_iso < onset+delay  -> isolate when infector is identified and isolates
                                                 # onset < onset+delay  < infector_iso -> isolate after symptoms and a delay
