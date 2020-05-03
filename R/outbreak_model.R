@@ -57,7 +57,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   # onset to isolation delay sampling function
   delayfn <- dist_setup(delay_shape,
                         delay_scale,
-                        "weibull")
+                        "adherence")
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
