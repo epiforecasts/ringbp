@@ -26,6 +26,8 @@ res <- sweep_results \%>\%
 
 make_figure_S1(results)
 }
+
+No longer relevant because theta isn't a parameter and we aren't varying the proportion of transmission that happens before symptoms
 }
 \author{
 Joel Hellewell

@@ -18,9 +18,6 @@ inf_fn(inc_samp = NULL, inf_shape = NULL, inf_rate = NULL, inf_shift = NULL)
 \value{
 
 }
-\value{
-
-}
 \description{
 Samples the serial interval for given incubation period samples
 }

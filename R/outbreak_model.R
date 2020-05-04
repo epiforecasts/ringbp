@@ -45,6 +45,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            inc_meanlog = NULL, inc_sdlog = NULL,
                            prop.asym = NULL, inf_shape = NULL,
                            inf_rate = NULL, inf_shift = NULL,
+                           min_quar_delay = 1, max_quar_delay = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
@@ -52,11 +53,11 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   incfn <- dist_setup(dist_param1 = inc_meanlog,
                       dist_param2 = inc_sdlog,
                       dist_type = 'lognormal')
-
-  # onset to isolation delay and adherence: either delay days if adhering or never if not
-  delayfn <- purrr::partial(adhere,
-                            adherence = adherence,
-                            delay = delay)
+  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
+  # onset to isolation delay sampling function
+  delayfn <- dist_setup(delay_shape,
+                        delay_scale,
+                        "adherence")
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
@@ -89,7 +90,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              inf_shift = inf_shift,
                              prop.ascertain = prop.ascertain,
                              quarantine = quarantine,
-                             prop.asym = prop.asym)
+                             prop.asym = prop.asym,
+                             min_quar_delay = min_quar_delay, max_quar_delay = max_quar_delay )
 
 
     case_data <- out[[1]]

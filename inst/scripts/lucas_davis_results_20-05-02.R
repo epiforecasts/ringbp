@@ -2,13 +2,18 @@
 #'output:
 #'  pdf_document:
 #'    number_sections: true
-#'    toc: true
-#'    toc_depth: 2
 #'title: "Further analysis of COVID branching process"
 #'author: Tim Lucas and Emma Davis
 #'fontsize: 8pt
 #'geometry: margin=0.5in
 #'---
+
+#' # Major model update 1
+#' 
+#' - Quarentine now applies to asymptomatics
+#' - Examine delay for contact tracing
+#' - Change onset delay to either a 1 day delay or non-adherence.
+#' - People that are quarentined have adherence of 1.
 
 #+setup, echo = TRUE, cache = FALSE
 
@@ -26,39 +31,43 @@ devtools::load_all()
 
 git2r::revparse_single('.',"HEAD")$sha
 
-# Make the log file
-#logs <- file.path("log_lucas.txt")
-#con <- file(logs, open = "wt")
-# # Send Output to log
-#sink(con)
-#sink(con, type = "message")
+set.seed(200503)
 
+
+#' Delay shape is adherence probability
+#' 
+#' Cap cases was chosen in a seperate analysis (choose_cap.R or something.)
 
 #+ create_parameters
 
-no.samples <- 2000
+no.samples <- 1500
 
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
   delay_group = list(tibble::tibble(
-    delay = c("SARS", "Wuhan"),
-    delay_shape = c(1.651524, 2.305172),
-    delay_scale = c(4.287786, 9.483875)
+    delay = c("Adherence"),
+    delay_shape = c(0.6, 0.9, 1),
+    delay_scale = 1
   )),
   inc_meanlog = 1.434065,
   inc_sdlog = 0.6612,
   inf_shape = 2.115779,
   inf_rate = 0.6898583,
   inf_shift = 3,
+  min_quar_delay = 1,
+  max_quar_delay = c(1, 4, 8),
   index_R0 = c(1.1, 1.6, 2),
-  prop.asym = c(0.2,0.4,0.5,0.7),
-  control_effectiveness = seq(0, 1, 0.2),
+  prop.asym = c(0.3,0.4,0.5),
+  control_effectiveness = seq(0.2, 1, 0.2),
   num.initial.cases = c(5)) %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
 cap_cases <- 2000
 max_days <- 300
+
+
+
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   cap_max_days = max_days,
@@ -69,16 +78,11 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   quarantine = TRUE)
 
 
-#+ setup_multicore, cache = FALSE
-## Set up multicore if using see ?future::plan for details
-## Use the workers argument to control the number of cores used.
-#future::plan("multiprocess")
-
 
 #+ full_run
 
 tic()
-## Run paramter sweep
+## Run parameter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios,
                                          sim_fn = sim_with_params,
                                          samples = no.samples,
@@ -89,11 +93,11 @@ toc()
 
 # #+ writeout
 
- saveRDS(sweep_results, file = "../../data-raw/lucas_quarentine_res.rds")
+saveRDS(sweep_results, file = "../../data-raw/lucas_davis_res.rds")
 
 
-
-#+ plots1
+#' Panel A is now redundant and has been replaced with an adherence probability.
+#+ plots1, eval = TRUE
 
 ringbp::make_figure_2()
 
@@ -114,29 +118,31 @@ res <- sweep_results %>%
 
 
 res %>% 
-  filter(delay == 'SARS') %>% 
-  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 20%', '40%', '50%', '70%'))) %>%
+  filter(max_quar_delay == 1) %>% 
+  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 30%', '50%', '70%'))) %>%
+  mutate(adherence = factor(delay_shape, labels = c('adhere = 60%', '90%', '100%'))) %>%
   mutate(index_R0 = factor(index_R0)) %>% 
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
-    geom_line() + 
-    geom_point() + 
-    facet_grid(~ prop.asym) +
-    ggtitle('SARS') +
-    ylab('Prob. large outbreak')
+  geom_line() + 
+  geom_point() + 
+  facet_grid(adherence ~ prop.asym) +
+  ggtitle('Contact trace delay is 1') +
+  ylab('Prob. large outbreak')
 
 
-#+ plots_wuhan, eval = FALSE, cache = FALSE, fig.height = 5, fig.width = 9
 
 res %>% 
-  filter(delay == 'Wuhan') %>% 
-  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 20%', '40%', '50%', '70%'))) %>%
+  filter(delay_shape == 1) %>% 
+  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 30%', '50%', '70%'))) %>%
+  mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days'))) %>%
   mutate(index_R0 = factor(index_R0)) %>% 
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
-    geom_line() + 
-    geom_point() + 
-    facet_grid(~ prop.asym) +
-    ggtitle('Wuhan')+
-    ylab('Prob. large outbreak')
+  geom_line() + 
+  geom_point() + 
+  facet_grid(max_quar_delay ~ prop.asym) +
+  ggtitle('Adherence is 90%') +
+  ylab('Prob. large outbreak')
+
 
 
 
@@ -147,12 +153,12 @@ week_range <- 40:42
 
 sweep_results2 <- 
   sweep_results %>% 
-  filter(delay == 'SARS') %>% 
-  filter(prop.asym == 0.4) %>% 
-  filter(control_effectiveness > 0.3)
+  filter(prop.asym == 0.4,
+         control_effectiveness > 0.3,
+         delay_shape == 0.9)
 
 for(i in seq_len(nrow(sweep_results2))){
-  print(i)
+  #print(i)
   tmp <- sweep_results2$sims[i][[1]]
   tmp <- 
     tmp %>%
@@ -170,7 +176,8 @@ for(i in seq_len(nrow(sweep_results2))){
   tmp <- 
     tmp %>% 
     mutate(index_R0 = sweep_results2$index_R0[i],
-           control_effectiveness = sweep_results2$control_effectiveness[i])
+           control_effectiveness = sweep_results2$control_effectiveness[i],
+           max_quar_delay = sweep_results2$max_quar_delay[i])
   
   res2[[i]] <- tmp              
 }
@@ -196,11 +203,12 @@ res2 <- do.call(rbind, res2)
 total_cumulative_distr <- 
   res2 %>% 
   mutate(total = ifelse(total > 2000, 2000, total)) %>% 
-  group_by(index_R0, control_effectiveness) %>% 
+  group_by(index_R0, control_effectiveness, max_quar_delay) %>% 
   do(res = tibble(cumdistr = nrow(.) * ecdf(.$total)(4:2000),
                   total = 4:2000,
                   outbreaks = nrow(.) - sum(.$extinct),
                   runs = nrow(.),
+                  max_quar_delay = .$max_quar_delay[1],
                   index_R0 = .$index_R0[1],
                   control_effectiveness = .$control_effectiveness[1],
                   poutbreak = (outbreaks) / (runs - cumdistr))) 
@@ -208,6 +216,7 @@ total_cumulative_distr <-
 
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2'))) %>% 
+  mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days'))) %>%
   filter(outbreaks != 0)
 
 
@@ -215,21 +224,23 @@ ggplot(total_cumulative_distr,
        aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) + 
   geom_line() + 
   xlim(0, 1000) +
-  facet_wrap(~ factor(index_R0), scale = 'free_y') +
+  facet_wrap(max_quar_delay ~ index_R0, scale = 'free_y') +
   ylab('Prob. large outbreak') + 
-  guides(colour=guide_legend(title="Prop. Traced"))
+  guides(colour=guide_legend(title="Prop. Traced")) +
+  ggtitle('Prob of outbreak as size of current epidemic increases')
 
 
 #+ plots_by_max_weekly, cache = FALSE
 
 total_cumulative_distr <- 
   res2 %>% 
-  group_by(index_R0, control_effectiveness) %>% 
+  group_by(index_R0, control_effectiveness, max_quar_delay) %>% 
   do(res = tibble(cumdistr = sum(.$extinct) * ecdf(.$max_weekly[.$extinct == 1])(1:max(.$max_weekly)),
                   max_max_weekly = max(.$max_weekly),
                   max_weekly = 1:max(.$max_weekly),
                   extinct = sum(.$extinct),
                   outbreaks = nrow(.) - sum(.$extinct),
+                  max_quar_delay = .$max_quar_delay[1],
                   runs = nrow(.),
                   index_R0 = .$index_R0[1],
                   control_effectiveness = .$control_effectiveness[1],
@@ -238,16 +249,19 @@ total_cumulative_distr <-
 
 total_cumulative_distr <- 
   do.call(rbind, total_cumulative_distr$res) %>%
-    filter(poutbreak < 1) %>%
-    mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2')))
+  filter(poutbreak < 1) %>%
+  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.6', '2'))) %>%
+  mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days')))
   
+
 
 ggplot(total_cumulative_distr, 
        aes(max_weekly, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) + 
   geom_line() + 
-  facet_wrap(~ factor(index_R0), scale = 'free_x') +
+  facet_wrap(max_quar_delay ~ index_R0, scale = 'free_x') +
   ylab('Prob. large outbreak') + 
-  guides(colour=guide_legend(title="Prop. Traced"))
+  guides(colour=guide_legend(title="Prop. Traced")) +
+  ggtitle('Prob of outbreak with size of worst week')
 
 
 
