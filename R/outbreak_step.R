@@ -109,7 +109,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                                 onset + delayfn(1)),
                                          # If you are tracked (are not missed)
                                          ifelse(vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                # With quarentine, isolate as soon as your infector was identified (a seperate delay to be added later)
+                                                # With quarentine, isolate as soon as your infector was identified.
                                                 infector_iso_time + runif(1, min_quar_delay, max_quar_delay),
                                                 # Without quarentine:
                                                 # onset < infector_iso < onset+delay  -> isolate when infector is identified and isolates
