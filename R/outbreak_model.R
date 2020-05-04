@@ -44,6 +44,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            prop.asym = NULL, inf_shape = NULL,
                            inf_rate = NULL, inf_shift = NULL,
                            min_quar_delay = 1, max_quar_delay = NULL,
+                           test_delay = NULL, sensitivity = NULL,
+                           precaution = NULL, self_report = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
@@ -66,7 +68,11 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
                             incfn = incfn,
                             prop.asym = prop.asym,
-                            delayfn = delayfn)
+                            delayfn = delayfn,
+                            sensitivity = sensitivity,
+                            precaution = precaution,
+                            test_delay = test_delay,
+                            self_report = self_report)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -89,7 +95,11 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              prop.ascertain = prop.ascertain,
                              quarantine = quarantine,
                              prop.asym = prop.asym,
-                             min_quar_delay = min_quar_delay, max_quar_delay = max_quar_delay )
+                             min_quar_delay = min_quar_delay, max_quar_delay = max_quar_delay,
+                             sensitivity = sensitivity,
+                             precaution = precaution,
+                             test_delay = test_delay,
+                             self_report = self_report)
 
 
     case_data <- out[[1]]
