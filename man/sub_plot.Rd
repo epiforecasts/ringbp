@@ -5,11 +5,10 @@
 \title{Create sub-plot for supplementary figures}
 \usage{
 sub_plot(
-  inf_shift.in = 3,
   delay.in = "SARS",
-  prop.asym.in = 0,
+  prop.asym.in = 0.4,
   num.initial.cases.in = 20,
-  index_R0.in = 2.5,
+  index_R0.in = 1.1,
   res.in = NULL,
   facet.by = NULL,
   col.by = NULL

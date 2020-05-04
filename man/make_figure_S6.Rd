@@ -2,7 +2,7 @@
 % Please edit documentation in R/figuresS6toS7.R
 \name{make_figure_S6}
 \alias{make_figure_S6}
-\title{Constructs figure S6 from supplementary material}
+\title{Both plot functions no longer relevant (plotting for different infectiousness profiles)}
 \usage{
 make_figure_S6()
 }
@@ -14,6 +14,7 @@ Constructs figure S6 from supplementary material
 }
 \examples{
 
+No longer relevant (plotting for different infectiousness profiles)
 }
 \author{
 Joel Hellewell

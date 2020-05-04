@@ -4,13 +4,19 @@
 \alias{make_figure_4}
 \title{Construct Figure 4 from the manuscript}
 \usage{
-make_figure_4(res = NULL)
+make_figure_4(
+  res = NULL,
+  num.initial.cases_val = 5,
+  delay_val = "SARS",
+  prop.asym_val = 0.4,
+  index_R0_val = 1.1
+)
 }
 \arguments{
-\item{res}{}
+\item{res}{The results dataframe todo}
 }
 \value{
-
+A ggplot2 plot object
 }
 \description{
 Construct Figure 4 from the manuscript

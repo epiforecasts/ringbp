@@ -4,7 +4,12 @@
 \alias{make_figure3b}
 \title{Generate a figure comparing the effective reproduction no with contacts traced.}
 \usage{
-make_figure3b(df = NULL)
+make_figure3b(
+  df = NULL,
+  num.initial.cases_val = 5,
+  delay_val = "SARS",
+  prop.asym_val = 0.4
+)
 }
 \arguments{
 \item{df}{A dataframe of results as produced by \code{parameter_sweep}}
