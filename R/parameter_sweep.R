@@ -97,7 +97,11 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
                min_quar_delay = .$min_quar_delay,
                max_quar_delay = .$max_quar_delay,
                prop.ascertain = .$control_effectiveness,
-               prop.asym = .$prop.asym
+               prop.asym = .$prop.asym,
+               test_delay = .$test_delay,
+               sensitivity =.$sensitivity,
+               precaution =.$precaution,
+               self_report =.$self_report
       )[[1]],
       .progress = show_progress
     )) %>%
