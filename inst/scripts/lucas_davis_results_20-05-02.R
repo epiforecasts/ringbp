@@ -110,7 +110,7 @@ ringbp::make_figure_2()
 # Load in results  -------------------------------------------------------
 
 
-res <- sweep_results %>%
+res <- sweep_results2 %>%
   dplyr::group_by(scenario) %>%
   dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
   dplyr::ungroup(scenario)
