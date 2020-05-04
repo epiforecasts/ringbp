@@ -40,7 +40,7 @@ set.seed(200503)
 
 #+ create_parameters
 
-no.samples <- 10
+no.samples <- 1000
 
 scenarios <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
@@ -59,10 +59,10 @@ scenarios <- tidyr::expand_grid(
   index_R0 = c(1.1,1.3),
   prop.asym = c(0.4),
   control_effectiveness = seq(0.4, 1, 0.2),
-  self_report = 0,
-  test_delay = 4, #time from isolation to test result
-  sensitivity = 0.65, #percent of cases detected
-  precaution = 0, #this could be between 0 and 7? Number of days stay in isolation after negative test
+  self_report = c(0,0.4,0.8),
+  test_delay = c(0,2), #time from isolation to test result
+  sensitivity = c(0.65,0.8,0.95), #percent of cases detected
+  precaution = c(0,7), #this could be between 0 and 7? Number of days stay in isolation after negative test
   num.initial.cases = c(5)) %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
