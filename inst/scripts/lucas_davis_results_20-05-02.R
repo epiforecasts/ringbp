@@ -226,7 +226,8 @@ ggplot(total_cumulative_distr,
   xlim(0, 1000) +
   facet_wrap(max_quar_delay ~ index_R0, scale = 'free_y') +
   ylab('Prob. large outbreak') + 
-  guides(colour=guide_legend(title="Prop. Traced"))
+  guides(colour=guide_legend(title="Prop. Traced")) +
+  ggtitle('Prob of outbreak as size of current epidemic increases')
 
 
 #+ plots_by_max_weekly, cache = FALSE
@@ -259,7 +260,8 @@ ggplot(total_cumulative_distr,
   geom_line() + 
   facet_wrap(max_quar_delay ~ index_R0, scale = 'free_x') +
   ylab('Prob. large outbreak') + 
-  guides(colour=guide_legend(title="Prop. Traced"))
+  guides(colour=guide_legend(title="Prop. Traced")) +
+  ggtitle('Prob of outbreak with size of worst week')
 
 
 
