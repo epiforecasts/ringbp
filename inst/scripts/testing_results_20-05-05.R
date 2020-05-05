@@ -123,31 +123,61 @@ res <- sweep_results %>%
 
 res %>%
   filter(max_quar_delay == 1) %>%
-  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 40%'))) %>%
-  mutate(adherence = factor(delay_shape, labels = c('adhere = 90%'))) %>%
+  filter(precaution == 0) %>%
+  filter(test_delay == 2) %>%
+  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%','80%','90%'))) %>%
+  mutate(adherence = factor(self_report, labels = c('100% self-reporting','60%','20%'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
   geom_line() +
   geom_point() +
   facet_grid(adherence ~ prop.asym) +
-  ggtitle('Contact trace delay is 1') +
+  ggtitle('Contact trace delay is 1, test delay is 2 days') +
   ylab('Prob. large outbreak')
 
 
 
 res %>%
-  filter(delay_shape == 0.9) %>%
-  mutate(prop.asym = factor(prop.asym, labels = c('asympt = 40%'))) %>%
+  filter(self_report == 0.4) %>%
+  filter(precaution == 0) %>%
+  filter(test_delay == 2) %>%
+  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%','80%','90%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
   geom_line() +
   geom_point() +
   facet_grid(max_quar_delay ~ prop.asym) +
-  ggtitle('Adherence is 90%') +
+  ggtitle('Self-reporting is 60%, test delay is 2 days') +
   ylab('Prob. large outbreak')
 
+res %>%
+  filter(self_report == 0.4) %>%
+  filter(max_quar_delay == 1) %>%
+  filter(sensitivity == 0.65) %>%
+  mutate(test_delay = factor(test_delay, labels = c('0 days','2 days'))) %>%
+  mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
+  mutate(index_R0 = factor(index_R0)) %>%
+  ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
+  geom_line() +
+  geom_point() +
+  facet_grid(test_delay ~ precaution) +
+  ggtitle('Self-reporting is 60%, sensitivity is 65%') +
+  ylab('Prob. large outbreak')
 
+res %>%
+  filter(self_report == 0.4) %>%
+  filter(max_quar_delay == 1) %>%
+  filter(index_R0 == 1.3) %>%
+  mutate(test_delay = factor(test_delay, labels = c('0 days','2 days'))) %>%
+  mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
+  mutate(sensitivity = factor(sensitivity)) %>%
+  ggplot(aes(control_effectiveness, 1 - pext, colour = sensitivity)) +
+  geom_line() +
+  geom_point() +
+  facet_grid(test_delay ~ precaution) +
+  ggtitle('Self-reporting is 60%, R0 is 1.3') +
+  ylab('Prob. large outbreak')
 
 
 #+ by_size, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
@@ -157,9 +187,8 @@ week_range <- 40:42
 
 sweep_results2 <-
   sweep_results %>%
-  filter(prop.asym == 0.4,
-         control_effectiveness > 0.3,
-         delay_shape == 0.9)
+  filter(self_report == 0.4,
+         test_delay == 2)
 
 for(i in seq_len(nrow(sweep_results2))){
   #print(i)
@@ -168,6 +197,7 @@ for(i in seq_len(nrow(sweep_results2))){
     tmp %>%
     dplyr::group_by(sim) %>% # group by simulation run
     mutate(max_weekly = max(weekly_cases),
+           time_to_size = which(cumulative>=500)[1], #time to reach 500 cases (weeks)
            total = max(cumulative)) %>%
     dplyr::filter(week %in% week_range) %>%
     dplyr::summarise(extinct =
@@ -175,13 +205,16 @@ for(i in seq_len(nrow(sweep_results2))){
                                     cumulative < cap_cases),
                               1, 0),
                      max_weekly = max(max_weekly),
+                     time_to_size = min(time_to_size),
                      total = max(total)) %>%
     dplyr::ungroup()
   tmp <-
     tmp %>%
     mutate(index_R0 = sweep_results2$index_R0[i],
            control_effectiveness = sweep_results2$control_effectiveness[i],
-           max_quar_delay = sweep_results2$max_quar_delay[i])
+           max_quar_delay = sweep_results2$max_quar_delay[i],
+           precaution = sweep_results2$precaution[i],
+           sensitivity = sweep_results2$sensitivity[i])
 
   res2[[i]] <- tmp
 }
@@ -207,38 +240,42 @@ res2 <- do.call(rbind, res2)
 total_cumulative_distr <-
   res2 %>%
   mutate(total = ifelse(total > 2000, 2000, total)) %>%
-  group_by(index_R0, control_effectiveness, max_quar_delay) %>%
+  group_by(index_R0, control_effectiveness, max_quar_delay, precaution, sensitivity) %>%
   do(res = tibble(cumdistr = nrow(.) * ecdf(.$total)(4:2000),
                   total = 4:2000,
                   outbreaks = nrow(.) - sum(.$extinct),
                   runs = nrow(.),
                   max_quar_delay = .$max_quar_delay[1],
                   index_R0 = .$index_R0[1],
+                  precaution = .$precaution[1],
+                  sensitivity = .$sensitivity[1],
                   control_effectiveness = .$control_effectiveness[1],
                   poutbreak = (outbreaks) / (runs - cumdistr)))
 
 
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3'))) %>%
+  mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
+  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive', '80%', '95%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days'))) %>%
   filter(outbreaks != 0)
 
-
-ggplot(total_cumulative_distr,
-       aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
-  geom_line() +
-  xlim(0, 1000) +
-  facet_wrap(index_R0 ~ max_quar_delay, scale = 'free_y') +
-  ylab('Prob. large outbreak') +
-  guides(colour=guide_legend(title="Prop. Traced")) +
-  ggtitle('Prob of outbreak as size of current epidemic increases')
+T1 <- total_cumulative_distr %>% filter(max_quar_delay=="1 day trace delay") %>%
+  filter(index_R0=="1.3")
+  ggplot(T1, aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
+    geom_line() +
+    xlim(0, 1000) +
+    facet_wrap(precaution ~ sensitivity, scale = 'free_y') +
+    ylab('Prob. large outbreak') +
+    guides(colour=guide_legend(title="Test sensitivity")) +
+    ggtitle('Prob of outbreak as size of current epidemic increases (R0=1.3)')
 
 
 #+ plots_by_max_weekly, cache = FALSE
 
 total_cumulative_distr <-
   res2 %>%
-  group_by(index_R0, control_effectiveness, max_quar_delay) %>%
+  group_by(index_R0, control_effectiveness, max_quar_delay, precaution, sensitivity) %>%
   do(res = tibble(cumdistr = sum(.$extinct) * ecdf(.$max_weekly[.$extinct == 1])(1:max(.$max_weekly)),
                   max_max_weekly = max(.$max_weekly),
                   max_weekly = 1:max(.$max_weekly),
@@ -247,6 +284,8 @@ total_cumulative_distr <-
                   max_quar_delay = .$max_quar_delay[1],
                   runs = nrow(.),
                   index_R0 = .$index_R0[1],
+                  precaution = .$precaution[1],
+                  sensitivity = .$sensitivity[1],
                   control_effectiveness = .$control_effectiveness[1],
                   poutbreak = (outbreaks) / (runs - cumdistr)))
 
@@ -255,17 +294,25 @@ total_cumulative_distr <-
   do.call(rbind, total_cumulative_distr$res) %>%
   filter(poutbreak < 1) %>%
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3'))) %>%
-  mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days')))
+  mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days', '8 days'))) %>%
+  mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
+  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive', '80%', '95%')))
 
+T1 <- total_cumulative_distr %>% filter(max_quar_delay=="1 day trace delay") %>%
+  filter(index_R0=="1.3")
 
-
-ggplot(total_cumulative_distr,
+ggplot(T1,
        aes(max_weekly, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
   geom_line() +
-  facet_wrap(index_R0 ~ max_quar_delay, scale = 'free_x') +
+  facet_wrap(precaution ~ sensitivity, scale = 'free_x') +
   ylab('Prob. large outbreak') +
   guides(colour=guide_legend(title="Prop. Traced")) +
   ggtitle('Prob of outbreak with size of worst week')
 
 
+# Histogram of how long it takes to reach 500 cases (weeks)
 
+ggplot(res2, aes(time_to_size)) + geom_histogram(aes(y=..density..),breaks=1:30,
+                                                 na.rm=T, col="orange",fill="orange") +
+  ggtitle('Time to reach 500 cases') +
+  xlab('Time (weeks)')

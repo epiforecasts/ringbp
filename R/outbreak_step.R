@@ -28,6 +28,19 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                           test_delay = NULL, sensitivity = NULL, precaution = NULL, self_report = NULL,
                           quarantine = NULL) {
 
+  # A vectorised version of isTRUE
+  vect_isTRUE <- function(x) {
+    purrr::map_lgl(x, isTRUE)
+  }
+
+  vect_max <- function(x, y) {
+    purrr::map2_dbl(x, y, max)
+  }
+
+  vect_min <- function(x, y) {
+    purrr::map2_dbl(x, y, min)
+  }
+
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   new_cases <- case_data[, new_cases := purrr::map2_dbl(
@@ -145,7 +158,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                                 vect_min(onset + delayfn(1), vect_max(onset, infector_iso_time))))]
 
   missedSympt <- nrow(prob_samples[vect_isTRUE(missed) & vect_isTRUE(isolated_time<Inf),]) # Symptomatic individuals who are missed
-  prob_samples[vect_isTRUE(missed) & vect_isTRUE(isolated_time<Inf), missed:=purrr::rbernoulli(missedSympt,p=self_report)] # Report themselves to contact tracing with prob self_report
+  prob_samples[vect_isTRUE(missed) & vect_isTRUE(isolated_time<Inf), missed:=purrr::rbernoulli(missedSympt,p=1-self_report)] # Report themselves to contact tracing with prob self_report
 
 
   prob_samples[, test := ifelse(vect_isTRUE(missed), # If not-traced:
@@ -163,7 +176,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
   prob_samples[, isolated_end := ifelse(vect_isTRUE(test), # If tested
                                         ifelse(vect_isTRUE(test_result==1), # If positive
                                         Inf, # Stay in isolation long enough to not transmit
-                                        isolated_time+time_to_test+precaution), # If test is negative
+                                        vect_max(isolated_time+time_to_test,isolated_time+precaution)), # If test is negative
                                         # Leave isolation with some precautionary delay (0-7 days)
                                         Inf)]
 
