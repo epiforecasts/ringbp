@@ -150,7 +150,9 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                          # If you are tracked (are not missed)
                                          ifelse(vect_isTRUE(rep(quarantine, total_new_cases)),
                                                 # With quarantine, isolate with some delay after your infector was identified.
-                                                pmin(onset+delays,infector_iso_time + delays_traced), #minimum of isolation due to symptoms and isolation due to tracing
+                                                ifelse(vect_isTRUE(asym),
+                                                       infector_iso_time + delays_traced,
+                                                       vect_min(onset+delays,infector_iso_time + delays_traced)), #minimum of isolation due to symptoms and isolation due to tracing
                                                 # Without quarantine:
                                                 # onset < infector_iso < onset+delay  -> isolate when infector is identified and isolates
                                                 # onset < onset+delay  < infector_iso -> isolate after symptoms and a delay
