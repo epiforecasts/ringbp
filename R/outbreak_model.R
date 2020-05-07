@@ -46,7 +46,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            min_quar_delay = 1, max_quar_delay = NULL,
                            test_delay = NULL, sensitivity = NULL,
                            precaution = NULL, self_report = NULL,
-                           quarantine = NULL) {
+                           quarantine = NULL, testing = NULL) {
 
   # Set up functions to sample from distributions
   # incubation period sampling function
@@ -72,7 +72,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                             sensitivity = sensitivity,
                             precaution = precaution,
                             test_delay = test_delay,
-                            self_report = self_report)
+                            self_report = self_report,
+                            testing = testing)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -99,7 +100,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              sensitivity = sensitivity,
                              precaution = precaution,
                              test_delay = test_delay,
-                             self_report = self_report)
+                             self_report = self_report,
+                             testing = testing)
 
 
     case_data <- out[[1]]

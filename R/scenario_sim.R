@@ -23,6 +23,7 @@
 #' @param sensitivity of test
 #' @param precaution a precautionary delay to leaving isolation if test negative
 #' @param self_report proportion of isolating missed cases that self-report to PHE
+#' @param testing whether testing is implemented or not
 #'
 #' @importFrom purrr safely
 #' @return
@@ -86,6 +87,13 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                          min_quar_delay = 1, max_quar_delay = NULL, sensitivity = NULL, precaution = NULL,
                          self_report = NULL, test_delay = NULL, prop.asym = NULL, quarantine = NULL) {
 
+  if(sensitivity==0){
+    testing = FALSE
+  }
+  else {
+    testing = TRUE
+  }
+
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
                                              prop.ascertain = prop.ascertain,
@@ -109,7 +117,8 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                                              sensitivity =sensitivity,
                                              precaution =precaution,
                                              self_report=self_report,
-                                             quarantine = quarantine))
+                                             quarantine = quarantine,
+                                             testing = testing))
 
 
   # bind output together and add simulation index

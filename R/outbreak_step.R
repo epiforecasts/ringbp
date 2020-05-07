@@ -26,7 +26,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                           prop.asym = NULL, incfn = NULL, delayfn = NULL, inf_rate = NULL, inf_shape = NULL,
                           inf_shift = NULL, prop.ascertain = NULL, min_quar_delay = 1, max_quar_delay = NULL,
                           test_delay = NULL, sensitivity = NULL, precaution = NULL, self_report = NULL,
-                          quarantine = NULL) {
+                          quarantine = NULL, testing = NULL) {
 
   # A vectorised version of isTRUE
   vect_isTRUE <- function(x) {
@@ -128,12 +128,8 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
                                              `:=`(# onset of new case is exposure + incubation period sample
                                                onset = exposure + incubfn_sample)]
 
-
-  # cases whose parents are asymptomatic AND whose parents have tested negative are automatically missed
-  prob_samples$missed[which(vect_isTRUE(prob_samples$infector_asym) & !vect_isTRUE(prob_samples$infector_pos==T))] <- TRUE
   # cases whose parents have been missed are automatically missed
   prob_samples$missed[vect_isTRUE(prob_samples$infector_missed)] <- TRUE
-
 
   #had to put these outside as the vectorisation wasn't working inside the next line down where isolate_time is calculated, was using the same sampled value for all columns
   prob_samples[, delays := delayfn(nrow(prob_samples))] #delays of symptomatic individuals to isolation
@@ -162,25 +158,48 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL, r0
   missedSympt <- nrow(prob_samples[vect_isTRUE(missed) & vect_isTRUE(isolated_time<Inf),]) # Symptomatic individuals who are missed
   prob_samples[vect_isTRUE(missed) & vect_isTRUE(isolated_time<Inf), missed:=purrr::rbernoulli(missedSympt,p=1-self_report)] # Report themselves to contact tracing with prob self_report
 
+  if(testing==TRUE) {
+      prob_samples[, test := ifelse(vect_isTRUE(missed), # If not-traced:
+                                    FALSE, # not tested
+                                    TRUE)] # otherwise tested
 
-  prob_samples[, test := ifelse(vect_isTRUE(missed), # If not-traced:
-                                FALSE, # not tested
-                                TRUE)] # otherwise tested
+      prob_samples[, time_to_test := ifelse(vect_isTRUE(test), # If tested:
+                                            test_delay, # delay from isolation to test results (currently a constant delay but could be expanded)
+                                            Inf)]
 
-  prob_samples[, time_to_test := ifelse(vect_isTRUE(test), # If tested:
-                                        test_delay, # delay from isolation to test results (currently a constant delay but could be expanded)
-                                        Inf)]
+      prob_samples[, test_result := ifelse(vect_isTRUE(test), # If tested
+                                            as.logical(rbinom(length(which(prob_samples$test==T)),1,sensitivity)), # =TRUE if positive, =FALSE if false negative
+                                            NA)] # not tested
 
-  prob_samples[, test_result := ifelse(vect_isTRUE(test), # If tested
-                                        rbinom(length(which(prob_samples$test==T)),1,sensitivity), # =1 if positive, =0 if false negative
-                                        NA)] # not tested
+      prob_samples[, isolated_end := ifelse(vect_isTRUE(test), # If tested
+                                            ifelse(vect_isTRUE(test_result), # If positive
+                                            Inf, # Stay in isolation long enough to not transmit
+                                            vect_max(isolated_time+time_to_test,isolated_time+precaution)), # If test is negative
+                                            # Leave isolation with some precautionary delay (0-7 days)
+                                            Inf)]
 
-  prob_samples[, isolated_end := ifelse(vect_isTRUE(test), # If tested
-                                        ifelse(vect_isTRUE(test_result==1), # If positive
-                                        Inf, # Stay in isolation long enough to not transmit
-                                        vect_max(isolated_time+time_to_test,isolated_time+precaution)), # If test is negative
-                                        # Leave isolation with some precautionary delay (0-7 days)
-                                        Inf)]
+      prob_samples[vect_isTRUE(!prob_samples$infector_pos) & vect_isTRUE(!missed), isolated_end := ifelse((infector_iso_time + test_delay)<=isolated_time,
+                                                                                   isolated_time+precaution,
+                                                                                   ifelse(vect_isTRUE(test_result),
+                                                                                          isolated_end,
+                                                                                          vect_max(isolated_time+time_to_test,isolated_time+precaution)))]
+      prob_samples[vect_isTRUE(!prob_samples$infector_pos), missed := ifelse((infector_iso_time + test_delay)<=isolated_time,
+                                                                              TRUE,
+                                                                              ifelse(vect_isTRUE(test_result),
+                                                                                     missed,
+                                                                                     TRUE))]
+  }
+
+  if(testing == FALSE) {
+    prob_samples$test <- FALSE
+    prob_samples$time_to_test <- NA
+    prob_samples$test_result <- NA
+    prob_samples$isolated_end <- NA
+    prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
+  }
+
+  #prob_samples[vect_isTRUE(isolated_time>=isolated_end),isolated_time := Inf]
+  #prob_samples[vect_isTRUE(isolated_time>=isolated_end),isolated_end := Inf]
 
   # Chop out unneeded sample columns
   prob_samples[, c("incubfn_sample", "infector_iso_time", "infector_asym","infector_pos",
