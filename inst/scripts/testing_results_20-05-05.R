@@ -132,7 +132,7 @@ res <- rbind(res,res_extra)
 
 res %>%
   filter(max_quar_delay == 1) %>%
-  filter(precaution == 0) %>%
+  filter(precaution == 7) %>%
   filter(test_delay == 2) %>%
   mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%','95%'))) %>%
   mutate(adherence = factor(self_report, labels = c('no self-reporting','25%','50%'))) %>%
@@ -150,7 +150,7 @@ res %>%
   filter(self_report == 0.5) %>%
   filter(precaution == 0) %>%
   filter(test_delay == 2) %>%
-  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%','95%'))) %>%
+  mutate(prop.asym = factor(sensitivity, labels = c('no testing','sensitivity = 65%','95%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
