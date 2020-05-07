@@ -17,7 +17,7 @@
 #' @export
 #' @importFrom dplyr group_by mutate ungroup sample_frac
 #' @importFrom tidyr nest unnest
-#' @importFrom furrr future_map
+#' @importFrom furrr future_map future_options
 #' @importFrom purrr safely
 #' @examples
 #'
@@ -93,7 +93,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
                prop.ascertain = .$control_effectiveness,
                prop.asym = .$prop.asym
       )[[1]],
-      .progress = show_progress
+      .progress = show_progress,
+      .options = furrr::future_options(scheduling = 20)
     )) %>%
     tidyr::unnest(cols = "data")
 
