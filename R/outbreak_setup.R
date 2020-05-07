@@ -19,7 +19,7 @@
 #' delayfn <- dist_setup(delay_shape, delay_scale)
 #' outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
 #'}
-outbreak_setup <- function(num.initial.cases, incfn, delayfn, prop.asym, sensitivity, precaution, test_delay, self_report) {
+outbreak_setup <- function(num.initial.cases, incfn, delayfn, prop.asym, sensitivity, precaution, test_delay, self_report, testing) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)
 
@@ -32,12 +32,14 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, prop.asym, sensiti
                           new_cases = NA,
                           test_result = NA)
 
-  case_data <- case_data[asym==FALSE, test_result := purrr::rbernoulli(sum(1-asym), sensitivity)]
-  case_data$missed[which(!is.na(case_data$test_result))] <- FALSE
+  if(testing==TRUE){
+    case_data <- case_data[asym==FALSE, test_result := purrr::rbernoulli(sum(1-asym), sensitivity)]
+  }
+  case_data$missed[which(!case_data$asym)] <- FALSE
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
   case_data <- case_data[, isolated_time := onset + delayfn(1)
-                         ][, isolated_end := isolated_time+test_delay+ifelse(test_result==1 | asym==T,Inf,precaution)
+                         ][, isolated_end := isolated_time+test_delay+ifelse(test_result!=FALSE | asym==T,Inf,precaution)
                            ][, isolated := FALSE]
 
   case_data$isolated_time[case_data$asym] <- Inf
