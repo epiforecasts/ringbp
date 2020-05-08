@@ -34,16 +34,166 @@ git2r::revparse_single('.',"HEAD")$sha
 
 set.seed(200503)
 
-
 #' Delay shape is adherence probability
 #'
 #' Cap cases was chosen in a seperate analysis (choose_cap.R or something.)
 
-#+ create_parameters
-
 no.samples <- 2000
 
-scenarios <- tidyr::expand_grid(
+scenarios1 <- tidyr::expand_grid(
+  ## Put parameters that are grouped by disease into this data.frame
+  delay_group = list(tibble::tibble(
+    delay = c("Adherence"),
+    delay_shape = c(0.9),
+    delay_scale = 1
+  )),
+  inc_meanlog = 1.434065,
+  inc_sdlog = 0.6612,
+  inf_shape = 2.115779,
+  inf_rate = 0.6898583,
+  inf_shift = 3,
+  min_quar_delay = 1,
+  max_quar_delay = c(1),
+  index_R0 = c(1.1,1.3,1.5),
+  prop.asym = c(0.4),
+  control_effectiveness = seq(0.4, 1, 0.2),
+  self_report = c(0.5),
+  test_delay = c(0,2), #time from isolation to test result
+  sensitivity = c(0.65,0.95), #percent of cases detected
+  precaution = c(0,7), #this could be between 0 and 7? Number of days stay in isolation if negative test
+  num.initial.cases = c(5)) %>%
+  tidyr::unnest("delay_group") %>%
+  dplyr::mutate(scenario = 1:dplyr::n())
+
+cap_cases <- 2000
+max_days <- 300
+## Parameterise fixed paramters
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
+                                  cap_max_days = max_days,
+                                  cap_cases = cap_cases,
+                                  r0isolated = 0,
+                                  disp.iso = 1,
+                                  disp.com = 0.16,
+                                  quarantine = TRUE)
+
+#+ full_run
+tic()
+## Run parameter sweep
+sweep_results1 <- ringbp::parameter_sweep(scenarios1,
+                                         sim_fn = sim_with_params,
+                                         samples = no.samples,
+                                         show_progress = TRUE)
+toc()
+
+
+# #+ writeout
+saveRDS(sweep_results1, file = "data-raw/res_20200507_1.rds")
+
+##################################################################
+
+scenarios2 <- tidyr::expand_grid(
+  ## Put parameters that are grouped by disease into this data.frame
+  delay_group = list(tibble::tibble(
+    delay = c("Adherence"),
+    delay_shape = c(0.9),
+    delay_scale = 1
+  )),
+  inc_meanlog = 1.434065,
+  inc_sdlog = 0.6612,
+  inf_shape = 2.115779,
+  inf_rate = 0.6898583,
+  inf_shift = 3,
+  min_quar_delay = 1,
+  max_quar_delay = c(1,4),
+  index_R0 = c(1.1,1.3,1.5),
+  prop.asym = c(0.4),
+  control_effectiveness = seq(0.4, 1, 0.2),
+  self_report = c(0),
+  test_delay = c(2), #time from isolation to test result
+  sensitivity = c(0.65), #percent of cases detected
+  precaution = c(0,7), #this could be between 0 and 7? Number of days stay in isolation if negative test
+  num.initial.cases = c(5)) %>%
+  tidyr::unnest("delay_group") %>%
+  dplyr::mutate(scenario = 1:dplyr::n())
+
+cap_cases <- 2000
+max_days <- 300
+## Parameterise fixed paramters
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
+                                  cap_max_days = max_days,
+                                  cap_cases = cap_cases,
+                                  r0isolated = 0,
+                                  disp.iso = 1,
+                                  disp.com = 0.16,
+                                  quarantine = TRUE)
+
+tic()
+## Run parameter sweep
+sweep_results2 <- ringbp::parameter_sweep(scenarios2,
+                                         sim_fn = sim_with_params,
+                                         samples = no.samples,
+                                         show_progress = TRUE)
+
+toc()
+
+# #+ writeout
+saveRDS(sweep_results2, file = "data-raw/res_20200507_2.rds")
+
+##################################################################
+
+scenarios3 <- tidyr::expand_grid(
+  ## Put parameters that are grouped by disease into this data.frame
+  delay_group = list(tibble::tibble(
+    delay = c("Adherence"),
+    delay_shape = c(0.9),
+    delay_scale = 1
+  )),
+  inc_meanlog = 1.434065,
+  inc_sdlog = 0.6612,
+  inf_shape = 2.115779,
+  inf_rate = 0.6898583,
+  inf_shift = 3,
+  min_quar_delay = 1,
+  max_quar_delay = c(4),
+  index_R0 = c(1.1,1.3,1.5),
+  prop.asym = c(0.4),
+  control_effectiveness = seq(0.4, 1, 0.2),
+  self_report = c(0.5),
+  test_delay = c(2), #time from isolation to test result
+  sensitivity = c(0.65), #percent of cases detected
+  precaution = c(0,7), #this could be between 0 and 7? Number of days stay in isolation if negative test
+  num.initial.cases = c(5)) %>%
+  tidyr::unnest("delay_group") %>%
+  dplyr::mutate(scenario = 1:dplyr::n())
+
+cap_cases <- 2000
+max_days <- 300
+## Parameterise fixed paramters
+sim_with_params <- purrr::partial(ringbp::scenario_sim,
+                                  cap_max_days = max_days,
+                                  cap_cases = cap_cases,
+                                  r0isolated = 0,
+                                  disp.iso = 1,
+                                  disp.com = 0.16,
+                                  quarantine = TRUE)
+
+#+ full_run
+tic()
+## Run parameter sweep
+sweep_results3 <- ringbp::parameter_sweep(scenarios3,
+                                         sim_fn = sim_with_params,
+                                         samples = no.samples,
+                                         show_progress = TRUE)
+
+toc()
+
+
+# #+ writeout
+saveRDS(sweep_results3, file = "data-raw/res_20200507_3.rds")
+
+##################################################################
+
+scenarios4 <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
   delay_group = list(tibble::tibble(
     delay = c("Adherence"),
@@ -61,18 +211,15 @@ scenarios <- tidyr::expand_grid(
   prop.asym = c(0.4),
   control_effectiveness = seq(0.4, 1, 0.2),
   self_report = c(0,0.5),
-  test_delay = c(2), #time from isolation to test result
-  sensitivity = c(0,0.65), #percent of cases detected
-  precaution = c(0,7), #this could be between 0 and 7? Number of days stay in isolation if negative test
+  test_delay = c(0), #time from isolation to test result
+  sensitivity = c(0), #percent of cases detected
+  precaution = c(0), #this could be between 0 and 7? Number of days stay in isolation if negative test
   num.initial.cases = c(5)) %>%
   tidyr::unnest("delay_group") %>%
   dplyr::mutate(scenario = 1:dplyr::n())
 
 cap_cases <- 2000
 max_days <- 300
-
-
-
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   cap_max_days = max_days,
@@ -82,13 +229,10 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   disp.com = 0.16,
                                   quarantine = TRUE)
 
-
-
 #+ full_run
-
 tic()
 ## Run parameter sweep
-sweep_results <- ringbp::parameter_sweep(scenarios,
+sweep_results4 <- ringbp::parameter_sweep(scenarios4,
                                          sim_fn = sim_with_params,
                                          samples = no.samples,
                                          show_progress = TRUE)
@@ -97,10 +241,28 @@ toc()
 
 
 # #+ writeout
+saveRDS(sweep_results4, file = "data-raw/res_20200507_4.rds")
 
-saveRDS(sweep_results, file = "data-raw/res_20200507_generalouts.rds")
+##################################################################
 
+sweep_results <- rbind(sweep_results1,sweep_results2,sweep_results3,sweep_results4)
+saveRDS(sweep_results, file = "data-raw/res_20200507_complete.rds")
 
+#expand results for no testing so they can be filtered for plotting later on
+#same results hold for precaution =0,7 and test delay =0,2
+temp1 <- sweep_results %>% filter(sensitivity==0) %>%
+  mutate(precaution := 7)
+
+temp2 <- sweep_results %>% filter(sensitivity==0) %>%
+  mutate(precaution := 7) %>%
+  mutate(test_delay := 2)
+
+temp3 <- sweep_results %>% filter(sensitivity==0) %>%
+  mutate(test_delay := 2)
+
+temp <- rbind(temp1,temp2,temp3)
+temp$scenario <- 216 + (1:nrow(temp))
+sweep_results <- rbind(sweep_results,temp)
 #' Panel A is now redundant and has been replaced with an adherence probability.
 #+ plots1, eval = TRUE
 
@@ -110,20 +272,14 @@ ringbp::make_figure_2()
 
 # Load in results  -------------------------------------------------------
 
-sweep_results_extra <- readRDS("data-raw/res_20200505_testing_R0_1point5.rds")
-sweep_results <- readRDS("data-raw/res_20200505_testing.rds")
+# sweep_results_extra <- readRDS("data-raw/res_20200505_testing_R0_1point5.rds")
+# sweep_results <- readRDS("data-raw/res_20200505_testing.rds")
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
   dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
   dplyr::ungroup(scenario)
 
-res_extra <- sweep_results_extra %>%
-  dplyr::group_by(scenario) %>%
-  dplyr::mutate(pext = extinct_prob(sims[[1]], cap_cases = cap_cases, week_range = 40:42)) %>%
-  dplyr::ungroup(scenario)
-
-res <- rbind(res,res_extra)
 #+ plots3
 
 
@@ -134,8 +290,9 @@ res %>%
   filter(max_quar_delay == 1) %>%
   filter(precaution == 7) %>%
   filter(test_delay == 2) %>%
-  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%','95%'))) %>%
-  mutate(adherence = factor(self_report, labels = c('no self-reporting','25%','50%'))) %>%
+  filter(sensitivity == 0.65) %>%
+  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%'))) %>%
+  mutate(adherence = factor(self_report, labels = c('no self-reporting','50%'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
   geom_line() +
@@ -150,7 +307,8 @@ res %>%
   filter(self_report == 0.5) %>%
   filter(precaution == 0) %>%
   filter(test_delay == 2) %>%
-  mutate(prop.asym = factor(sensitivity, labels = c('no testing','sensitivity = 65%','95%'))) %>%
+  filter(sensitivity == 0.65) %>%
+  mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
@@ -180,7 +338,7 @@ res %>%
   filter(index_R0 == 1.3) %>%
   mutate(test_delay = factor(test_delay, labels = c('0 days','2 days'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
-  mutate(sensitivity = factor(sensitivity)) %>%
+  mutate(sensitivity = factor(sensitivity, labels = c('No testing','65%','95%'))) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = sensitivity)) +
   geom_line() +
   geom_point() +
@@ -194,14 +352,13 @@ res %>%
 res2 <- list()
 week_range <- 40:42
 
-sweep_results2 <-
-  rbind(sweep_results,sweep_results_extra) %>%
+sweep_resultsB <- sweep_results %>%
   filter(self_report == 0.5,
          test_delay == 2)
 
-for(i in seq_len(nrow(sweep_results2))){
+for(i in seq_len(nrow(sweep_resultsB))){
   #print(i)
-  tmp <- sweep_results2$sims[i][[1]]
+  tmp <- sweep_resultsB$sims[i][[1]]
   tmp <-
     tmp %>%
     dplyr::group_by(sim) %>% # group by simulation run
@@ -219,11 +376,11 @@ for(i in seq_len(nrow(sweep_results2))){
     dplyr::ungroup()
   tmp <-
     tmp %>%
-    mutate(index_R0 = sweep_results2$index_R0[i],
-           control_effectiveness = sweep_results2$control_effectiveness[i],
-           max_quar_delay = sweep_results2$max_quar_delay[i],
-           precaution = sweep_results2$precaution[i],
-           sensitivity = sweep_results2$sensitivity[i])
+    mutate(index_R0 = sweep_resultsB$index_R0[i],
+           control_effectiveness = sweep_resultsB$control_effectiveness[i],
+           max_quar_delay = sweep_resultsB$max_quar_delay[i],
+           precaution = sweep_resultsB$precaution[i],
+           sensitivity = sweep_resultsB$sensitivity[i])
 
   res2[[i]] <- tmp
 }
@@ -265,11 +422,11 @@ total_cumulative_distr <-
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3','1.5'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
-  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive', '95%'))) %>%
+  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive','95%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   filter(outbreaks != 0)
 
-T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive") %>%
+T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive1") %>%
   filter(precaution=="7 days")
   ggplot(T1, aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
     geom_line() +
@@ -305,7 +462,7 @@ total_cumulative_distr <-
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3','1.5'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
-  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive', '95%')))
+  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive','95%')))
 
 T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive") %>%
   filter(precaution=="7 days")
