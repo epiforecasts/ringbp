@@ -80,6 +80,9 @@ make_figure_2a <- function() {
 #'}
 make_figure_2 <- function() {
 
+  # A colour-blind-friendly palette
+  cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
   p2 <- data.frame(x = seq(0, 15, 0.1),
                    y = dlnorm(x = seq(0, 15, 0.1),
                                 meanlog = 1.434065,
@@ -94,7 +97,7 @@ make_figure_2 <- function() {
     ggplot2::geom_ribbon(aes(ymax = y, ymin = 0),
                          alpha = 0.4) +
     ggplot2::theme(legend.position = "right") +
-    ggplot2::scale_fill_manual(values = c("chartreuse2"),
+    ggplot2::scale_fill_manual(values = cbPalette[2],
                                name = c("Incubation period"))
 
 
@@ -108,10 +111,10 @@ make_figure_2 <- function() {
     ggplot2::coord_cartesian(xlim = c(-3, 10)) +
     ggplot2::geom_vline(xintercept = -1.4,lty=2) +
     ggplot2::theme(legend.position = "right") +
-    ggplot2::scale_fill_manual(values = c("grey65"),
+    ggplot2::scale_fill_manual(values = cbPalette[3],
                                name = c("Transmission profile")) +
     ggplot2::labs(tag = "B",
-                  x = "time since infection (days)",
+                  x = "time since symptom onset (days)",
                   y = "probability density")
 
 

@@ -27,6 +27,7 @@ library(tictoc)
 library(ggplot2)
 library(patchwork)
 library(cowplot)
+library(latex2exp)
 
 devtools::load_all()
 
@@ -285,6 +286,8 @@ res <- sweep_results %>%
 
 #+ plotsS, eval = TRUE, cache = FALSE, fig.height = 5, fig.width = 9
 
+# A colour-blind-friendly palette
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 res %>%
   filter(max_quar_delay == 1) %>%
@@ -295,17 +298,19 @@ res %>%
   mutate(adherence = factor(self_report, labels = c('no self-reporting','50%'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
+  ggplot2::scale_colour_manual(values = cbPalette[c(4,2,7)],name=TeX("Index $\\R_0$")) +
   geom_line() +
   geom_point() +
   facet_grid(adherence ~ prop.asym) +
   ggtitle('Contact trace delay is 1, test delay is 2 days') +
-  ylab('Prob. large outbreak')
+  ylab('Prob. large outbreak') +
+  xlab('Contact tracing coverage')
 
 
 
 res %>%
   filter(self_report == 0.5) %>%
-  filter(precaution == 0) %>%
+  filter(precaution == 7) %>%
   filter(test_delay == 2) %>%
   filter(sensitivity == 0.65) %>%
   mutate(prop.asym = factor(sensitivity, labels = c('sensitivity = 65%'))) %>%
@@ -314,37 +319,45 @@ res %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
   geom_line() +
   geom_point() +
+  ggplot2::scale_colour_manual(values = cbPalette[c(4,2,7)],name=TeX("Index $\\R_0$")) +
   facet_grid(max_quar_delay ~ prop.asym) +
   ggtitle('Self-reporting is 50%, test delay is 2 days') +
-  ylab('Prob. large outbreak')
+  ylab('Prob. large outbreak') +
+  xlab('Contact tracing coverage')
 
 res %>%
   filter(self_report == 0.5) %>%
   filter(max_quar_delay == 1) %>%
   filter(sensitivity == 0.65) %>%
-  mutate(test_delay = factor(test_delay, labels = c('0 days','2 days'))) %>%
+  mutate(test_delay = factor(test_delay, labels = c('instant test','2 day delay'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
   mutate(index_R0 = factor(index_R0)) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = index_R0)) +
+  ggplot2::scale_colour_manual(values = cbPalette[c(4,2,7)],name=TeX("Index $\\R_0$:")) +
+  ggplot2::theme(legend.position = "bottom") +
   geom_line() +
   geom_point() +
   facet_grid(test_delay ~ precaution) +
-  ggtitle('Self-reporting is 50%, sensitivity is 65%, trace delay is 1') +
-  ylab('Prob. large outbreak')
+  ggtitle(TeX('Self-reporting is 50%, sensitivity is 65%, trace delay is 1')) +
+  ylab('Prob. large outbreak') +
+  xlab('Contact tracing coverage')
 
 res %>%
   filter(self_report == 0.5) %>%
   filter(max_quar_delay == 1) %>%
   filter(index_R0 == 1.3) %>%
-  mutate(test_delay = factor(test_delay, labels = c('0 days','2 days'))) %>%
+  mutate(test_delay = factor(test_delay, labels = c('instant test','2 day delay'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
   mutate(sensitivity = factor(sensitivity, labels = c('No testing','65%','95%'))) %>%
   ggplot(aes(control_effectiveness, 1 - pext, colour = sensitivity)) +
+  ggplot2::scale_colour_manual(values = cbPalette[c(1,3,6)],name="Test sensitivity:") +
+  ggplot2::theme(legend.position = "bottom") +
   geom_line() +
   geom_point() +
   facet_grid(test_delay ~ precaution) +
-  ggtitle('Self-reporting is 50%, trace delay is 1, R0 is 1.3') +
-  ylab('Prob. large outbreak')
+  ggtitle(TeX('Self-reporting is 50%, trace delay is 1, $\\R_0$ is 1.3')) +
+  ylab('Prob. large outbreak') +
+  xlab('Contact tracing coverage')
 
 
 #+ by_size, eval = TRUE, cache = TRUE, fig.height = 5, fig.width = 9
@@ -420,22 +433,24 @@ total_cumulative_distr <-
 
 
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
-  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3','1.5'))) %>%
+  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1'), '1.3','1.5'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
-  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive','95%'))) %>%
+  mutate(sensitivity = factor(sensitivity, labels = c('No testing','65% sensitive','95%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   filter(outbreaks != 0)
 
-T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive1") %>%
+T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive") %>%
   filter(precaution=="7 days")
-  ggplot(T1, aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
+ggplot(T1,
+         aes(total, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
     geom_line() +
-    xlim(0,750) +
-    facet_wrap(max_quar_delay~index_R0, scale = 'free_y') +
+    facet_wrap(max_quar_delay ~ index_R0, scale = 'free_x') +
+    scale_colour_manual(values = cbPalette) +
     ylab('Prob. large outbreak') +
-    guides(colour=guide_legend(title="Prop. traced")) +
-    ggtitle('Prob of outbreak as size of current epidemic increases')
-
+    guides(colour=guide_legend(title="Prop. Traced")) +
+    ggtitle('Prob of outbreak with size of worst week') +
+    xlim(c(0,750)) +
+    ylim(c(0,1))
 
 #+ plots_by_max_weekly, cache = FALSE
 
@@ -462,7 +477,7 @@ total_cumulative_distr <-
   mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1', '1.3','1.5'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
-  mutate(sensitivity = factor(sensitivity, labels = c('65% sensitive','95%')))
+  mutate(sensitivity = factor(sensitivity, labels = c('No testing','65% sensitive','95%')))
 
 T1 <- total_cumulative_distr %>% filter(sensitivity=="65% sensitive") %>%
   filter(precaution=="7 days")
@@ -471,6 +486,7 @@ ggplot(T1,
        aes(max_weekly, poutbreak, colour = factor(control_effectiveness), group = factor(control_effectiveness))) +
   geom_line() +
   facet_wrap(max_quar_delay ~ index_R0, scale = 'free_x') +
+  scale_colour_manual(values = cbPalette) +
   ylab('Prob. large outbreak') +
   guides(colour=guide_legend(title="Prop. Traced")) +
   ggtitle('Prob of outbreak with size of worst week') +
@@ -504,6 +520,7 @@ res3 %>% mutate(index_R0 = factor(index_R0, labels=c("1.1","1.3","1.5"))) %>%
     mutate(control_effectiveness = factor(control_effectiveness, labels=c("Prop. traced 40%","60%","80%","100%"))) %>%
     mutate(max_quar_delay = factor(max_quar_delay, labels=c("1 day trace delay","4 days"))) %>%
   ggplot(aes(x,y,colour=index_R0)) + geom_line() +
+  scale_colour_manual(values = cbPalette[c(4,2,7)]) +
   facet_grid(max_quar_delay ~ control_effectiveness) +
   xlim(c(5,2000)) + ylim(c(0,0.5)) +
   xlab('outbreak size, X') +
