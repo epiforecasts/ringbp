@@ -88,7 +88,7 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results1, file = "data-raw/res_20200507_1.rds")
+saveRDS(sweep_results1, file = "data-raw/res_20200507_1B.rds")
 
 ##################################################################
 
@@ -138,7 +138,7 @@ sweep_results2 <- ringbp::parameter_sweep(scenarios2,
 toc()
 
 # #+ writeout
-saveRDS(sweep_results2, file = "data-raw/res_20200507_2.rds")
+saveRDS(sweep_results2, file = "data-raw/res_20200507_2B.rds")
 
 ##################################################################
 
@@ -190,7 +190,7 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results3, file = "data-raw/res_20200507_3.rds")
+saveRDS(sweep_results3, file = "data-raw/res_20200507_3B.rds")
 
 ##################################################################
 
@@ -242,30 +242,31 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results4, file = "data-raw/res_20200507_4.rds")
+saveRDS(sweep_results4, file = "data-raw/res_20200507_4B.rds")
 
 ##################################################################
 
-sweep_results <- rbind(sweep_results1,sweep_results2,sweep_results3,sweep_results4)
-saveRDS(sweep_results, file = "data-raw/res_20200507_complete.rds")
+sweep_resultsB <- rbind(sweep_results1,sweep_results2,sweep_results3,sweep_results4)
 
 #expand results for no testing so they can be filtered for plotting later on
 #same results hold for precaution =0,7 and test delay =0,2
-temp1 <- sweep_results %>% filter(sensitivity==0) %>%
+temp1 <- sweep_resultsB %>% filter(sensitivity==0) %>%
   mutate(precaution := 7)
 
-temp2 <- sweep_results %>% filter(sensitivity==0) %>%
+temp2 <- sweep_resultsB %>% filter(sensitivity==0) %>%
   mutate(precaution := 7) %>%
   mutate(test_delay := 2)
 
-temp3 <- sweep_results %>% filter(sensitivity==0) %>%
+temp3 <- sweep_resultsB %>% filter(sensitivity==0) %>%
   mutate(test_delay := 2)
 
 temp <- rbind(temp1,temp2,temp3)
 temp$scenario <- 216 + (1:nrow(temp))
-sweep_results <- rbind(sweep_results,temp)
+sweep_resultsB <- rbind(sweep_resultsB,temp)
 #' Panel A is now redundant and has been replaced with an adherence probability.
 #+ plots1, eval = TRUE
+
+saveRDS(sweep_resultsB, file = "data-raw/res_20200507_completeB.rds")
 
 ringbp::make_figure_2()
 
