@@ -16,3 +16,4 @@ inst/scripts/*.log
 inst/plots/*.pdf
 inst/plots/*.png
 data-raw/*.rds
+.DS_Store
