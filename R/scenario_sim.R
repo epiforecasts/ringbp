@@ -39,6 +39,13 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                          delay_shape = NULL, delay_scale = NULL, num.initial.cases = NULL, prop.asym = NULL,
                          quarantine = NULL, r0subclin = NULL, disp.subclin = NULL) {
 
+  if(is.null(r0subclin)) {
+    r0subclin <- r0community
+  }
+
+  if(is.null(disp.subclin)) {
+    disp.subclin <- disp.com
+  }
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
                                              prop.ascertain = prop.ascertain,
