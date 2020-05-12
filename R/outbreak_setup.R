@@ -27,22 +27,32 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, prop.asym, sensiti
                           asym = purrr::rbernoulli(num.initial.cases, prop.asym),
                           caseid = 1:(num.initial.cases), # set case id
                           infector = 0,
-                          missed = TRUE,
                           onset = inc_samples,
                           new_cases = NA,
+                          missed = NA,
                           test_result = NA)
 
+  case_data <- case_data %>%
+    mutate(missed := ifelse(asym==F,
+                           rbernoulli(missed,1-self_report),
+                           TRUE))
+
   if(testing==TRUE){
-    case_data <- case_data[asym==FALSE, test_result := purrr::rbernoulli(sum(1-asym), sensitivity)]
+    case_data <- case_data %>%
+      mutate(test_result := ifelse(missed==FALSE,
+                                   purrr::rbernoulli(sum(1-asym), sensitivity),
+                                   NA))
   }
-  case_data$missed[which(!case_data$asym)] <- FALSE
 
+  adhere <- delayfn(num.initial.cases)
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
-  case_data <- case_data[, isolated_time := onset + delayfn(1)
-                         ][, isolated_end := isolated_time+test_delay+ifelse(test_result!=FALSE | asym==T,Inf,precaution)
-                           ][, isolated := FALSE]
-
-  case_data$isolated_time[case_data$asym] <- Inf
+  case_data <- case_data %>% mutate(isolated_time := ifelse(asym==FALSE,
+                                                            ifelse(missed==TRUE,
+                                                            onset + adhere,
+                                                            onset + 1),
+                                                            Inf)) %>%
+    mutate(isolated_end := isolated_time+test_delay+ifelse(test_result!=FALSE | missed==T,Inf,precaution)) %>%
+    mutate(isolated := FALSE)
 
   # return
   return(case_data)

@@ -39,7 +39,7 @@ set.seed(200503)
 #'
 #' Cap cases was chosen in a seperate analysis (choose_cap.R or something.)
 
-no.samples <- 2000
+no.samples <- 3000
 
 scenarios1 <- tidyr::expand_grid(
   ## Put parameters that are grouped by disease into this data.frame
@@ -88,7 +88,7 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results1, file = "data-raw/res_20200507_1B.rds")
+# saveRDS(sweep_results1, file = "data-raw/res_20200507_1B.rds")
 
 ##################################################################
 
@@ -138,7 +138,7 @@ sweep_results2 <- ringbp::parameter_sweep(scenarios2,
 toc()
 
 # #+ writeout
-saveRDS(sweep_results2, file = "data-raw/res_20200507_2B.rds")
+# saveRDS(sweep_results2, file = "data-raw/res_20200507_2B.rds")
 
 ##################################################################
 
@@ -190,7 +190,7 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results3, file = "data-raw/res_20200507_3B.rds")
+# saveRDS(sweep_results3, file = "data-raw/res_20200507_3B.rds")
 
 ##################################################################
 
@@ -242,7 +242,7 @@ toc()
 
 
 # #+ writeout
-saveRDS(sweep_results4, file = "data-raw/res_20200507_4B.rds")
+# saveRDS(sweep_results4, file = "data-raw/res_20200507_4B.rds")
 
 ##################################################################
 
@@ -263,19 +263,32 @@ temp3 <- sweep_resultsB %>% filter(sensitivity==0) %>%
 temp <- rbind(temp1,temp2,temp3)
 temp$scenario <- 216 + (1:nrow(temp))
 sweep_resultsB <- rbind(sweep_resultsB,temp)
-#' Panel A is now redundant and has been replaced with an adherence probability.
-#+ plots1, eval = TRUE
+sweep_resultsB$scenario[1:216] <- 1:216
 
-saveRDS(sweep_resultsB, file = "data-raw/res_20200507_completeB.rds")
+# saveRDS(sweep_resultsB, file = "data-raw/res_20200507_completeB.rds")
+
+# Plot figure 2:  --------------------------------------------------------
+# Parameter distributions (incubation, generation interval etc.)
 
 ringbp::make_figure_2()
-
-#+ plots2, cache = FALSE
 
 # Load in results  -------------------------------------------------------
 
 # sweep_results_extra <- readRDS("data-raw/res_20200505_testing_R0_1point5.rds")
-# sweep_results <- readRDS("data-raw/res_20200505_testing.rds")
+sweep_resultsA <- readRDS("data-raw/res_20200507_complete.rds")
+sweep_resultsB <- readRDS("data-raw/res_20200507_completeB.rds")
+
+#they aren't in the same order!
+ for (i in 2:nrow(sweep_results)){
+   sweep_resultsB$sims[[i]]$sim <- sweep_resultsB$sims[[i]]$sim + 2000
+   sweep_results$sims[[i]] <- bind_rows(sweep_results$sims[[i]],sweep_resultsB$sims[[i]])
+ }
+
+sweep_results <- bind_rows(sweep_resultsA, sweep_resultsB)
+sweep_results <- sweep_results %>% unnest(sims) %>%
+  dplyr::group_by(max_quar_delay,index_R0,control_effectiveness,
+                  self_report,test_delay,sensitivity,precaution) %>%
+  nest()
 
 res <- sweep_results %>%
   dplyr::group_by(scenario) %>%
@@ -434,7 +447,7 @@ total_cumulative_distr <-
 
 
 total_cumulative_distr <- do.call(rbind, total_cumulative_distr$res) %>%
-  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1'), '1.3','1.5'))) %>%
+  mutate(index_R0 = factor(index_R0, labels = c('R0 = 1.1'), '1.3','1.5')) %>%
   mutate(precaution = factor(precaution, labels = c('immediate release', '7 days'))) %>%
   mutate(sensitivity = factor(sensitivity, labels = c('No testing','65% sensitive','95%'))) %>%
   mutate(max_quar_delay = factor(max_quar_delay, labels = c('1 day trace delay', '4 days'))) %>%
