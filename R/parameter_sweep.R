@@ -16,6 +16,7 @@
 #' from `wuhan_sim`.
 #' @export
 #' @importFrom dplyr group_by mutate ungroup sample_frac
+#' @importFrom tibble has_name
 #' @importFrom tidyr nest unnest
 #' @importFrom furrr future_map
 #' @importFrom purrr safely
@@ -89,7 +90,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       ~ safe_sim_fn(n.sim = samples,
                num.initial.cases = .$num.initial.cases,
                r0community = .$index_R0,
-               r0subclin = .$subclin_R0,
+               r0subclin = ifelse(tibble::has_name(scenarios, "subclin_R0"), .$subclin_R0, .$index_R0),
                k = .$k,
                delay_shape = .$delay_shape,
                delay_scale = .$delay_scale,
