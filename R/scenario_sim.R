@@ -37,8 +37,16 @@
 scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NULL, cap_cases = NULL,
                          r0isolated = NULL, r0community = NULL, disp.iso = NULL, disp.com = NULL, k = NULL,
                          delay_shape = NULL, delay_scale = NULL, num.initial.cases = NULL, prop.asym = NULL,
-                         quarantine = NULL) {
+                         quarantine = NULL, r0subclin = NULL, disp.subclin = NULL) {
 
+  # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
+  if(is.null(r0subclin)) {
+    r0subclin <- r0community
+  }
+
+  if(is.null(disp.subclin)) {
+    disp.subclin <- disp.com
+  }
   # Run n.sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
                                              prop.ascertain = prop.ascertain,
@@ -46,6 +54,8 @@ scenario_sim <- function(n.sim = NULL, prop.ascertain = NULL, cap_max_days = NUL
                                              cap_cases = cap_cases,
                                              r0isolated = r0isolated,
                                              r0community = r0community,
+                                             r0subclin = r0subclin,
+                                             disp.subclin = disp.subclin,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
                                              delay_shape = delay_shape,

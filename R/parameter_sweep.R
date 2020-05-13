@@ -16,6 +16,7 @@
 #' from `wuhan_sim`.
 #' @export
 #' @importFrom dplyr group_by mutate ungroup sample_frac
+#' @importFrom tibble has_name
 #' @importFrom tidyr nest unnest
 #' @importFrom furrr future_map future_options
 #' @importFrom purrr safely
@@ -38,6 +39,7 @@
 #'  k = c(1,0.88,0.47)
 #' )),
 #' index_R0 = c(1.5,2.5,3.5),
+#' subclin_R0 = 0,
 #' control_effectiveness = seq(0,1,0.2),
 #' num.initial.clusters = c(5,20,40)) %>%
 #'  tidyr::unnest("k_group") %>%
@@ -50,7 +52,8 @@
 #'                                  cap_max_days = 365,
 #'                                  cap_cases = 5000,
 #'                                  r0isolated = 0,
-#'                                  disp.iso=1,
+#'                                  disp.iso= 1,
+#'                                  disp.subclin = 0.16,
 #'                                  disp.com = 0.16,
 #'                                  mu_ip = 5.8, # incubation period mean
 #'                                  sd_ip = 2.6, # incubation period sd
@@ -87,10 +90,12 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       ~ safe_sim_fn(n.sim = samples,
                num.initial.cases = .$num.initial.cases,
                r0community = .$index_R0,
+               r0subclin = ifelse(tibble::has_name(scenarios, "subclin_R0"), .$subclin_R0, .$index_R0),
                k = .$k,
                delay_shape = .$delay_shape,
                delay_scale = .$delay_scale,
                prop.ascertain = .$control_effectiveness,
+               quarantine = .$quarantine,
                prop.asym = .$prop.asym
       )[[1]],
       .progress = show_progress,
