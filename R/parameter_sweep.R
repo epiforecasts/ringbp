@@ -95,6 +95,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
                delay_shape = .$delay_shape,
                delay_scale = .$delay_scale,
                prop.ascertain = .$control_effectiveness,
+               quarantine = .$quarantine,
                prop.asym = .$prop.asym
       )[[1]],
       .progress = show_progress
