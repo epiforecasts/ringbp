@@ -16,7 +16,10 @@ Authors@R: c(
            role = c("aut")),
     person("Tim", "Lucas",
            email = "tim.lucas@leicester.ac.uk",
-           role = c("aut"))
+           role = c("aut")),
+    person("Sebastian", "Funk",
+           email = "sebastian.funk@lshtm.ac.uk",
+           role = c("rev"))
            )
 Description: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts.
 License: MIT + file LICENSE
