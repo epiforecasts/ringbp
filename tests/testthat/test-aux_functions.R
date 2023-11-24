@@ -18,8 +18,6 @@ test_that("dist_setup returns a partialised function", {
 
 test_that("dist_setup parameters behave as expected", {
   
-  set.seed(32515)
-  
   f1 <- dist_setup(1, 0.01)
   f2 <- dist_setup(1, 1e5)
   
@@ -50,13 +48,11 @@ test_that("dist_setup parameters behave as expected", {
 
 test_that("inf_fn parameters behave as expected", {
   
-  set.seed(32515)
   r1 <- inf_fn(c(1, 4, 1), 2)
   
   expect_length(r1, 3)
   
   
-  set.seed(499211)
   r2 <- inf_fn(rep(0.01, 1e6), 2)
   expect_length(r2, 1e6)
   expect_true(is.numeric(r2))
@@ -90,7 +86,6 @@ test_that("inf_fn parameters behave as expected", {
 
 test_that('extinct_prob works as expected', {
   
-  set.seed(12341240)
   cap <- 100
   sims <- 5
   res <- scenario_sim(n.sim = sims,
@@ -184,7 +179,6 @@ test_that('extinct_prob works as expected', {
 test_that('extinct_prob week_range argument works', {
   
   
-  set.seed(12341240)
   cap <- 100
   sims <- 2
   res <- scenario_sim(n.sim = 2,
@@ -272,7 +266,6 @@ test_that('extinct_prob week_range argument works', {
 test_that('detect_extinct works', {
   
   
-  set.seed(1516)
   cap <- 100
   sims <- 2
   res <- scenario_sim(n.sim = 2,
