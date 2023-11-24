@@ -54,7 +54,7 @@
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
                          delay_shape, delay_scale, num.initial.cases, prop.asym,
-                         quarantine, r0subclin, disp.subclin) {
+                         quarantine, r0subclin = NULL, disp.subclin = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
   if(is.null(r0subclin)) {
