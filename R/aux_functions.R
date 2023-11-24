@@ -40,12 +40,6 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' @author Joel Hellewell
 #' @export
 #' @inheritParams detect_extinct
-#' @example 
-#' 
-#' 
-#' 
-#' 
-#' 
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   n_sim <- max(outbreak_df_week$sim)
