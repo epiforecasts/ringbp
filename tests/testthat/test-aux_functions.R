@@ -73,7 +73,7 @@ test_that("inf_fn parameters behave as expected", {
   # probability that normal with mean 1e6, sd 2 being less than 4.7
   #   pnorm(4.7, 1e6, 2) < 1e-200
   # So this test should almost certainly pass if code is correct.
-  r3 <- inf_fn(c(1, 1e6), 0)
+  r3 <- inf_fn(c(0, 1e6), 0)
   expect_lt(r3[1], r3[2])
 
   # Test the alpha parameter. 
@@ -82,7 +82,7 @@ test_that("inf_fn parameters behave as expected", {
   expect_gt(mean(r4), median(r4))
 
   # negative is left skew so mean is less than median.    
-  r5 <- inf_fn(rep(100, 1e6), 0.01)
+  r5 <- inf_fn(rep(100, 1e6), -10)
   expect_lt(mean(r5), median(r5))
   
 })
