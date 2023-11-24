@@ -62,10 +62,9 @@ test_that("inf_fn parameters behave as expected", {
   expect_equal(min(r2), 1)
   expect_true(all(r2 >= 1))
   
-  # skew normal collapses to normal with alpha = k =  0
+  # skew normal collapses to normal with alpha = k = 0
   # SD is hard coded as 2
-  # Can't be bothered to quite do this properly but upper 99%
-  #   of normal with mean 1 sd 2: qnorm(0.99, 0, 2) = 4.7
+  # Upper 99% of normal with mean 0 sd 2: qnorm(0.99, 0, 2) = 4.7
   # probability that normal with mean 1e6, sd 2 being less than 4.7
   #   pnorm(4.7, 1e6, 2) < 1e-200
   # So this test should almost certainly pass if code is correct.
