@@ -7,7 +7,7 @@
 make_figure_3a(df = NULL)
 }
 \arguments{
-\item{df}{The results data frame}
+\item{df}{A dataframe of results as produced by \code{parameter_sweep}}
 }
 \value{
 A ggplot2 plot object

@@ -2,17 +2,19 @@
 % Please edit documentation in R/aux_functions.R
 \name{detect_extinct}
 \alias{detect_extinct}
-\title{Calculate proportion of outbreaks that went extinct}
+\title{Calculate whether outbreaks went extinct or not}
 \usage{
-detect_extinct(outbreak_df_week = NULL, cap_cases = NULL)
+detect_extinct(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
 }
 \arguments{
-\item{outbreak_df_week}{data.table  weekly cases producted by the outbreak model}
+\item{outbreak_df_week}{data.table  weekly cases produced by the outbreak model}
 
 \item{cap_cases}{integer number of cumulative cases at which the branching process was terminated}
+
+\item{week_range}{integer vector giving the (zero indexed) week range to test for whether an extinction occurred.}
 }
 \description{
-Calculate proportion of outbreaks that went extinct
+Calculate whether outbreaks went extinct or not
 }
 \author{
 Joel Hellewell

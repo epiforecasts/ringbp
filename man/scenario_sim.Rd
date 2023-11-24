@@ -18,7 +18,9 @@ scenario_sim(
   delay_scale,
   num.initial.cases,
   prop.asym,
-  quarantine
+  quarantine,
+  r0subclin = NULL,
+  disp.subclin = NULL
 )
 }
 \arguments{

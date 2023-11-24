@@ -7,7 +7,7 @@
 make_figure_4(res = NULL)
 }
 \arguments{
-\item{res}{The results dataframe}
+\item{res}{The results dataframe todo}
 }
 \value{
 A ggplot2 plot object
