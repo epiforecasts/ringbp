@@ -1,10 +1,10 @@
 
 context("Test basic usage")
 
+set.seed(20200410)
 
 test_that("A basic sim returns the correct object", {
   
-  set.seed(20200410)
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)
@@ -56,7 +56,6 @@ test_that("A basic sim returns the correct object", {
 
 test_that("Sim with multiple infectors makes senes", {
   
-  set.seed(20212310)
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)
@@ -90,7 +89,6 @@ test_that("Sim with multiple infectors makes senes", {
 
 test_that("R0isolated is working properly", {
   
-  set.seed(20200410)
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)

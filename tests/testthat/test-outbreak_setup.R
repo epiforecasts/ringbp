@@ -41,7 +41,6 @@ test_that("asym arg works properly", {
   expect_true(all(all_asym$asym))
   
   
-  set.seed(110102932)
   # Mixed asympt
   # dbinom(0, 10000, 0.5)
   # With 10000 cases, probability of 0 symptomatic or 0 asympt is less than machine precision
