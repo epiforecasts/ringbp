@@ -163,7 +163,7 @@ test_that('Test a bunch of args',{
     quarantine = FALSE
   )
   expect_true(all(case_data2$cases$missed))
-    
+
   case_data3 <- outbreak_step(
     case_data = case_data,
     disp.iso = 1,

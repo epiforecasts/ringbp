@@ -190,14 +190,14 @@ test_that('extinct_prob week_range argument works', {
   res3$cumulative[1:3] <- c(1, 2, 3)
   r3 <- extinct_prob(res3, cap_cases = cap, week_range = 1:2)
   expect_equal(r3, 0)
-  
+
   # Simple case of no cases in week 1 or 2
   res4 <- res[c(1, 2, 3), ]
   res4$weekly_cases[1:3] <- c(1, 0, 0)
   res4$cumulative[1:3] <- c(1, 1, 1)
   r4 <- extinct_prob(res4, cap_cases = cap, week_range = 1:2)
   expect_equal(r4, 1)
-  
+
   # Case of cases in week 1 but not 2 (by the definition used in this function
   # this is not an extinction). Test here that week_range 1:2 says no extintion
   # but week_range 2 says extinction.
@@ -206,7 +206,7 @@ test_that('extinct_prob week_range argument works', {
   res5$cumulative[1:3] <- c(1, 2, 2)
   r5 <- extinct_prob(res5, cap_cases = cap, week_range = 1:2)
   expect_equal(r5, 0)
-  
+
   r5b <- extinct_prob(res5, cap_cases = cap, week_range = 2)
   expect_equal(r5b, 1)
   
