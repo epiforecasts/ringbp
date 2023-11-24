@@ -13,7 +13,11 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-8057-8037")),
     person("Amy", "Gimma", 
            email = "amy.gimma@lshtm.ac.uk", 
-           role = c("aut")))
+           role = c("aut")),
+    person("Tim", "Lucas",
+           email = "tim.lucas@leicester.ac.uk",
+           role = c("aut"))
+           )
 Description: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts.
 License: MIT + file LICENSE
 Encoding: UTF-8
