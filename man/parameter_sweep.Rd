@@ -50,6 +50,7 @@ k_group = list(tibble::tibble(
  k = c(1,0.88,0.47)
 )),
 index_R0 = c(1.5,2.5,3.5),
+subclin_R0 = 0,
 control_effectiveness = seq(0,1,0.2),
 num.initial.clusters = c(5,20,40)) \%>\%
  tidyr::unnest("k_group") \%>\%
@@ -62,7 +63,8 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                  cap_max_days = 365,
                                  cap_cases = 5000,
                                  r0isolated = 0,
-                                 disp.iso=1,
+                                 disp.iso= 1,
+                                 disp.subclin = 0.16,
                                  disp.com = 0.16,
                                  mu_ip = 5.8, # incubation period mean
                                  sd_ip = 2.6, # incubation period sd

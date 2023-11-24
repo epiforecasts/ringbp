@@ -15,7 +15,9 @@ outbreak_step(
   delayfn = NULL,
   prop.ascertain = NULL,
   k = NULL,
-  quarantine = NULL
+  quarantine = NULL,
+  r0subclin = NULL,
+  disp.subclin = NULL
 )
 }
 \arguments{
@@ -40,6 +42,10 @@ outbreak_step(
 \item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+
+\item{r0subclin}{numeric reproduction number for sub-clinical non-isolated cases (must be >0)}
+
+\item{disp.subclin}{numeric dispersion parameter for sub-clincial non-isolated cases (must be >0)}
 }
 \description{
 Move forward one generation in the branching process
@@ -50,11 +56,23 @@ Move forward one generation in the branching process
 # incubation period sampling function
 incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
 # delay distribution sampling function
-delayfn <- dist_setup(delay_shape, delay_scale)
+delayfn <- dist_setup(1.651524, 4.287786)
 # generate initial cases
 case_data <- outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
 # generate next generation of cases
-case_data <- outbreak_step(case_data,1,0.16,0,2.5,0,incfn,delayfn,0,1.95,FALSE)
+case_data <- outbreak_step(case_data = case_data,
+disp.iso = 1,
+disp.com = 0.16,
+r0isolated = 0,
+r0subclin = 1.25,
+disp.subclin = 0.16,
+r0community = 2.5,
+prop.asym = 0,
+incfn = incfn,
+delayfn = delayfn,
+prop.ascertain = 0,
+k = 1.95,
+quarantine = FALSE)[[1]]
 }
 }
 \author{
