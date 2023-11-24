@@ -28,7 +28,7 @@ test_that("A basic sim returns the correct object", {
                              k = 1.95,
                              quarantine = FALSE)
   
-  expect_true(nrow(case_data2$cases) > 1)
+  expect_gt(nrow(case_data2$cases), 1)
   expect_equal(as.vector(table(case_data2$cases$infector)), c(1, nrow(case_data2$cases) - 1))
     
   
@@ -46,7 +46,7 @@ test_that("A basic sim returns the correct object", {
                               k = 1.95,
                               quarantine = FALSE)
   
-  expect_true(nrow(case_data3$cases) == 1)
+  expect_equal(nrow(case_data3$cases), 1)
 
   
 })
@@ -80,9 +80,9 @@ test_that("Sim with multiple infectors makes senes", {
                               k = 1.95,
                               quarantine = FALSE)
   
-  expect_true(nrow(case_data2$cases) > 1)
+  expect_gt(nrow(case_data2$cases), 1)
 
-  expect_true(as.vector(table(case_data2$cases$infector))[1] == 2)
+  expect_equal(as.vector(table(case_data2$cases$infector))[1], 2)
   
   expect_true(all(as.vector(table(case_data2$cases$infector))[2:3] > 1))
 })
@@ -115,7 +115,7 @@ test_that("R0isolated is working properly", {
                               k = 1.95,
                               quarantine = FALSE)
   
-  expect_true(nrow(case_data2$cases) == 1)
+  expect_equal(nrow(case_data2$cases), 1)
   
   
   
@@ -132,7 +132,7 @@ test_that("R0isolated is working properly", {
                               k = 1.95,
                               quarantine = FALSE)
   
-  expect_true(nrow(case_data3$cases) > 1)
+  expect_gt(nrow(case_data3$cases), 1)
   
 })
 
@@ -179,7 +179,7 @@ test_that('Test a bunch of args',{
                                 quarantine = FALSE)
     
     # The index case should be missed but no others.
-    expect_true(sum(case_data3$cases$missed) == 1)
+    expect_equal(sum(case_data3$cases$missed), 1)
     
     
     case_data4 <- outbreak_step(case_data = case_data,

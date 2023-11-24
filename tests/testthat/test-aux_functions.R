@@ -27,7 +27,7 @@ test_that("dist_setup parameters behave as expected", {
   r1 <- f1(1e5)
   r2 <- f2(1e5)
   
-  expect_true(mean(r1) < mean(r2))
+  expect_lt(mean(r1), mean(r2))
   
   expect_true(inherits(f1, 'purrr_function_partial'))
   expect_true(is.numeric(r1))
@@ -35,11 +35,11 @@ test_that("dist_setup parameters behave as expected", {
   
   f3 <- dist_setup(0.01, 10)
   r3 <- f3(1e5)
-  expect_true(mean(r3) > median(r3))  
+  expect_gt(mean(r3), median(r3))
   
   f4 <- dist_setup(50, 10)
   r4 <- f4(1e5)
-  expect_true(mean(r4) < median(r4))  
+  expect_lt(mean(r4), median(r4))
   
   
 })
@@ -74,16 +74,16 @@ test_that("inf_fn parameters behave as expected", {
   #   pnorm(4.7, 1e6, 2) < 1e-200
   # So this test should almost certainly pass if code is correct.
   r3 <- inf_fn(c(1, 1e6), 0)
-  expect_true(r3[1] < r3[2])
+  expect_lt(r3[1], r3[2])
 
   # Test the alpha parameter. 
   # positive is right skew so mean is greater than median.
   r4 <- inf_fn(rep(100, 1e6), 10)
-  expect_true(mean(r4) > median(r4))
+  expect_gt(mean(r4), median(r4))
 
   # negative is left skew so mean is less than median.    
   r5 <- inf_fn(rep(100, 1e6), 0.01)
-  expect_true(mean(r5) < median(r5))
+  expect_lt(mean(r5), median(r5))
   
 })
 
