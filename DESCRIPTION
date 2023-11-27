@@ -1,6 +1,6 @@
 Package: ringbp
 Type: Package
-Title: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts
+Title: Simulate and evaluate contact tracing scenarios
 Version: 0.1.1
 Authors@R: c(
     person(given = "Joel Hellewell",
@@ -21,7 +21,7 @@ Authors@R: c(
            email = "sebastian.funk@lshtm.ac.uk",
            role = c("rev"))
            )
-Description: Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts.
+Description: A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
