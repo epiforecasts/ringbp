@@ -6,3 +6,4 @@
 ^inst$
 ^\.travis\.yml$
 .github
+README.Rmd
