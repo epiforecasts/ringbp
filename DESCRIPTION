@@ -37,7 +37,6 @@ Imports:
     furrr,
     purrr,
     ggplot2,
-    patchwork,
     sn,
     tibble,
     ggrepel,
