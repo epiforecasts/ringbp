@@ -26,31 +26,35 @@ scenario_sim(
 \arguments{
 \item{n.sim}{number of simulations to run}
 
-\item{prop.ascertain}{Probability that cases are ascertained by contact tracing}
+\item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
-\item{cap_max_days}{Maximum number of days to run process for}
+\item{cap_max_days}{Stop the simulation when this many days is reached.}
 
-\item{cap_cases}{Maximum number of cases to run process for}
+\item{cap_cases}{Stop the simulation when this many cases is reached.}
 
-\item{r0isolated}{basic reproduction number for isolated cases}
+\item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
 
-\item{r0community}{basic reproduction number for non-isolated cases}
+\item{r0community}{numeric reproduction number for non-isolated cases (must be >0)}
 
-\item{disp.iso}{dispersion parameter for negative binomial distribution for isolated cases}
+\item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
-\item{disp.com}{dispersion parameter for negative binomial distribution for non-isolated cases}
+\item{disp.com}{numeric dispersion parameter for non-isolated cases (must be >0)}
 
 \item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
 
-\item{delay_shape}{shape of distribution for delay between symptom onset and isolation}
+\item{delay_shape}{numeric shape parameter of delay distribution}
 
-\item{delay_scale}{scale of distribution for delay between symptom onset and isolation}
+\item{delay_scale}{numeric scale parameter of delay distribution}
 
-\item{num.initial.cases}{Initial number of cases in each initial cluster}
+\item{num.initial.cases}{The number of initial or starting cases which are all assumed to be missed.}
 
 \item{prop.asym}{proportion of cases that are completely asymptomatic.}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+
+\item{r0subclin}{numeric reproduction number for sub-clinical non-isolated cases (must be >0)}
+
+\item{disp.subclin}{numeric dispersion parameter for sub-clincial non-isolated cases (must be >0)}
 }
 \value{
 A data.table object returning the results for multiple simulations using
