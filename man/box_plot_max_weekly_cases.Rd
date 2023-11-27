@@ -61,7 +61,8 @@ scenarios <- tidyr::expand_grid(
   index_R0 = c(3.5, 2),
   prop.asym = c(0.1),
   control_effectiveness = seq(0.2),
-  num.initial.cases = c(5)) \%>\%
+  num.initial.cases = c(5),
+  quarantine = c(FALSE)) \%>\%
   tidyr::unnest("k_group") \%>\%
   tidyr::unnest("delay_group") \%>\%
   dplyr::mutate(scenario = 1:dplyr::n())
@@ -72,8 +73,7 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                   cap_cases = 100,
                                   r0isolated = 0,
                                   disp.iso = 1,
-                                  disp.com = 0.16,
-                                  quarantine = FALSE)
+                                  disp.com = 0.16)
 
 ## Run paramter sweep
 sweep_results <- ringbp::parameter_sweep(scenarios,
