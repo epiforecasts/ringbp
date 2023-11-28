@@ -71,7 +71,7 @@ ggplot(
   theme_bw()
 ```
 
-<img src="/home/runner/work/ringbp/ringbp/README_files/figure-gfm/plot-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" width="100%" />
 
 ### Estimate extinction probability
 
