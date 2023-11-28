@@ -38,7 +38,7 @@ pak::pak("{{ gh_repo }}")
 The main functionality of the package is in the `scenario_sim()` function.
 Here is an example for running 10 simulations of a given scenario:
 
-```r
+```{r}
 library("ringbp")
 library("ggplot2")
 
