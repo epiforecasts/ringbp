@@ -1,95 +1,68 @@
-# Feasibility of controlling 2019-nCoV outbreaks by isolation of cases and contacts
 
-```diff
-- This repository is under active development and is subject to change as the analysis evolves
+# *ringbp*: Simulate infectious disease transmission with contact tracing
+
+<!-- badges: start -->
+
+![GitHub R package version](https://img.shields.io/github/r-package/v/)
+[![R-CMD-check](https://github.com//actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com//actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh//branch/main/graph/badge.svg)](https://app.codecov.io/gh/?branch=main)
+![GitHub contributors](https://img.shields.io/github/contributors/)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+<!-- badges: end -->
+
+*ringbp* is an R package that provides methods to simulate infectious
+disease transmission in the presence of contact tracing. It was
+initially developed to support a paper written in early 2020 to assess
+the [feasibility of controlling
+COVID-19](https://github.com/cmmid/ringbp.ncov). For more details on the
+methods implemented here, see the associated
+[paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
+
+## Installation
+
+The current development version of *ringbp* can be installed from
+[GitHub](https://github.com/) using the `pak` package.
+
+``` r
+if(!require("pak")) install.packages("pak")
+pak::pak("")
 ```
 
-## Abstract
+## Quick start
 
+The main functionality of the package is in the `scenario_sim()`
+function. Here is an example for running 10 simulations of a given
+scenario:
 
-**Background:** To assess the viability of isolation and contact tracing to control onwards transmission from imported cases of 2019-nCoV.
+``` r
+library("ringbp")
+library("ggplot2")
 
-**Methods:** We developed a stochastic transmission model, parameterised to the 2019-nCoV outbreak. We used the model to quantify the potential effectiveness of contact tracing and isolation of cases at controlling a 2019 nCoV-like pathogen. We considered scenarios that varied in: the number of initial cases; the basic reproduction number R0; the delay from symptom onset to isolation; the probability contacts were traced; the proportion of transmission that occurred before symptom onset, and the proportion of subclinical infections. We assumed isolation prevented all further transmission in the model. Outbreaks were deemed controlled if transmission ended within 12 weeks or before 5000 cases in total. We measured the success of controlling outbreaks using isolation and contact tracing, and quantified the weekly maximum number of cases traced to measure feasibility of public health effort. 
-
-**Findings:** While simulated outbreaks starting with only 5 initial cases, R0 of 1.5 and little transmission before symptom onset could be controlled even with low contact tracing probability, the prospects of controlling an outbreak dramatically dropped with the number of initial cases, with higher R0, and with more transmission before symptom onset. Across different initial numbers of cases, the majority of scenarios with an R0 of 1.5 were controllable with under 50% of contacts successfully traced. For R0 of 2.5 and 3.5, more than 70% and 90% of contacts respectively had to be traced to control the majority of outbreaks. The delay between symptom onset and isolation played the largest role in determining whether an outbreak was controllable for lower values of R0. For higher values of R0 and a large initial number of cases, contact tracing and isolation was only potentially feasible when less than 1% of transmission occurred before symptom onset.
-
-**Interpretation:** We found that in most scenarios contact tracing and case isolation alone is unlikely to control a new outbreak of 2019-nCov within three months. The probability of control decreases with longer delays from symptom onset to isolation, fewer cases ascertained by contact tracing, and increasing transmission before symptoms. This model can be modified to reflect updated transmission characteristics and more specific definitions of outbreak control to assess the potential success of local response efforts.
-
-## Usage
-
-### Set up
-
-Set your working directory to the home directory of this project (or use the provided Rstudio project). Install the analysis and all dependencies with: 
-
-```r
-remotes::install_github("epiforecasts/ringbp", dependencies = TRUE)
-```
-
-### Run a single scenario
-
-Run a single scenario for a 100 simulations.
-
-```r
-library(ringbp)
-library(ggplot2)
-
-res <- ringbp::scenario_sim(n.sim = 10, num.initial.cases = 1,prop.asym=0,
-                     prop.ascertain = 0.2, cap_cases = 4500, cap_max_days = 350,
-                     r0isolated = 0, r0community = 2.5, disp.com = 0.16, disp.iso = 1, delay_shape = 1.651524,
-                     delay_scale = 4.287786,k = 0, quarantine = FALSE)
+res <- scenario_sim(
+  n.sim = 10, ## 10 simulations
+  num.initial.cases = 1, ## one initial case in each of the simulations
+  prop.asym = 0, ## no asymptomatic infections
+  prop.ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
+  cap_cases = 4500, ## don't simulate beyond 4500 infections
+  cap_max_days = 350, ## don't simulate beyond 350 days
+  r0isolated = 0, ## isolated individuals have R0 of 0
+  r0community = 2.5, ## non-isolated individuals have R0 of 2.5
+  disp.com = 0.16, ## dispersion parameter in the community
+  disp.iso = 1, ## dispersion  parameter of those isolated
+  delay_shape = 1.651524, ## shape parameter of time from onset to isolation
+  delay_scale = 4.287786, ## scale parameter of time from onset to isolation
+  k = 0, ## skew of generation interval to be beyond onset of symptoms
+  quarantine = FALSE ## whether quarantine is in effect
+)
 
 # Plot of weekly cases
-ggplot2::ggplot(data=res, ggplot2::aes(x=week, y=cumulative, col = as.factor(sim))) +
-  ggplot2::geom_line(show.legend = FALSE, alpha=0.3) +
-  ggplot2::scale_y_continuous(name="Number of cases") + 
-  ggplot2::theme_bw()
+ggplot(data=res, ggplot2::aes(x = week, y = cumulative, col = as.factor(sim))) +
+  geom_line(show.legend = FALSE, alpha = 0.3) +
+  scale_y_continuous(name = "Number of cases") + 
+  theme_bw()
 
-ringbp::extinct_prob(res,cap_cases = 4500)
+## estimate extinction probability
+extinct_prob(res, cap_cases = 4500)
 ```
-
-### Run the full analysis
-
-Run the analysis with the following:
-
-```bash
-Rscript inst/scripts/generate_results.R
-```
-
-### Generate figures
-
-Render figures with the following:
-
-```bash
-Rscript inst/scripts/generate_figures.R
-```
-
-## Docker 
-
-This analysis was developed in a docker container based on the tidyverse docker image. 
-
-To build the docker image run (from the `ringbp` directory):
-
-```bash
-docker build . -t ringbp
-```
-
-To run the docker image run:
-
-```bash
-docker run -d -p 8787:8787 --name ringbp -e USER=ringbp -e PASSWORD=ringbp ringbp
-```
-
-The rstudio client can be found on port :8787 at your local machines ip. The default username:password is ringbp:ringbp, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.
-
-To mount a folder (from your current working directory - here assumed to be `tmp`) in the docker container to your local system use the following in the above docker run command (as given mounts the whole `ringbp` directory to `tmp`).
-
-```{bash, eval = FALSE}
---mount type=bind,source=$(pwd)/tmp,target=/home/ringbp
-```
-
-To access the command line run the following:
-
-```{bash, eval = FALSE}
-docker exec -ti ringbp bash
-```
-
