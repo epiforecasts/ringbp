@@ -58,13 +58,21 @@ res <- scenario_sim(
   k = 0, ## skew of generation interval to be beyond onset of symptoms
   quarantine = FALSE ## whether quarantine is in effect
 )
+```
 
-# Plot of weekly cases
-ggplot(data=res, ggplot2::aes(x = week, y = cumulative, col = as.factor(sim))) +
+### Plot of weekly cases
+
+```{r}
+ggplot(
+  data = res, ggplot2::aes(x = week, y = cumulative, col = as.factor(sim))
+) +
   geom_line(show.legend = FALSE, alpha = 0.3) +
-  scale_y_continuous(name = "Number of cases") + 
+  scale_y_continuous(name = "Number of cases") +
   theme_bw()
+```
 
-## estimate extinction probability
+### Estimate extinction probability
+
+```{r}
 extinct_prob(res, cap_cases = 4500)
 ```
