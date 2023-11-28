@@ -39,7 +39,7 @@ pak::pak("{{ gh_repo }}")
 The main functionality of the package is in the `scenario_sim()` function.
 Here is an example for running 10 simulations of a given scenario:
 
-```{r}
+```{r scenario_sim}
 library("ringbp")
 library("ggplot2")
 
@@ -63,7 +63,7 @@ res <- scenario_sim(
 
 ### Plot of weekly cases
 
-```{r}
+```{r plot}
 ggplot(
   data = res, aes(x = week, y = cumulative, col = as.factor(sim))
 ) +
@@ -74,6 +74,6 @@ ggplot(
 
 ### Estimate extinction probability
 
-```{r}
+```{r extinct_prob}
 extinct_prob(res, cap_cases = 4500)
 ```
