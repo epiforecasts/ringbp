@@ -1,10 +1,8 @@
-# ringbp 0.1.9999
-
-* Added testing and checking infrastructure using github actions.
-
 # ringbp 0.1.1
 
 * Added unit tests. By @timcdlucas in #43 and reviewed by @sbfnk.
+
+* Added testing and checking infrastructure using github actions.
 
 # ringbp 0.1.0
 
