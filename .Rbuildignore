@@ -4,6 +4,6 @@
 ^data-raw$
 ^LICENSE\.md$
 ^inst$
-^\.travis\.yml$
-.github
+codecov.yml
+\.github
 README.Rmd
