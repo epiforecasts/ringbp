@@ -3,11 +3,13 @@
 
 <!-- badges: start -->
 
-![GitHub R package version](https://img.shields.io/github/r-package/v/)
-[![R-CMD-check](https://github.com//actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com//actions/workflows/R-CMD-check.yaml)
+![GitHub R package
+version](https://img.shields.io/github/r-package/v/epiforecasts/ringbp)
+[![R-CMD-check](https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh//branch/main/graph/badge.svg)](https://app.codecov.io/gh/?branch=main)
-![GitHub contributors](https://img.shields.io/github/contributors/)
+coverage](https://codecov.io/gh/epiforecasts/ringbp/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/ringbp?branch=main)
+![GitHub
+contributors](https://img.shields.io/github/contributors/epiforecasts/ringbp)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
@@ -27,7 +29,7 @@ The current development version of *ringbp* can be installed from
 
 ``` r
 if(!require("pak")) install.packages("pak")
-pak::pak("")
+pak::pak("epiforecasts/ringbp")
 ```
 
 ## Quick start
@@ -47,7 +49,7 @@ res <- scenario_sim(
   prop.ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
   cap_cases = 4500, ## don't simulate beyond 4500 infections
   cap_max_days = 350, ## don't simulate beyond 350 days
-  r0isolated = 0, ## isolated individuals have R0 of 0
+  r0isolated = 0.5, ## isolated individuals have R0 of 0.5
   r0community = 2.5, ## non-isolated individuals have R0 of 2.5
   disp.com = 0.16, ## dispersion parameter in the community
   disp.iso = 1, ## dispersion  parameter of those isolated
@@ -56,13 +58,24 @@ res <- scenario_sim(
   k = 0, ## skew of generation interval to be beyond onset of symptoms
   quarantine = FALSE ## whether quarantine is in effect
 )
+```
 
-# Plot of weekly cases
-ggplot(data=res, ggplot2::aes(x = week, y = cumulative, col = as.factor(sim))) +
+### Plot of weekly cases
+
+``` r
+ggplot(
+  data = res, aes(x = week, y = cumulative, col = as.factor(sim))
+) +
   geom_line(show.legend = FALSE, alpha = 0.3) +
-  scale_y_continuous(name = "Number of cases") + 
+  scale_y_continuous(name = "Cumulative number of cases") +
   theme_bw()
+```
 
-## estimate extinction probability
+<img src="/home/runner/work/ringbp/ringbp/README_files/figure-gfm/plot-1.png" width="100%" />
+
+### Estimate extinction probability
+
+``` r
 extinct_prob(res, cap_cases = 4500)
+#> [1] 0.7
 ```
