@@ -26,8 +26,6 @@ name: render-readme
 on:
   workflow_dispatch:
   push:
-    tags-ignore:
-      - '*'
     paths:
       - 'README.Rmd'
       - '.github/workflows/render_readme.yml'
