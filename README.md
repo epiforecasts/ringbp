@@ -18,7 +18,7 @@ MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/
 disease transmission in the presence of contact tracing. It was
 initially developed to support a paper written in early 2020 to assess
 the [feasibility of controlling
-COVID-19](https://github.com/cmmid/ringbp.ncov). For more details on the
+COVID-19](https://github.com/cmmid/ringbp). For more details on the
 methods implemented here, see the associated
 [paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
 
