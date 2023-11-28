@@ -71,7 +71,7 @@
 <p>The current development version of <em>ringbp</em> can be installed from <a href="https://github.com/" class="external-link">GitHub</a> using the <code>pak</code> package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://pak.r-lib.org/" class="external-link">"pak"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"epiforecasts/ringbp"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -88,7 +88,7 @@
 <span>  prop.ascertain <span class="op">=</span> <span class="fl">0.2</span>, <span class="co">## 20% probability of ascertainment by contact tracing</span></span>
 <span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>, <span class="co">## don't simulate beyond 4500 infections</span></span>
 <span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>, <span class="co">## don't simulate beyond 350 days</span></span>
-<span>  r0isolated <span class="op">=</span> <span class="fl">0</span>, <span class="co">## isolated individuals have R0 of 0</span></span>
+<span>  r0isolated <span class="op">=</span> <span class="fl">0.5</span>, <span class="co">## isolated individuals have R0 of 0.5</span></span>
 <span>  r0community <span class="op">=</span> <span class="fl">2.5</span>, <span class="co">## non-isolated individuals have R0 of 2.5</span></span>
 <span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>, <span class="co">## dispersion parameter in the community</span></span>
 <span>  disp.iso <span class="op">=</span> <span class="fl">1</span>, <span class="co">## dispersion  parameter of those isolated</span></span>
@@ -96,16 +96,26 @@
 <span>  delay_scale <span class="op">=</span> <span class="fl">4.287786</span>, <span class="co">## scale parameter of time from onset to isolation</span></span>
 <span>  k <span class="op">=</span> <span class="fl">0</span>, <span class="co">## skew of generation interval to be beyond onset of symptoms</span></span>
 <span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span> <span class="co">## whether quarantine is in effect</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Plot of weekly cases</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">res</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">cumulative</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="plot-of-weekly-cases">Plot of weekly cases<a class="anchor" aria-label="anchor" href="#plot-of-weekly-cases"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">cumulative</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Number of cases"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## estimate extinction probability</span></span>
-<span><span class="fu"><a href="reference/extinct_prob.html">extinct_prob</a></span><span class="op">(</span><span class="va">res</span>, cap_cases <span class="op">=</span> <span class="fl">4500</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Cumulative number of cases"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="/home/runner/work/ringbp/ringbp/README_files/figure-gfm/plot-1.png" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="estimate-extinction-probability">Estimate extinction probability<a class="anchor" aria-label="anchor" href="#estimate-extinction-probability"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/extinct_prob.html">extinct_prob</a></span><span class="op">(</span><span class="va">res</span>, cap_cases <span class="op">=</span> <span class="fl">4500</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </div>
@@ -141,8 +151,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com//actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com//actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/?branch=main" class="external-link"><img src="https://codecov.io/gh//branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/epiforecasts/ringbp?branch=main" class="external-link"><img src="https://codecov.io/gh/epiforecasts/ringbp/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a></li>
 </ul>
 </div>
