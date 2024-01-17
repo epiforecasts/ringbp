@@ -17,8 +17,3 @@ reference:
     contents:
     - detect_extinct
     - extinct_prob
-  - subtitle: Visualisation
-    contents:
-    - rename_variables_for_plotting
-    - box_plot_max_weekly_cases
-
