@@ -17,7 +17,7 @@
 #' @param prop.asym proportion of cases that are completely asymptomatic.
 #'
 #' @importFrom data.table data.table rbindlist
-#' @importFrom purrr map2 map2_dbl map_lgl rbernoulli
+#' @importFrom purrr map2 map2_dbl map_lgl
 #'
 #' @export
 #'
@@ -106,9 +106,9 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                                          rep(x, y)
                                          })),
     # draws a sample to see if this person is asymptomatic
-    asym = purrr::rbernoulli(n = total_new_cases, p = prop.asym),
+    asym = as.logical(rbinom(n = total_new_cases, 1, p = prop.asym)),
     # draws a sample to see if this person is traced
-    missed = purrr::rbernoulli(n = total_new_cases, p = 1 - prop.ascertain),
+    missed = as.logical(rbinom(n = total_new_cases, 1, p = 1 - prop.ascertain)),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE,
