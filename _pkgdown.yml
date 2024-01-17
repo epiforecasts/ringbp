@@ -1,1 +1,24 @@
 url: https://epiforecasts.io/ringbp/
+
+reference:
+  - title: Model
+    contents:
+    - starts_with("outbreak_")
+  - title: Helper functions
+  - subtitle: Probability distribution manipulation
+    contents:
+    - dist_setup
+    - inf_fn
+  - subtitle: Loop wrappers for scenario modelling
+    contents:
+    - parameter_sweep
+    - scenario_sim
+  - title: Post-processing
+    contents:
+    - detect_extinct
+    - extinct_prob
+  - subtitle: Visualisation
+    contents:
+    - rename_variables_for_plotting
+    - box_plot_max_weekly_cases
+
