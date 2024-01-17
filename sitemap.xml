@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://epiforecasts.io/ringbp/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://epiforecasts.io/ringbp/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://epiforecasts.io/ringbp/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://epiforecasts.io/ringbp/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://epiforecasts.io/ringbp/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://epiforecasts.io/ringbp/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/box_plot_max_weekly_cases.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/box_plot_max_weekly_cases.html</loc>
   </url>
   <url>
-    <loc>/reference/detect_extinct.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/detect_extinct.html</loc>
   </url>
   <url>
-    <loc>/reference/dist_setup.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/dist_setup.html</loc>
   </url>
   <url>
-    <loc>/reference/extinct_prob.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/extinct_prob.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/inf_fn.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/inf_fn.html</loc>
   </url>
   <url>
-    <loc>/reference/outbreak_model.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/outbreak_model.html</loc>
   </url>
   <url>
-    <loc>/reference/outbreak_setup.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/outbreak_setup.html</loc>
   </url>
   <url>
-    <loc>/reference/outbreak_step.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/outbreak_step.html</loc>
   </url>
   <url>
-    <loc>/reference/parameter_sweep.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/parameter_sweep.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/rename_variables_for_plotting.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/rename_variables_for_plotting.html</loc>
   </url>
   <url>
-    <loc>/reference/scenario_sim.html</loc>
+    <loc>https://epiforecasts.io/ringbp/reference/scenario_sim.html</loc>
   </url>
 </urlset>

@@ -2,5 +2,8 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2023-11-28T12:47Z
+last_built: 2024-01-17T14:51Z
+urls:
+  reference: https://epiforecasts.io/ringbp/reference
+  article: https://epiforecasts.io/ringbp/articles
 

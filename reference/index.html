@@ -28,7 +28,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/epiforecasts/ringbp/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -41,30 +47,10 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="all-functions">All functions <a href="#all-functions" class="anchor" aria-hidden="true"></a></h2>
+          <h2 id="model">Model <a href="#model" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="box_plot_max_weekly_cases.html">box_plot_max_weekly_cases()</a></code> </p>
-        </td>
-        <td><p>Create box plots of maximum weekly cases by scenario</p></td>
-      </tr><tr><td>
-          <p><code><a href="detect_extinct.html">detect_extinct()</a></code> </p>
-        </td>
-        <td><p>Calculate whether outbreaks went extinct or not</p></td>
-      </tr><tr><td>
-          <p><code><a href="dist_setup.html">dist_setup()</a></code> </p>
-        </td>
-        <td><p>Create partial function to sample from gamma distributions</p></td>
-      </tr><tr><td>
-          <p><code><a href="extinct_prob.html">extinct_prob()</a></code> </p>
-        </td>
-        <td><p>Calculate proportion of runs that have controlled outbreak</p></td>
-      </tr><tr><td>
-          <p><code><a href="inf_fn.html">inf_fn()</a></code> </p>
-        </td>
-        <td><p>Samples the serial interval for given incubation period samples</p></td>
-      </tr><tr><td>
           <p><code><a href="outbreak_model.html">outbreak_model()</a></code> </p>
         </td>
         <td><p>Run a single instance of the branching process model</p></td>
@@ -76,18 +62,58 @@
           <p><code><a href="outbreak_step.html">outbreak_step()</a></code> </p>
         </td>
         <td><p>Move forward one generation in the branching process</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="helper-functions">Helper functions <a href="#helper-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h3 id="probability-distribution-manipulation">Probability distribution manipulation <a href="#probability-distribution-manipulation" class="anchor" aria-hidden="true"></a></h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="dist_setup.html">dist_setup()</a></code> </p>
+        </td>
+        <td><p>Create partial function to sample from gamma distributions</p></td>
       </tr><tr><td>
+          <p><code><a href="inf_fn.html">inf_fn()</a></code> </p>
+        </td>
+        <td><p>Samples the serial interval for given incubation period samples</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h3 id="loop-wrappers-for-scenario-modelling">Loop wrappers for scenario modelling <a href="#loop-wrappers-for-scenario-modelling" class="anchor" aria-hidden="true"></a></h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="parameter_sweep.html">parameter_sweep()</a></code> </p>
         </td>
         <td><p>Sweep across parameters</p></td>
       </tr><tr><td>
+          <p><code><a href="scenario_sim.html">scenario_sim()</a></code> </p>
+        </td>
+        <td><p>Run a specified number of simulations with identical parameters</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="post-processing">Post-processing <a href="#post-processing" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="detect_extinct.html">detect_extinct()</a></code> </p>
+        </td>
+        <td><p>Calculate whether outbreaks went extinct or not</p></td>
+      </tr><tr><td>
+          <p><code><a href="extinct_prob.html">extinct_prob()</a></code> </p>
+        </td>
+        <td><p>Calculate proportion of runs that have controlled outbreak</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h3 id="visualisation">Visualisation <a href="#visualisation" class="anchor" aria-hidden="true"></a></h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="rename_variables_for_plotting.html">rename_variables_for_plotting()</a></code> </p>
         </td>
         <td><p>Rename variables for plotting</p></td>
       </tr><tr><td>
-          <p><code><a href="scenario_sim.html">scenario_sim()</a></code> </p>
+          <p><code><a href="box_plot_max_weekly_cases.html">box_plot_max_weekly_cases()</a></code> </p>
         </td>
-        <td><p>Run a specified number of simulations with identical parameters</p></td>
+        <td><p>Create box plots of maximum weekly cases by scenario</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
