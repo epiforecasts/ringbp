@@ -44,5 +44,5 @@ Imports:
 Suggests:
     future,
     testthat
-URL: https://github.com/epiforecasts/ringbp
+URL: https://epiforecasts.io/ringbp, https://github.com/epiforecasts/ringbp
 BugReports: https://github.com/epiforecasts/ringbp/issues
