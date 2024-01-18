@@ -256,10 +256,9 @@ test_that('detect_extinct works', {
 
   r2 <- detect_extinct(res2, cap_cases = cap, week_range = 1)
   # The types in the output is a bit random. So just force all to doubles.
-  r2 <- r2 %>%
-    dplyr::mutate_all(as.double)
+  r2 <- data.table(r2)[, lapply(.SD, as.double)]
 
-  expect2 <- tibble::tibble(sim = c(1.0, 2.0), extinct = c(0.0, 1.0))
+  expect2 <- data.table(sim = c(1.0, 2.0), extinct = c(0.0, 1.0))
   expect_equal(r2, expect2)
 
   # Now add a week and test week_range = 1:2
@@ -269,10 +268,9 @@ test_that('detect_extinct works', {
   res3$cumulative[1:3] <- c(1, 2, 3)
   r3 <- detect_extinct(res3, cap_cases = cap, week_range = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
-  r3 <- r3 %>%
-    dplyr::mutate_all(as.double)
+  r3 <- data.table(r3)[, lapply(.SD, as.double)]
 
-  expect3 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect3 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r3, expect3)
 
   # Simple case of no cases in week 1 or 2
@@ -281,10 +279,9 @@ test_that('detect_extinct works', {
   res4$cumulative[1:3] <- c(1, 1, 1)
   r4 <- detect_extinct(res4, cap_cases = cap, week_range = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
-  r4 <- r4 %>%
-    dplyr::mutate_all(as.double)
+  r4 <- data.table(r4)[, lapply(.SD, as.double)]
 
-  expect4 <- tibble::tibble(sim = c(1.0), extinct = c(1.0))
+  expect4 <- data.table(sim = c(1.0), extinct = c(1.0))
   expect_equal(r4, expect4)
 
   # Case of cases in week 1 but not 2 (by the definition used in this function
@@ -295,18 +292,16 @@ test_that('detect_extinct works', {
   res5$cumulative[1:3] <- c(1, 2, 2)
   r5 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
-  r5 <- r5 %>%
-    dplyr::mutate_all(as.double)
+  r5 <- data.table(r5)[, lapply(.SD, as.double)]
 
-  expect5 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect5 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r5, expect5)
   
   r5b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
   # The types in the output is a bit random. So just force all to doubles.
-  r5b <- r5b %>%
-    dplyr::mutate_all(as.double)
+  r5b <- data.table(r5b)[, lapply(.SD, as.double)]
 
-  expect5b <- tibble::tibble(sim = c(1.0), extinct = c(1.0))
+  expect5b <- data.table(sim = c(1.0), extinct = c(1.0))
   expect_equal(r5b, expect5b)
 
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
@@ -317,17 +312,15 @@ test_that('detect_extinct works', {
   res6$cumulative[1:3] <- c(1, 1, 2)
   r6 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
-  r6 <- r6 %>%
-    dplyr::mutate_all(as.double)
+  r6 <- data.table(r6)[, lapply(.SD, as.double)]
 
-  expect6 <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect6 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6, expect5)
 
   r6b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
 
-  r6b <- r6b %>%
-    dplyr::mutate_all(as.double)
+  r6b <- data.table(r6b)[, lapply(.SD, as.double)]
 
-  expect6b <- tibble::tibble(sim = c(1.0), extinct = c(0.0))
+  expect6b <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6b, expect5b)
 })
