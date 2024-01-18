@@ -57,12 +57,7 @@ outside of the function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameter_sweep</span><span class="op">(</span></span>
-<span>  scenarios <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  samples <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  sim_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  show_progress <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameter_sweep</span><span class="op">(</span>scenarios <span class="op">=</span> <span class="cn">NULL</span>, samples <span class="op">=</span> <span class="fl">1</span>, sim_fn <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -80,10 +75,6 @@ Defaults to NULL.</p></dd>
 <dd><p>Function, defaults to NULL. The vectorised model simulation function - see the examples
 for usage.</p></dd>
 
-
-<dt>show_progress</dt>
-<dd><p>Logical, defaults to <code>TRUE</code>. Show the progress of the parameter sweep.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -92,67 +83,10 @@ for usage.</p></dd>
 <p>A nested tibble containing the parameters for each scenario and a nested list of output
 from <code>wuhan_sim</code>.</p>
     </div>
-    <div id="author">
-    <h2>Author</h2>
-    <p>Sam Abbott</p>
-    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/ringbp">ringbp</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span><span class="co">## Put parameters that are grouped by disease into this data.frame</span></span></span>
-<span class="r-in"><span>delay_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span> delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SARS"</span>,<span class="st">"Wuhan"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> delay_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.651524</span>,<span class="fl">2.305172</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> delay_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.287786</span>,<span class="fl">9.483875</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>k_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span> theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;1%"</span>,<span class="st">"15%"</span>,<span class="st">"30%"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0.88</span>,<span class="fl">0.47</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>index_R0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>,<span class="fl">2.5</span>,<span class="fl">3.5</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>subclin_R0 <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>control_effectiveness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>num.initial.clusters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">20</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="st">"k_group"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="st">"delay_group"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Parameterise fixed paramters</span></span></span>
-<span class="r-in"><span><span class="va">sim_with_params</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/partial.html" class="external-link">partial</a></span><span class="op">(</span><span class="fu">ringbp</span><span class="fu">::</span><span class="va"><a href="scenario_sim.html">scenario_sim</a></span>,</span></span>
-<span class="r-in"><span>                                 num.initial.cases<span class="op">=</span><span class="fl">1</span>,</span></span>
-<span class="r-in"><span>                                 cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
-<span class="r-in"><span>                                 cap_cases <span class="op">=</span> <span class="fl">5000</span>,</span></span>
-<span class="r-in"><span>                                 r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                                 disp.iso<span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>                                 disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>                                 disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>                                 mu_ip <span class="op">=</span> <span class="fl">5.8</span>, <span class="co"># incubation period mean</span></span></span>
-<span class="r-in"><span>                                 sd_ip <span class="op">=</span> <span class="fl">2.6</span>, <span class="co"># incubation period sd</span></span></span>
-<span class="r-in"><span>                                 mu_si <span class="op">=</span> <span class="fl">7.5</span>, <span class="co"># serial interval mean</span></span></span>
-<span class="r-in"><span>                                 sd_si <span class="op">=</span> <span class="fl">3.4</span><span class="op">)</span> <span class="co"># serial interval sd</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Default is to run sequntially on a single core</span></span></span>
-<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">"sequential"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">## Set up multicore if using see ?future::plan for details</span></span></span>
-<span class="r-in"><span><span class="co">## Use the workers argument to control the number of cores used.</span></span></span>
-<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">"multiprocess"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Run paramter sweep</span></span></span>
-<span class="r-in"><span><span class="va">sweep_results</span> <span class="op">&lt;-</span> <span class="fu">ringbp</span><span class="fu">::</span><span class="fu">parameter_sweep</span><span class="op">(</span><span class="va">scenarios</span>, sim_fn <span class="op">=</span> <span class="va">sim_with_params</span>, samples <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">sweep_results</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-</code></pre></div>
+    
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -19,9 +19,6 @@
     <loc>https://epiforecasts.io/ringbp/news/index.html</loc>
   </url>
   <url>
-    <loc>https://epiforecasts.io/ringbp/reference/box_plot_max_weekly_cases.html</loc>
-  </url>
-  <url>
     <loc>https://epiforecasts.io/ringbp/reference/detect_extinct.html</loc>
   </url>
   <url>
@@ -47,12 +44,6 @@
   </url>
   <url>
     <loc>https://epiforecasts.io/ringbp/reference/parameter_sweep.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/rename_variables_for_plotting.html</loc>
   </url>
   <url>
     <loc>https://epiforecasts.io/ringbp/reference/scenario_sim.html</loc>
