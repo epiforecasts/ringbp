@@ -4,12 +4,7 @@
 \alias{parameter_sweep}
 \title{Sweep across parameters}
 \usage{
-parameter_sweep(
-  scenarios = NULL,
-  samples = 1,
-  sim_fn = NULL,
-  show_progress = TRUE
-)
+parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL)
 }
 \arguments{
 \item{scenarios}{A dataframe containing all gridded  scenarios - see the examples for the required structure.
@@ -19,8 +14,6 @@ Defaults to NULL.}
 
 \item{sim_fn}{Function, defaults to NULL. The vectorised model simulation function - see the examples
 for usage.}
-
-\item{show_progress}{Logical, defaults to \code{TRUE}. Show the progress of the parameter sweep.}
 }
 \value{
 A nested tibble containing the parameters for each scenario and a nested list of output
@@ -35,41 +28,43 @@ outside of the function.
 
 
 \dontrun{
-library(ringbp)
-library(tibble)
+library(data.table)
 
-scenarios <- tidyr::expand_grid(
-## Put parameters that are grouped by disease into this data.frame
-delay_group = list(tibble::tibble(
+scenarios <- data.table(expand.grid(
+delay_group = list(data.table(
  delay = c("SARS","Wuhan"),
  delay_shape = c(1.651524,2.305172),
  delay_scale = c(4.287786,9.483875)
 )),
-k_group = list(tibble::tibble(
+k_group = list(data.table(
  theta = c("<1\%","15\%","30\%"),
  k = c(1,0.88,0.47)
 )),
 index_R0 = c(1.5,2.5,3.5),
-subclin_R0 = 0,
+prop.asym = c(0,  0.1),
 control_effectiveness = seq(0,1,0.2),
-num.initial.clusters = c(5,20,40)) \%>\%
- tidyr::unnest("k_group") \%>\%
- tidyr::unnest("delay_group") \%>\%
- dplyr::mutate(scenario = 1:dplyr::n())
+num.initial.cases = c(5,20,40))
+
+list_cols <- grep("_group", colnames(scenarios), value = TRUE)
+non_list_cols <- setdiff(colnames(scenarios), list_cols)
+
+expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
+expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
+
+scenarios <- merge(
+  expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
+)
+scenarios[, scenario :=  1:.N]
 
 ## Parameterise fixed paramters
 sim_with_params <- purrr::partial(ringbp::scenario_sim,
-                                 num.initial.cases=1,
                                  cap_max_days = 365,
                                  cap_cases = 5000,
                                  r0isolated = 0,
                                  disp.iso= 1,
                                  disp.subclin = 0.16,
                                  disp.com = 0.16,
-                                 mu_ip = 5.8, # incubation period mean
-                                 sd_ip = 2.6, # incubation period sd
-                                 mu_si = 7.5, # serial interval mean
-                                 sd_si = 3.4) # serial interval sd
+                                 quarantine = FALSE)
 
 
 ## Default is to run sequntially on a single core
@@ -85,7 +80,4 @@ sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, sa
 
 sweep_results
 }
-}
-\author{
-Sam Abbott
 }

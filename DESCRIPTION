@@ -30,17 +30,10 @@ RoxygenNote: 7.2.3
 Depends:
     R (>= 3.5.0)
 Imports: 
-    magrittr,
-    dplyr,
     data.table,
-    tidyr,
-    furrr,
+    future.apply,
     purrr,
-    ggplot2,
-    sn,
-    tibble,
-    ggrepel,
-    cowplot
+    sn
 Suggests:
     future,
     testthat

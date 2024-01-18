@@ -9,56 +9,55 @@
 #' @param samples Numeric, defaults to 1. The number of samples to take.
 #' @param sim_fn Function, defaults to NULL. The vectorised model simulation function - see the examples
 #' for usage.
-#' @param show_progress Logical, defaults to `TRUE`. Show the progress of the parameter sweep.
-#' @author Sam Abbott
 #'
 #' @return A nested tibble containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
 #' @export
-#' @importFrom dplyr group_by mutate ungroup sample_frac
-#' @importFrom tibble has_name
-#' @importFrom tidyr nest unnest
-#' @importFrom furrr future_map future_options
+#' @importFrom future.apply future_lapply
 #' @importFrom purrr safely
+#' @importFrom data.table .SD
 #' @examples
 #'
 #'
 #'\dontrun{
-#' library(ringbp)
-#' library(tibble)
+#' library(data.table)
 #'
-#' scenarios <- tidyr::expand_grid(
-#' ## Put parameters that are grouped by disease into this data.frame
-#' delay_group = list(tibble::tibble(
+## Put parameters that are grouped by disease into this data.frame
+#' scenarios <- data.table(expand.grid(
+#' delay_group = list(data.table(
 #'  delay = c("SARS","Wuhan"),
 #'  delay_shape = c(1.651524,2.305172),
 #'  delay_scale = c(4.287786,9.483875)
 #' )),
-#' k_group = list(tibble::tibble(
+#' k_group = list(data.table(
 #'  theta = c("<1%","15%","30%"),
 #'  k = c(1,0.88,0.47)
 #' )),
 #' index_R0 = c(1.5,2.5,3.5),
-#' subclin_R0 = 0,
+#' prop.asym = c(0,  0.1),
 #' control_effectiveness = seq(0,1,0.2),
-#' num.initial.clusters = c(5,20,40)) %>%
-#'  tidyr::unnest("k_group") %>%
-#'  tidyr::unnest("delay_group") %>%
-#'  dplyr::mutate(scenario = 1:dplyr::n())
+#' num.initial.cases = c(5,20,40))
+#'
+#' list_cols <- grep("_group", colnames(scenarios), value = TRUE)
+#' non_list_cols <- setdiff(colnames(scenarios), list_cols)
+#'
+#' expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
+#' expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
+#'
+#' scenarios <- merge(
+#'   expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
+#' )
+#' scenarios[, scenario :=  1:.N]
 #'
 #' ## Parameterise fixed paramters
 #' sim_with_params <- purrr::partial(ringbp::scenario_sim,
-#'                                  num.initial.cases=1,
 #'                                  cap_max_days = 365,
 #'                                  cap_cases = 5000,
 #'                                  r0isolated = 0,
 #'                                  disp.iso= 1,
 #'                                  disp.subclin = 0.16,
 #'                                  disp.com = 0.16,
-#'                                  mu_ip = 5.8, # incubation period mean
-#'                                  sd_ip = 2.6, # incubation period sd
-#'                                  mu_si = 7.5, # serial interval mean
-#'                                  sd_si = 3.4) # serial interval sd
+#'                                  quarantine = FALSE)
 #'
 #'
 #' ## Default is to run sequntially on a single core
@@ -75,33 +74,33 @@
 #' sweep_results
 #' }
 parameter_sweep <- function(scenarios = NULL, samples = 1,
-                            sim_fn = NULL, show_progress = TRUE) {
+                            sim_fn = NULL) {
 
   safe_sim_fn <- purrr::safely(sim_fn)
 
-  scenario_sims <- scenarios %>%
-    dplyr::group_by(scenario) %>%
-    tidyr::nest() %>%
-    dplyr::ungroup() %>%
-    ##Randomise the order of scenarios - helps share the load across cores
-    dplyr::sample_frac(size = 1, replace = FALSE) %>%
-    dplyr::mutate(sims = furrr::future_map(
-      data,
-      ~ safe_sim_fn(n.sim = samples,
-               num.initial.cases = .$num.initial.cases,
-               r0community = .$index_R0,
-               r0subclin = ifelse(tibble::has_name(scenarios, "subclin_R0"), .$subclin_R0, .$index_R0),
-               k = .$k,
-               delay_shape = .$delay_shape,
-               delay_scale = .$delay_scale,
-               prop.ascertain = .$control_effectiveness,
-               quarantine = .$quarantine,
-               prop.asym = .$prop.asym
-      )[[1]],
-      .progress = show_progress,
-      .options = furrr::furrr_options(scheduling = 20)
-    )) %>%
-    tidyr::unnest(cols = "data")
+  ## create list column
+  scenario_sims <- scenarios[, list(data = list(.SD)), by = scenario]
+  ## Randomise the order of scenarios - helps share the load across cores
+  scenario_sims <- scenario_sims[sample(.N), ]
+  ## Run simulations
+  scenario_sims[, sims := future_lapply(
+    data,
+    \(x) safe_sim_fn(
+      n.sim = samples,
+      num.initial.cases = x$num.initial.cases,
+      r0community = x$index_R0,
+      r0subclin = ifelse(
+        "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
+      k = x$k,
+      delay_shape = x$delay_shape,
+      delay_scale = x$delay_scale,
+      prop.ascertain = x$control_effectiveness,
+      quarantine = x$quarantine,
+      prop.asym = x$prop.asym
+    )[[1]],
+    future.scheduling = 20,
+    future.seed = TRUE
+  )]
 
-  return(scenario_sims)
+  return(scenario_sims[])
 }

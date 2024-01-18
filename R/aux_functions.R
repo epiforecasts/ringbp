@@ -44,12 +44,8 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 
   n_sim <- max(outbreak_df_week$sim)
 
-  out <- outbreak_df_week %>%
-    # new variable extinct = 1 if cases in weeks 10-12 all 0, 0 if not
-    detect_extinct(cap_cases, week_range) %>%
-    # number of runs where extinct = TRUE / number of runs
-    .$extinct %>%
-    sum(.) / n_sim
+  extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
+  out <-  sum(extinct_runs$extinct) / n_sim
 
   return(out)
 }
@@ -60,19 +56,15 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' @param outbreak_df_week data.table  weekly cases produced by the outbreak model
 #' @param cap_cases integer number of cumulative cases at which the branching process was terminated
 #' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
+#' @importFrom data.table as.data.table fifelse
 #'
 #' @export
-#' @importFrom dplyr group_by filter summarise ungroup
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
 
-  outbreak_df_week %>%
-    dplyr::group_by(sim) %>% # group by simulation run
-    dplyr::filter(week %in% week_range) %>%
-    dplyr::summarise(extinct =
-                       ifelse(all(weekly_cases == 0 &
-                                    cumulative < cap_cases),
-                              1, 0)) %>%
-    dplyr::ungroup()
-
+  outbreak_df_week <- as.data.table(outbreak_df_week)
+  outbreak_df_week <- outbreak_df_week[week %in% week_range]
+  outbreak_df_week[, list(
+    extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
+  ), by = sim]
 }
