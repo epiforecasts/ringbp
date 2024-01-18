@@ -1,3 +1,7 @@
+# ringbp 0.1.2
+
+* Improved package infrastructure by remove the number of dependencies, removing deprecated function calls and reducing clutter in the repo. In #70, #71, #72 and #73 by @sbfnk.
+
 # ringbp 0.1.1
 
 * Added unit tests. By @timcdlucas in #43 and reviewed by @sbfnk.
