@@ -18,6 +18,7 @@
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl
+#' @importFrom stats rbinom
 #'
 #' @export
 #'
