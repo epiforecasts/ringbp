@@ -107,9 +107,9 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                                          rep(x, y)
                                          })),
     # draws a sample to see if this person is asymptomatic
-    asym = as.logical(rbinom(n = total_new_cases, 1, p = prop.asym)),
+    asym = as.logical(rbinom(n = total_new_cases, 1, prob = prop.asym)),
     # draws a sample to see if this person is traced
-    missed = as.logical(rbinom(n = total_new_cases, 1, p = 1 - prop.ascertain)),
+    missed = as.logical(rbinom(n = total_new_cases, 1, prob = 1 - prop.ascertain)),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE,
