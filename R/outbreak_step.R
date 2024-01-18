@@ -168,12 +168,3 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
 vect_isTRUE <- function(x) {
   purrr::map_lgl(x, isTRUE)
 }
-
-#vect_max <- function(x, y) {
-#  purrr::map2_dbl(x, y, max)
-#}
-
-#vect_min <- function(x, y) {
-#  purrr::map2_dbl(x, y, min)
-#ß}
-
