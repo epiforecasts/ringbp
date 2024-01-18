@@ -19,7 +19,10 @@ Authors@R: c(
            role = c("aut")),
     person("Sebastian", "Funk",
            email = "sebastian.funk@lshtm.ac.uk",
-           role = c("rev"))
+           role = c("aut"))
+    person("Adam", "Kucharski",
+           email = "adam.kucharski@lshtm.ac.uk",
+           role = c("aut")),
            )
 Description: A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
 License: MIT + file LICENSE
