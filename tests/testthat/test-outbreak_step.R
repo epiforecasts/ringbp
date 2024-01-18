@@ -1,6 +1,6 @@
 context("Test basic usage")
 
-set.seed(20200410)
+set.seed(123456)
 
 test_that("A basic sim returns the correct object", {
   incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
