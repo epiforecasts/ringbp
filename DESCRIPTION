@@ -1,7 +1,7 @@
 Package: ringbp
 Type: Package
 Title: Simulate and evaluate contact tracing scenarios
-Version: 0.1.2
+Version: 0.1.2.9999
 Authors@R: c(
     person(given = "Joel Hellewell",
            role = c("aut", "cre"),
