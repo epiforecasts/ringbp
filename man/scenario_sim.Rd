@@ -20,7 +20,7 @@ scenario_sim(
   prop_asym,
   quarantine,
   r0subclin = r0community,
-  disp_subclin = NULL
+  disp_subclin = disp_com
 )
 }
 \arguments{
@@ -65,7 +65,9 @@ cases (\code{r0community}), this unless specified infectiousnes of subclinical
 cases will be equal to clinical cases.}
 
 \item{disp_subclin}{numeric dispersion parameter for sub-clincial
-non-isolated cases (must be >0)}
+non-isolated cases (must be >0). Default of \code{disp_subclin} is to be equal to
+clinical cases (\code{disp_com}), this unless specified dispersion for
+sub-clinical cases will be equal to non-isolated cases.}
 }
 \value{
 A data.table object returning the results for multiple simulations

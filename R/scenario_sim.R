@@ -56,14 +56,8 @@ scenario_sim <- function(n_sim,
                          prop_asym,
                          quarantine,
                          r0subclin = r0community,
-                         disp_subclin = NULL) {
+                         disp_subclin = disp_com) {
 
-
-
-
-  if (is.null(disp_subclin)) {
-    disp_subclin <- disp_com
-  }
   # Run n_sim number of model runs and put them all together in a big data.frame
   res <- purrr::map(
     .x = 1:n_sim, ~ outbreak_model(

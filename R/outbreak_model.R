@@ -18,7 +18,9 @@
 #' @param disp_com numeric dispersion parameter for non-isolated cases
 #' (must be >0)
 #' @param disp_subclin numeric dispersion parameter for sub-clincial
-#' non-isolated cases (must be >0)
+#' non-isolated cases (must be >0). Default of `disp_subclin` is to be equal to
+#' clinical cases (`disp_com`), this unless specified dispersion for
+#' sub-clinical cases will be equal to non-isolated cases.
 #' @param k numeric skew parameter for sampling the serial interval from the
 #' incubation period
 #' @param delay_shape numeric shape parameter of delay distribution
@@ -70,7 +72,7 @@ outbreak_model <- function(num_initial_cases,
                            r0subclin = r0community,
                            disp_iso,
                            disp_com,
-                           disp_subclin,
+                           disp_subclin = disp_com,
                            k,
                            delay_shape,
                            delay_scale,
