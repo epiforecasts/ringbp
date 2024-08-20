@@ -2,10 +2,14 @@
 #' @author Joel Hellewell
 #'
 #' @param num.initial.cases Integer number of initial cases
-#' @param incfn function that samples from incubation period Weibull distribution; generated using dist_setup
-#' @param delayfn function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup
-#' @param k Numeric skew parameter for sampling the serial interval from the incubation period
-#' @param prop.asym Numeric proportion of cases that are sublinical (between 0 and 1)
+#' @param incfn function that samples from incubation period Weibull
+#' distribution; generated using dist_setup
+#' @param delayfn function that samples from the onset-to-hospitalisation delay
+#' Weibull distribution; generated using dist_setup
+#' @param k Numeric skew parameter for sampling the serial interval from the
+#' incubation period
+#' @param prop.asym Numeric proportion of cases that are sublinical
+#' (between 0 and 1)
 #'
 #' @return data.table of cases in outbreak so far
 #' @export
@@ -25,15 +29,18 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)
 
-  case_data <- data.table(exposure = rep(0, num.initial.cases), # Exposure time of 0 for all initial cases
-                          asym = as.logical(rbinom(num.initial.cases, 1, prop.asym)),
-                          caseid = 1:(num.initial.cases), # set case id
-                          infector = 0,
-                          missed = TRUE,
-                          onset = inc_samples,
-                          new_cases = NA)
+  case_data <- data.table(
+    exposure = rep(0, num.initial.cases), # Exposure time of 0 for all initial cases
+    asym = as.logical(rbinom(num.initial.cases, 1, prop.asym)),
+    caseid = 1:(num.initial.cases), # set case id
+    infector = 0,
+    missed = TRUE,
+    onset = inc_samples,
+    new_cases = NA
+  )
 
-  # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
+  # set isolation time for cluster to minimum time of onset of symptoms + draw
+  # from delay distribution
   case_data <- case_data[, isolated_time := onset + delayfn(1)
                          ][, isolated := FALSE]
 

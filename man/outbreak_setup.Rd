@@ -9,13 +9,17 @@ outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 \arguments{
 \item{num.initial.cases}{Integer number of initial cases}
 
-\item{incfn}{function that samples from incubation period Weibull distribution; generated using dist_setup}
+\item{incfn}{function that samples from incubation period Weibull
+distribution; generated using dist_setup}
 
-\item{delayfn}{function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup}
+\item{delayfn}{function that samples from the onset-to-hospitalisation delay
+Weibull distribution; generated using dist_setup}
 
-\item{k}{Numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{Numeric skew parameter for sampling the serial interval from the
+incubation period}
 
-\item{prop.asym}{Numeric proportion of cases that are sublinical (between 0 and 1)}
+\item{prop.asym}{Numeric proportion of cases that are sublinical
+(between 0 and 1)}
 }
 \value{
 data.table of cases in outbreak so far
