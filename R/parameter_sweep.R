@@ -35,9 +35,9 @@
 #'  k = c(1,0.88,0.47)
 #' )),
 #' index_R0 = c(1.5,2.5,3.5),
-#' prop.asym = c(0,  0.1),
+#' prop_asym = c(0,  0.1),
 #' control_effectiveness = seq(0,1,0.2),
-#' num.initial.cases = c(5,20,40))
+#' num_initial_cases = c(5,20,40))
 #'
 #' list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 #' non_list_cols <- setdiff(colnames(scenarios), list_cols)
@@ -55,9 +55,9 @@
 #'                                  cap_max_days = 365,
 #'                                  cap_cases = 5000,
 #'                                  r0isolated = 0,
-#'                                  disp.iso= 1,
-#'                                  disp.subclin = 0.16,
-#'                                  disp.com = 0.16,
+#'                                  disp_iso= 1,
+#'                                  disp_subclin = 0.16,
+#'                                  disp_com = 0.16,
 #'                                  quarantine = FALSE)
 #'
 #'
@@ -91,17 +91,17 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
   scenario_sims[, sims := future_lapply(
     data,
     \(x) safe_sim_fn(
-      n.sim = samples,
-      num.initial.cases = x$num.initial.cases,
+      n_sim = samples,
+      num_initial_cases = x$num_initial_cases,
       r0community = x$index_R0,
       r0subclin = ifelse(
         "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
       k = x$k,
       delay_shape = x$delay_shape,
       delay_scale = x$delay_scale,
-      prop.ascertain = x$control_effectiveness,
+      prop_ascertain = x$control_effectiveness,
       quarantine = x$quarantine,
-      prop.asym = x$prop.asym
+      prop_asym = x$prop_asym
     )[[1]],
     future.scheduling = 20,
     future.seed = TRUE

@@ -1,15 +1,13 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @param num.initial.cases Integer number of initial cases
+#' @inheritParams outbreak_model
 #' @param incfn function that samples from incubation period Weibull
 #' distribution; generated using dist_setup
 #' @param delayfn function that samples from the onset-to-hospitalisation delay
 #' Weibull distribution; generated using dist_setup
 #' @param k Numeric skew parameter for sampling the serial interval from the
 #' incubation period
-#' @param prop.asym Numeric proportion of cases that are sublinical
-#' (between 0 and 1)
 #'
 #' @return data.table of cases in outbreak so far
 #' @export
@@ -23,16 +21,16 @@
 #' incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
 #' # delay distribution sampling function
 #' delayfn <- dist_setup(delay_shape, delay_scale)
-#' outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
+#' outbreak_setup(num_initial_cases = 5,incfn,delayfn,k=1.95,prop_asym=0)
 #'}
-outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
+outbreak_setup <- function(num_initial_cases, incfn, delayfn, k, prop_asym) {
   # Set up table of initial cases
-  inc_samples <- incfn(num.initial.cases)
+  inc_samples <- incfn(num_initial_cases)
 
   case_data <- data.table(
-    exposure = rep(0, num.initial.cases), # Exposure time of 0 for all initial cases
-    asym = as.logical(rbinom(num.initial.cases, 1, prop.asym)),
-    caseid = 1:(num.initial.cases), # set case id
+    exposure = rep(0, num_initial_cases), # Exposure time of 0 for all initial cases
+    asym = as.logical(rbinom(num_initial_cases, 1, prop_asym)),
+    caseid = 1:(num_initial_cases), # set case id
     infector = 0,
     missed = TRUE,
     onset = inc_samples,

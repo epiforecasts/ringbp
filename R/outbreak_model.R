@@ -1,9 +1,9 @@
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
 #'
-#' @param num.initial.cases The number of initial or starting cases which are
-#' all assumed to be missed.
-#' @param prop.ascertain numeric proportion of infectious contacts ascertained
+#' @param num_initial_cases `integer` The number of initial or starting cases
+#' which are all assumed to be missed.
+#' @param prop_ascertain numeric proportion of infectious contacts ascertained
 #' by contact tracing (must be 0<=x<=1)
 #' @param cap_max_days Stop the simulation when this many days is reached.
 #' @param cap_cases Stop the simulation when this many cases is reached.
@@ -12,16 +12,17 @@
 #' (must be >0)
 #' @param r0subclin numeric reproduction number for sub-clinical non-isolated
 #' cases (must be >0)
-#' @param disp.iso numeric dispersion parameter for isolated cases (must be >0)
-#' @param disp.com numeric dispersion parameter for non-isolated cases
+#' @param disp_iso numeric dispersion parameter for isolated cases (must be >0)
+#' @param disp_com numeric dispersion parameter for non-isolated cases
 #' (must be >0)
-#' @param disp.subclin numeric dispersion parameter for sub-clincial
+#' @param disp_subclin numeric dispersion parameter for sub-clincial
 #' non-isolated cases (must be >0)
 #' @param k numeric skew parameter for sampling the serial interval from the
 #' incubation period
 #' @param delay_shape numeric shape parameter of delay distribution
 #' @param delay_scale numeric scale parameter of delay distribution
-#' @param prop.asym proportion of cases that are completely asymptomatic.
+#' @param prop_asym `Numeric` proportion of cases that are completely
+#' asymptomatic (subclinical) (between 0 and 1).
 #' @param quarantine logical whether quarantine is in effect, if TRUE then
 #' traced contacts are isolated before symptom onset
 #'
@@ -38,40 +39,40 @@
 #' # delay distribution sampling function
 #' delayfn <- dist_setup(2, 4)
 #' # generate initial cases
-#' case_data <- outbreak_setup(num.initial.cases = 5,
+#' case_data <- outbreak_setup(num_initial_cases = 5,
 #'                             incfn=incfn,
 #'                             delayfn = delayfn,
 #'                             k=1.95,
-#'                             prop.asym=0)
+#'                             prop_asym=0)
 #' # generate next generation of cases
 #' case_data <- outbreak_step(case_data = case_data,
-#'                            disp.iso = 1,
-#'                            disp.com = 0.16,
-#'                            disp.subclin = 0.16,
+#'                            disp_iso = 1,
+#'                            disp_com = 0.16,
+#'                            disp_subclin = 0.16,
 #'                            r0isolated = 0,
 #'                            r0community = 2.5,
 #'                            r0subclin = 1.25,
-#'                            prop.asym = 0,
+#'                            prop_asym = 0,
 #'                            incfn = incfn,
 #'                            delayfn = delayfn,
-#'                            prop.ascertain = 0,
+#'                            prop_ascertain = 0,
 #'                            k = 1.95,
 #'                            quarantine = FALSE)
 #'}
-outbreak_model <- function(num.initial.cases,
-                           prop.ascertain,
+outbreak_model <- function(num_initial_cases,
+                           prop_ascertain,
                            cap_max_days,
                            cap_cases,
                            r0isolated,
                            r0community,
                            r0subclin,
-                           disp.iso,
-                           disp.com,
-                           disp.subclin,
+                           disp_iso,
+                           disp_com,
+                           disp_subclin,
                            k,
                            delay_shape,
                            delay_scale,
-                           prop.asym,
+                           prop_asym,
                            quarantine) {
 
   # Set up functions to sample from distributions
@@ -84,14 +85,14 @@ outbreak_model <- function(num.initial.cases,
                         delay_scale)
 
   # Set initial values for loop indices
-  total.cases <- num.initial.cases
+  total.cases <- num_initial_cases
   latest.onset <- 0
   extinct <- FALSE
 
   # Initial setup
-  case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
+  case_data <- outbreak_setup(num_initial_cases = num_initial_cases,
                               incfn = incfn,
-                              prop.asym = prop.asym,
+                              prop_asym = prop_asym,
                               delayfn = delayfn,
                               k = k)
 
@@ -104,18 +105,18 @@ outbreak_model <- function(num.initial.cases,
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
     out <- outbreak_step(case_data = case_data,
-                         disp.iso = disp.iso,
-                         disp.com = disp.com,
-                         disp.subclin = disp.subclin,
+                         disp_iso = disp_iso,
+                         disp_com = disp_com,
+                         disp_subclin = disp_subclin,
                          r0isolated = r0isolated,
                          r0community = r0community,
                          r0subclin = r0subclin,
                          incfn = incfn,
                          delayfn = delayfn,
-                         prop.ascertain = prop.ascertain,
+                         prop_ascertain = prop_ascertain,
                          k = k,
                          quarantine = quarantine,
-                         prop.asym = prop.asym)
+                         prop_asym = prop_asym)
 
 
     case_data <- out[[1]]

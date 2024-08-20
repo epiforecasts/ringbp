@@ -21,32 +21,32 @@
 #' # delay distribution sampling function
 #' delayfn <- dist_setup(1.651524, 4.287786)
 #' # generate initial cases
-#' case_data <- outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
+#' case_data <- outbreak_setup(num_initial_cases = 5,incfn,delayfn,k=1.95,prop_asym=0)
 #' # generate next generation of cases
 #' case_data <- outbreak_step(case_data = case_data,
-#' disp.iso = 1,
-#' disp.com = 0.16,
+#' disp_iso = 1,
+#' disp_com = 0.16,
 #' r0isolated = 0,
 #' r0subclin = 1.25,
-#' disp.subclin = 0.16,
+#' disp_subclin = 0.16,
 #' r0community = 2.5,
-#' prop.asym = 0,
+#' prop_asym = 0,
 #' incfn = incfn,
 #' delayfn = delayfn,
-#' prop.ascertain = 0,
+#' prop_ascertain = 0,
 #' k = 1.95,
 #' quarantine = FALSE)[[1]]
 #'}
 outbreak_step <- function(case_data,
-                          prop.ascertain,
+                          prop_ascertain,
                           r0isolated,
                           r0community,
                           r0subclin,
-                          disp.iso,
-                          disp.com,
-                          disp.subclin,
+                          disp_iso,
+                          disp_com,
+                          disp_subclin,
                           k,
-                          prop.asym,
+                          prop_asym,
                           quarantine,
                           incfn,
                           delayfn) {
@@ -54,12 +54,12 @@ outbreak_step <- function(case_data,
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := purrr::map2_dbl(
-    ifelse(vect_isTRUE(isolated),
-           disp.iso,
-           ifelse(vect_isTRUE(asym), disp.subclin, disp.com)),
-    ifelse(vect_isTRUE(isolated),
+    ifelse(vect_is_true(isolated),
+           disp_iso,
+           ifelse(vect_is_true(asym), disp_subclin, disp_com)),
+    ifelse(vect_is_true(isolated),
            r0isolated,
-           ifelse(vect_isTRUE(asym),r0subclin, r0community)),
+           ifelse(vect_is_true(asym),r0subclin, r0community)),
     ~ rnbinom(1, size = .x, mu = .y))
     ]
 
@@ -106,9 +106,9 @@ outbreak_step <- function(case_data,
                                          rep(x, y)
                                          })),
     # draws a sample to see if this person is asymptomatic
-    asym = as.logical(rbinom(n = total_new_cases, 1, prob = prop.asym)),
+    asym = as.logical(rbinom(n = total_new_cases, 1, prob = prop_asym)),
     # draws a sample to see if this person is traced
-    missed = as.logical(rbinom(n = total_new_cases, 1, prob = 1 - prop.ascertain)),
+    missed = as.logical(rbinom(n = total_new_cases, 1, prob = 1 - prop_ascertain)),
     # sample from the incubation period for each new person
     incubfn_sample = inc_samples,
     isolated = FALSE,
@@ -122,18 +122,18 @@ outbreak_step <- function(case_data,
 
 
   # cases whose parents are asymptomatic are automatically missed
-  prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
+  prob_samples$missed[vect_is_true(prob_samples$infector_asym)] <- TRUE
 
   # If you are asymptomatic, your isolation time is Inf
-  prob_samples[, isolated_time := ifelse(vect_isTRUE(asym), Inf,
-                                        # If you are not asymptomatic, but you are missed,
-                                        # you are isolated at your symptom onset
-                                        ifelse(vect_isTRUE(missed), onset + delayfn(1),
-                                               # If you are not asymptomatic and you are traced,
-                                               # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
-                                               ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
-                                                      infector_iso_time)))]
+  prob_samples[, isolated_time := ifelse(vect_is_true(asym), Inf,
+                                         # If you are not asymptomatic, but you are missed,
+                                         # you are isolated at your symptom onset
+                                         ifelse(vect_is_true(missed), onset + delayfn(1),
+                                                # If you are not asymptomatic and you are traced,
+                                                # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
+                                                ifelse(!vect_is_true(rep(quarantine, total_new_cases)),
+                                                       pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
+                                                       infector_iso_time)))]
 
 
   # Chop out unneeded sample columns
@@ -145,9 +145,11 @@ outbreak_step <- function(case_data,
   cases_in_gen <- nrow(prob_samples)
 
   ## Estimate the effective r0
-  effective_r0 <- nrow(prob_samples) / nrow(case_data[!vect_isTRUE(case_data$isolated)])
+  effective_r0 <- nrow(prob_samples) /
+    nrow(case_data[!vect_is_true(case_data$isolated)])
 
-  # Everyone in case_data so far has had their chance to infect and are therefore considered isolated
+  # Everyone in case_data so far has had their chance to infect and are
+  # therefore considered isolated
   case_data$isolated <- TRUE
 
   # bind original cases + new secondary cases
@@ -164,6 +166,6 @@ outbreak_step <- function(case_data,
 
 
 # A vectorised version of isTRUE
-vect_isTRUE <- function(x) {
+vect_is_true <- function(x) {
   purrr::map_lgl(x, isTRUE)
 }

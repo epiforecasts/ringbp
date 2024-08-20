@@ -5,28 +5,28 @@
 \title{Run a specified number of simulations with identical parameters}
 \usage{
 scenario_sim(
-  n.sim,
-  prop.ascertain,
+  n_sim,
+  prop_ascertain,
   cap_max_days,
   cap_cases,
   r0isolated,
   r0community,
-  disp.iso,
-  disp.com,
+  disp_iso,
+  disp_com,
   k,
   delay_shape,
   delay_scale,
-  num.initial.cases,
-  prop.asym,
+  num_initial_cases,
+  prop_asym,
   quarantine,
   r0subclin = NULL,
-  disp.subclin = NULL
+  disp_subclin = NULL
 )
 }
 \arguments{
-\item{n.sim}{number of simulations to run}
+\item{n_sim}{number of simulations to run}
 
-\item{prop.ascertain}{numeric proportion of infectious contacts ascertained
+\item{prop_ascertain}{numeric proportion of infectious contacts ascertained
 by contact tracing (must be 0<=x<=1)}
 
 \item{cap_max_days}{Stop the simulation when this many days is reached.}
@@ -38,9 +38,9 @@ by contact tracing (must be 0<=x<=1)}
 \item{r0community}{numeric reproduction number for non-isolated cases
 (must be >0)}
 
-\item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
+\item{disp_iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
-\item{disp.com}{numeric dispersion parameter for non-isolated cases
+\item{disp_com}{numeric dispersion parameter for non-isolated cases
 (must be >0)}
 
 \item{k}{numeric skew parameter for sampling the serial interval from the
@@ -50,10 +50,11 @@ incubation period}
 
 \item{delay_scale}{numeric scale parameter of delay distribution}
 
-\item{num.initial.cases}{The number of initial or starting cases which are
-all assumed to be missed.}
+\item{num_initial_cases}{\code{integer} The number of initial or starting cases
+which are all assumed to be missed.}
 
-\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+\item{prop_asym}{\code{Numeric} proportion of cases that are completely
+asymptomatic (subclinical) (between 0 and 1).}
 
 \item{quarantine}{logical whether quarantine is in effect, if TRUE then
 traced contacts are isolated before symptom onset}
@@ -61,7 +62,7 @@ traced contacts are isolated before symptom onset}
 \item{r0subclin}{numeric reproduction number for sub-clinical non-isolated
 cases (must be >0)}
 
-\item{disp.subclin}{numeric dispersion parameter for sub-clincial
+\item{disp_subclin}{numeric dispersion parameter for sub-clincial
 non-isolated cases (must be >0)}
 }
 \value{
@@ -82,19 +83,19 @@ Run a specified number of simulations with identical parameters
 }
 \examples{
 \dontrun{
-res <- scenario_sim(n.sim = 5,
-num.initial.cases = 5,
+res <- scenario_sim(n_sim = 5,
+num_initial_cases = 5,
 cap_max_days = 365,
 cap_cases = 2000,
 r0isolated = 0,
 r0community = 2.5,
-disp.iso = 1,
-disp.com = 0.16,
+disp_iso = 1,
+disp_com = 0.16,
 k = 0.7,
 delay_shape = 2.5,
 delay_scale = 5,
-prop.asym = 0,
-prop.ascertain = 0)
+prop_asym = 0,
+prop_ascertain = 0)
 }
 
 }

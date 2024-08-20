@@ -45,16 +45,16 @@ library("ringbp")
 library("ggplot2")
 
 res <- scenario_sim(
-  n.sim = 10, ## 10 simulations
-  num.initial.cases = 1, ## one initial case in each of the simulations
-  prop.asym = 0, ## no asymptomatic infections
-  prop.ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
+  n_sim = 10, ## 10 simulations
+  num_initial_cases = 1, ## one initial case in each of the simulations
+  prop_asym = 0, ## no asymptomatic infections
+  prop_ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
   cap_cases = 4500, ## don't simulate beyond 4500 infections
   cap_max_days = 350, ## don't simulate beyond 350 days
   r0isolated = 0.5, ## isolated individuals have R0 of 0.5
   r0community = 2.5, ## non-isolated individuals have R0 of 2.5
-  disp.com = 0.16, ## dispersion parameter in the community
-  disp.iso = 1, ## dispersion  parameter of those isolated
+  disp_com = 0.16, ## dispersion parameter in the community
+  disp_iso = 1, ## dispersion  parameter of those isolated
   delay_shape = 1.651524, ## shape parameter of time from onset to isolation
   delay_scale = 4.287786, ## scale parameter of time from onset to isolation
   k = 0, ## skew of generation interval to be beyond onset of symptoms
