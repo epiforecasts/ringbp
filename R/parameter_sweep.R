@@ -1,17 +1,18 @@
 #' Sweep across parameters
 #'
-#' @description Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
-#' are included in the grid are currently hard coded. Use the `future` package to control parallisation
-#' outside of the function.
+#' @description Explore scenarios using gridding with sampling for parameters
+#' not in the grid. Parameters that are included in the grid are currently
+#' hard coded. Use the `future` package to control parallisation outside of
+#' the function.
 #'
-#' @param scenarios A dataframe containing all gridded  scenarios - see the examples for the required structure.
-#' Defaults to NULL.
+#' @param scenarios A dataframe containing all gridded  scenarios - see the
+#' examples for the required structure. Defaults to NULL.
 #' @param samples Numeric, defaults to 1. The number of samples to take.
-#' @param sim_fn Function, defaults to NULL. The vectorised model simulation function - see the examples
-#' for usage.
+#' @param sim_fn Function, defaults to NULL. The vectorised model simulation
+#' function - see the examples for usage.
 #'
-#' @return A nested tibble containing the parameters for each scenario and a nested list of output
-#' from `wuhan_sim`.
+#' @return A nested tibble containing the parameters for each scenario and a
+#' nested list of output from `wuhan_sim`.
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom purrr safely
@@ -68,7 +69,11 @@
 #'
 #'
 #' ## Run paramter sweep
-#' sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)
+#' sweep_results <- ringbp::parameter_sweep(
+#'   scenarios,
+#'   sim_fn = sim_with_params,
+#'   samples = 1
+#' )
 #'
 #'
 #' sweep_results

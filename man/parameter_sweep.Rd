@@ -7,22 +7,23 @@
 parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL)
 }
 \arguments{
-\item{scenarios}{A dataframe containing all gridded  scenarios - see the examples for the required structure.
-Defaults to NULL.}
+\item{scenarios}{A dataframe containing all gridded  scenarios - see the
+examples for the required structure. Defaults to NULL.}
 
 \item{samples}{Numeric, defaults to 1. The number of samples to take.}
 
-\item{sim_fn}{Function, defaults to NULL. The vectorised model simulation function - see the examples
-for usage.}
+\item{sim_fn}{Function, defaults to NULL. The vectorised model simulation
+function - see the examples for usage.}
 }
 \value{
-A nested tibble containing the parameters for each scenario and a nested list of output
-from \code{wuhan_sim}.
+A nested tibble containing the parameters for each scenario and a
+nested list of output from \code{wuhan_sim}.
 }
 \description{
-Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
-are included in the grid are currently hard coded. Use the \code{future} package to control parallisation
-outside of the function.
+Explore scenarios using gridding with sampling for parameters
+not in the grid. Parameters that are included in the grid are currently
+hard coded. Use the \code{future} package to control parallisation outside of
+the function.
 }
 \examples{
 
@@ -75,7 +76,11 @@ future::plan("multiprocess")
 
 
 ## Run paramter sweep
-sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)
+sweep_results <- ringbp::parameter_sweep(
+  scenarios,
+  sim_fn = sim_with_params,
+  samples = 1
+)
 
 
 sweep_results
