@@ -65,14 +65,15 @@ cases (must be >0)}
 non-isolated cases (must be >0)}
 }
 \value{
-A data.table object returning the results for multiple simulations using
-the same set of parameters. The table has columns
+A data.table object returning the results for multiple simulations
+using the same set of parameters. The table has columns
 \itemize{
 \item week: The week in the simulation.
 \item weekly_cases: The number of new cases that week.
 \item cumulative: The cumulative cases.
 \item effective_r0: The effective reproduction rate for the whole simulation
-\item cases_per_gen: A list column with the cases per generation. This is repeated each row.
+\item cases_per_gen: A list column with the cases per generation. This is
+repeated each row.
 \item sim: Index column for which simulation.
 }
 }
