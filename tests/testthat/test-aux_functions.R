@@ -5,7 +5,7 @@ set.seed(515)
 test_that("dist_setup returns a partialised function", {
   r1 <- dist_setup(0.1, 2)
   expect_error(r1(20), NA)
-  expect_true(inherits(r1, 'purrr_function_partial'))
+  expect_true(inherits(r1, "purrr_function_partial"))
 })
 
 test_that("dist_setup parameters behave as expected", {
@@ -15,7 +15,7 @@ test_that("dist_setup parameters behave as expected", {
   r2 <- f2(1e5)
 
   expect_lt(mean(r1), mean(r2))
-  expect_true(inherits(f1, 'purrr_function_partial'))
+  expect_true(inherits(f1, "purrr_function_partial"))
   expect_true(is.numeric(r1))
   expect_length(r1, 1e5)
 
@@ -60,7 +60,7 @@ test_that("inf_fn parameters behave as expected", {
 })
 
 
-test_that('extinct_prob works as expected', {
+test_that("extinct_prob works as expected", {
   cap <- 100
   sims <- 5
   res <- scenario_sim(
@@ -147,7 +147,7 @@ test_that('extinct_prob works as expected', {
   expect_equal(r3, 1)
 })
 
-test_that('extinct_prob week_range argument works', {
+test_that("extinct_prob week_range argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
@@ -209,7 +209,7 @@ test_that('extinct_prob week_range argument works', {
 
   r5b <- extinct_prob(res5, cap_cases = cap, week_range = 2)
   expect_equal(r5b, 1)
-  
+
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
   # extinction). Test here that week_range 1:2 says no extinction and neither
   # does week_range 2.
@@ -223,7 +223,7 @@ test_that('extinct_prob week_range argument works', {
   expect_equal(r6b, 0)
 })
 
-test_that('detect_extinct works', {
+test_that("detect_extinct works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
@@ -296,7 +296,7 @@ test_that('detect_extinct works', {
 
   expect5 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r5, expect5)
-  
+
   r5b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
   # The types in the output is a bit random. So just force all to doubles.
   r5b <- data.table(r5b)[, lapply(.SD, as.double)]
