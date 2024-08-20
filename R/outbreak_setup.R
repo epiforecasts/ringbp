@@ -2,8 +2,7 @@
 #' @author Joel Hellewell
 #'
 #' @inheritParams outbreak_model
-#' @param incfn function that samples from incubation period Weibull
-#' distribution; generated using dist_setup
+#' @inheritParams outbreak_step
 #' @param delayfn function that samples from the onset-to-hospitalisation delay
 #' Weibull distribution; generated using dist_setup
 #' @param k Numeric skew parameter for sampling the serial interval from the
