@@ -38,18 +38,18 @@
 #' quarantine = FALSE)[[1]]
 #'}
 outbreak_step <- function(case_data,
-                          disp.iso,
-                          disp.com,
+                          prop.ascertain,
                           r0isolated,
                           r0community,
-                          prop.asym,
-                          incfn,
-                          delayfn,
-                          prop.ascertain,
-                          k,
-                          quarantine,
                           r0subclin,
-                          disp.subclin) {
+                          disp.iso,
+                          disp.com,
+                          disp.subclin,
+                          k,
+                          prop.asym,
+                          quarantine,
+                          incfn,
+                          delayfn) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
