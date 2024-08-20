@@ -11,7 +11,9 @@
 #' @param r0community numeric reproduction number for non-isolated cases
 #' (must be >0)
 #' @param r0subclin numeric reproduction number for sub-clinical non-isolated
-#' cases (must be >0)
+#' cases (must be >0). Default of `r0subclin` is to be equal to clinical
+#' cases (`r0community`), this unless specified infectiousnes of subclinical
+#' cases will be equal to clinical cases.
 #' @param disp_iso numeric dispersion parameter for isolated cases (must be >0)
 #' @param disp_com numeric dispersion parameter for non-isolated cases
 #' (must be >0)
@@ -65,7 +67,7 @@ outbreak_model <- function(num_initial_cases,
                            cap_cases,
                            r0isolated,
                            r0community,
-                           r0subclin,
+                           r0subclin = r0community,
                            disp_iso,
                            disp_com,
                            disp_subclin,

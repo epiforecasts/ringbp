@@ -11,7 +11,7 @@ outbreak_model(
   cap_cases,
   r0isolated,
   r0community,
-  r0subclin,
+  r0subclin = r0community,
   disp_iso,
   disp_com,
   disp_subclin,
@@ -39,7 +39,9 @@ by contact tracing (must be 0<=x<=1)}
 (must be >0)}
 
 \item{r0subclin}{numeric reproduction number for sub-clinical non-isolated
-cases (must be >0)}
+cases (must be >0). Default of \code{r0subclin} is to be equal to clinical
+cases (\code{r0community}), this unless specified infectiousnes of subclinical
+cases will be equal to clinical cases.}
 
 \item{disp_iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
