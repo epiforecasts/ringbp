@@ -3,7 +3,7 @@ context("Test basic usage")
 set.seed(123456)
 
 test_that("A basic sim returns the correct object", {
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)
   # generate initial cases
@@ -89,7 +89,7 @@ test_that("Sim with multiple infectors makes senes", {
 
 
 test_that("R0isolated is working properly", {
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)
   # generate initial cases
@@ -135,8 +135,8 @@ test_that("R0isolated is working properly", {
   expect_gt(nrow(case_data3$cases), 1)
 })
 
-test_that('Test a bunch of args',{
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+test_that("Test a bunch of args", {
+  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
   delayfn <- dist_setup(2, 4)
   # generate initial cases
