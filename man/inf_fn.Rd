@@ -9,7 +9,8 @@ inf_fn(inc_samp = NULL, k = NULL)
 \arguments{
 \item{inc_samp}{vector of samples from the incubation period distribution}
 
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{numeric skew parameter for sampling the serial interval from the
+incubation period}
 }
 \description{
 Samples the serial interval for given incubation period samples
