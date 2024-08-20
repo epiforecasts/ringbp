@@ -85,8 +85,8 @@ outbreak_model <- function(num_initial_cases,
                         delay_scale)
 
   # Set initial values for loop indices
-  total.cases <- num_initial_cases
-  latest.onset <- 0
+  total_cases <- num_initial_cases
+  latest_onset <- 0
   extinct <- FALSE
 
   # Initial setup
@@ -102,7 +102,7 @@ outbreak_model <- function(num_initial_cases,
 
 
   # Model loop
-  while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
+  while (latest_onset < cap_max_days & total_cases < cap_cases & !extinct) {
 
     out <- outbreak_step(case_data = case_data,
                          disp_iso = disp_iso,
@@ -122,8 +122,8 @@ outbreak_model <- function(num_initial_cases,
     case_data <- out[[1]]
     effective_r0_vect <- c(effective_r0_vect, out[[2]])
     cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
-    total.cases <- nrow(case_data)
-    latest.onset <- max(case_data$onset)
+    total_cases <- nrow(case_data)
+    latest_onset <- max(case_data$onset)
     extinct <- all(case_data$isolated)
   }
 
