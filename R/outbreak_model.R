@@ -1,23 +1,32 @@
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
 #'
-#' @param num.initial.cases The number of initial or starting cases which are all assumed to be missed.
-#' @param prop.ascertain numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
+#' @param num.initial.cases The number of initial or starting cases which are
+#' all assumed to be missed.
+#' @param prop.ascertain numeric proportion of infectious contacts ascertained
+#' by contact tracing (must be 0<=x<=1)
 #' @param cap_max_days Stop the simulation when this many days is reached.
 #' @param cap_cases Stop the simulation when this many cases is reached.
 #' @param r0isolated numeric reproduction number for isolated cases (must be >0)
-#' @param r0community numeric reproduction number for non-isolated cases (must be >0)
-#' @param r0subclin numeric reproduction number for sub-clinical non-isolated cases (must be >0)
+#' @param r0community numeric reproduction number for non-isolated cases
+#' (must be >0)
+#' @param r0subclin numeric reproduction number for sub-clinical non-isolated
+#' cases (must be >0)
 #' @param disp.iso numeric dispersion parameter for isolated cases (must be >0)
-#' @param disp.com numeric dispersion parameter for non-isolated cases (must be >0)
-#' @param disp.subclin numeric dispersion parameter for sub-clincial non-isolated cases (must be >0)
-#' @param k numeric skew parameter for sampling the serial interval from the incubation period
+#' @param disp.com numeric dispersion parameter for non-isolated cases
+#' (must be >0)
+#' @param disp.subclin numeric dispersion parameter for sub-clincial
+#' non-isolated cases (must be >0)
+#' @param k numeric skew parameter for sampling the serial interval from the
+#' incubation period
 #' @param delay_shape numeric shape parameter of delay distribution
 #' @param delay_scale numeric scale parameter of delay distribution
 #' @param prop.asym proportion of cases that are completely asymptomatic.
-#' @param quarantine logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
+#' @param quarantine logical whether quarantine is in effect, if TRUE then
+#' traced contacts are isolated before symptom onset
 #'
-#' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
+#' @return data.table of cases by week, cumulative cases, and the effective
+#' reproduction number of the outreak
 #' @export
 #'
 #' @importFrom data.table rbindlist
@@ -81,10 +90,10 @@ outbreak_model <- function(num.initial.cases,
 
   # Initial setup
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
-                            incfn = incfn,
-                            prop.asym = prop.asym,
-                            delayfn = delayfn,
-                            k = k)
+                              incfn = incfn,
+                              prop.asym = prop.asym,
+                              delayfn = delayfn,
+                              k = k)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -95,18 +104,18 @@ outbreak_model <- function(num.initial.cases,
   while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
 
     out <- outbreak_step(case_data = case_data,
-                             disp.iso = disp.iso,
-                             disp.com = disp.com,
-                             disp.subclin = disp.subclin,
-                             r0isolated = r0isolated,
-                             r0community = r0community,
-                             r0subclin = r0subclin,
-                             incfn = incfn,
-                             delayfn = delayfn,
-                             prop.ascertain = prop.ascertain,
-                             k = k,
-                             quarantine = quarantine,
-                             prop.asym = prop.asym)
+                         disp.iso = disp.iso,
+                         disp.com = disp.com,
+                         disp.subclin = disp.subclin,
+                         r0isolated = r0isolated,
+                         r0community = r0community,
+                         r0subclin = r0subclin,
+                         incfn = incfn,
+                         delayfn = delayfn,
+                         prop.ascertain = prop.ascertain,
+                         k = k,
+                         quarantine = quarantine,
+                         prop.asym = prop.asym)
 
 
     case_data <- out[[1]]
@@ -141,7 +150,7 @@ outbreak_model <- function(num.initial.cases,
   # Add effective R0
   weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
                                                           na.rm = TRUE),
-                                        cases_per_gen = list(cases_in_gen_vect))]
+                                      cases_per_gen = list(cases_in_gen_vect))]
   # return
   return(weekly_cases)
 }
