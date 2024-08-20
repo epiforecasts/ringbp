@@ -1,4 +1,3 @@
-
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
 #'
