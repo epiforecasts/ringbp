@@ -26,19 +26,23 @@
 #'
 #' @examples
 #' \dontrun{
-#' res <- scenario_sim(n_sim = 5,
-#' num_initial_cases = 5,
-#' cap_max_days = 365,
-#' cap_cases = 2000,
-#' r0isolated = 0,
-#' r0community = 2.5,
-#' disp_iso = 1,
-#' disp_com = 0.16,
-#' k = 0.7,
-#' delay_shape = 2.5,
-#' delay_scale = 5,
-#' prop_asym = 0,
-#' prop_ascertain = 0)
+#' res <- scenario_sim(
+#'   n_sim = 5,
+#'   num_initial_cases = 5,
+#'   cap_max_days = 365,
+#'   cap_cases = 2000,
+#'   r0isolated = 0,
+#'   r0community = 2.5,
+#'   disp_iso = 1,
+#'   disp_com = 0.16,
+#'   k = 0.7,
+#'   onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+#'   incubation_period = function(x) {
+#'     rweibull(n = x, shape = 2.322737, scale = 6.492272)
+#'   },
+#'   prop_asym = 0,
+#'   prop_ascertain = 0
+#' )
 #' }
 #'
 scenario_sim <- function(n_sim,
@@ -50,8 +54,8 @@ scenario_sim <- function(n_sim,
                          disp_iso,
                          disp_com,
                          k,
-                         delay_shape,
-                         delay_scale,
+                         onset_to_isolation,
+                         incubation_period,
                          num_initial_cases,
                          prop_asym,
                          quarantine,
@@ -71,8 +75,8 @@ scenario_sim <- function(n_sim,
       disp_subclin = disp_subclin,
       disp_iso = disp_iso,
       disp_com = disp_com,
-      delay_shape = delay_shape,
-      delay_scale = delay_scale,
+      onset_to_isolation = onset_to_isolation,
+      incubation_period = incubation_period,
       k = k,
       prop_asym = prop_asym,
       quarantine = quarantine

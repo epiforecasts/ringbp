@@ -14,8 +14,8 @@ scenario_sim(
   disp_iso,
   disp_com,
   k,
-  delay_shape,
-  delay_scale,
+  onset_to_isolation,
+  incubation_period,
   num_initial_cases,
   prop_asym,
   quarantine,
@@ -45,6 +45,17 @@ by contact tracing (must be 0<=x<=1)}
 
 \item{k}{numeric skew parameter for sampling the serial interval from the
 incubation period}
+
+\item{onset_to_isolation}{A \code{function} to generate the onset-to-isolation
+delay. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of
+onset-to-isolation delays to simulate, and returns the onset-to-isolation
+delays.}
+
+\item{incubation_period}{A \code{function} to generate the incubation period for
+cases. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of incubation periods
+to simulate, and returns the incubation period(s).}
 
 \item{num_initial_cases}{\code{integer} The number of initial or starting cases
 which are all assumed to be missed.}
@@ -83,19 +94,23 @@ Run a specified number of simulations with identical parameters
 }
 \examples{
 \dontrun{
-res <- scenario_sim(n_sim = 5,
-num_initial_cases = 5,
-cap_max_days = 365,
-cap_cases = 2000,
-r0isolated = 0,
-r0community = 2.5,
-disp_iso = 1,
-disp_com = 0.16,
-k = 0.7,
-delay_shape = 2.5,
-delay_scale = 5,
-prop_asym = 0,
-prop_ascertain = 0)
+res <- scenario_sim(
+  n_sim = 5,
+  num_initial_cases = 5,
+  cap_max_days = 365,
+  cap_cases = 2000,
+  r0isolated = 0,
+  r0community = 2.5,
+  disp_iso = 1,
+  disp_com = 0.16,
+  k = 0.7,
+  onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+  incubation_period = function(x) {
+    rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  },
+  prop_asym = 0,
+  prop_ascertain = 0
+)
 }
 
 }

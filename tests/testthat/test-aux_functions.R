@@ -73,8 +73,10 @@ test_that("extinct_prob works as expected", {
     disp_iso = 1,
     disp_com = 0.16,
     k = 0.7,
-    delay_shape = 2.5,
-    delay_scale = 5,
+    onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+    incubation_period = function(x) {
+      rweibull(n = x, shape = 2.322737, scale = 6.492272)
+    },
     prop_asym = 0,
     prop_ascertain = 0,
     quarantine = FALSE
@@ -118,8 +120,10 @@ test_that("extinct_prob works as expected", {
     disp_iso = 1,
     disp_com = 0.16,
     k = 0.7,
-    delay_shape = 2.5,
-    delay_scale = 5,
+    onset_to_isolation = function(x) rweibull(n = x,shape = 2.5, scale = 5),
+    incubation_period = function(x) {
+      rweibull(n = x, shape = 2.322737, scale = 6.492272)
+    },
     prop_asym = 0,
     prop_ascertain = 0,
     quarantine = FALSE
@@ -139,8 +143,10 @@ test_that("extinct_prob works as expected", {
     disp_iso = 1,
     disp_com = 0.16,
     k = 0.7,
-    delay_shape = 2.5,
-    delay_scale = 5,
+    onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+    incubation_period = function(x) {
+      rweibull(n = x, shape = 2.322737, scale = 6.492272)
+    },
     prop_asym = 0,
     prop_ascertain = 0,
     quarantine = FALSE
@@ -163,8 +169,10 @@ test_that("extinct_prob week_range argument works", {
     disp_iso = 1,
     disp_com = 0.16,
     k = 0.7,
-    delay_shape = 2.5,
-    delay_scale = 5,
+    onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+    incubation_period = function(x) {
+      rweibull(n = x, shape = 2.322737, scale = 6.492272)
+    },
     prop_asym = 0,
     prop_ascertain = 0,
     quarantine = FALSE
@@ -240,8 +248,10 @@ test_that("detect_extinct works", {
     disp_iso = 1,
     disp_com = 0.16,
     k = 0.7,
-    delay_shape = 2.5,
-    delay_scale = 5,
+    onset_to_isolation = function(x) rweibull(n = x, shape = 2.5, scale = 5),
+    incubation_period = function(x) {
+      rweibull(n = x, shape = 2.322737, scale = 6.492272)
+    },
     prop_asym = 0,
     prop_ascertain = 0,
     quarantine = FALSE
