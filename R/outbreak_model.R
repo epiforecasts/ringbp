@@ -106,7 +106,7 @@ outbreak_model <- function(num_initial_cases,
 
 
   # Model loop
-  while (latest_onset < cap_max_days & total_cases < cap_cases & !extinct) {
+  while (latest_onset < cap_max_days && total_cases < cap_cases && !extinct) {
 
     out <- outbreak_step(case_data = case_data,
                          disp_iso = disp_iso,
