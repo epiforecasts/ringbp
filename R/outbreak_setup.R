@@ -7,7 +7,7 @@
 #' incubation period
 #'
 #' @return data.table of cases in outbreak so far
-#' @export
+#' @keywords internal
 #' @importFrom data.table data.table
 #' @importFrom stats rbinom
 #'

@@ -41,3 +41,4 @@ outbreak_setup(num_initial_cases = 5,incfn,delayfn,k=1.95,prop_asym=0)
 \author{
 Joel Hellewell
 }
+\keyword{internal}
