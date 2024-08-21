@@ -37,32 +37,25 @@
 #' @importFrom data.table rbindlist
 #'
 #' @examples
-#'
-#'\dontrun{
-#' incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
-#' # delay distribution sampling function
-#' delayfn <- dist_setup(2, 4)
-#' # generate initial cases
-#' case_data <- outbreak_setup(num_initial_cases = 5,
-#'                             incfn=incfn,
-#'                             delayfn = delayfn,
-#'                             k=1.95,
-#'                             prop_asym=0)
-#' # generate next generation of cases
-#' case_data <- outbreak_step(case_data = case_data,
-#'                            disp_iso = 1,
-#'                            disp_com = 0.16,
-#'                            disp_subclin = 0.16,
-#'                            r0isolated = 0,
-#'                            r0community = 2.5,
-#'                            r0subclin = 1.25,
-#'                            prop_asym = 0,
-#'                            incfn = incfn,
-#'                            delayfn = delayfn,
-#'                            prop_ascertain = 0,
-#'                            k = 1.95,
-#'                            quarantine = FALSE)
-#'}
+#' set.seed(1)
+#' out <- outbreak_model(
+#'   num_initial_cases = 2,
+#'   prop_ascertain = 0.2,
+#'   cap_max_days = 350,
+#'   cap_cases = 4500,
+#'   r0isolated = 0.5,
+#'   r0community = 2.5,
+#'   r0subclin = 2.5,
+#'   disp_iso = 1,
+#'   disp_com = 0.16,
+#'   disp_subclin = 0.16,
+#'   k = 0,
+#'   delay_shape = 1.651524,
+#'   delay_scale = 4.287786,
+#'   prop_asym = 0,
+#'   quarantine = FALSE
+#' )
+#' out[]
 outbreak_model <- function(num_initial_cases,
                            prop_ascertain,
                            cap_max_days,
