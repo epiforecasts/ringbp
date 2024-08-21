@@ -15,26 +15,28 @@
 #'
 #'\dontrun{
 #' # incubation period sampling function
-#' incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+#' incubation_period <- function(x) {
+#'   rweibull(n = x, shape = 2.322737, scale = 6.492272)
+#' }
 #' # delay distribution sampling function
 #' onset_to_isolation <- function(x) {
 #'   rweibull(n = x, shape = 1.651524, scale = 4.287786)
 #' }
 #' outbreak_setup(
 #'   num_initial_cases = 5,
-#'   incfn,
+#'   incubation_period,
 #'   onset_to_isolation,
 #'   k = 1.95,
 #'   prop_asym = 0
 #' )
 #'}
 outbreak_setup <- function(num_initial_cases,
-                           incfn,
+                           incubation_period,
                            onset_to_isolation,
                            k,
                            prop_asym) {
   # Set up table of initial cases
-  inc_samples <- incfn(num_initial_cases)
+  inc_samples <- incubation_period(num_initial_cases)
 
   case_data <- data.table(
     exposure = rep(0, num_initial_cases), # Exposure time of 0 for all initial cases

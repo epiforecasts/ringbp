@@ -95,21 +95,19 @@ outbreak_model <- function(num_initial_cases,
   checkmate::assert_number(prop_asym, lower = 0, upper = 1)
   checkmate::assert_logical(quarantine, len = 1)
 
-  # TODO: replace all instances of incfn with incubation_period
-  incfn <- incubation_period
-  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
-
   # Set initial values for loop indices
   total_cases <- num_initial_cases
   latest_onset <- 0
   extinct <- FALSE
 
   # Initial setup
-  case_data <- outbreak_setup(num_initial_cases = num_initial_cases,
-                              incfn = incfn,
-                              prop_asym = prop_asym,
-                              onset_to_isolation = onset_to_isolation,
-                              k = k)
+  case_data <- outbreak_setup(
+    num_initial_cases = num_initial_cases,
+    incubation_period = incubation_period,
+    prop_asym = prop_asym,
+    onset_to_isolation = onset_to_isolation,
+    k = k
+  )
 
   # Preallocate
   effective_r0_vect <- c()
@@ -126,7 +124,7 @@ outbreak_model <- function(num_initial_cases,
                          r0isolated = r0isolated,
                          r0community = r0community,
                          r0subclin = r0subclin,
-                         incfn = incfn,
+                         incubation_period = incubation_period,
                          onset_to_isolation = onset_to_isolation,
                          prop_ascertain = prop_ascertain,
                          k = k,

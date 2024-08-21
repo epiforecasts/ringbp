@@ -3,13 +3,15 @@ context("Test basic usage")
 set.seed(20200410)
 
 test_that("A basic sim setup returns the correct object", {
-  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  incubation_period <- function(x) {
+    rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  }
   # delay distribution sampling function
   onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num_initial_cases = 5,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0
@@ -21,14 +23,16 @@ test_that("A basic sim setup returns the correct object", {
 })
 
 test_that("asym arg works properly", {
-  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  incubation_period <- function(x) {
+    rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  }
   # delay distribution sampling function
   onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   # All asymptomatics
   all_asym <- outbreak_setup(
     num_initial_cases = 5,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 1
@@ -40,7 +44,7 @@ test_that("asym arg works properly", {
   # machine precision
   mix <- outbreak_setup(
     num_initial_cases = 10000,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0.5
