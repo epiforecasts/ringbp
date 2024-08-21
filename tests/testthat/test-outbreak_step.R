@@ -5,12 +5,12 @@ set.seed(123456)
 test_that("A basic sim returns the correct object", {
   incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num_initial_cases = 1,
     incfn = incfn,
-    delayfn  =  delayfn,
+    onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0
   )
@@ -24,7 +24,7 @@ test_that("A basic sim returns the correct object", {
     r0community = 500, # almost guarentees to get new cases
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -45,7 +45,7 @@ test_that("A basic sim returns the correct object", {
     r0community = 0, # almost guarentees to get new cases
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -57,12 +57,12 @@ test_that("A basic sim returns the correct object", {
 test_that("Sim with multiple infectors makes senes", {
   incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num_initial_cases = 2,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0
   )
@@ -76,7 +76,7 @@ test_that("Sim with multiple infectors makes senes", {
     r0community = 10000, # almost guarentees both index cases create infections
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -91,12 +91,12 @@ test_that("Sim with multiple infectors makes senes", {
 test_that("R0isolated is working properly", {
   incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num_initial_cases = 1,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0
   )
@@ -111,7 +111,7 @@ test_that("R0isolated is working properly", {
     r0community = 500, # Case is isolated so irrelevent
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -127,7 +127,7 @@ test_that("R0isolated is working properly", {
     r0community = 0, # Case is isolated so irrelevent
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -138,12 +138,12 @@ test_that("R0isolated is working properly", {
 test_that("Test a bunch of args", {
   incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  onset_to_isolation <- function(x) rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num_initial_cases = 1,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop_asym = 0
   )
@@ -157,7 +157,7 @@ test_that("Test a bunch of args", {
     r0community = 10000, # almost guarentees both index cases create infections
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
     k = 1.95,
     quarantine = FALSE
@@ -172,7 +172,7 @@ test_that("Test a bunch of args", {
     r0community = 10000, # almost guarentees both index cases create infections
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 1,
     k = 1.95,
     quarantine = FALSE
@@ -188,7 +188,7 @@ test_that("Test a bunch of args", {
     r0community = 100000, # To test a mix make sure there's loads of cases.
     prop_asym = 0,
     incfn = incfn,
-    delayfn = delayfn,
+    onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0.5,
     k = 1.95,
     quarantine = FALSE

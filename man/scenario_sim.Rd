@@ -46,10 +46,6 @@ by contact tracing (must be 0<=x<=1)}
 \item{k}{numeric skew parameter for sampling the serial interval from the
 incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
-
-\item{delay_scale}{numeric scale parameter of delay distribution}
-
 \item{num_initial_cases}{\code{integer} The number of initial or starting cases
 which are all assumed to be missed.}
 

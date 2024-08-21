@@ -97,10 +97,6 @@ outbreak_model <- function(num_initial_cases,
 
   # TODO: replace all instances of incfn with incubation_period
   incfn <- incubation_period
-
-  # TODO: replace all instances of delayfn with onset_to_isolation
-  delayfn <- onset_to_isolation
-
   # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
 
   # Set initial values for loop indices
@@ -112,7 +108,7 @@ outbreak_model <- function(num_initial_cases,
   case_data <- outbreak_setup(num_initial_cases = num_initial_cases,
                               incfn = incfn,
                               prop_asym = prop_asym,
-                              delayfn = delayfn,
+                              onset_to_isolation = onset_to_isolation,
                               k = k)
 
   # Preallocate
@@ -131,7 +127,7 @@ outbreak_model <- function(num_initial_cases,
                          r0community = r0community,
                          r0subclin = r0subclin,
                          incfn = incfn,
-                         delayfn = delayfn,
+                         onset_to_isolation = onset_to_isolation,
                          prop_ascertain = prop_ascertain,
                          k = k,
                          quarantine = quarantine,
