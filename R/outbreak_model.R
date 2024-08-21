@@ -23,8 +23,15 @@
 #' sub-clinical cases will be equal to non-isolated cases.
 #' @param k numeric skew parameter for sampling the serial interval from the
 #' incubation period
-#' @param delay_shape numeric shape parameter of delay distribution
-#' @param delay_scale numeric scale parameter of delay distribution
+#' @param onset_to_isolation A `function` to generate the onset-to-isolation
+#' delay. The function can be defined or anonymous. The function must have a
+#' single argument which accepts an integer for the number of
+#' onset-to-isolation delays to simulate, and returns the onset-to-isolation
+#' delays.
+#' @param incubation_period A `function` to generate the incubation period for
+#' cases. The function can be defined or anonymous. The function must have a
+#' single argument which accepts an integer for the number of incubation periods
+#' to simulate, and returns the incubation period(s).
 #' @param prop_asym `Numeric` proportion of cases that are completely
 #' asymptomatic (subclinical) (between 0 and 1).
 #' @param quarantine logical whether quarantine is in effect, if TRUE then
@@ -50,8 +57,8 @@
 #'   disp_com = 0.16,
 #'   disp_subclin = 0.16,
 #'   k = 0,
-#'   delay_shape = 1.651524,
-#'   delay_scale = 4.287786,
+#'   onset_to_isolation = function(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+#'   incubation_period = function(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
 #'   prop_asym = 0,
 #'   quarantine = FALSE
 #' )
@@ -67,8 +74,8 @@ outbreak_model <- function(num_initial_cases,
                            disp_com,
                            disp_subclin = disp_com,
                            k,
-                           delay_shape,
-                           delay_scale,
+                           onset_to_isolation,
+                           incubation_period,
                            prop_asym,
                            quarantine) {
 
@@ -83,19 +90,18 @@ outbreak_model <- function(num_initial_cases,
   checkmate::assert_number(disp_com, 0)
   checkmate::assert_number(disp_subclin, 0)
   checkmate::assert_number(k)
-  checkmate::assert_number(delay_shape)
-  checkmate::assert_number(delay_scale)
+  checkmate::assert_function(onset_to_isolation, nargs = 1)
+  checkmate::assert_function(incubation_period, nargs = 1)
   checkmate::assert_number(prop_asym, lower = 0, upper = 1)
   checkmate::assert_logical(quarantine, len = 1)
 
-  # Set up functions to sample from distributions
-  # incubation period sampling function
-  incfn <- dist_setup(dist_shape = 2.322737,
-                      dist_scale = 6.492272)
+  # TODO: replace all instances of incfn with incubation_period
+  incfn <- incubation_period
+
+  # TODO: replace all instances of delayfn with onset_to_isolation
+  delayfn <- onset_to_isolation
+
   # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
-  # onset to isolation delay sampling function
-  delayfn <- dist_setup(delay_shape,
-                        delay_scale)
 
   # Set initial values for loop indices
   total_cases <- num_initial_cases

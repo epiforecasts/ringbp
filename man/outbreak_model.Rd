@@ -16,8 +16,8 @@ outbreak_model(
   disp_com,
   disp_subclin = disp_com,
   k,
-  delay_shape,
-  delay_scale,
+  onset_to_isolation,
+  incubation_period,
   prop_asym,
   quarantine
 )
@@ -56,9 +56,16 @@ sub-clinical cases will be equal to non-isolated cases.}
 \item{k}{numeric skew parameter for sampling the serial interval from the
 incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
+\item{onset_to_isolation}{A \code{function} to generate the onset-to-isolation
+delay. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of
+onset-to-isolation delays to simulate, and returns the onset-to-isolation
+delays.}
 
-\item{delay_scale}{numeric scale parameter of delay distribution}
+\item{incubation_period}{A \code{function} to generate the incubation period for
+cases. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of incubation periods
+to simulate, and returns the incubation period(s).}
 
 \item{prop_asym}{\code{Numeric} proportion of cases that are completely
 asymptomatic (subclinical) (between 0 and 1).}
@@ -87,8 +94,8 @@ out <- outbreak_model(
   disp_com = 0.16,
   disp_subclin = 0.16,
   k = 0,
-  delay_shape = 1.651524,
-  delay_scale = 4.287786,
+  onset_to_isolation = function(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+  incubation_period = function(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
   prop_asym = 0,
   quarantine = FALSE
 )
