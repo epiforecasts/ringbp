@@ -76,7 +76,8 @@ test_that("extinct_prob works as expected", {
     delay_shape = 2.5,
     delay_scale = 5,
     prop_asym = 0,
-    prop_ascertain = 0
+    prop_ascertain = 0,
+    quarantine = FALSE
   )
 
   r1 <- extinct_prob(res, cap)
@@ -120,7 +121,8 @@ test_that("extinct_prob works as expected", {
     delay_shape = 2.5,
     delay_scale = 5,
     prop_asym = 0,
-    prop_ascertain = 0
+    prop_ascertain = 0,
+    quarantine = FALSE
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -140,7 +142,8 @@ test_that("extinct_prob works as expected", {
     delay_shape = 2.5,
     delay_scale = 5,
     prop_asym = 0,
-    prop_ascertain = 0
+    prop_ascertain = 0,
+    quarantine = FALSE
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -163,7 +166,8 @@ test_that("extinct_prob week_range argument works", {
     delay_shape = 2.5,
     delay_scale = 5,
     prop_asym = 0,
-    prop_ascertain = 0
+    prop_ascertain = 0,
+    quarantine = FALSE
   )
 
   # Manually build an output with known proportion of extinctions
@@ -239,7 +243,8 @@ test_that("detect_extinct works", {
     delay_shape = 2.5,
     delay_scale = 5,
     prop_asym = 0,
-    prop_ascertain = 0
+    prop_ascertain = 0,
+    quarantine = FALSE
   )
 
   # Manually build an output with known proportion of extinctions
