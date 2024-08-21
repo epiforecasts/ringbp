@@ -1,20 +1,3 @@
-#' Create partial function to sample from Weibull distributions
-#' @author Joel Hellewell
-#' @param dist_shape numeric shape parameter of Weibull distribution
-#' @param dist_scale numeric scale parameter of Weibull distribution
-#'
-#' @return partial function that takes a numeric argument for number of samples
-#' @export
-#' @importFrom purrr partial
-#'
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                        shape = dist_shape,
-                        scale = dist_scale)
-  return(out)
-}
-
-
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp vector of samples from the incubation period distribution
