@@ -79,6 +79,22 @@ outbreak_model <- function(num_initial_cases,
                            prop_asym,
                            quarantine) {
 
+  checkmate::assert_integerish(num_initial_cases, len = 1)
+  checkmate::assert_number(prop_ascertain, lower = 0, upper = 1)
+  checkmate::assert_number(cap_max_days)
+  checkmate::assert_integerish(cap_cases, len = 1)
+  checkmate::assert_number(r0isolated, lower = 0)
+  checkmate::assert_number(r0community, lower = 0)
+  checkmate::assert_number(r0subclin, lower = 0)
+  checkmate::assert_number(disp_iso, 0)
+  checkmate::assert_number(disp_com, 0)
+  checkmate::assert_number(disp_subclin, 0)
+  checkmate::assert_number(k)
+  checkmate::assert_number(delay_shape)
+  checkmate::assert_number(delay_scale)
+  checkmate::assert_number(prop_asym, lower = 0, upper = 1)
+  checkmate::assert_logical(quarantine, len = 1)
+
   # Set up functions to sample from distributions
   # incubation period sampling function
   incfn <- dist_setup(dist_shape = 2.322737,
