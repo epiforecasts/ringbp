@@ -1,4 +1,4 @@
-#' Create partial function to sample from gamma distributions
+#' Create partial function to sample from Weibull distributions
 #' @author Joel Hellewell
 #' @param dist_shape numeric shape parameter of Weibull distribution
 #' @param dist_scale numeric scale parameter of Weibull distribution

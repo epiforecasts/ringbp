@@ -2,7 +2,7 @@
 % Please edit documentation in R/aux_functions.R
 \name{dist_setup}
 \alias{dist_setup}
-\title{Create partial function to sample from gamma distributions}
+\title{Create partial function to sample from Weibull distributions}
 \usage{
 dist_setup(dist_shape = NULL, dist_scale = NULL)
 }
@@ -15,7 +15,7 @@ dist_setup(dist_shape = NULL, dist_scale = NULL)
 partial function that takes a numeric argument for number of samples
 }
 \description{
-Create partial function to sample from gamma distributions
+Create partial function to sample from Weibull distributions
 }
 \author{
 Joel Hellewell
