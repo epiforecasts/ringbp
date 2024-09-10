@@ -4,18 +4,34 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
+outbreak_setup(
+  num_initial_cases,
+  incubation_period,
+  onset_to_isolation,
+  k,
+  prop_asym
+)
 }
 \arguments{
-\item{num.initial.cases}{Integer number of initial cases}
+\item{num_initial_cases}{\code{integer} The number of initial or starting cases
+which are all assumed to be missed.}
 
-\item{incfn}{function that samples from incubation period Weibull distribution; generated using dist_setup}
+\item{incubation_period}{A \code{function} to generate the incubation period for
+cases. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of incubation periods
+to simulate, and returns the incubation period(s).}
 
-\item{delayfn}{function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup}
+\item{onset_to_isolation}{A \code{function} to generate the onset-to-isolation
+delay. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of
+onset-to-isolation delays to simulate, and returns the onset-to-isolation
+delays.}
 
-\item{k}{Numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{Numeric skew parameter for sampling the serial interval from the
+incubation period}
 
-\item{prop.asym}{Numeric proportion of cases that are sublinical (between 0 and 1)}
+\item{prop_asym}{\code{Numeric} proportion of cases that are completely
+asymptomatic (subclinical) (between 0 and 1).}
 }
 \value{
 data.table of cases in outbreak so far
@@ -27,12 +43,23 @@ Set up initial cases for branching process
 
 \dontrun{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+incubation_period <- function(x) {
+  rweibull(n = x, shape = 2.322737, scale = 6.492272)
+}
 # delay distribution sampling function
-delayfn <- dist_setup(delay_shape, delay_scale)
-outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
+onset_to_isolation <- function(x) {
+  rweibull(n = x, shape = 1.651524, scale = 4.287786)
+}
+outbreak_setup(
+  num_initial_cases = 5,
+  incubation_period,
+  onset_to_isolation,
+  k = 1.95,
+  prop_asym = 0
+)
 }
 }
 \author{
 Joel Hellewell
 }
+\keyword{internal}

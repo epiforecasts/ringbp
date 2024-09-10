@@ -5,27 +5,29 @@
 \title{Run a single instance of the branching process model}
 \usage{
 outbreak_model(
-  num.initial.cases = NULL,
-  prop.ascertain = NULL,
-  cap_max_days = NULL,
-  cap_cases = NULL,
-  r0isolated = NULL,
-  r0community = NULL,
-  r0subclin = NULL,
-  disp.iso = NULL,
-  disp.com = NULL,
-  disp.subclin = NULL,
+  num_initial_cases,
+  prop_ascertain,
+  cap_max_days,
+  cap_cases,
+  r0isolated,
+  r0community,
+  r0subclin = r0community,
+  disp_iso,
+  disp_com,
+  disp_subclin = disp_com,
   k,
-  delay_shape = NULL,
-  delay_scale = NULL,
-  prop.asym = NULL,
-  quarantine = NULL
+  onset_to_isolation,
+  incubation_period,
+  prop_asym,
+  quarantine
 )
 }
 \arguments{
-\item{num.initial.cases}{The number of initial or starting cases which are all assumed to be missed.}
+\item{num_initial_cases}{\code{integer} The number of initial or starting cases
+which are all assumed to be missed.}
 
-\item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+\item{prop_ascertain}{numeric proportion of infectious contacts ascertained
+by contact tracing (must be 0<=x<=1)}
 
 \item{cap_max_days}{Stop the simulation when this many days is reached.}
 
@@ -33,59 +35,71 @@ outbreak_model(
 
 \item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
 
-\item{r0community}{numeric reproduction number for non-isolated cases (must be >0)}
+\item{r0community}{numeric reproduction number for non-isolated cases
+(must be >0)}
 
-\item{r0subclin}{numeric reproduction number for sub-clinical non-isolated cases (must be >0)}
+\item{r0subclin}{numeric reproduction number for sub-clinical non-isolated
+cases (must be >0). Default of \code{r0subclin} is to be equal to clinical
+cases (\code{r0community}), this unless specified infectiousnes of subclinical
+cases will be equal to clinical cases.}
 
-\item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
+\item{disp_iso}{numeric dispersion parameter for isolated cases (must be >0)}
 
-\item{disp.com}{numeric dispersion parameter for non-isolated cases (must be >0)}
+\item{disp_com}{numeric dispersion parameter for non-isolated cases
+(must be >0)}
 
-\item{disp.subclin}{numeric dispersion parameter for sub-clincial non-isolated cases (must be >0)}
+\item{disp_subclin}{numeric dispersion parameter for sub-clincial
+non-isolated cases (must be >0). Default of \code{disp_subclin} is to be equal to
+clinical cases (\code{disp_com}), this unless specified dispersion for
+sub-clinical cases will be equal to non-isolated cases.}
 
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{numeric skew parameter for sampling the serial interval from the
+incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
+\item{onset_to_isolation}{A \code{function} to generate the onset-to-isolation
+delay. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of
+onset-to-isolation delays to simulate, and returns the onset-to-isolation
+delays.}
 
-\item{delay_scale}{numeric scale parameter of delay distribution}
+\item{incubation_period}{A \code{function} to generate the incubation period for
+cases. The function can be defined or anonymous. The function must have a
+single argument which accepts an integer for the number of incubation periods
+to simulate, and returns the incubation period(s).}
 
-\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+\item{prop_asym}{\code{Numeric} proportion of cases that are completely
+asymptomatic (subclinical) (between 0 and 1).}
 
-\item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+\item{quarantine}{logical whether quarantine is in effect, if TRUE then
+traced contacts are isolated before symptom onset}
 }
 \value{
-data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
+data.table of cases by week, cumulative cases, and the effective
+reproduction number of the outreak
 }
 \description{
 Run a single instance of the branching process model
 }
 \examples{
-
-\dontrun{
-incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
-# delay distribution sampling function
-delayfn <- dist_setup(2, 4)
-# generate initial cases
-case_data <- outbreak_setup(num.initial.cases = 5,
-                            incfn=incfn,
-                            delayfn = delayfn,
-                            k=1.95,
-                            prop.asym=0)
-# generate next generation of cases
-case_data <- outbreak_step(case_data = case_data,
-                           disp.iso = 1,
-                           disp.com = 0.16,
-                           disp.subclin = 0.16,
-                           r0isolated = 0,
-                           r0community = 2.5,
-                           r0subclin = 1.25,
-                           prop.asym = 0,
-                           incfn = incfn,
-                           delayfn = delayfn,
-                           prop.ascertain = 0,
-                           k = 1.95,
-                           quarantine = FALSE)
-}
+set.seed(1)
+out <- outbreak_model(
+  num_initial_cases = 2,
+  prop_ascertain = 0.2,
+  cap_max_days = 350,
+  cap_cases = 4500,
+  r0isolated = 0.5,
+  r0community = 2.5,
+  r0subclin = 2.5,
+  disp_iso = 1,
+  disp_com = 0.16,
+  disp_subclin = 0.16,
+  k = 0,
+  onset_to_isolation = function(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+  incubation_period = function(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
+  prop_asym = 0,
+  quarantine = FALSE
+)
+out[]
 }
 \author{
 Joel Hellewell

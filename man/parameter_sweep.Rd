@@ -7,22 +7,23 @@
 parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL)
 }
 \arguments{
-\item{scenarios}{A dataframe containing all gridded  scenarios - see the examples for the required structure.
-Defaults to NULL.}
+\item{scenarios}{A dataframe containing all gridded  scenarios - see the
+examples for the required structure. Defaults to NULL.}
 
 \item{samples}{Numeric, defaults to 1. The number of samples to take.}
 
-\item{sim_fn}{Function, defaults to NULL. The vectorised model simulation function - see the examples
-for usage.}
+\item{sim_fn}{Function, defaults to NULL. The vectorised model simulation
+function - see the examples for usage.}
 }
 \value{
-A nested tibble containing the parameters for each scenario and a nested list of output
-from \code{wuhan_sim}.
+A nested tibble containing the parameters for each scenario and a
+nested list of output from \code{wuhan_sim}.
 }
 \description{
-Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
-are included in the grid are currently hard coded. Use the \code{future} package to control parallisation
-outside of the function.
+Explore scenarios using gridding with sampling for parameters
+not in the grid. Parameters that are included in the grid are currently
+hard coded. Use the \code{future} package to control parallisation outside of
+the function.
 }
 \examples{
 
@@ -41,9 +42,9 @@ k_group = list(data.table(
  k = c(1,0.88,0.47)
 )),
 index_R0 = c(1.5,2.5,3.5),
-prop.asym = c(0,  0.1),
+prop_asym = c(0,  0.1),
 control_effectiveness = seq(0,1,0.2),
-num.initial.cases = c(5,20,40))
+num_initial_cases = c(5,20,40))
 
 list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 non_list_cols <- setdiff(colnames(scenarios), list_cols)
@@ -61,9 +62,9 @@ sim_with_params <- purrr::partial(ringbp::scenario_sim,
                                  cap_max_days = 365,
                                  cap_cases = 5000,
                                  r0isolated = 0,
-                                 disp.iso= 1,
-                                 disp.subclin = 0.16,
-                                 disp.com = 0.16,
+                                 disp_iso= 1,
+                                 disp_subclin = 0.16,
+                                 disp_com = 0.16,
                                  quarantine = FALSE)
 
 
@@ -75,7 +76,11 @@ future::plan("multiprocess")
 
 
 ## Run paramter sweep
-sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)
+sweep_results <- ringbp::parameter_sweep(
+  scenarios,
+  sim_fn = sim_with_params,
+  samples = 1
+)
 
 
 sweep_results
