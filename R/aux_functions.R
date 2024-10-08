@@ -7,10 +7,10 @@
 #' @export
 #' @importFrom purrr partial
 #'
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                 shape = dist_shape,
-                 scale = dist_scale)
+dist_setup <- function(dist_type, dist_shape = NULL, dist_scale = NULL) {
+  out <- purrr::partial(
+    dist_type,shape = dist_shape, scale = dist_scale)
+  
   return(out)
 }
 
