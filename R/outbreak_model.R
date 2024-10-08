@@ -47,16 +47,24 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
-                           k, delay_shape = NULL,
+                           si_mean = NULL, si_sd = NULL,
+                           inc_mean = NULL, inc_sd = NULL,
+                           delay_shape = NULL,
                            delay_scale = NULL, prop.asym = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
   # incubation period sampling function
-  incfn <- dist_setup(rgamma, dist_shape = 5, dist_scale = 2)
-  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
+  inc_shape <- (inc_mean / inc_sd)^2
+  inc_scale <- inc_mean / (inc_sd^2)
+  incfn <- purrr::partial(rgamma,
+                          shape = inc_shape,
+                          scale = inc_scale)
+
   # onset to isolation delay sampling function
-  delayfn <- dist_setup(rlnorm, delay_shape, delay_scale)
+  delayfn <- purrr::partial(rweibull,
+                            shape = delay_shape,
+                            scale = delay_scale)
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
@@ -67,8 +75,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
                             incfn = incfn,
                             prop.asym = prop.asym,
-                            delayfn = delayfn,
-                            k = k)
+                            delayfn = delayfn)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -88,7 +95,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              incfn = incfn,
                              delayfn = delayfn,
                              prop.ascertain = prop.ascertain,
-                             k = k,
+                             si_mean = si_mean,
+                             si_sd = si_sd,
                              quarantine = quarantine,
                              prop.asym = prop.asym)
 
