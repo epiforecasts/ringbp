@@ -41,7 +41,8 @@
 #' }
 #'
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp.iso, disp.com, k,
+                         r0isolated, r0community, disp.iso, disp.com, 
+                         inc_mean, inc_sd, si_mean, si_sd,
                          delay_shape, delay_scale, num.initial.cases, prop.asym,
                          quarantine, r0subclin = NULL, disp.subclin = NULL) {
 
@@ -66,7 +67,10 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                                              disp.com = disp.com,
                                              delay_shape = delay_shape,
                                              delay_scale = delay_scale,
-                                             k = k,
+                                             inc_mean = inc_mean, 
+                                             inc_sd = inc_sd,
+                                             si_mean = si_mean,
+                                             si_sd = si_sd,
                                              prop.asym = prop.asym,
                                              quarantine = quarantine))
 
