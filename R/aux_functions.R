@@ -17,20 +17,14 @@ dist_setup <- function(dist_type, dist_shape = NULL, dist_scale = NULL) {
 
 #' Samples the serial interval for given incubation period samples
 #'
-#' @param inc_samp vector of samples from the incubation period distribution
+#' @param exp_samp vector of the exposure time of the infector
 #' @param k numeric skew parameter for sampling the serial interval from the incubation period
 #'
 #' @export
-#' @importFrom sn rsn
 
-inf_fn <- function(inc_samp = NULL, k = NULL) {
+inf_fn <- function(exp_samp = NULL, si_mean = NULL, si_sd = NULL) {
 
-  out <- sn::rsn(n = length(inc_samp),
-                 xi = inc_samp,
-                 omega = 2,
-                 alpha = k)
-
-  out <- ifelse(out < 1, 1, out)
+  out <- exp_samp + rlnorm(n = length(exp_samp), meanlog = si_mean, sdlog = si_sd)
 
   return(out)
 }
