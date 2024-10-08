@@ -49,7 +49,8 @@
 outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                           r0isolated = NULL, r0community = NULL,
                           prop.asym = NULL, incfn = NULL, delayfn = NULL, 
-                          prop.ascertain = NULL, k = NULL, quarantine = NULL,
+                          prop.ascertain = NULL, si_mean = NULL, si_sd = NULL, 
+                          quarantine = NULL,
                           r0subclin = NULL, disp.subclin = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
@@ -87,9 +88,9 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
 
   prob_samples <- data.table(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
-    exposure = unlist(purrr::map2(new_case_data$new_cases, new_case_data$onset,
+    exposure = unlist(purrr::map2(new_case_data$new_cases, new_case_data$exposure,
                                   function(x, y) {
-                                    inf_fn(rep(y, x), k)
+                                    inf_fn(rep(y, x), si_mean, si_sd)
                                     })),
     # records the infector of each new person
     infector = unlist(purrr::map2(new_case_data$caseid, new_case_data$new_cases,
