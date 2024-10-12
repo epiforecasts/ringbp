@@ -51,7 +51,7 @@ sweep_results <- ringbp::parameter_sweep(
 dt_sim <- rbindlist(lapply(1:nrow(sweep_results), function(i) {
   data.table(scenario = sweep_results[i]$scenario, sweep_results[i]$sims[[1]])
 }))
-
+            
 # Merge scenario ID with incubation period values for plotting
 dt_scenario_id_lookup <- data.table(
   scenario = min(dt_sim$scenario):max(dt_sim$scenario),
@@ -78,5 +78,20 @@ dt_sim_plot_sum |>
        title = "Number of new cases of H5N1, varying the mean of the incubation period") + 
   theme(strip.text.x.top = element_blank()) 
 
+#--- Probability of extinction and persistence of outbreaks
 
+# Summarise the outbreaks using the probability that the outbreaks go extinct 
+# or not, using the extinct_prob() function with default parameters
+sweep_results_extinction <- sweep_results[
+  , .(ep = extinct_prob(sims, cap_cases = 1000),
+      inc = get_inc_mean(data)), "scenario"]
 
+# Plotting 1 - extinction probability (i.e., probabililty outbreak persists)
+# against the varied incubation period mean values
+sweep_results_extinction |> 
+  ggplot(aes(x = inc, y = 1 - ep)) + 
+  geom_point() + 
+  geom_line(colour = "red") + 
+  labs(x = "Incubation period mean", y = "Probability outbreak persists") + 
+  scale_y_continuous(labels=scales::percent) +
+  theme_minimal()
