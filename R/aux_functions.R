@@ -35,7 +35,7 @@ inf_fn <- function(exp_samp = NULL, si_mean = NULL, si_sd = NULL) {
 #' @export
 #' @inheritParams detect_extinct
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
-
+  outbreak_df_week <- outbreak_df_week[[1]]
   n_sim <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
@@ -44,6 +44,13 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
   return(out)
 }
 
+#' Calculate proportion of runs that have controlled outbreak
+#'
+#' @author Joel Hellewell
+#' @param df data.table including incubation period draws 
+get_inc_mean <- function(df){
+  df[[1]]$inc_mean
+}
 
 #' Calculate whether outbreaks went extinct or not
 #' @author Joel Hellewell
