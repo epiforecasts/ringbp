@@ -5,11 +5,11 @@
 #' outside of the function.
 #'
 #' @param scenarios a `data.frame`: containing all gridded scenarios - see the
-#' examples for the required structure. Defaults to `NULL`.
+#'   examples for the required structure. Defaults to `NULL`.
 #' @param samples a positive `integer` scalar: the number of samples to take.
-#' Defaults to `1`.
+#'   Defaults to `1`.
 #' @param sim_fn a `function`: defaults to `NULL`. The vectorised model
-#' simulation function - see the examples for usage.
+#'   simulation function - see the examples for usage.
 #'
 #' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
