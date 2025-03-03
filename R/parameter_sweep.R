@@ -10,7 +10,7 @@
 #' @param sim_fn Function, defaults to NULL. The vectorised model simulation function - see the examples
 #' for usage.
 #'
-#' @return A nested tibble containing the parameters for each scenario and a nested list of output
+#' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
 #' @export
 #' @importFrom future.apply future_lapply

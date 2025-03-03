@@ -16,7 +16,7 @@ Defaults to NULL.}
 for usage.}
 }
 \value{
-A nested tibble containing the parameters for each scenario and a nested list of output
+A nested \code{data.table} containing the parameters for each scenario and a nested list of output
 from \code{wuhan_sim}.
 }
 \description{
