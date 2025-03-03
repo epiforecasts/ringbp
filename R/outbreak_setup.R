@@ -46,6 +46,5 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
   case_data$isolated_time[case_data$asym] <- Inf
 
   # return
-  browser()
   return(case_data)
 }
