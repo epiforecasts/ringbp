@@ -129,5 +129,5 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                                                           na.rm = TRUE),
                                         cases_per_gen = list(cases_in_gen_vect))]
   # return
-  return(weekly_cases)
+  return(weekly_cases[])
 }

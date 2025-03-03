@@ -74,7 +74,7 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
   # bind output together and add simulation index
   res <- data.table::rbindlist(res)
   res[, sim := rep(1:n.sim, rep(floor(cap_max_days / 7) + 1, n.sim)), ]
-  return(res)
+  return(res[])
 }
 
 
@@ -85,6 +85,6 @@ utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumu
                          "new_cases", "num.initial.cases", "onset", "pext", "prob_extinct", "prop.asym",
                          "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
                          "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
-                         
+
 
 
