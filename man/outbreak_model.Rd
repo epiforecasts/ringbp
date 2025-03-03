@@ -54,7 +54,15 @@ outbreak_model(
 \item{quarantine}{\code{logical} whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
 }
 \value{
-\code{data.table} of cases by week, cumulative cases, and the effective reproduction number of the outbreak
+\code{data.table} of cases by week, cumulative cases, and the effective
+reproduction number of the outbreak. \code{data.table} columns are:
+\itemize{
+\item \verb{$week}: \code{numeric}
+\item \verb{$weekly_cases}: \code{numeric}
+\item \verb{$cumulative}: \code{numeric}
+\item \verb{$effective_r0}: \code{numeric}
+\item \verb{$cases_per_gen}: \code{list}
+}
 }
 \description{
 Run a single instance of the branching process model

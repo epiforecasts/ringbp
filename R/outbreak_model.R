@@ -19,7 +19,13 @@
 #'
 #'
 #'
-#' @return `data.table` of cases by week, cumulative cases, and the effective reproduction number of the outbreak
+#' @return `data.table` of cases by week, cumulative cases, and the effective
+#' reproduction number of the outbreak. `data.table` columns are:
+#' * `$week`: `numeric`
+#' * `$weekly_cases`: `numeric`
+#' * `$cumulative`: `numeric`
+#' * `$effective_r0`: `numeric`
+#' * `$cases_per_gen`: `list`
 #' @export
 #'
 #' @importFrom data.table rbindlist
