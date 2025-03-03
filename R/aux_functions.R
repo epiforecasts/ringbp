@@ -20,6 +20,7 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' @param inc_samp vector of samples from the incubation period distribution
 #' @inheritParams outbreak_model
 #'
+#' @return a `numeric` vector of equal length to the vector input to `inc_samp`
 #' @export
 #' @importFrom sn rsn
 
@@ -38,6 +39,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' Calculate proportion of runs that have controlled outbreak
 #'
 #' @author Joel Hellewell
+#' @return a single `numeric` with the probability of extinction
 #' @export
 #' @inheritParams detect_extinct
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
@@ -58,6 +60,9 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
 #' @importFrom data.table as.data.table fifelse
 #'
+#' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
+#' classification of whether the outbreak went extinct in each simulation
+#' replicate. `1` is an outbreak that went extinct, `0` if not.
 #' @export
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {

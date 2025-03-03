@@ -13,6 +13,11 @@ detect_extinct(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
 
 \item{week_range}{integer vector giving the (zero indexed) week range to test for whether an extinction occurred.}
 }
+\value{
+A \code{data.table}, with two columns \code{sim} and \code{extinct}, for a binary
+classification of whether the outbreak went extinct in each simulation
+replicate. \code{1} is an outbreak that went extinct, \code{0} if not.
+}
 \description{
 Calculate whether outbreaks went extinct or not
 }

@@ -47,6 +47,15 @@ outbreak_step(
 
 \item{disp.subclin}{\code{numeric} dispersion parameter for sub-clincial non-isolated cases (must be >0)}
 }
+\value{
+A \code{list} with three elements:
+\enumerate{
+\item \verb{$cases}: a \code{data.table} with case data
+\item \verb{$effective_r0}: a \code{numeric} with the effective reproduction number
+\item \verb{$cases_in_gen}: a \code{numeric} with the number of new cases in that
+generation
+}
+}
 \description{
 Move forward one generation in the branching process
 }

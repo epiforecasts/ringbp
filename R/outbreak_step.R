@@ -11,6 +11,11 @@
 #' @importFrom purrr map2 map2_dbl map_lgl
 #' @importFrom stats rbinom
 #'
+#' @return A `list` with three elements:
+#'   1. `$cases`: a `data.table` with case data
+#'   2. `$effective_r0`: a `numeric` with the effective reproduction number
+#'   3. `$cases_in_gen`: a `numeric` with the number of new cases in that
+#'   generation
 #' @export
 #'
 #' @examples

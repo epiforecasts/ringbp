@@ -11,6 +11,9 @@ inf_fn(inc_samp = NULL, k = NULL)
 
 \item{k}{\code{numeric} skew parameter for sampling the serial interval from the incubation period}
 }
+\value{
+a \code{numeric} vector of equal length to the vector input to \code{inc_samp}
+}
 \description{
 Samples the serial interval for given incubation period samples
 }

@@ -13,6 +13,9 @@ extinct_prob(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
 
 \item{week_range}{integer vector giving the (zero indexed) week range to test for whether an extinction occurred.}
 }
+\value{
+a single \code{numeric} with the probability of extinction
+}
 \description{
 Calculate proportion of runs that have controlled outbreak
 }
