@@ -13,7 +13,7 @@
 #' @importFrom stats quantile
 #' @importFrom stats rweibull
 #' @importFrom utils data
-#' @return A data.table object returning the results for multiple simulations using
+#' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
 #' * week: The week in the simulation.
 #' * weekly_cases: The number of new cases that week.
@@ -85,6 +85,6 @@ utils::globalVariables(c(".", ".N", ":=", "asym", "control_effectiveness", "cumu
                          "new_cases", "num.initial.cases", "onset", "pext", "prob_extinct", "prop.asym",
                          "r0", "rweibull", "samp", "samples", "scenario", "sim", "sims", "theta", "upper", "value",
                          "week", "weekly_cases", "x", "y", "y0", "y100", "y25", "y50", "y75"))
-                         
+
 
 

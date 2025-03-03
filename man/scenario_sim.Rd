@@ -57,7 +57,7 @@ scenario_sim(
 \item{disp.subclin}{\code{numeric} dispersion parameter for sub-clincial non-isolated cases (must be >0)}
 }
 \value{
-A data.table object returning the results for multiple simulations using
+A \code{data.table} object returning the results for multiple simulations using
 the same set of parameters. The table has columns
 \itemize{
 \item week: The week in the simulation.

@@ -3,7 +3,7 @@
 #'
 #' @inheritParams outbreak_model
 #'
-#' @return data.table of cases in outbreak so far
+#' @return `data.table` of cases in outbreak so far
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom stats rbinom

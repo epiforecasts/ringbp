@@ -14,7 +14,7 @@ outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 \item{prop.asym}{\code{numeric} proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
-data.table of cases in outbreak so far
+\code{data.table} of cases in outbreak so far
 }
 \description{
 Set up initial cases for branching process
