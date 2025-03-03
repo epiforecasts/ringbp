@@ -1,7 +1,7 @@
 #' Create partial function to sample from gamma distributions
 #' @author Joel Hellewell
-#' @param dist_shape numeric shape parameter of Weibull distribution
-#' @param dist_scale numeric scale parameter of Weibull distribution
+#' @param dist_shape `numeric` shape parameter of Weibull distribution
+#' @param dist_scale `numeric` scale parameter of Weibull distribution
 #'
 #' @return partial function that takes a numeric argument for number of samples
 #' @export
@@ -17,7 +17,7 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 
 #' Samples the serial interval for given incubation period samples
 #'
-#' @param inc_samp vector of samples from the incubation period distribution
+#' @param inc_samp `numeric` vector of samples from the incubation period distribution
 #' @inheritParams outbreak_model
 #'
 #' @return a `numeric` vector of equal length to the vector input to `inc_samp`
@@ -57,7 +57,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' @author Joel Hellewell
 #' @param outbreak_df_week `data.table` weekly cases produced by the outbreak model
 #' @inheritParams outbreak_model
-#' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
+#' @param week_range `integer` vector giving the (zero indexed) week range to test for whether an extinction occurred.
 #' @importFrom data.table as.data.table fifelse
 #'
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary

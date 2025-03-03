@@ -11,7 +11,7 @@ detect_extinct(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
 
 \item{cap_cases}{\code{integer} number of cumulative cases at which the branching process (simulation) was terminated}
 
-\item{week_range}{integer vector giving the (zero indexed) week range to test for whether an extinction occurred.}
+\item{week_range}{\code{integer} vector giving the (zero indexed) week range to test for whether an extinction occurred.}
 }
 \value{
 A \code{data.table}, with two columns \code{sim} and \code{extinct}, for a binary

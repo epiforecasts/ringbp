@@ -24,11 +24,11 @@ scenario_sim(
 )
 }
 \arguments{
-\item{n.sim}{number of simulations to run}
+\item{n.sim}{\code{numeric} number of simulations to run}
 
 \item{prop.ascertain}{\code{numeric} proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
-\item{cap_max_days}{Stop the simulation when this many days is reached.}
+\item{cap_max_days}{\code{integer} stop the simulation when this many days is reached.}
 
 \item{cap_cases}{\code{integer} number of cumulative cases at which the branching process (simulation) was terminated}
 
@@ -42,9 +42,9 @@ scenario_sim(
 
 \item{k}{\code{numeric} skew parameter for sampling the serial interval from the incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
+\item{delay_shape}{\code{numeric} shape parameter of delay distribution}
 
-\item{delay_scale}{numeric scale parameter of delay distribution}
+\item{delay_scale}{\code{numeric} scale parameter of delay distribution}
 
 \item{num.initial.cases}{\code{integer} number of initial or starting cases which are all assumed to be missed.}
 

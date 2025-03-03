@@ -7,9 +7,9 @@
 dist_setup(dist_shape = NULL, dist_scale = NULL)
 }
 \arguments{
-\item{dist_shape}{numeric shape parameter of Weibull distribution}
+\item{dist_shape}{\code{numeric} shape parameter of Weibull distribution}
 
-\item{dist_scale}{numeric scale parameter of Weibull distribution}
+\item{dist_scale}{\code{numeric} scale parameter of Weibull distribution}
 }
 \value{
 partial function that takes a numeric argument for number of samples

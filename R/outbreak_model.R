@@ -11,11 +11,11 @@
 #' @param k `numeric` skew parameter for sampling the serial interval from the incubation period
 #' @param quarantine `logical` whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
 #' @param prop.asym `numeric` proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)
-#' @param delay_shape numeric shape parameter of delay distribution
-#' @param delay_scale numeric scale parameter of delay distribution
+#' @param delay_shape `numeric` shape parameter of delay distribution
+#' @param delay_scale `numeric` scale parameter of delay distribution
 #' @param num.initial.cases `integer` number of initial or starting cases which are all assumed to be missed.
 #' @param cap_cases `integer` number of cumulative cases at which the branching process (simulation) was terminated
-#' @param cap_max_days Stop the simulation when this many days is reached.
+#' @param cap_max_days `integer` stop the simulation when this many days is reached.
 #'
 #'
 #'

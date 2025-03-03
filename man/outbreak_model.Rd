@@ -27,7 +27,7 @@ outbreak_model(
 
 \item{prop.ascertain}{\code{numeric} proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
-\item{cap_max_days}{Stop the simulation when this many days is reached.}
+\item{cap_max_days}{\code{integer} stop the simulation when this many days is reached.}
 
 \item{cap_cases}{\code{integer} number of cumulative cases at which the branching process (simulation) was terminated}
 
@@ -45,9 +45,9 @@ outbreak_model(
 
 \item{k}{\code{numeric} skew parameter for sampling the serial interval from the incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
+\item{delay_shape}{\code{numeric} shape parameter of delay distribution}
 
-\item{delay_scale}{numeric scale parameter of delay distribution}
+\item{delay_scale}{\code{numeric} scale parameter of delay distribution}
 
 \item{prop.asym}{\code{numeric} proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)}
 

@@ -4,10 +4,10 @@
 #' are included in the grid are currently hard coded. Use the `future` package to control parallisation
 #' outside of the function.
 #'
-#' @param scenarios A dataframe containing all gridded  scenarios - see the examples for the required structure.
+#' @param scenarios A `data.frame` containing all gridded  scenarios - see the examples for the required structure.
 #' Defaults to NULL.
-#' @param samples Numeric, defaults to 1. The number of samples to take.
-#' @param sim_fn Function, defaults to NULL. The vectorised model simulation function - see the examples
+#' @param samples `numeric`, defaults to 1. The number of samples to take.
+#' @param sim_fn `function`, defaults to `NULL`. The vectorised model simulation function - see the examples
 #' for usage.
 #'
 #' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
