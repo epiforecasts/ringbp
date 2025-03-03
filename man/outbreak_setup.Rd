@@ -7,15 +7,11 @@
 outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 }
 \arguments{
-\item{num.initial.cases}{Integer number of initial cases}
+\item{num.initial.cases}{\code{integer} number of initial or starting cases which are all assumed to be missed.}
 
-\item{incfn}{function that samples from incubation period Weibull distribution; generated using dist_setup}
+\item{k}{\code{numeric} skew parameter for sampling the serial interval from the incubation period}
 
-\item{delayfn}{function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup}
-
-\item{k}{Numeric skew parameter for sampling the serial interval from the incubation period}
-
-\item{prop.asym}{Numeric proportion of cases that are sublinical (between 0 and 1)}
+\item{prop.asym}{\code{numeric} proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
 data.table of cases in outbreak so far

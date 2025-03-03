@@ -1,11 +1,20 @@
 
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
-#' @inheritParams outbreak_step
+#' @param disp.iso `numeric` dispersion parameter for isolated cases (must be >0)
+#' @param disp.com `numeric` dispersion parameter for non-isolated cases (must be >0)
+#' @param disp.subclin `numeric` dispersion parameter for sub-clincial non-isolated cases (must be >0)
+#' @param r0isolated `numeric` reproduction number for isolated cases (must be >0)
+#' @param r0community `numeric` reproduction number for non-isolated cases (must be >0)
+#' @param r0subclin `numeric` reproduction number for sub-clinical non-isolated cases (must be >0)
+#' @param prop.ascertain `numeric` proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
+#' @param k `numeric` skew parameter for sampling the serial interval from the incubation period
+#' @param quarantine `logical` whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
+#' @param prop.asym `numeric` proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)
 #' @param delay_shape numeric shape parameter of delay distribution
 #' @param delay_scale numeric scale parameter of delay distribution
-#' @param num.initial.cases The number of initial or starting cases which are all assumed to be missed.
-#' @param cap_cases Stop the simulation when this many cases is reached.
+#' @param num.initial.cases `integer` number of initial or starting cases which are all assumed to be missed.
+#' @param cap_cases `integer` number of cumulative cases at which the branching process (simulation) was terminated
 #' @param cap_max_days Stop the simulation when this many days is reached.
 #'
 #'

@@ -9,7 +9,7 @@ extinct_prob(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
 \arguments{
 \item{outbreak_df_week}{data.table  weekly cases produced by the outbreak model}
 
-\item{cap_cases}{integer number of cumulative cases at which the branching process was terminated}
+\item{cap_cases}{\code{integer} number of cumulative cases at which the branching process (simulation) was terminated}
 
 \item{week_range}{integer vector giving the (zero indexed) week range to test for whether an extinction occurred.}
 }

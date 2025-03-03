@@ -1,11 +1,7 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @param num.initial.cases Integer number of initial cases
-#' @param incfn function that samples from incubation period Weibull distribution; generated using dist_setup
-#' @param delayfn function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup
-#' @param k Numeric skew parameter for sampling the serial interval from the incubation period
-#' @param prop.asym Numeric proportion of cases that are sublinical (between 0 and 1)
+#' @inheritParams outbreak_model
 #'
 #' @return data.table of cases in outbreak so far
 #' @export

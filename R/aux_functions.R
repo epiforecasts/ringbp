@@ -18,7 +18,7 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp vector of samples from the incubation period distribution
-#' @param k numeric skew parameter for sampling the serial interval from the incubation period
+#' @inheritParams outbreak_model
 #'
 #' @export
 #' @importFrom sn rsn
@@ -54,7 +54,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' Calculate whether outbreaks went extinct or not
 #' @author Joel Hellewell
 #' @param outbreak_df_week data.table  weekly cases produced by the outbreak model
-#' @param cap_cases integer number of cumulative cases at which the branching process was terminated
+#' @inheritParams outbreak_model
 #' @param week_range integer vector giving the (zero indexed) week range to test for whether an extinction occurred.
 #' @importFrom data.table as.data.table fifelse
 #'
