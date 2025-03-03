@@ -1,22 +1,36 @@
 
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
-#' @param disp.iso `numeric` dispersion parameter for isolated cases (must be >0)
-#' @param disp.com `numeric` dispersion parameter for non-isolated cases (must be >0)
-#' @param disp.subclin `numeric` dispersion parameter for sub-clincial non-isolated cases (must be >0)
-#' @param r0isolated `numeric` reproduction number for isolated cases (must be >0)
-#' @param r0community `numeric` reproduction number for non-isolated cases (must be >0)
-#' @param r0subclin `numeric` reproduction number for sub-clinical non-isolated cases (must be >0)
-#' @param prop.ascertain `numeric` proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)
-#' @param k `numeric` skew parameter for sampling the serial interval from the incubation period
-#' @param quarantine `logical` whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset
-#' @param prop.asym `numeric` proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)
-#' @param delay_shape `numeric` shape parameter of delay distribution
-#' @param delay_scale `numeric` scale parameter of delay distribution
-#' @param num.initial.cases `integer` number of initial or starting cases which are all assumed to be missed.
-#' @param cap_cases `integer` number of cumulative cases at which the branching process (simulation) was terminated
-#' @param cap_max_days `integer` stop the simulation when this many days is reached.
-#'
+#' @param disp.iso a positive `numeric` scalar: dispersion parameter for
+#' isolated cases (must be >0)
+#' @param disp.com a positive `numeric` scalar: dispersion parameter for
+#' non-isolated cases (must be >0)
+#' @param disp.subclin a positive `numeric` scalar: dispersion parameter for
+#' sub-clincial non-isolated cases (must be >0)
+#' @param r0isolated a positive `numeric` scalar: reproduction number for
+#' isolated cases (must be >0)
+#' @param r0community a positive `numeric` scalar: reproduction number for
+#' non-isolated cases (must be >0)
+#' @param r0subclin a positive `numeric` scalar: reproduction number for
+#' sub-clinical non-isolated cases (must be >0)
+#' @param prop.ascertain a nonnegative `numeric` scalar: proportion of
+#' infectious contacts ascertained by contact tracing (must be 0<=x<=1)
+#' @param k a `numeric` scalar: skew parameter for sampling the serial
+#' interval from the incubation period
+#' @param quarantine a `logical` scalar: whether quarantine is in effect, if
+#' `TRUE` then traced contacts are isolated before symptom onset
+#' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
+#' are completely asymptomatic (sublinical) (between 0 and 1)
+#' @param delay_shape a positive `numeric` scalar: shape parameter of delay
+#' distribution
+#' @param delay_scale a positive `numeric` scalar: scale parameter of delay
+#' distribution
+#' @param num.initial.cases a nonnegative `integer` scalar: number of initial
+#' or starting cases which are all assumed to be missed.
+#' @param cap_cases a positive `integer` scalar: number of cumulative cases at
+#' which the branching process (simulation) was terminated
+#' @param cap_max_days a positive `integer` scalar: stop the simulation when
+#' this many days is reached.
 #'
 #'
 #' @return `data.table` of cases by week, cumulative cases, and the effective

@@ -7,15 +7,20 @@
 outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 }
 \arguments{
-\item{num.initial.cases}{\code{integer} number of initial or starting cases which are all assumed to be missed.}
+\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
 
-\item{incfn}{\code{function} that samples from incubation period Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{incfn}{a \code{function} that samples from incubation period Weibull
+distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
 
-\item{delayfn}{\code{function} that samples from the onset-to-hospitalisation delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
+delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
 
-\item{k}{\code{numeric} skew parameter for sampling the serial interval from the incubation period}
+\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
+interval from the incubation period}
 
-\item{prop.asym}{\code{numeric} proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
+are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:

@@ -1,6 +1,6 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n.sim `numeric` number of simulations to run
+#' @param n.sim a positive `integer` scalar: number of simulations to run
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
