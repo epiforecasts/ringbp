@@ -18,7 +18,18 @@ outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 \item{prop.asym}{\code{numeric} proportion of cases that are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
-\code{data.table} of cases in outbreak so far
+\code{data.table} of cases in outbreak so far. \code{data.table} columns are:
+\itemize{
+\item \verb{$exposure}: \code{numeric}
+\item \verb{$asym}: \code{logical}
+\item \verb{$caseid}: \code{integer}
+\item \verb{$infector}: \code{numeric}
+\item \verb{$missed}: \code{logical}
+\item \verb{$onset}: \code{numeric}
+\item \verb{$new_cases}: \code{logical}
+\item \verb{$isolated_time}: \code{numeric}
+\item \verb{$isolated}: \code{logical}
+}
 }
 \description{
 Set up initial cases for branching process

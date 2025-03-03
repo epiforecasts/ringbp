@@ -4,7 +4,16 @@
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
 #'
-#' @return `data.table` of cases in outbreak so far
+#' @return `data.table` of cases in outbreak so far. `data.table` columns are:
+#' * `$exposure`: `numeric`
+#' * `$asym`: `logical`
+#' * `$caseid`: `integer`
+#' * `$infector`: `numeric`
+#' * `$missed`: `logical`
+#' * `$onset`: `numeric`
+#' * `$new_cases`: `logical`
+#' * `$isolated_time`: `numeric`
+#' * `$isolated`: `logical`
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom stats rbinom
@@ -37,5 +46,6 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
   case_data$isolated_time[case_data$asym] <- Inf
 
   # return
+  browser()
   return(case_data)
 }
