@@ -1,51 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://epiforecasts.io/ringbp/404.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/index.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/detect_extinct.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/dist_setup.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/extinct_prob.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/inf_fn.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/outbreak_model.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/outbreak_setup.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/outbreak_step.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/parameter_sweep.html</loc>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/ringbp/reference/scenario_sim.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://epiforecasts.io/ringbp/404.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/LICENSE-text.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/LICENSE.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/authors.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/index.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/news/index.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/detect_extinct.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/dist_setup.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/extinct_prob.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/index.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/inf_fn.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/outbreak_model.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/outbreak_setup.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/outbreak_step.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/parameter_sweep.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/reference/scenario_sim.html</loc></url>
 </urlset>
+
