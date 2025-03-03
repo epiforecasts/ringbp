@@ -2,6 +2,7 @@
 #' @author Joel Hellewell
 #'
 #' @inheritParams outbreak_model
+#' @inheritParams outbreak_step
 #'
 #' @return `data.table` of cases in outbreak so far
 #' @export
