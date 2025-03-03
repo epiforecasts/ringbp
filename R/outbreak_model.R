@@ -19,7 +19,7 @@
 #'
 #'
 #'
-#' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outreak
+#' @return data.table of cases by week, cumulative cases, and the effective reproduction number of the outbreak
 #' @export
 #'
 #' @importFrom data.table rbindlist
