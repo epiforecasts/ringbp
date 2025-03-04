@@ -14,6 +14,7 @@
 #' * `$new_cases`: `logical`
 #' * `$isolated_time`: `numeric`
 #' * `$isolated`: `logical`
+#' @autoglobal
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom stats rbinom

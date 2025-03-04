@@ -40,6 +40,7 @@
 #' * `$cumulative`: `numeric`
 #' * `$effective_r0`: `numeric`
 #' * `$cases_per_gen`: `list`
+#' @autoglobal
 #' @export
 #'
 #' @importFrom data.table rbindlist
@@ -134,7 +135,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
 
   # Prepare output, group into weeks
   weekly_cases <- case_data[, week := floor(onset / 7)
-                            ][, .(weekly_cases = .N), by = week
+                            ][, list(weekly_cases = .N), by = week
                               ]
   # maximum outbreak week
   max_week <- floor(cap_max_days / 7)

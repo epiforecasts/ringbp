@@ -19,6 +19,7 @@
 #'   2. `$effective_r0`: a `numeric` with the effective reproduction number
 #'   3. `$cases_in_gen`: a `numeric` with the number of new cases in that
 #'   generation
+#' @autoglobal
 #' @export
 #'
 #' @examples
