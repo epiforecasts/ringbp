@@ -24,40 +24,55 @@ scenario_sim(
 )
 }
 \arguments{
-\item{n.sim}{number of simulations to run}
+\item{n.sim}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{prop.ascertain}{numeric proportion of infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+\item{prop.ascertain}{a nonnegative \code{numeric} scalar: proportion of
+infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
-\item{cap_max_days}{Stop the simulation when this many days is reached.}
+\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
+this many days is reached.}
 
-\item{cap_cases}{Stop the simulation when this many cases is reached.}
+\item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
+which the branching process (simulation) was terminated}
 
-\item{r0isolated}{numeric reproduction number for isolated cases (must be >0)}
+\item{r0isolated}{a positive \code{numeric} scalar: reproduction number for
+isolated cases (must be >0)}
 
-\item{r0community}{numeric reproduction number for non-isolated cases (must be >0)}
+\item{r0community}{a positive \code{numeric} scalar: reproduction number for
+non-isolated cases (must be >0)}
 
-\item{disp.iso}{numeric dispersion parameter for isolated cases (must be >0)}
+\item{disp.iso}{a positive \code{numeric} scalar: dispersion parameter for
+isolated cases (must be >0)}
 
-\item{disp.com}{numeric dispersion parameter for non-isolated cases (must be >0)}
+\item{disp.com}{a positive \code{numeric} scalar: dispersion parameter for
+non-isolated cases (must be >0)}
 
-\item{k}{numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
+interval from the incubation period}
 
-\item{delay_shape}{numeric shape parameter of delay distribution}
+\item{delay_shape}{a positive \code{numeric} scalar: shape parameter of delay
+distribution}
 
-\item{delay_scale}{numeric scale parameter of delay distribution}
+\item{delay_scale}{a positive \code{numeric} scalar: scale parameter of delay
+distribution}
 
-\item{num.initial.cases}{The number of initial or starting cases which are all assumed to be missed.}
+\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
 
-\item{prop.asym}{proportion of cases that are completely asymptomatic.}
+\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
+are completely asymptomatic (sublinical) (between 0 and 1)}
 
-\item{quarantine}{logical whether quarantine is in effect, if TRUE then traced contacts are isolated before symptom onset}
+\item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
+\code{TRUE} then traced contacts are isolated before symptom onset}
 
-\item{r0subclin}{numeric reproduction number for sub-clinical non-isolated cases (must be >0)}
+\item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
+sub-clinical non-isolated cases (must be >0)}
 
-\item{disp.subclin}{numeric dispersion parameter for sub-clincial non-isolated cases (must be >0)}
+\item{disp.subclin}{a positive \code{numeric} scalar: dispersion parameter for
+sub-clincial non-isolated cases (must be >0)}
 }
 \value{
-A data.table object returning the results for multiple simulations using
+A \code{data.table} object returning the results for multiple simulations using
 the same set of parameters. The table has columns
 \itemize{
 \item week: The week in the simulation.

@@ -1,6 +1,6 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n.sim number of simulations to run
+#' @param n.sim a positive `integer` scalar: number of simulations to run
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
@@ -13,7 +13,7 @@
 #' @importFrom stats quantile
 #' @importFrom stats rweibull
 #' @importFrom utils data
-#' @return A data.table object returning the results for multiple simulations using
+#' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
 #' * week: The week in the simulation.
 #' * weekly_cases: The number of new cases that week.

@@ -7,18 +7,34 @@
 outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
 }
 \arguments{
-\item{num.initial.cases}{Integer number of initial cases}
+\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
 
-\item{incfn}{function that samples from incubation period Weibull distribution; generated using dist_setup}
+\item{incfn}{a \code{function} that samples from incubation period Weibull
+distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
 
-\item{delayfn}{function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup}
+\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
+delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
 
-\item{k}{Numeric skew parameter for sampling the serial interval from the incubation period}
+\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
+interval from the incubation period}
 
-\item{prop.asym}{Numeric proportion of cases that are sublinical (between 0 and 1)}
+\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
+are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
-data.table of cases in outbreak so far
+\code{data.table} of cases in outbreak so far. \code{data.table} columns are:
+\itemize{
+\item \verb{$exposure}: \code{numeric}
+\item \verb{$asym}: \code{logical}
+\item \verb{$caseid}: \code{integer}
+\item \verb{$infector}: \code{numeric}
+\item \verb{$missed}: \code{logical}
+\item \verb{$onset}: \code{numeric}
+\item \verb{$new_cases}: \code{logical}
+\item \verb{$isolated_time}: \code{numeric}
+\item \verb{$isolated}: \code{logical}
+}
 }
 \description{
 Set up initial cases for branching process

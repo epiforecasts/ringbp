@@ -7,16 +7,17 @@
 parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL)
 }
 \arguments{
-\item{scenarios}{A dataframe containing all gridded  scenarios - see the examples for the required structure.
-Defaults to NULL.}
+\item{scenarios}{a \code{data.frame}: containing all gridded scenarios - see the
+examples for the required structure. Defaults to \code{NULL}.}
 
-\item{samples}{Numeric, defaults to 1. The number of samples to take.}
+\item{samples}{a positive \code{integer} scalar: the number of samples to take.
+Defaults to \code{1}.}
 
-\item{sim_fn}{Function, defaults to NULL. The vectorised model simulation function - see the examples
-for usage.}
+\item{sim_fn}{a \code{function}: defaults to \code{NULL}. The vectorised model
+simulation function - see the examples for usage.}
 }
 \value{
-A nested tibble containing the parameters for each scenario and a nested list of output
+A nested \code{data.table} containing the parameters for each scenario and a nested list of output
 from \code{wuhan_sim}.
 }
 \description{
