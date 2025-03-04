@@ -61,29 +61,42 @@
 
 
 <dl><dt id="arg-num-initial-cases">num.initial.cases<a class="anchor" aria-label="anchor" href="#arg-num-initial-cases"></a></dt>
-<dd><p>Integer number of initial cases</p></dd>
+<dd><p>a nonnegative <code>integer</code> scalar: number of initial
+or starting cases which are all assumed to be missed.</p></dd>
 
 
 <dt id="arg-incfn">incfn<a class="anchor" aria-label="anchor" href="#arg-incfn"></a></dt>
-<dd><p>function that samples from incubation period Weibull distribution; generated using dist_setup</p></dd>
+<dd><p>a <code>function</code> that samples from incubation period Weibull
+distribution; generated using <code><a href="dist_setup.html">dist_setup()</a></code></p></dd>
 
 
 <dt id="arg-delayfn">delayfn<a class="anchor" aria-label="anchor" href="#arg-delayfn"></a></dt>
-<dd><p>function that samples from the onset-to-hospitalisation delay Weibull distribution; generated using dist_setup</p></dd>
+<dd><p>a <code>function</code> that samples from the onset-to-hospitalisation
+delay Weibull distribution; generated using <code><a href="dist_setup.html">dist_setup()</a></code></p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>Numeric skew parameter for sampling the serial interval from the incubation period</p></dd>
+<dd><p>a <code>numeric</code> scalar: skew parameter for sampling the serial
+interval from the incubation period</p></dd>
 
 
 <dt id="arg-prop-asym">prop.asym<a class="anchor" aria-label="anchor" href="#arg-prop-asym"></a></dt>
-<dd><p>Numeric proportion of cases that are sublinical (between 0 and 1)</p></dd>
+<dd><p>a nonnegative <code>numeric</code> scalar: proportion of cases that
+are completely asymptomatic (sublinical) (between 0 and 1)</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data.table of cases in outbreak so far</p>
-    </div>
+    <p><code>data.table</code> of cases in outbreak so far. <code>data.table</code> columns are:</p><ul><li><p><code>$exposure</code>: <code>numeric</code></p></li>
+<li><p><code>$asym</code>: <code>logical</code></p></li>
+<li><p><code>$caseid</code>: <code>integer</code></p></li>
+<li><p><code>$infector</code>: <code>numeric</code></p></li>
+<li><p><code>$missed</code>: <code>logical</code></p></li>
+<li><p><code>$onset</code>: <code>numeric</code></p></li>
+<li><p><code>$new_cases</code>: <code>logical</code></p></li>
+<li><p><code>$isolated_time</code>: <code>numeric</code></p></li>
+<li><p><code>$isolated</code>: <code>logical</code></p></li>
+</ul></div>
     <div id="author">
     <h2>Author</h2>
     <p>Joel Hellewell</p>

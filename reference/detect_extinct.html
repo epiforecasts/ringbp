@@ -61,17 +61,26 @@
 
 
 <dl><dt id="arg-outbreak-df-week">outbreak_df_week<a class="anchor" aria-label="anchor" href="#arg-outbreak-df-week"></a></dt>
-<dd><p>data.table  weekly cases produced by the outbreak model</p></dd>
+<dd><p>a <code>data.table</code>: weekly cases produced by the
+outbreak model</p></dd>
 
 
 <dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
-<dd><p>integer number of cumulative cases at which the branching process was terminated</p></dd>
+<dd><p>a positive <code>integer</code> scalar: number of cumulative cases at
+which the branching process (simulation) was terminated</p></dd>
 
 
 <dt id="arg-week-range">week_range<a class="anchor" aria-label="anchor" href="#arg-week-range"></a></dt>
-<dd><p>integer vector giving the (zero indexed) week range to test for whether an extinction occurred.</p></dd>
+<dd><p>a positive <code>integer</code> vector: giving the (zero indexed)
+week range to test for whether an extinction occurred.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>A <code>data.table</code>, with two columns <code>sim</code> and <code>extinct</code>, for a binary
+classification of whether the outbreak went extinct in each simulation
+replicate. <code>1</code> is an outbreak that went extinct, <code>0</code> if not.</p>
+    </div>
     <div id="author">
     <h2>Author</h2>
     <p>Joel Hellewell</p>
