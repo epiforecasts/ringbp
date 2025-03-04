@@ -40,14 +40,17 @@ are completely asymptomatic (sublinical) (between 0 and 1)}
 Set up initial cases for branching process
 }
 \examples{
-
-\dontrun{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+incfn <- dist_setup(dist_shape = 2.32,dist_scale = 6.49)
 # delay distribution sampling function
-delayfn <- dist_setup(delay_shape, delay_scale)
-outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
-}
+delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
+outbreak_setup(
+  num.initial.cases = 1,
+  incfn = incfn,
+  delayfn = delayfn,
+  k = 1.95,
+  prop.asym = 0
+)
 }
 \author{
 Joel Hellewell

@@ -19,61 +19,65 @@
 #' @importFrom purrr safely
 #' @importFrom data.table .SD
 #' @examples
+#' if (requireNamespace("data.table", quietly = TRUE)) {
+#'   library(data.table)
+#'   # Put parameters that are grouped by disease into this data.table
+#'   scenarios <- data.table(
+#'     expand.grid(
+#'       delay_group = list(data.table(
+#'         delay = c("SARS", "Wuhan"),
+#'         delay_shape = c(1.651524, 2.305172),
+#'         delay_scale = c(4.287786, 9.483875)
+#'       )),
+#'       k_group = list(data.table(
+#'         theta = c("<1%", "15%", "30%"),
+#'         k = c(1, 0.88, 0.47)
+#'       )),
+#'       index_R0 = c(1.5, 2.5, 3.5),
+#'       prop.asym = c(0, 0.1),
+#'       control_effectiveness = seq(0, 1, 0.2),
+#'       num.initial.cases = c(5, 20, 40)
+#'     )
+#'   )
 #'
+#'   list_cols <- grep("_group", colnames(scenarios), value = TRUE)
+#'   non_list_cols <- setdiff(colnames(scenarios), list_cols)
 #'
-#'\dontrun{
-#' library(data.table)
+#'   expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
+#'   expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
 #'
-## Put parameters that are grouped by disease into this data.frame
-#' scenarios <- data.table(expand.grid(
-#' delay_group = list(data.table(
-#'  delay = c("SARS","Wuhan"),
-#'  delay_shape = c(1.651524,2.305172),
-#'  delay_scale = c(4.287786,9.483875)
-#' )),
-#' k_group = list(data.table(
-#'  theta = c("<1%","15%","30%"),
-#'  k = c(1,0.88,0.47)
-#' )),
-#' index_R0 = c(1.5,2.5,3.5),
-#' prop.asym = c(0,  0.1),
-#' control_effectiveness = seq(0,1,0.2),
-#' num.initial.cases = c(5,20,40))
+#'   scenarios <- merge(
+#'     expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
+#'   )
+#'   scenarios[, scenario :=  1:.N]
 #'
-#' list_cols <- grep("_group", colnames(scenarios), value = TRUE)
-#' non_list_cols <- setdiff(colnames(scenarios), list_cols)
+#'   ## Parameterise fixed paramters
+#'   sim_with_params <- purrr::partial(
+#'     ringbp::scenario_sim,
+#'     cap_max_days = 365,
+#'     cap_cases = 5000,
+#'     r0isolated = 0,
+#'     disp.iso= 1,
+#'     disp.subclin = 0.16,
+#'     disp.com = 0.16,
+#'     quarantine = FALSE
+#'   )
 #'
-#' expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
-#' expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
+#'   ## parameter_sweep uses the future_lapply() function
+#'   ## Default is to run sequntially on a single core
+#'   # future::plan("sequential")
+#'   ## Set up multicore if using see ?future::plan for details
+#'   ## Use the workers argument to control the number of cores used.
+#'   # future::plan("multiprocess")
 #'
-#' scenarios <- merge(
-#'   expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
-#' )
-#' scenarios[, scenario :=  1:.N]
+#'   ## Run parameter sweep
+#'   sweep_results <- ringbp::parameter_sweep(
+#'     scenarios,
+#'     sim_fn = sim_with_params,
+#'     samples = 1
+#'   )
 #'
-#' ## Parameterise fixed paramters
-#' sim_with_params <- purrr::partial(ringbp::scenario_sim,
-#'                                  cap_max_days = 365,
-#'                                  cap_cases = 5000,
-#'                                  r0isolated = 0,
-#'                                  disp.iso= 1,
-#'                                  disp.subclin = 0.16,
-#'                                  disp.com = 0.16,
-#'                                  quarantine = FALSE)
-#'
-#'
-#' ## Default is to run sequntially on a single core
-#' future::plan("sequential")
-#' ## Set up multicore if using see ?future::plan for details
-#' ## Use the workers argument to control the number of cores used.
-#' future::plan("multiprocess")
-#'
-#'
-#' ## Run paramter sweep
-#' sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)
-#'
-#'
-#' sweep_results
+#'   sweep_results
 #' }
 parameter_sweep <- function(scenarios = NULL, samples = 1,
                             sim_fn = NULL) {
