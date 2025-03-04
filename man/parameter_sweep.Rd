@@ -18,7 +18,7 @@ simulation function - see the examples for usage.}
 }
 \value{
 A nested \code{data.table} containing the parameters for each scenario and a nested list of output
-from \code{wuhan_sim}.
+from \code{\link[=scenario_sim]{scenario_sim()}}.
 }
 \description{
 Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
