@@ -19,3 +19,6 @@ a \code{numeric} vector of equal length to the vector input to \code{inc_samp}
 \description{
 Samples the serial interval for given incubation period samples
 }
+\examples{
+inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
+}

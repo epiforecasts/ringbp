@@ -24,6 +24,25 @@ replicate. \code{1} is an outbreak that went extinct, \code{0} if not.
 \description{
 Calculate whether outbreaks went extinct or not
 }
+\examples{
+res <- scenario_sim(
+  n.sim = 10,
+  num.initial.cases = 1,
+  prop.asym = 0,
+  prop.ascertain = 0.2,
+  cap_cases = 4500,
+  cap_max_days = 350,
+  r0isolated = 0.5,
+  r0community = 2.5,
+  disp.com = 0.16,
+  disp.iso = 1,
+  delay_shape = 1.65,
+  delay_scale = 4.28,
+  k = 0,
+  quarantine = FALSE
+)
+detect_extinct(outbreak_df_week = res, cap_cases = 4500)
+}
 \author{
 Joel Hellewell
 }

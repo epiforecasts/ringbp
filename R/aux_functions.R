@@ -9,6 +9,9 @@
 #' @export
 #' @importFrom purrr partial
 #'
+#' @examples
+#' incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
+#' incfn(5)
 dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
   out <- purrr::partial(rweibull,
                  shape = dist_shape,
@@ -26,7 +29,9 @@ dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
 #' @return a `numeric` vector of equal length to the vector input to `inc_samp`
 #' @export
 #' @importFrom sn rsn
-
+#'
+#' @examples
+#' inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
 inf_fn <- function(inc_samp = NULL, k = NULL) {
 
   out <- sn::rsn(n = length(inc_samp),
@@ -45,6 +50,25 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' @return a single `numeric` with the probability of extinction
 #' @export
 #' @inheritParams detect_extinct
+#'
+#' @examples
+#' res <- scenario_sim(
+#'   n.sim = 10,
+#'   num.initial.cases = 1,
+#'   prop.asym = 0,
+#'   prop.ascertain = 0.2,
+#'   cap_cases = 4500,
+#'   cap_max_days = 350,
+#'   r0isolated = 0.5,
+#'   r0community = 2.5,
+#'   disp.com = 0.16,
+#'   disp.iso = 1,
+#'   delay_shape = 1.65,
+#'   delay_scale = 4.28,
+#'   k = 0,
+#'   quarantine = FALSE
+#' )
+#' extinct_prob(res, cap_cases = 4500)
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   n_sim <- max(outbreak_df_week$sim)
@@ -71,6 +95,24 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' @autoglobal
 #' @export
 #'
+#' @examples
+#' res <- scenario_sim(
+#'   n.sim = 10,
+#'   num.initial.cases = 1,
+#'   prop.asym = 0,
+#'   prop.ascertain = 0.2,
+#'   cap_cases = 4500,
+#'   cap_max_days = 350,
+#'   r0isolated = 0.5,
+#'   r0community = 2.5,
+#'   disp.com = 0.16,
+#'   disp.iso = 1,
+#'   delay_shape = 1.65,
+#'   delay_scale = 4.28,
+#'   k = 0,
+#'   quarantine = FALSE
+#' )
+#' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
