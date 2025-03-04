@@ -21,6 +21,7 @@
 #' * effective_r0: The effective reproduction rate for the whole simulation
 #' * cases_per_gen: A list column with the cases per generation. This is repeated each row.
 #' * sim: Index column for which simulation.
+#' @autoglobal
 #' @export
 #'
 #' @examples

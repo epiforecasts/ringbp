@@ -13,6 +13,7 @@
 #'
 #' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
 #' from `wuhan_sim`.
+#' @autoglobal
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom purrr safely

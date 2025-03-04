@@ -68,6 +68,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
 #' classification of whether the outbreak went extinct in each simulation
 #' replicate. `1` is an outbreak that went extinct, `0` if not.
+#' @autoglobal
 #' @export
 #'
 detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {

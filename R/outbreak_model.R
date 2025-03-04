@@ -40,6 +40,7 @@
 #' * `$cumulative`: `numeric`
 #' * `$effective_r0`: `numeric`
 #' * `$cases_per_gen`: `list`
+#' @autoglobal
 #' @export
 #'
 #' @importFrom data.table rbindlist
