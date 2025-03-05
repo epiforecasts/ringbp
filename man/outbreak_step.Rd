@@ -102,6 +102,7 @@ out <- outbreak_step(
   quarantine = FALSE
 )
 case_data <- out[[1]]
+case_data
 }
 \author{
 Joel Hellewell
