@@ -70,7 +70,7 @@
 #' # future::plan("multiprocess")
 #'
 #' ## Run parameter sweep
-#' sweep_results <- ringbp::parameter_sweep(
+#' sweep_results <- parameter_sweep(
 #'   scenarios,
 #'   sim_fn = sim_with_params,
 #'   samples = 1
