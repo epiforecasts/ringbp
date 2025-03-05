@@ -102,6 +102,7 @@ res <- scenario_sim(
   prop.asym = 0,
   prop.ascertain = 0
 )
+res
 }
 \author{
 Joel Hellewell

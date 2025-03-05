@@ -40,6 +40,7 @@
 #'   prop.asym = 0,
 #'   prop.ascertain = 0
 #' )
+#' res
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
                          delay_shape, delay_scale, num.initial.cases, prop.asym,

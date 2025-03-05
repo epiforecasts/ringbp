@@ -31,6 +31,7 @@
 #'   k = 1.95,
 #'   prop.asym = 0
 #' )
+#' outbreak_setup
 outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)

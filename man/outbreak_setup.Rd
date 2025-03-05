@@ -51,6 +51,7 @@ outbreak_setup(
   k = 1.95,
   prop.asym = 0
 )
+outbreak_setup
 }
 \author{
 Joel Hellewell
