@@ -52,6 +52,7 @@
 #'   quarantine = FALSE
 #' )
 #' case_data <- out[[1]]
+#' case_data
 outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                           r0isolated = NULL, r0community = NULL,
                           prop.asym = NULL, incfn = NULL, delayfn = NULL,
