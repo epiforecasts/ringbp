@@ -41,7 +41,7 @@ Set up initial cases for branching process
 }
 \examples{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.32,dist_scale = 6.49)
+incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
 # delay distribution sampling function
 delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
 outbreak_setup(
