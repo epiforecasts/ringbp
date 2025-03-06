@@ -44,14 +44,14 @@ Set up initial cases for branching process
 incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
 # delay distribution sampling function
 delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
-outbreak_setup(
+out <- outbreak_setup(
   num.initial.cases = 1,
   incfn = incfn,
   delayfn = delayfn,
   k = 1.95,
   prop.asym = 0
 )
-outbreak_setup
+out
 }
 \author{
 Joel Hellewell

@@ -24,14 +24,14 @@
 #' incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
 #' # delay distribution sampling function
 #' delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
-#' outbreak_setup(
+#' out <- outbreak_setup(
 #'   num.initial.cases = 1,
 #'   incfn = incfn,
 #'   delayfn = delayfn,
 #'   k = 1.95,
 #'   prop.asym = 0
 #' )
-#' outbreak_setup
+#' out
 outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)
