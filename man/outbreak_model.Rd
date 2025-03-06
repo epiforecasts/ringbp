@@ -101,6 +101,7 @@ out <- outbreak_model(
   prop.asym = 0,
   quarantine = FALSE
 )
+out
 }
 \author{
 Joel Hellewell

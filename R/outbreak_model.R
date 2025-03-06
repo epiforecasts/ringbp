@@ -64,6 +64,7 @@
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )
+#' out
 outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
