@@ -85,6 +85,7 @@ case_data <- outbreak_setup(
   k = 1.95,
   prop.asym = 0
 )
+case_data
 # generate next generation of cases
 out <- outbreak_step(
   case_data = case_data,
