@@ -86,6 +86,39 @@ replicate. <code>1</code> is an outbreak that went extinct, <code>0</code> if no
     <p>Joel Hellewell</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="scenario_sim.html">scenario_sim</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n.sim <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>,</span></span>
+<span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>,</span></span>
+<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  delay_shape <span class="op">=</span> <span class="fl">1.65</span>,</span></span>
+<span class="r-in"><span>  delay_scale <span class="op">=</span> <span class="fl">4.28</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">detect_extinct</span><span class="op">(</span>outbreak_df_week <span class="op">=</span> <span class="va">res</span>, cap_cases <span class="op">=</span> <span class="fl">4500</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       sim extinct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;   &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     2       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     3       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     4       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     5       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     6       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     7       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     9       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    10       1</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

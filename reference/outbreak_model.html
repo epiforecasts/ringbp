@@ -167,32 +167,79 @@ reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.322737</span>,dist_scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># delay distribution sampling function</span></span></span>
-<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># generate initial cases</span></span></span>
-<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="outbreak_setup.html">outbreak_setup</a></span><span class="op">(</span>num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>                            incfn<span class="op">=</span><span class="va">incfn</span>,</span></span>
-<span class="r-in"><span>                            delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
-<span class="r-in"><span>                            k<span class="op">=</span><span class="fl">1.95</span>,</span></span>
-<span class="r-in"><span>                            prop.asym<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># generate next generation of cases</span></span></span>
-<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="outbreak_step.html">outbreak_step</a></span><span class="op">(</span>case_data <span class="op">=</span> <span class="va">case_data</span>,</span></span>
-<span class="r-in"><span>                           disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>                           disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>                           disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>                           r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                           r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>                           r0subclin <span class="op">=</span> <span class="fl">1.25</span>,</span></span>
-<span class="r-in"><span>                           prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                           incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
-<span class="r-in"><span>                           delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
-<span class="r-in"><span>                           prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                           k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
-<span class="r-in"><span>                           quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">outbreak_model</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>,</span></span>
+<span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>,</span></span>
+<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  r0subclin <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  delay_shape <span class="op">=</span> <span class="fl">1.65</span>,</span></span>
+<span class="r-in"><span>  delay_scale <span class="op">=</span> <span class="fl">4.28</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative effective_r0 cases_per_gen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;        &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     0            0          0            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     1            3          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     2            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     3            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     4            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     5            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     6            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     7            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     8            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     9            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    10            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    11            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    12            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:    13            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:    14            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    15            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    16            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    17            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    18            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    19            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    20            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    21            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    22            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    23            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    24            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    25            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    26            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    27            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:    28            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    29            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    30            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    31            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    32            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    33            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    34            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    35            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    36            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    37            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    38            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    39            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    40            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    41            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    42            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    43            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    44            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    45            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    46            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    47            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    48            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    49            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    50            0          3            1           2,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative effective_r0 cases_per_gen</span>
 </code></pre></div>
     </div>
   </div>

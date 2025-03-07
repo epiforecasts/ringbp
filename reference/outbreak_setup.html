@@ -104,14 +104,24 @@ are completely asymptomatic (sublinical) (between 0 and 1)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># incubation period sampling function</span></span></span>
-<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.322737</span>,dist_scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># incubation period sampling function</span></span></span>
+<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.32</span>, dist_scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># delay distribution sampling function</span></span></span>
-<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span><span class="va">delay_shape</span>, <span class="va">delay_scale</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">outbreak_setup</span><span class="op">(</span>num.initial.cases <span class="op">=</span> <span class="fl">5</span>,<span class="va">incfn</span>,<span class="va">delayfn</span>,k<span class="op">=</span><span class="fl">1.95</span>,prop.asym<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">1.65</span>, dist_scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">outbreak_setup</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
+<span class="r-in"><span>  delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure   asym caseid infector missed    onset new_cases isolated_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt; &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;    &lt;lgcl&gt;         &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0  FALSE      1        0   TRUE 8.118098        NA      9.679915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    isolated</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    FALSE</span>
 </code></pre></div>
     </div>
   </div>

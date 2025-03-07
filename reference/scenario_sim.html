@@ -173,22 +173,35 @@ the same set of parameters. The table has columns</p><ul><li><p>week: The week i
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">scenario_sim</span><span class="op">(</span>n.sim <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
-<span class="r-in"><span>cap_cases <span class="op">=</span> <span class="fl">2000</span>,</span></span>
-<span class="r-in"><span>r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>k <span class="op">=</span> <span class="fl">0.7</span>,</span></span>
-<span class="r-in"><span>delay_shape <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>delay_scale <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>prop.ascertain <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">scenario_sim</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n.sim <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
+<span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">2000</span>,</span></span>
+<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0.7</span>,</span></span>
+<span class="r-in"><span>  delay_shape <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  delay_scale <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       week weekly_cases cumulative effective_r0 cases_per_gen   sim</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;        &lt;list&gt; &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     0            5          5          0.0             0     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1            0          5          0.0             0     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     2            0          5          0.0             0     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     3            0          5          0.0             0     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     4            0          5          0.0             0     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261:    48            0          8          0.3           3,0     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262:    49            0          8          0.3           3,0     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263:    50            0          8          0.3           3,0     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264:    51            0          8          0.3           3,0     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265:    52            0          8          0.3           3,0     5</span>
 </code></pre></div>
     </div>
   </div>

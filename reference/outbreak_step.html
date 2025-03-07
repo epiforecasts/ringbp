@@ -153,29 +153,67 @@ generation</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># incubation period sampling function</span></span></span>
-<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.322737</span>,dist_scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># incubation period sampling function</span></span></span>
+<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.32</span>, dist_scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># delay distribution sampling function</span></span></span>
-<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span><span class="fl">1.651524</span>, <span class="fl">4.287786</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">1.65</span>, dist_scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># generate initial cases</span></span></span>
-<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="outbreak_setup.html">outbreak_setup</a></span><span class="op">(</span>num.initial.cases <span class="op">=</span> <span class="fl">5</span>,<span class="va">incfn</span>,<span class="va">delayfn</span>,k<span class="op">=</span><span class="fl">1.95</span>,prop.asym<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="outbreak_setup.html">outbreak_setup</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
+<span class="r-in"><span>  delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">case_data</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure   asym caseid infector missed    onset new_cases isolated_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt; &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;    &lt;lgcl&gt;         &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0  FALSE      1        0   TRUE 4.385409        NA      5.985869</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        0  FALSE      2        0   TRUE 3.446895        NA      5.047355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0  FALSE      3        0   TRUE 9.163309        NA     10.763769</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0  FALSE      4        0   TRUE 3.989371        NA      5.589831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0  FALSE      5        0   TRUE 6.167557        NA      7.768017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    isolated</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:    FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:    FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:    FALSE</span>
 <span class="r-in"><span><span class="co"># generate next generation of cases</span></span></span>
-<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu">outbreak_step</span><span class="op">(</span>case_data <span class="op">=</span> <span class="va">case_data</span>,</span></span>
-<span class="r-in"><span>disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>r0subclin <span class="op">=</span> <span class="fl">1.25</span>,</span></span>
-<span class="r-in"><span>disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
-<span class="r-in"><span>delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
-<span class="r-in"><span>prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
-<span class="r-in"><span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">outbreak_step</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  case_data <span class="op">=</span> <span class="va">case_data</span>,</span></span>
+<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  r0subclin <span class="op">=</span> <span class="fl">1.25</span>,</span></span>
+<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
+<span class="r-in"><span>  delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
+<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
+<span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">case_data</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure   asym caseid infector missed    onset new_cases isolated_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt; &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;     &lt;num&gt;         &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.000000  FALSE      1        0   TRUE 4.385409         1      5.985869</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 0.000000  FALSE      2        0   TRUE 3.446895         0      5.047355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: 0.000000  FALSE      3        0   TRUE 9.163309         0     10.763769</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: 0.000000  FALSE      4        0   TRUE 3.989371         0      5.589831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: 0.000000  FALSE      5        0   TRUE 6.167557         0      7.768017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 4.309422  FALSE      6        1   TRUE 8.740109        NA     13.278195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    isolated</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:     TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:    FALSE</span>
 </code></pre></div>
     </div>
   </div>
