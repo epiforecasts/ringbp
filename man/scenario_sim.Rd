@@ -87,22 +87,22 @@ the same set of parameters. The table has columns
 Run a specified number of simulations with identical parameters
 }
 \examples{
-\dontrun{
-res <- scenario_sim(n.sim = 5,
-num.initial.cases = 5,
-cap_max_days = 365,
-cap_cases = 2000,
-r0isolated = 0,
-r0community = 2.5,
-disp.iso = 1,
-disp.com = 0.16,
-k = 0.7,
-delay_shape = 2.5,
-delay_scale = 5,
-prop.asym = 0,
-prop.ascertain = 0)
-}
-
+res <- scenario_sim(
+  n.sim = 5,
+  num.initial.cases = 5,
+  cap_max_days = 365,
+  cap_cases = 2000,
+  r0isolated = 0,
+  r0community = 2.5,
+  disp.iso = 1,
+  disp.com = 0.16,
+  k = 0.7,
+  delay_shape = 2.5,
+  delay_scale = 5,
+  prop.asym = 0,
+  prop.ascertain = 0
+)
+res
 }
 \author{
 Joel Hellewell

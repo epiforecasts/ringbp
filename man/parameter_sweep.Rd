@@ -26,25 +26,26 @@ are included in the grid are currently hard coded. Use the \code{future} package
 outside of the function.
 }
 \examples{
-
-
-\dontrun{
+\dontshow{if (requireNamespace("data.table", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(data.table)
-
-scenarios <- data.table(expand.grid(
-delay_group = list(data.table(
- delay = c("SARS","Wuhan"),
- delay_shape = c(1.651524,2.305172),
- delay_scale = c(4.287786,9.483875)
-)),
-k_group = list(data.table(
- theta = c("<1\%","15\%","30\%"),
- k = c(1,0.88,0.47)
-)),
-index_R0 = c(1.5,2.5,3.5),
-prop.asym = c(0,  0.1),
-control_effectiveness = seq(0,1,0.2),
-num.initial.cases = c(5,20,40))
+# Put parameters that are grouped by disease into this data.table
+scenarios <- data.table(
+  expand.grid(
+    delay_group = list(data.table(
+      delay = c("SARS", "Wuhan"),
+      delay_shape = c(1.651524, 2.305172),
+      delay_scale = c(4.287786, 9.483875)
+    )),
+    k_group = list(data.table(
+      theta = c("<1\%", "15\%", "30\%"),
+      k = c(1, 0.88, 0.47)
+    )),
+    index_R0 = c(1.5, 2.5, 3.5),
+    prop.asym = c(0, 0.1),
+    control_effectiveness = seq(0, 1, 0.2),
+    num.initial.cases = c(5, 20, 40)
+  )
+)
 
 list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 non_list_cols <- setdiff(colnames(scenarios), list_cols)
@@ -58,27 +59,31 @@ scenarios <- merge(
 scenarios[, scenario :=  1:.N]
 
 ## Parameterise fixed paramters
-sim_with_params <- purrr::partial(ringbp::scenario_sim,
-                                 cap_max_days = 365,
-                                 cap_cases = 5000,
-                                 r0isolated = 0,
-                                 disp.iso= 1,
-                                 disp.subclin = 0.16,
-                                 disp.com = 0.16,
-                                 quarantine = FALSE)
+sim_with_params <- purrr::partial(
+  ringbp::scenario_sim,
+  cap_max_days = 365,
+  cap_cases = 5000,
+  r0isolated = 0,
+  disp.iso= 1,
+  disp.subclin = 0.16,
+  disp.com = 0.16,
+  quarantine = FALSE
+)
 
-
+## parameter_sweep uses the future_lapply() function
 ## Default is to run sequntially on a single core
-future::plan("sequential")
+# future::plan("sequential")
 ## Set up multicore if using see ?future::plan for details
 ## Use the workers argument to control the number of cores used.
-future::plan("multiprocess")
+# future::plan("multiprocess")
 
-
-## Run paramter sweep
-sweep_results <- ringbp::parameter_sweep(scenarios, sim_fn = sim_with_params, samples = 1)
-
+## Run parameter sweep
+sweep_results <- parameter_sweep(
+  scenarios,
+  sim_fn = sim_with_params,
+  samples = 1
+)
 
 sweep_results
-}
+\dontshow{\}) # examplesIf}
 }

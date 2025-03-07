@@ -19,6 +19,10 @@ partial function that takes a numeric argument for number of samples
 \description{
 Create partial function to sample from gamma distributions
 }
+\examples{
+incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
+incfn(5)
+}
 \author{
 Joel Hellewell
 }

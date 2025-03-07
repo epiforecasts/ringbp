@@ -73,29 +73,37 @@ generation
 Move forward one generation in the branching process
 }
 \examples{
-
-\dontrun{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
 # delay distribution sampling function
-delayfn <- dist_setup(1.651524, 4.287786)
+delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
 # generate initial cases
-case_data <- outbreak_setup(num.initial.cases = 5,incfn,delayfn,k=1.95,prop.asym=0)
+case_data <- outbreak_setup(
+  num.initial.cases = 5,
+  incfn = incfn,
+  delayfn = delayfn,
+  k = 1.95,
+  prop.asym = 0
+)
+case_data
 # generate next generation of cases
-case_data <- outbreak_step(case_data = case_data,
-disp.iso = 1,
-disp.com = 0.16,
-r0isolated = 0,
-r0subclin = 1.25,
-disp.subclin = 0.16,
-r0community = 2.5,
-prop.asym = 0,
-incfn = incfn,
-delayfn = delayfn,
-prop.ascertain = 0,
-k = 1.95,
-quarantine = FALSE)[[1]]
-}
+out <- outbreak_step(
+  case_data = case_data,
+  disp.iso = 1,
+  disp.com = 0.16,
+  disp.subclin = 0.16,
+  r0isolated = 0,
+  r0subclin = 1.25,
+  r0community = 2.5,
+  prop.asym = 0,
+  incfn = incfn,
+  delayfn = delayfn,
+  prop.ascertain = 0,
+  k = 1.95,
+  quarantine = FALSE
+)
+case_data <- out[[1]]
+case_data
 }
 \author{
 Joel Hellewell
