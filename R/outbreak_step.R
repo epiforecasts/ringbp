@@ -7,8 +7,8 @@
 #' @inheritParams outbreak_model
 #' @param incfn a `function` that samples from incubation period Weibull
 #'   distribution
-#' @param delayfn a `function` that samples from the onset-to-hospitalisation
-#'   delay Weibull distribution
+#' @param onset_to_isolation a `function` that samples from the
+#'   onset-to-hospitalisation delay Weibull distribution
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom purrr map2 map2_dbl map_lgl
@@ -26,12 +26,12 @@
 #' # incubation period sampling function
 #' incfn <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
 #' # delay distribution sampling function
-#' delayfn <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
+#' onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
 #' # generate initial cases
 #' case_data <- outbreak_setup(
 #'   num.initial.cases = 5,
 #'   incfn = incfn,
-#'   delayfn = delayfn,
+#'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
 #'   prop.asym = 0
 #' )
@@ -47,7 +47,7 @@
 #'   r0community = 2.5,
 #'   prop.asym = 0,
 #'   incfn = incfn,
-#'   delayfn = delayfn,
+#'   onset_to_isolation = onset_to_isolation,
 #'   prop.ascertain = 0,
 #'   k = 1.95,
 #'   quarantine = FALSE
@@ -56,9 +56,10 @@
 #' case_data
 outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                           r0isolated = NULL, r0community = NULL,
-                          prop.asym = NULL, incfn = NULL, delayfn = NULL,
-                          prop.ascertain = NULL, k = NULL, quarantine = NULL,
-                          r0subclin = NULL, disp.subclin = NULL) {
+                          prop.asym = NULL, incfn = NULL,
+                          onset_to_isolation = NULL, prop.ascertain = NULL,
+                          k = NULL, quarantine = NULL, r0subclin = NULL,
+                          disp.subclin = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
@@ -137,11 +138,11 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   prob_samples[, isolated_time := ifelse(vect_isTRUE(asym), Inf,
                                         # If you are not asymptomatic, but you are missed,
                                         # you are isolated at your symptom onset
-                                        ifelse(vect_isTRUE(missed), onset + delayfn(1),
+                                        ifelse(vect_isTRUE(missed), onset + onset_to_isolation(1),
                                                # If you are not asymptomatic and you are traced,
                                                # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
                                                ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      pmin(onset + delayfn(1), pmax(onset, infector_iso_time)),
+                                                      pmin(onset + onset_to_isolation(1), pmax(onset, infector_iso_time)),
                                                       infector_iso_time)))]
 
 

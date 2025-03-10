@@ -23,16 +23,16 @@
 #' # incubation period sampling function
 #' incfn <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
 #' # delay distribution sampling function
-#' delayfn <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
+#' onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
 #' out <- outbreak_setup(
 #'   num.initial.cases = 1,
 #'   incfn = incfn,
-#'   delayfn = delayfn,
+#'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
 #'   prop.asym = 0
 #' )
 #' out
-outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
+outbreak_setup <- function(num.initial.cases, incfn, onset_to_isolation, k, prop.asym) {
   # Set up table of initial cases
   inc_samples <- incfn(num.initial.cases)
 
@@ -45,7 +45,7 @@ outbreak_setup <- function(num.initial.cases, incfn, delayfn, k, prop.asym) {
                           new_cases = NA)
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
-  case_data <- case_data[, isolated_time := onset + delayfn(1)
+  case_data <- case_data[, isolated_time := onset + onset_to_isolation(1)
                          ][, isolated := FALSE]
 
   case_data$isolated_time[case_data$asym] <- Inf

@@ -12,7 +12,7 @@ outbreak_step(
   r0community = NULL,
   prop.asym = NULL,
   incfn = NULL,
-  delayfn = NULL,
+  onset_to_isolation = NULL,
   prop.ascertain = NULL,
   k = NULL,
   quarantine = NULL,
@@ -42,8 +42,8 @@ are completely asymptomatic (sublinical) (between 0 and 1)}
 \item{incfn}{a \code{function} that samples from incubation period Weibull
 distribution}
 
-\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
-delay Weibull distribution}
+\item{onset_to_isolation}{a \code{function} that samples from the
+onset-to-hospitalisation delay Weibull distribution}
 
 \item{prop.ascertain}{a nonnegative \code{numeric} scalar: proportion of
 infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
@@ -76,12 +76,12 @@ Move forward one generation in the branching process
 # incubation period sampling function
 incfn <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
-delayfn <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
+onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
 # generate initial cases
 case_data <- outbreak_setup(
   num.initial.cases = 5,
   incfn = incfn,
-  delayfn = delayfn,
+  onset_to_isolation = onset_to_isolation,
   k = 1.95,
   prop.asym = 0
 )
@@ -97,7 +97,7 @@ out <- outbreak_step(
   r0community = 2.5,
   prop.asym = 0,
   incfn = incfn,
-  delayfn = delayfn,
+  onset_to_isolation = onset_to_isolation,
   prop.ascertain = 0,
   k = 1.95,
   quarantine = FALSE

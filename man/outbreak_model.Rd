@@ -16,7 +16,7 @@ outbreak_model(
   disp.com = NULL,
   disp.subclin = NULL,
   k,
-  delayfn,
+  onset_to_isolation,
   prop.asym = NULL,
   quarantine = NULL
 )
@@ -55,9 +55,9 @@ sub-clincial non-isolated cases (must be >0)}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{delayfn}{a \code{function}: a random number generating \code{function} that
-accepts a single \code{integer} argument specifying the length of the
-\code{function} output.}
+\item{onset_to_isolation}{a \code{function}: a random number generating
+\code{function} that accepts a single \code{integer} argument specifying the
+length of the \code{function} output.}
 
 \item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
@@ -93,7 +93,7 @@ out <- outbreak_model(
   disp.com = 0.16,
   disp.subclin = 0.16,
   k = 0,
-  delayfn = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
+  onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
   prop.asym = 0,
   quarantine = FALSE
 )

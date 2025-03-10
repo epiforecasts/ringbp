@@ -21,9 +21,9 @@
 #'   `TRUE` then traced contacts are isolated before symptom onset
 #' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
 #'   are completely asymptomatic (sublinical) (between 0 and 1)
-#' @param delayfn a `function`: a random number generating `function` that
-#'   accepts a single `integer` argument specifying the length of the
-#'   `function` output.
+#' @param onset_to_isolation a `function`: a random number generating
+#'   `function` that accepts a single `integer` argument specifying the
+#'   length of the `function` output.
 #' @param num.initial.cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
@@ -58,7 +58,7 @@
 #'   disp.com = 0.16,
 #'   disp.subclin = 0.16,
 #'   k = 0,
-#'   delayfn = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )
@@ -68,7 +68,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
-                           k, delayfn, prop.asym = NULL,
+                           k, onset_to_isolation, prop.asym = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
@@ -85,7 +85,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
                             incfn = incfn,
                             prop.asym = prop.asym,
-                            delayfn = delayfn,
+                            onset_to_isolation = onset_to_isolation,
                             k = k)
 
   # Preallocate
@@ -104,7 +104,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              r0community = r0community,
                              r0subclin = r0subclin,
                              incfn = incfn,
-                             delayfn = delayfn,
+                             onset_to_isolation = onset_to_isolation,
                              prop.ascertain = prop.ascertain,
                              k = k,
                              quarantine = quarantine,

@@ -33,7 +33,7 @@ scenarios <- data.table(
   expand.grid(
     delay_group = list(data.table(
       delay = c("SARS", "Wuhan"),
-      delayfn = c(
+      onset_to_isolation = c(
         \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
         \(x) stats::rweibull(n = x, shape = 2.305172, scale = 9.483875)
       )
