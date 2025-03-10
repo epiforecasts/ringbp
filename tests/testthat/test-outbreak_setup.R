@@ -3,9 +3,9 @@ context("Test basic usage")
 set.seed(20200410)
 
 test_that("A basic sim setup returns the correct object", {
-  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 5,
@@ -21,9 +21,9 @@ test_that("A basic sim setup returns the correct object", {
 })
 
 test_that("asym arg works properly", {
-  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   # All asymptomatics
   all_asym <- outbreak_setup(

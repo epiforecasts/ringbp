@@ -2,32 +2,6 @@ context("Test all aux functions")
 
 set.seed(515)
 
-test_that("dist_setup returns a partialised function", {
-  r1 <- dist_setup(0.1, 2)
-  expect_error(r1(20), NA)
-  expect_true(inherits(r1, 'purrr_function_partial'))
-})
-
-test_that("dist_setup parameters behave as expected", {
-  f1 <- dist_setup(1, 0.01)
-  f2 <- dist_setup(1, 1e5)
-  r1 <- f1(1e5)
-  r2 <- f2(1e5)
-
-  expect_lt(mean(r1), mean(r2))
-  expect_true(inherits(f1, 'purrr_function_partial'))
-  expect_true(is.numeric(r1))
-  expect_length(r1, 1e5)
-
-  f3 <- dist_setup(0.01, 10)
-  r3 <- f3(1e5)
-  expect_gt(mean(r3), median(r3))
-
-  f4 <- dist_setup(50, 10)
-  r4 <- f4(1e5)
-  expect_lt(mean(r4), median(r4))
-})
-
 test_that("inf_fn parameters behave as expected", {
   r1 <- inf_fn(c(1, 4, 1), 2)
   expect_length(r1, 3)
@@ -209,7 +183,7 @@ test_that('extinct_prob week_range argument works', {
 
   r5b <- extinct_prob(res5, cap_cases = cap, week_range = 2)
   expect_equal(r5b, 1)
-  
+
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
   # extinction). Test here that week_range 1:2 says no extinction and neither
   # does week_range 2.
@@ -296,7 +270,7 @@ test_that('detect_extinct works', {
 
   expect5 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r5, expect5)
-  
+
   r5b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
   # The types in the output is a bit random. So just force all to doubles.
   r5b <- data.table(r5b)[, lapply(.SD, as.double)]

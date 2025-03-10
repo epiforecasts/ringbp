@@ -3,9 +3,9 @@ context("Test basic usage")
 set.seed(123456)
 
 test_that("A basic sim returns the correct object", {
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
@@ -55,9 +55,9 @@ test_that("A basic sim returns the correct object", {
 })
 
 test_that("Sim with multiple infectors makes senes", {
-  incfn <- dist_setup(dist_shape = 2.322737, dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 2,
@@ -89,9 +89,9 @@ test_that("Sim with multiple infectors makes senes", {
 
 
 test_that("R0isolated is working properly", {
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
@@ -136,9 +136,9 @@ test_that("R0isolated is working properly", {
 })
 
 test_that('Test a bunch of args',{
-  incfn <- dist_setup(dist_shape = 2.322737,dist_scale = 6.492272)
+  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
-  delayfn <- dist_setup(2, 4)
+  delayfn <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
