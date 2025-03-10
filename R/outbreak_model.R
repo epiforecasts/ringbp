@@ -24,6 +24,10 @@
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
+#' @param incfn a `function`: a random number generating `function` that
+#'   samples from incubation period distribution, the `function` accepts a
+#'   single `integer` argument specifying the number of times to sample
+#'   the incubation period (i.e. length of the `function` output).
 #' @param num.initial.cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
@@ -59,6 +63,7 @@
 #'   disp.subclin = 0.16,
 #'   k = 0,
 #'   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   incfn = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )
@@ -68,13 +73,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
-                           k, onset_to_isolation, prop.asym = NULL,
+                           k, onset_to_isolation, incfn, prop.asym = NULL,
                            quarantine = NULL) {
-
-  # Set up functions to sample from distributions
-  # incubation period sampling function
-  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
-  # shape = 3.303525, scale = 6.68849 # incubation function for ECDC run
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases

@@ -36,13 +36,14 @@
 #'   disp.com = 0.16,
 #'   k = 0.7,
 #'   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+#'   incfn = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   prop.ascertain = 0
 #' )
 #' res
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
-                         onset_to_isolation, num.initial.cases, prop.asym,
+                         onset_to_isolation, incfn, num.initial.cases, prop.asym,
                          quarantine, r0subclin = NULL, disp.subclin = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
@@ -65,6 +66,7 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
                                              onset_to_isolation = onset_to_isolation,
+                                             incfn = incfn,
                                              k = k,
                                              prop.asym = prop.asym,
                                              quarantine = quarantine))

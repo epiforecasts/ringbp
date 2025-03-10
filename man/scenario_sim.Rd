@@ -15,6 +15,7 @@ scenario_sim(
   disp.com,
   k,
   onset_to_isolation,
+  incfn,
   num.initial.cases,
   prop.asym,
   quarantine,
@@ -52,6 +53,11 @@ interval from the incubation period}
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the
 length of the \code{function} output.}
+
+\item{incfn}{a \code{function}: a random number generating \code{function} that
+samples from incubation period distribution, the \code{function} accepts a
+single \code{integer} argument specifying the number of times to sample
+the incubation period (i.e. length of the \code{function} output).}
 
 \item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
@@ -95,6 +101,7 @@ res <- scenario_sim(
   disp.com = 0.16,
   k = 0.7,
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+  incfn = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
   prop.asym = 0,
   prop.ascertain = 0
 )

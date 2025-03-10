@@ -10,8 +10,10 @@ outbreak_setup(num.initial.cases, incfn, onset_to_isolation, k, prop.asym)
 \item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{incfn}{a \code{function} that samples from incubation period Weibull
-distribution}
+\item{incfn}{a \code{function}: a random number generating \code{function} that
+samples from incubation period distribution, the \code{function} accepts a
+single \code{integer} argument specifying the number of times to sample
+the incubation period (i.e. length of the \code{function} output).}
 
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the

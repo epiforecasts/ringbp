@@ -39,8 +39,10 @@ non-isolated cases (must be >0)}
 \item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
-\item{incfn}{a \code{function} that samples from incubation period Weibull
-distribution}
+\item{incfn}{a \code{function}: a random number generating \code{function} that
+samples from incubation period distribution, the \code{function} accepts a
+single \code{integer} argument specifying the number of times to sample
+the incubation period (i.e. length of the \code{function} output).}
 
 \item{onset_to_isolation}{a \code{function} that samples from the
 onset-to-hospitalisation delay Weibull distribution}
