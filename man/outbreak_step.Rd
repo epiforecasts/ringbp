@@ -40,10 +40,10 @@ non-isolated cases (must be >0)}
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{incfn}{a \code{function} that samples from incubation period Weibull
-distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+distribution}
 
 \item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
-delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+delay Weibull distribution}
 
 \item{prop.ascertain}{a nonnegative \code{numeric} scalar: proportion of
 infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
@@ -74,9 +74,9 @@ Move forward one generation in the branching process
 }
 \examples{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
+incfn <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
-delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
+delayfn <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
 # generate initial cases
 case_data <- outbreak_setup(
   num.initial.cases = 5,

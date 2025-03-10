@@ -1,25 +1,3 @@
-#' Create partial function to sample from gamma distributions
-#' @author Joel Hellewell
-#' @param dist_shape a positive `numeric` scalar: shape parameter of Weibull
-#'   distribution
-#' @param dist_scale a positive `numeric` scalar: scale parameter of Weibull
-#'   distribution
-#'
-#' @return partial function that takes a numeric argument for number of samples
-#' @export
-#' @importFrom purrr partial
-#'
-#' @examples
-#' incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
-#' incfn(5)
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                 shape = dist_shape,
-                 scale = dist_scale)
-  return(out)
-}
-
-
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp a positive `numeric` vector: samples from the incubation
