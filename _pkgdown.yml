@@ -7,7 +7,6 @@ reference:
   - title: Helper functions
   - subtitle: Probability distribution manipulation
     contents:
-    - dist_setup
     - inf_fn
   - subtitle: Loop wrappers for scenario modelling
     contents:
