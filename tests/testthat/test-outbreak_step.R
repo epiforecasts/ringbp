@@ -3,13 +3,13 @@ context("Test basic usage")
 set.seed(123456)
 
 test_that("A basic sim returns the correct object", {
-  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation  =  onset_to_isolation,
     k = 1.95,
     prop.asym = 0
@@ -23,7 +23,7 @@ test_that("A basic sim returns the correct object", {
     r0isolated = 0,
     r0community = 500, # almost guarentees to get new cases
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -44,7 +44,7 @@ test_that("A basic sim returns the correct object", {
     r0isolated = 0,
     r0community = 0, # almost guarentees to get new cases
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -55,13 +55,13 @@ test_that("A basic sim returns the correct object", {
 })
 
 test_that("Sim with multiple infectors makes senes", {
-  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 2,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop.asym = 0
@@ -75,7 +75,7 @@ test_that("Sim with multiple infectors makes senes", {
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -89,13 +89,13 @@ test_that("Sim with multiple infectors makes senes", {
 
 
 test_that("R0isolated is working properly", {
-  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop.asym = 0
@@ -110,7 +110,7 @@ test_that("R0isolated is working properly", {
     r0isolated = 0, # Shoiuld get zero cases
     r0community = 500, # Case is isolated so irrelevent
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -126,7 +126,7 @@ test_that("R0isolated is working properly", {
     r0isolated = 500, # Shoiuld get lots of cases
     r0community = 0, # Case is isolated so irrelevent
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -136,13 +136,13 @@ test_that("R0isolated is working properly", {
 })
 
 test_that('Test a bunch of args',{
-  incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     num.initial.cases = 1,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
     prop.asym = 0
@@ -156,7 +156,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0,
     k = 1.95,
@@ -171,7 +171,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 1,
     k = 1.95,
@@ -187,7 +187,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 100000, # To test a mix make sure there's loads of cases.
     prop.asym = 0,
-    incfn = incfn,
+    incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop.ascertain = 0.5,
     k = 1.95,

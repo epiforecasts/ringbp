@@ -17,7 +17,7 @@ outbreak_model(
   disp.subclin = NULL,
   k,
   onset_to_isolation,
-  incfn,
+  incubation_period,
   prop.asym = NULL,
   quarantine = NULL
 )
@@ -60,10 +60,11 @@ interval from the incubation period}
 \code{function} that accepts a single \code{integer} argument specifying the
 length of the \code{function} output.}
 
-\item{incfn}{a \code{function}: a random number generating \code{function} that
-samples from incubation period distribution, the \code{function} accepts a
-single \code{integer} argument specifying the number of times to sample
-the incubation period (i.e. length of the \code{function} output).}
+\item{incubation_period}{a \code{function}: a random number generating
+\code{function} that samples from incubation period distribution, the
+\code{function} accepts a single \code{integer} argument specifying the number of
+times to sample the incubation period (i.e. length of the \code{function}
+output).}
 
 \item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
@@ -100,7 +101,7 @@ out <- outbreak_model(
   disp.subclin = 0.16,
   k = 0,
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
-  incfn = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+  incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
   prop.asym = 0,
   quarantine = FALSE
 )

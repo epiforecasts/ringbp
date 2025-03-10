@@ -48,7 +48,7 @@ test_that('extinct_prob works as expected', {
     disp.com = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop.asym = 0,
     prop.ascertain = 0
   )
@@ -92,7 +92,7 @@ test_that('extinct_prob works as expected', {
     disp.com = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop.asym = 0,
     prop.ascertain = 0
   )
@@ -112,7 +112,7 @@ test_that('extinct_prob works as expected', {
     disp.com = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop.asym = 0,
     prop.ascertain = 0
   )
@@ -135,7 +135,7 @@ test_that('extinct_prob week_range argument works', {
     disp.com = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop.asym = 0,
     prop.ascertain = 0
   )
@@ -211,7 +211,7 @@ test_that('detect_extinct works', {
     disp.com = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop.asym = 0,
     prop.ascertain = 0
   )

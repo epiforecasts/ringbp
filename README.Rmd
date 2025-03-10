@@ -56,7 +56,7 @@ res <- scenario_sim(
   disp.com = 0.16, ## dispersion parameter in the community
   disp.iso = 1, ## dispersion  parameter of those isolated
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786), ## time from onset to isolation
-  incfn = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+  incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), ## incubation period
   k = 0, ## skew of generation interval to be beyond onset of symptoms
   quarantine = FALSE ## whether quarantine is in effect
 )

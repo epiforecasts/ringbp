@@ -22,13 +22,13 @@
 #'
 #' @examples
 #' # incubation period sampling function
-#' incfn <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
+#' incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
 #' # delay distribution sampling function
 #' onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
 #' # generate initial cases
 #' case_data <- outbreak_setup(
 #'   num.initial.cases = 5,
-#'   incfn = incfn,
+#'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
 #'   prop.asym = 0
@@ -44,7 +44,7 @@
 #'   r0subclin = 1.25,
 #'   r0community = 2.5,
 #'   prop.asym = 0,
-#'   incfn = incfn,
+#'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   prop.ascertain = 0,
 #'   k = 1.95,
@@ -54,7 +54,7 @@
 #' case_data
 outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                           r0isolated = NULL, r0community = NULL,
-                          prop.asym = NULL, incfn = NULL,
+                          prop.asym = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop.ascertain = NULL,
                           k = NULL, quarantine = NULL, r0subclin = NULL,
                           disp.subclin = NULL) {
@@ -90,7 +90,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   }
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
-  inc_samples <- incfn(total_new_cases)
+  inc_samples <- incubation_period(total_new_cases)
 
   prob_samples <- data.table(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
