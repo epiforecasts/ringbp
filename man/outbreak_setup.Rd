@@ -13,8 +13,9 @@ or starting cases which are all assumed to be missed.}
 \item{incfn}{a \code{function} that samples from incubation period Weibull
 distribution}
 
-\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
-delay Weibull distribution}
+\item{delayfn}{a \code{function}: a random number generating \code{function} that
+accepts a single \code{integer} argument specifying the length of the
+\code{function} output.}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}

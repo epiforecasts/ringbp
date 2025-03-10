@@ -25,8 +25,10 @@
 #'   expand.grid(
 #'     delay_group = list(data.table(
 #'       delay = c("SARS", "Wuhan"),
-#'       delay_shape = c(1.651524, 2.305172),
-#'       delay_scale = c(4.287786, 9.483875)
+#'       delayfn = c(
+#'         \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
+#'         \(x) stats::rweibull(n = x, shape = 2.305172, scale = 9.483875)
+#'       )
 #'     )),
 #'     k_group = list(data.table(
 #'       theta = c("<1%", "15%", "30%"),
@@ -96,8 +98,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       r0subclin = ifelse(
         "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
       k = x$k,
-      delay_shape = x$delay_shape,
-      delay_scale = x$delay_scale,
+      delayfn = x$delayfn,
       prop.ascertain = x$control_effectiveness,
       quarantine = x$quarantine,
       prop.asym = x$prop.asym

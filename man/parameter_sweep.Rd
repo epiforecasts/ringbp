@@ -33,8 +33,10 @@ scenarios <- data.table(
   expand.grid(
     delay_group = list(data.table(
       delay = c("SARS", "Wuhan"),
-      delay_shape = c(1.651524, 2.305172),
-      delay_scale = c(4.287786, 9.483875)
+      delayfn = c(
+        \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
+        \(x) stats::rweibull(n = x, shape = 2.305172, scale = 9.483875)
+      )
     )),
     k_group = list(data.table(
       theta = c("<1\%", "15\%", "30\%"),

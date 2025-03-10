@@ -21,10 +21,9 @@
 #'   `TRUE` then traced contacts are isolated before symptom onset
 #' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
 #'   are completely asymptomatic (sublinical) (between 0 and 1)
-#' @param delay_shape a positive `numeric` scalar: shape parameter of delay
-#'   distribution
-#' @param delay_scale a positive `numeric` scalar: scale parameter of delay
-#'   distribution
+#' @param delayfn a `function`: a random number generating `function` that
+#'   accepts a single `integer` argument specifying the length of the
+#'   `function` output.
 #' @param num.initial.cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
@@ -59,8 +58,7 @@
 #'   disp.com = 0.16,
 #'   disp.subclin = 0.16,
 #'   k = 0,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   delayfn = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )
@@ -70,18 +68,13 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
-                           k, delay_shape = NULL,
-                           delay_scale = NULL, prop.asym = NULL,
+                           k, delayfn, prop.asym = NULL,
                            quarantine = NULL) {
 
   # Set up functions to sample from distributions
   # incubation period sampling function
   incfn <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # shape = 3.303525, scale = 6.68849 # incubation function for ECDC run
-  # onset to isolation delay sampling function
-  delayfn <- \(x) stats::rweibull(
-    n = x, shape = delay_shape, scale = delay_scale
-  )
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases

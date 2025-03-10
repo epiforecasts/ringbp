@@ -41,8 +41,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #'   r0community = 2.5,
 #'   disp.com = 0.16,
 #'   disp.iso = 1,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   delayfn = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   k = 0,
 #'   quarantine = FALSE
 #' )
@@ -85,8 +84,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #'   r0community = 2.5,
 #'   disp.com = 0.16,
 #'   disp.iso = 1,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   delayfn = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   k = 0,
 #'   quarantine = FALSE
 #' )

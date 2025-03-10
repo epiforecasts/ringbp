@@ -14,8 +14,7 @@ scenario_sim(
   disp.iso,
   disp.com,
   k,
-  delay_shape,
-  delay_scale,
+  delayfn,
   num.initial.cases,
   prop.asym,
   quarantine,
@@ -50,11 +49,9 @@ non-isolated cases (must be >0)}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{delay_shape}{a positive \code{numeric} scalar: shape parameter of delay
-distribution}
-
-\item{delay_scale}{a positive \code{numeric} scalar: scale parameter of delay
-distribution}
+\item{delayfn}{a \code{function}: a random number generating \code{function} that
+accepts a single \code{integer} argument specifying the length of the
+\code{function} output.}
 
 \item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
@@ -97,8 +94,7 @@ res <- scenario_sim(
   disp.iso = 1,
   disp.com = 0.16,
   k = 0.7,
-  delay_shape = 2.5,
-  delay_scale = 5,
+  delayfn = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
   prop.asym = 0,
   prop.ascertain = 0
 )
