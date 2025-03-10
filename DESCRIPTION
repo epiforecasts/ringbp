@@ -36,7 +36,7 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
 RoxygenNote: 7.3.2
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports: 
     data.table,
     future.apply,
