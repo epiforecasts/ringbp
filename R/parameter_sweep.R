@@ -98,7 +98,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       r0subclin = ifelse(
         "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
       k = x$k,
-      onset_to_isolation = x$onset_to_isolation,
+      onset_to_isolation = x$onset_to_isolation[[1]],
+      incubation_period = x$incubation_period[[1]],
       prop.ascertain = x$control_effectiveness,
       quarantine = x$quarantine,
       prop.asym = x$prop.asym
