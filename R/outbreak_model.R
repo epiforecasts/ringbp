@@ -63,8 +63,8 @@
 #'   disp.com = 0.16,
 #'   disp.subclin = 0.16,
 #'   k = 0,
-#'   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
-#'   incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )

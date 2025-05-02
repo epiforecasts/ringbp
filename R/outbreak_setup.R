@@ -21,9 +21,9 @@
 #'
 #' @examples
 #' # incubation period sampling function
-#' incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
+#' incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 #' # delay distribution sampling function
-#' onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
+#' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 #' out <- outbreak_setup(
 #'   num.initial.cases = 1,
 #'   incubation_period = incubation_period,

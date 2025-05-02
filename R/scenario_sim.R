@@ -35,8 +35,8 @@
 #'   disp.iso = 1,
 #'   disp.com = 0.16,
 #'   k = 0.7,
-#'   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-#'   incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   prop.ascertain = 0
 #' )

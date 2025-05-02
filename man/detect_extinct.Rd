@@ -36,8 +36,8 @@ res <- scenario_sim(
   r0community = 2.5,
   disp.com = 0.16,
   disp.iso = 1,
-  onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28),
-  incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
+  onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+  incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
   k = 0,
   quarantine = FALSE
 )

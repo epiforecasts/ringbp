@@ -34,8 +34,8 @@ scenarios <- data.table(
     delay_group = list(data.table(
       delay = c("SARS", "Wuhan"),
       onset_to_isolation = c(
-        \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
-        \(x) stats::rweibull(n = x, shape = 2.305172, scale = 9.483875)
+        \(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+        \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
       )
     )),
     k_group = list(data.table(
@@ -61,7 +61,7 @@ scenarios <- merge(
 )
 scenarios[, scenario :=  1:.N]
 
-incub <- \(x) stats::rweibull(n = x, shape = 1.65, scale = 4.28)
+incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 scenarios[, incubation_period := rep(list(incub), .N)]
 
 ## Parameterise fixed paramters
