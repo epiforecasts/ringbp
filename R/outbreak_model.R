@@ -84,10 +84,10 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
 
   # Initial setup
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
-                            incubation_period = incubation_period,
-                            prop.asym = prop.asym,
-                            onset_to_isolation = onset_to_isolation,
-                            k = k)
+                              incubation_period = incubation_period,
+                              onset_to_isolation = onset_to_isolation,
+                              k = k,
+                              prop.asym = prop.asym)
 
   # Preallocate
   effective_r0_vect <- c()
