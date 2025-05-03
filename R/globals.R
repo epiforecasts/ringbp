@@ -32,7 +32,6 @@ utils::globalVariables(c(
   ".N", # <parameter_sweep>
   ":=", # <parameter_sweep>
   "sims", # <parameter_sweep>
-  ":=", # <scenario_sim>
-  "sim", # <scenario_sim>
+  "data", # <parameter_sweep>
   NULL
 ))
