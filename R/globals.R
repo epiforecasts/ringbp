@@ -10,20 +10,24 @@ utils::globalVariables(c(
   "onset", # <outbreak_model>
   ".N", # <outbreak_model>
   "cumulative", # <outbreak_model>
+  "asym", # <outbreak_setup>
   ":=", # <outbreak_setup>
   "isolated_time", # <outbreak_setup>
   "onset", # <outbreak_setup>
-  "isolated", # <outbreak_setup>
+  ".N", # <outbreak_setup>
   ":=", # <outbreak_step>
   "new_cases", # <outbreak_step>
+  ".N", # <outbreak_step>
   "isolated", # <outbreak_step>
   "asym", # <outbreak_step>
+  "onset", # <outbreak_step>
+  "caseid", # <outbreak_step>
+  "isolated_time", # <outbreak_step>
   "exposure", # <outbreak_step>
   "infector_iso_time", # <outbreak_step>
   "incubfn_sample", # <outbreak_step>
-  "isolated_time", # <outbreak_step>
+  "infector_asym", # <outbreak_step>
   "missed", # <outbreak_step>
-  "onset", # <outbreak_step>
   "scenario", # <parameter_sweep>
   ".N", # <parameter_sweep>
   ":=", # <parameter_sweep>
