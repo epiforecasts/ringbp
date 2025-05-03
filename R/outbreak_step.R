@@ -10,6 +10,7 @@
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom stats rbinom
+#' @importFrom stats runif
 #'
 #' @return A `list` with three elements:
 #'   1. `$cases`: a `data.table` with case data
@@ -85,7 +86,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   }
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
-  prob_samples <- new_case_data[, .(
+  prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
     exposure = inf_fn(rep(onset, new_cases), k),
     # records the infector of each new person
@@ -120,10 +121,10 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
       asym == TRUE, Inf, fifelse(
       # If not asymptomatic, but are missed, isolated at your symptom onset
       missed == TRUE, ref_time,
-      if (quarantine == TRUE) infector_iso_time else
+      if (!is.null(quarantine) && (quarantine == TRUE)) infector_iso_time else
       # if symptomatic & traced, and infectors not quarantined
-      pmin(onset + ref_time, pmax(onset, infector_iso_time)
-  )))}]
+      pmin(ref_time, pmax(onset, infector_iso_time))
+    ))}]
 
   # Chop out unneeded sample columns
   prob_samples[, c("incubfn_sample", "infector_iso_time", "infector_asym") := NULL]
