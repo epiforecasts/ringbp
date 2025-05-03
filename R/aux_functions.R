@@ -17,9 +17,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
                  omega = 2,
                  alpha = k)
 
-  out <- ifelse(out < 1, 1, out)
-
-  return(out)
+  return(pmax(1, out))
 }
 
 #' Calculate proportion of runs that have controlled outbreak
