@@ -5,19 +5,13 @@ utils::globalVariables(c(
   "weekly_cases", # <detect_extinct>
   "cumulative", # <detect_extinct>
   "sim", # <detect_extinct>
-  ":=", # <outbreak_model>
   "week", # <outbreak_model>
   "onset", # <outbreak_model>
-  ".N", # <outbreak_model>
   "cumulative", # <outbreak_model>
   "asym", # <outbreak_setup>
-  ":=", # <outbreak_setup>
   "isolated_time", # <outbreak_setup>
   "onset", # <outbreak_setup>
-  ".N", # <outbreak_setup>
-  ":=", # <outbreak_step>
   "new_cases", # <outbreak_step>
-  ".N", # <outbreak_step>
   "isolated", # <outbreak_step>
   "asym", # <outbreak_step>
   "onset", # <outbreak_step>
@@ -29,8 +23,6 @@ utils::globalVariables(c(
   "infector_asym", # <outbreak_step>
   "missed", # <outbreak_step>
   "scenario", # <parameter_sweep>
-  ".N", # <parameter_sweep>
-  ":=", # <parameter_sweep>
   "sims", # <parameter_sweep>
   "data", # <parameter_sweep>
   NULL
