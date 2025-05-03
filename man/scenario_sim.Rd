@@ -104,7 +104,8 @@ res <- scenario_sim(
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
   prop.asym = 0,
-  prop.ascertain = 0
+  prop.ascertain = 0,
+  quarantine = TRUE
 )
 res
 }

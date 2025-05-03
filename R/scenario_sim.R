@@ -4,15 +4,7 @@
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
-#' @importFrom purrr safely
-#' @importFrom stats as.formula
-#' @importFrom stats dist
-#' @importFrom stats dweibull
-#' @importFrom stats dnbinom
-#' @importFrom stats median
-#' @importFrom stats quantile
-#' @importFrom stats rweibull
-#' @importFrom utils data
+#' @importFrom data.table rbindlist
 #' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
 #' * week: The week in the simulation.
