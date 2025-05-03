@@ -43,7 +43,7 @@ outbreak_setup <- function(num.initial.cases, incubation_period, onset_to_isolat
     missed = TRUE,
     onset = incubation_period(num.initial.cases),
     new_cases = NA,
-    isolated_time := Inf
+    isolated_time = Inf
   )
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
