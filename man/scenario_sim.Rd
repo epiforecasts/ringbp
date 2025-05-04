@@ -18,7 +18,7 @@ scenario_sim(
   incubation_period,
   num.initial.cases,
   prop.asym,
-  quarantine,
+  quarantine = NULL,
   r0subclin = NULL,
   disp.subclin = NULL
 )

@@ -11,6 +11,7 @@
 #' @importFrom data.table data.table rbindlist
 #' @importFrom stats rbinom
 #' @importFrom stats runif
+#' @importFrom stats rnbinom
 #'
 #' @return A `list` with three elements:
 #'   1. `$cases`: a `data.table` with case data
