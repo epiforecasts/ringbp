@@ -4,17 +4,27 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(num.initial.cases, incfn, delayfn, k, prop.asym)
+outbreak_setup(
+  num.initial.cases,
+  incubation_period,
+  onset_to_isolation,
+  k,
+  prop.asym
+)
 }
 \arguments{
 \item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{incfn}{a \code{function} that samples from incubation period Weibull
-distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{incubation_period}{a \code{function}: a random number generating
+\code{function} that samples from incubation period distribution, the
+\code{function} accepts a single \code{integer} argument specifying the number of
+times to sample the incubation period (i.e. length of the \code{function}
+output).}
 
-\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
-delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{onset_to_isolation}{a \code{function}: a random number generating
+\code{function} that accepts a single \code{integer} argument specifying the
+length of the \code{function} output.}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
@@ -41,13 +51,13 @@ Set up initial cases for branching process
 }
 \examples{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
+incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
-delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
+onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 out <- outbreak_setup(
   num.initial.cases = 1,
-  incfn = incfn,
-  delayfn = delayfn,
+  incubation_period = incubation_period,
+  onset_to_isolation = onset_to_isolation,
   k = 1.95,
   prop.asym = 0
 )

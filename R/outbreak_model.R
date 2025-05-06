@@ -21,10 +21,14 @@
 #'   `TRUE` then traced contacts are isolated before symptom onset
 #' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
 #'   are completely asymptomatic (sublinical) (between 0 and 1)
-#' @param delay_shape a positive `numeric` scalar: shape parameter of delay
-#'   distribution
-#' @param delay_scale a positive `numeric` scalar: scale parameter of delay
-#'   distribution
+#' @param onset_to_isolation a `function`: a random number generating
+#'   `function` that accepts a single `integer` argument specifying the
+#'   length of the `function` output.
+#' @param incubation_period a `function`: a random number generating
+#'   `function` that samples from incubation period distribution, the
+#'   `function` accepts a single `integer` argument specifying the number of
+#'   times to sample the incubation period (i.e. length of the `function`
+#'   output).
 #' @param num.initial.cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
@@ -59,8 +63,8 @@
 #'   disp.com = 0.16,
 #'   disp.subclin = 0.16,
 #'   k = 0,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   quarantine = FALSE
 #' )
@@ -70,18 +74,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
-                           k, delay_shape = NULL,
-                           delay_scale = NULL, prop.asym = NULL,
-                           quarantine = NULL) {
-
-  # Set up functions to sample from distributions
-  # incubation period sampling function
-  incfn <- dist_setup(dist_shape = 2.322737,
-                      dist_scale = 6.492272)
-  # incfn <- dist_setup(dist_shape = 3.303525,dist_scale = 6.68849) # incubation function for ECDC run
-  # onset to isolation delay sampling function
-  delayfn <- dist_setup(delay_shape,
-                        delay_scale)
+                           k, onset_to_isolation, incubation_period,
+                           prop.asym = NULL, quarantine = NULL) {
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
@@ -90,10 +84,10 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
 
   # Initial setup
   case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
-                            incfn = incfn,
-                            prop.asym = prop.asym,
-                            delayfn = delayfn,
-                            k = k)
+                              incubation_period = incubation_period,
+                              onset_to_isolation = onset_to_isolation,
+                              k = k,
+                              prop.asym = prop.asym)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -110,8 +104,8 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                              r0isolated = r0isolated,
                              r0community = r0community,
                              r0subclin = r0subclin,
-                             incfn = incfn,
-                             delayfn = delayfn,
+                             incubation_period = incubation_period,
+                             onset_to_isolation = onset_to_isolation,
                              prop.ascertain = prop.ascertain,
                              k = k,
                              quarantine = quarantine,

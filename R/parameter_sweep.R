@@ -25,17 +25,20 @@
 #'   expand.grid(
 #'     delay_group = list(data.table(
 #'       delay = c("SARS", "Wuhan"),
-#'       delay_shape = c(1.651524, 2.305172),
-#'       delay_scale = c(4.287786, 9.483875)
+#'       onset_to_isolation = c(
+#'         \(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+#'         \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
+#'       )
 #'     )),
 #'     k_group = list(data.table(
-#'       theta = c("<1%", "15%", "30%"),
-#'       k = c(1, 0.88, 0.47)
+#'       theta = c("<1%", "15%"),
+#'       k = c(1, 0.88)
 #'     )),
-#'     index_R0 = c(1.5, 2.5, 3.5),
+#'     index_R0 = c(1.1, 1.5),
 #'     prop.asym = c(0, 0.1),
-#'     control_effectiveness = seq(0, 1, 0.2),
-#'     num.initial.cases = c(5, 20, 40)
+#'     control_effectiveness = seq(0, 1, 0.25),
+#'     num.initial.cases = c(5, 10),
+#'     quarantine = FALSE
 #'   )
 #' )
 #'
@@ -50,6 +53,9 @@
 #' )
 #' scenarios[, scenario :=  1:.N]
 #'
+#' incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
+#' scenarios[, incubation_period := rep(list(incub), .N)]
+#'
 #' ## Parameterise fixed paramters
 #' sim_with_params <- purrr::partial(
 #'   ringbp::scenario_sim,
@@ -58,8 +64,7 @@
 #'   r0isolated = 0,
 #'   disp.iso= 1,
 #'   disp.subclin = 0.16,
-#'   disp.com = 0.16,
-#'   quarantine = FALSE
+#'   disp.com = 0.16
 #' )
 #'
 #' ## parameter_sweep uses the future_lapply() function
@@ -96,8 +101,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       r0subclin = ifelse(
         "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
       k = x$k,
-      delay_shape = x$delay_shape,
-      delay_scale = x$delay_scale,
+      onset_to_isolation = x$onset_to_isolation[[1]],
+      incubation_period = x$incubation_period[[1]],
       prop.ascertain = x$control_effectiveness,
       quarantine = x$quarantine,
       prop.asym = x$prop.asym

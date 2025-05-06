@@ -11,8 +11,8 @@ outbreak_step(
   r0isolated = NULL,
   r0community = NULL,
   prop.asym = NULL,
-  incfn = NULL,
-  delayfn = NULL,
+  incubation_period = NULL,
+  onset_to_isolation = NULL,
   prop.ascertain = NULL,
   k = NULL,
   quarantine = NULL,
@@ -39,11 +39,14 @@ non-isolated cases (must be >0)}
 \item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
-\item{incfn}{a \code{function} that samples from incubation period Weibull
-distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{incubation_period}{a \code{function}: a random number generating
+\code{function} that samples from incubation period distribution, the
+\code{function} accepts a single \code{integer} argument specifying the number of
+times to sample the incubation period (i.e. length of the \code{function}
+output).}
 
-\item{delayfn}{a \code{function} that samples from the onset-to-hospitalisation
-delay Weibull distribution; generated using \code{\link[=dist_setup]{dist_setup()}}}
+\item{onset_to_isolation}{a \code{function} that samples from the
+onset-to-hospitalisation delay Weibull distribution}
 
 \item{prop.ascertain}{a nonnegative \code{numeric} scalar: proportion of
 infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
@@ -74,14 +77,14 @@ Move forward one generation in the branching process
 }
 \examples{
 # incubation period sampling function
-incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
+incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
-delayfn <- dist_setup(dist_shape = 1.65, dist_scale = 4.28)
+onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 # generate initial cases
 case_data <- outbreak_setup(
   num.initial.cases = 5,
-  incfn = incfn,
-  delayfn = delayfn,
+  incubation_period = incubation_period,
+  onset_to_isolation = onset_to_isolation,
   k = 1.95,
   prop.asym = 0
 )
@@ -96,8 +99,8 @@ out <- outbreak_step(
   r0subclin = 1.25,
   r0community = 2.5,
   prop.asym = 0,
-  incfn = incfn,
-  delayfn = delayfn,
+  incubation_period = incubation_period,
+  onset_to_isolation = onset_to_isolation,
   prop.ascertain = 0,
   k = 1.95,
   quarantine = FALSE

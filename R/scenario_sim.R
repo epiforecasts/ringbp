@@ -35,16 +35,17 @@
 #'   disp.iso = 1,
 #'   disp.com = 0.16,
 #'   k = 0.7,
-#'   delay_shape = 2.5,
-#'   delay_scale = 5,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
 #'   prop.ascertain = 0
 #' )
 #' res
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
-                         delay_shape, delay_scale, num.initial.cases, prop.asym,
-                         quarantine, r0subclin = NULL, disp.subclin = NULL) {
+                         onset_to_isolation, incubation_period,
+                         num.initial.cases, prop.asym, quarantine,
+                         r0subclin = NULL, disp.subclin = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
   if(is.null(r0subclin)) {
@@ -65,8 +66,8 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                                              disp.subclin = disp.subclin,
                                              disp.iso = disp.iso,
                                              disp.com = disp.com,
-                                             delay_shape = delay_shape,
-                                             delay_scale = delay_scale,
+                                             onset_to_isolation = onset_to_isolation,
+                                             incubation_period = incubation_period,
                                              k = k,
                                              prop.asym = prop.asym,
                                              quarantine = quarantine))

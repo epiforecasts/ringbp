@@ -4,7 +4,9 @@ set.seed(20200410)
 res <- ringbp::scenario_sim(
   n.sim = 2, num.initial.cases = 10, prop.asym = 0, prop.ascertain = 0.2,
   cap_cases = 20, cap_max_days = 100, r0isolated = 0, r0community = 2.5,
-  disp.com = 0.16, disp.iso = 1, delay_shape = 1.651524, delay_scale = 4.287786,
+  disp.com = 0.16, disp.iso = 1,
+  onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
+  incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
   k = 0, quarantine = FALSE)
 
 test_that("A basic sim returns the correct object", {

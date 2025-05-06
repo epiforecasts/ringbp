@@ -1,25 +1,3 @@
-#' Create partial function to sample from gamma distributions
-#' @author Joel Hellewell
-#' @param dist_shape a positive `numeric` scalar: shape parameter of Weibull
-#'   distribution
-#' @param dist_scale a positive `numeric` scalar: scale parameter of Weibull
-#'   distribution
-#'
-#' @return partial function that takes a numeric argument for number of samples
-#' @export
-#' @importFrom purrr partial
-#'
-#' @examples
-#' incfn <- dist_setup(dist_shape = 2.32, dist_scale = 6.49)
-#' incfn(5)
-dist_setup <- function(dist_shape = NULL, dist_scale = NULL) {
-  out <- purrr::partial(rweibull,
-                 shape = dist_shape,
-                 scale = dist_scale)
-  return(out)
-}
-
-
 #' Samples the serial interval for given incubation period samples
 #'
 #' @param inc_samp a positive `numeric` vector: samples from the incubation
@@ -63,8 +41,8 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #'   r0community = 2.5,
 #'   disp.com = 0.16,
 #'   disp.iso = 1,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
 #'   k = 0,
 #'   quarantine = FALSE
 #' )
@@ -107,8 +85,8 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #'   r0community = 2.5,
 #'   disp.com = 0.16,
 #'   disp.iso = 1,
-#'   delay_shape = 1.65,
-#'   delay_scale = 4.28,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
 #'   k = 0,
 #'   quarantine = FALSE
 #' )
