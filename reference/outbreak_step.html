@@ -60,8 +60,8 @@
 <span>  r0isolated <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r0community <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prop.asym <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  incfn <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  delayfn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  incubation_period <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  onset_to_isolation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prop.ascertain <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  quarantine <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -104,14 +104,17 @@ non-isolated cases (must be &gt;0)</p></dd>
 are completely asymptomatic (sublinical) (between 0 and 1)</p></dd>
 
 
-<dt id="arg-incfn">incfn<a class="anchor" aria-label="anchor" href="#arg-incfn"></a></dt>
-<dd><p>a <code>function</code> that samples from incubation period Weibull
-distribution; generated using <code><a href="dist_setup.html">dist_setup()</a></code></p></dd>
+<dt id="arg-incubation-period">incubation_period<a class="anchor" aria-label="anchor" href="#arg-incubation-period"></a></dt>
+<dd><p>a <code>function</code>: a random number generating
+<code>function</code> that samples from incubation period distribution, the
+<code>function</code> accepts a single <code>integer</code> argument specifying the number of
+times to sample the incubation period (i.e. length of the <code>function</code>
+output).</p></dd>
 
 
-<dt id="arg-delayfn">delayfn<a class="anchor" aria-label="anchor" href="#arg-delayfn"></a></dt>
-<dd><p>a <code>function</code> that samples from the onset-to-hospitalisation
-delay Weibull distribution; generated using <code><a href="dist_setup.html">dist_setup()</a></code></p></dd>
+<dt id="arg-onset-to-isolation">onset_to_isolation<a class="anchor" aria-label="anchor" href="#arg-onset-to-isolation"></a></dt>
+<dd><p>a <code>function</code> that samples from the
+onset-to-hospitalisation delay Weibull distribution</p></dd>
 
 
 <dt id="arg-prop-ascertain">prop.ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
@@ -154,14 +157,14 @@ generation</p></li>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># incubation period sampling function</span></span></span>
-<span class="r-in"><span><span class="va">incfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">2.32</span>, dist_scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">incubation_period</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># delay distribution sampling function</span></span></span>
-<span class="r-in"><span><span class="va">delayfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="dist_setup.html">dist_setup</a></span><span class="op">(</span>dist_shape <span class="op">=</span> <span class="fl">1.65</span>, dist_scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">onset_to_isolation</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.65</span>, scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># generate initial cases</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="outbreak_setup.html">outbreak_setup</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
-<span class="r-in"><span>  delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
+<span class="r-in"><span>  incubation_period <span class="op">=</span> <span class="va">incubation_period</span>,</span></span>
+<span class="r-in"><span>  onset_to_isolation <span class="op">=</span> <span class="va">onset_to_isolation</span>,</span></span>
 <span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
 <span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -190,8 +193,8 @@ generation</p></li>
 <span class="r-in"><span>  r0subclin <span class="op">=</span> <span class="fl">1.25</span>,</span></span>
 <span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
 <span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  incfn <span class="op">=</span> <span class="va">incfn</span>,</span></span>
-<span class="r-in"><span>  delayfn <span class="op">=</span> <span class="va">delayfn</span>,</span></span>
+<span class="r-in"><span>  incubation_period <span class="op">=</span> <span class="va">incubation_period</span>,</span></span>
+<span class="r-in"><span>  onset_to_isolation <span class="op">=</span> <span class="va">onset_to_isolation</span>,</span></span>
 <span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
 <span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -228,7 +231,7 @@ generation</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer></div>

@@ -65,8 +65,8 @@
 <span>  disp.com <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  disp.subclin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">k</span>,</span>
-<span>  delay_shape <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  delay_scale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">onset_to_isolation</span>,</span>
+<span>  <span class="va">incubation_period</span>,</span>
 <span>  prop.asym <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  quarantine <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -131,14 +131,18 @@ sub-clincial non-isolated cases (must be &gt;0)</p></dd>
 interval from the incubation period</p></dd>
 
 
-<dt id="arg-delay-shape">delay_shape<a class="anchor" aria-label="anchor" href="#arg-delay-shape"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: shape parameter of delay
-distribution</p></dd>
+<dt id="arg-onset-to-isolation">onset_to_isolation<a class="anchor" aria-label="anchor" href="#arg-onset-to-isolation"></a></dt>
+<dd><p>a <code>function</code>: a random number generating
+<code>function</code> that accepts a single <code>integer</code> argument specifying the
+length of the <code>function</code> output.</p></dd>
 
 
-<dt id="arg-delay-scale">delay_scale<a class="anchor" aria-label="anchor" href="#arg-delay-scale"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: scale parameter of delay
-distribution</p></dd>
+<dt id="arg-incubation-period">incubation_period<a class="anchor" aria-label="anchor" href="#arg-incubation-period"></a></dt>
+<dd><p>a <code>function</code>: a random number generating
+<code>function</code> that samples from incubation period distribution, the
+<code>function</code> accepts a single <code>integer</code> argument specifying the number of
+times to sample the incubation period (i.e. length of the <code>function</code>
+output).</p></dd>
 
 
 <dt id="arg-prop-asym">prop.asym<a class="anchor" aria-label="anchor" href="#arg-prop-asym"></a></dt>
@@ -180,8 +184,8 @@ reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul
 <span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
 <span class="r-in"><span>  disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
 <span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  delay_shape <span class="op">=</span> <span class="fl">1.65</span>,</span></span>
-<span class="r-in"><span>  delay_scale <span class="op">=</span> <span class="fl">4.28</span>,</span></span>
+<span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.65</span>, scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -254,7 +258,7 @@ reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer></div>
