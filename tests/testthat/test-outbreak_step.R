@@ -1,6 +1,6 @@
 context("Test basic usage")
 
-set.seed(123456)
+set.seed(12345678)
 
 test_that("A basic sim returns the correct object", {
   incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
