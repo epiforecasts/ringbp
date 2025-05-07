@@ -53,8 +53,8 @@ res <- scenario_sim(
   r0community = 2.5, ## non-isolated individuals have R0 of 2.5
   disp.com = 0.16, ## dispersion parameter in the community
   disp.iso = 1, ## dispersion  parameter of those isolated
-  delay_shape = 1.651524, ## shape parameter of time from onset to isolation
-  delay_scale = 4.287786, ## scale parameter of time from onset to isolation
+  onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786), ## time from onset to isolation
+  incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), ## incubation period
   k = 0, ## skew of generation interval to be beyond onset of symptoms
   quarantine = FALSE ## whether quarantine is in effect
 )
@@ -77,5 +77,43 @@ ggplot(
 
 ``` r
 extinct_prob(res, cap_cases = 4500)
-#> [1] 0.7
+#> [1] 0.8
 ```
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors` package](https://github.com/ropensci/allcontributors)
+following the [all-contributors](https://allcontributors.org)
+specification. Contributions of any kind are welcome!
+
+### Code
+
+<a href="https://github.com/epiforecasts/ringbp/commits?author=seabbs">seabbs</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=sbfnk">sbfnk</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=jhellewell14">jhellewell14</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=timcdlucas">timcdlucas</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=amygimma">amygimma</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=joshwlambert">joshwlambert</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=Bisaloo">Bisaloo</a>,
+<a href="https://github.com/epiforecasts/ringbp/commits?author=actions-user">actions-user</a>
+
+### Issue Authors
+
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Apearsonca">pearsonca</a>,
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Asophiemeakin">sophiemeakin</a>
+
+### Issue Contributors
+
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Athimotei">thimotei</a>,
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Aadamkucharski">adamkucharski</a>,
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Adcadam">dcadam</a>,
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam">jamesmbaazam</a>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->

@@ -78,3 +78,48 @@ ggplot(
 ```{r extinct_prob}
 extinct_prob(res, cap_cases = 4500)
 ```
+
+## Contributors
+
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+
+### Code
+
+
+<a href="https://github.com/epiforecasts/ringbp/commits?author=seabbs">seabbs</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=sbfnk">sbfnk</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=jhellewell14">jhellewell14</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=timcdlucas">timcdlucas</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=amygimma">amygimma</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=joshwlambert">joshwlambert</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=Bisaloo">Bisaloo</a>, 
+<a href="https://github.com/epiforecasts/ringbp/commits?author=actions-user">actions-user</a>
+
+
+
+### Issue Authors
+
+
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Apearsonca">pearsonca</a>, 
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Asophiemeakin">sophiemeakin</a>
+
+
+
+### Issue Contributors
+
+
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Athimotei">thimotei</a>, 
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Aadamkucharski">adamkucharski</a>, 
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Adcadam">dcadam</a>, 
+<a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam">jamesmbaazam</a>
+
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
