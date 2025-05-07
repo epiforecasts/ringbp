@@ -99,18 +99,15 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     # cases whose parents are asymptomatic are automatically missed;
     # will draw this for infector_asym == FALSE
     missed = TRUE,
-    # sample from the incubation period for each new person
-    incubfn_sample = incubation_period(total_new_cases),
     isolated = FALSE, new_cases = NA
   )][,
     # draws a sample to see if this person is asymptomatic
     asym := runif(.N) < prop.asym
   ][
-    exposure < infector_iso_time
-  ][, # filter out new cases prevented by isolation
-      `:=`(# onset of new case is exposure + incubation period sample
-        onset = exposure + incubfn_sample
-  )]
+    exposure < infector_iso_time # keep only news cases that are pre-isolation
+  ][,
+    onset := exposure + incubation_period(.N) # onset of new case is exposure + incubation period sample
+  ]
 
   # draw a sample for missing
   prob_samples[infector_asym == FALSE, missed := runif(.N) > prop.ascertain]
@@ -130,7 +127,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     )}]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("incubfn_sample", "infector_iso_time", "infector_asym") := NULL]
+  prob_samples[, c("infector_iso_time", "infector_asym") := NULL]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 
