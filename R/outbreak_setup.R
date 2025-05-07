@@ -50,7 +50,7 @@ outbreak_setup <- function(num.initial.cases, incubation_period, onset_to_isolat
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
   case_data <- case_data[
     asym == FALSE,
-    isolated_time := pmin(onset + onset_to_isolation(.N))
+    isolated_time := onset + onset_to_isolation(.N)
   ]
 
   # return
