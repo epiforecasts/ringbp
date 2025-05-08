@@ -18,7 +18,7 @@ scenario_sim(
   incubation_period,
   num.initial.cases,
   prop.asym,
-  quarantine,
+  quarantine = NULL,
   r0subclin = NULL,
   disp.subclin = NULL
 )
@@ -104,7 +104,8 @@ res <- scenario_sim(
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
   prop.asym = 0,
-  prop.ascertain = 0
+  prop.ascertain = 0,
+  quarantine = TRUE
 )
 res
 }

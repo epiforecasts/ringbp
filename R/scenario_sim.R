@@ -4,15 +4,7 @@
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
-#' @importFrom purrr safely
-#' @importFrom stats as.formula
-#' @importFrom stats dist
-#' @importFrom stats dweibull
-#' @importFrom stats dnbinom
-#' @importFrom stats median
-#' @importFrom stats quantile
-#' @importFrom stats rweibull
-#' @importFrom utils data
+#' @importFrom data.table rbindlist
 #' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
 #' * week: The week in the simulation.
@@ -38,13 +30,14 @@
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop.asym = 0,
-#'   prop.ascertain = 0
+#'   prop.ascertain = 0,
+#'   quarantine = TRUE
 #' )
 #' res
 scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp.iso, disp.com, k,
                          onset_to_isolation, incubation_period,
-                         num.initial.cases, prop.asym, quarantine,
+                         num.initial.cases, prop.asym, quarantine = NULL,
                          r0subclin = NULL, disp.subclin = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
@@ -56,25 +49,27 @@ scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
     disp.subclin <- disp.com
   }
   # Run n.sim number of model runs and put them all together in a big data.frame
-  res <- purrr::map(.x = 1:n.sim, ~ outbreak_model(num.initial.cases = num.initial.cases,
-                                             prop.ascertain = prop.ascertain,
-                                             cap_max_days = cap_max_days,
-                                             cap_cases = cap_cases,
-                                             r0isolated = r0isolated,
-                                             r0community = r0community,
-                                             r0subclin = r0subclin,
-                                             disp.subclin = disp.subclin,
-                                             disp.iso = disp.iso,
-                                             disp.com = disp.com,
-                                             onset_to_isolation = onset_to_isolation,
-                                             incubation_period = incubation_period,
-                                             k = k,
-                                             prop.asym = prop.asym,
-                                             quarantine = quarantine))
-
+  res <- replicate(
+    n.sim, outbreak_model(
+      num.initial.cases = num.initial.cases,
+      prop.ascertain = prop.ascertain,
+      cap_max_days = cap_max_days,
+      cap_cases = cap_cases,
+      r0isolated = r0isolated,
+      r0community = r0community,
+      r0subclin = r0subclin,
+      disp.subclin = disp.subclin,
+      disp.iso = disp.iso,
+      disp.com = disp.com,
+      onset_to_isolation = onset_to_isolation,
+      incubation_period = incubation_period,
+      k = k,
+      prop.asym = prop.asym,
+      quarantine = quarantine
+    ), simplify = FALSE)
 
   # bind output together and add simulation index
-  res <- data.table::rbindlist(res)
-  res[, sim := rep(1:n.sim, rep(floor(cap_max_days / 7) + 1, n.sim)), ]
+  res <- data.table::rbindlist(res, idcol = "sim")
+
   return(res[])
 }

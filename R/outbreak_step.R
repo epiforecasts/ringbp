@@ -8,9 +8,10 @@
 #' @param onset_to_isolation a `function` that samples from the
 #'   onset-to-hospitalisation delay Weibull distribution
 #'
-#' @importFrom data.table data.table rbindlist
-#' @importFrom purrr map2 map2_dbl map_lgl
+#' @importFrom data.table data.table rbindlist fcase
 #' @importFrom stats rbinom
+#' @importFrom stats runif
+#' @importFrom stats rnbinom
 #'
 #' @return A `list` with three elements:
 #'   1. `$cases`: a `data.table` with case data
@@ -61,15 +62,11 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
-  case_data[, new_cases := purrr::map2_dbl(
-    ifelse(vect_isTRUE(isolated),
-           disp.iso,
-           ifelse(vect_isTRUE(asym), disp.subclin, disp.com)),
-    ifelse(vect_isTRUE(isolated),
-           r0isolated,
-           ifelse(vect_isTRUE(asym),r0subclin, r0community)),
-    ~ rnbinom(1, size = .x, mu = .y))
-    ]
+  case_data[, new_cases := rnbinom(
+    .N,
+    size = fifelse(isolated, disp.iso, fifelse(asym, disp.subclin, disp.com)),
+    mu = fifelse(isolated, r0isolated, fifelse(asym, r0subclin, r0community))
+  )]
 
   # Select cases that have generated any new cases
   new_case_data <- case_data[new_cases > 0]
@@ -90,70 +87,55 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   }
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
-  inc_samples <- incubation_period(total_new_cases)
-
-  prob_samples <- data.table(
+  prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
-    exposure = unlist(purrr::map2(new_case_data$new_cases, new_case_data$onset,
-                                  function(x, y) {
-                                    inf_fn(rep(y, x), k)
-                                    })),
+    exposure = inf_fn(rep(onset, new_cases), k),
     # records the infector of each new person
-    infector = unlist(purrr::map2(new_case_data$caseid, new_case_data$new_cases,
-                                  function(x, y) {
-                                    rep(as.integer(x), as.integer(y))
-                                    })),
-    # records when infector was isolated
-    infector_iso_time = unlist(purrr::map2(new_case_data$isolated_time, new_case_data$new_cases,
-                                           function(x, y) {
-                                             rep(x, as.integer(y))
-                                             })),
+    infector = rep(caseid, new_cases),
+    # records when infector was isolated    
+    infector_iso_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
-    infector_asym = unlist(purrr::map2(new_case_data$asym, new_case_data$new_cases,
-                                       function(x, y) {
-                                         rep(x, y)
-                                         })),
+    infector_asym = rep(asym, new_cases),
+    # cases whose parents are asymptomatic are automatically missed;
+    # will draw this for infector_asym == FALSE
+    missed = TRUE,
+    isolated = FALSE, new_cases = NA
+  )][,
     # draws a sample to see if this person is asymptomatic
-    asym = as.logical(rbinom(n = total_new_cases, 1, prob = prop.asym)),
-    # draws a sample to see if this person is traced
-    missed = as.logical(rbinom(n = total_new_cases, 1, prob = 1 - prop.ascertain)),
-    # sample from the incubation period for each new person
-    incubfn_sample = inc_samples,
-    isolated = FALSE,
-    new_cases = NA
-  )
+    asym := runif(.N) < prop.asym
+  ][
+    exposure < infector_iso_time # keep only news cases that are pre-isolation
+  ][,
+    onset := exposure + incubation_period(.N) # onset of new case is exposure + incubation period sample
+  ]
 
+  # draw a sample for missing
+  prob_samples[infector_asym == FALSE, missed := runif(.N) > prop.ascertain]
 
-  prob_samples <- prob_samples[exposure < infector_iso_time][, # filter out new cases prevented by isolation
-                                             `:=`(# onset of new case is exposure + incubation period sample
-                                               onset = exposure + incubfn_sample)]
-
-
-  # cases whose parents are asymptomatic are automatically missed
-  prob_samples$missed[vect_isTRUE(prob_samples$infector_asym)] <- TRUE
-
-  # If you are asymptomatic, your isolation time is Inf
-  prob_samples[, isolated_time := ifelse(vect_isTRUE(asym), Inf,
-                                        # If you are not asymptomatic, but you are missed,
-                                        # you are isolated at your symptom onset
-                                        ifelse(vect_isTRUE(missed), onset + onset_to_isolation(1),
-                                               # If you are not asymptomatic and you are traced,
-                                               # you are isolated at max(onset,infector isolation time) # max(onset,infector_iso_time)
-                                               ifelse(!vect_isTRUE(rep(quarantine, total_new_cases)),
-                                                      pmin(onset + onset_to_isolation(1), pmax(onset, infector_iso_time)),
-                                                      infector_iso_time)))]
-
+  prob_samples[, isolated_time := {
+    ref_time <- onset + onset_to_isolation(.N)
+    fcase(
+      # If asymptomatic, never isolated: time is Inf
+      asym == TRUE, Inf,
+      # If not asymptomatic, but are missed, isolated at your symptom onset
+      missed == TRUE, ref_time,
+      # if quarantine is in effect, isolated at infector's isolation time
+      rep(!is.null(quarantine) && (quarantine == TRUE), .N), infector_iso_time,
+      # isolated at symptom onset time if after infector isolation time,
+      # otherwise at the earlier of infector and infectee isolation times
+      default = pmin(ref_time, pmax(onset, infector_iso_time))
+    )}]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("incubfn_sample", "infector_iso_time", "infector_asym") := NULL]
+  prob_samples[, c("infector_iso_time", "infector_asym") := NULL]
   # Set new case ids for new people
-  prob_samples$caseid <- (nrow(case_data) + 1):(nrow(case_data) + nrow(prob_samples))
+  prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 
   ## Number of new cases
   cases_in_gen <- nrow(prob_samples)
 
   ## Estimate the effective r0
-  effective_r0 <- nrow(prob_samples) / nrow(case_data[!vect_isTRUE(case_data$isolated)])
+  effective_r0 <- cases_in_gen / case_data[isolated == FALSE, .N]
 
   # Everyone in case_data so far has had their chance to infect and are therefore considered isolated
   case_data$isolated <- TRUE
@@ -167,11 +149,4 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   names(out) <- c("cases", "effective_r0", "cases_in_gen")
 
   return(out)
-}
-
-
-
-# A vectorised version of isTRUE
-vect_isTRUE <- function(x) {
-  purrr::map_lgl(x, isTRUE)
 }
