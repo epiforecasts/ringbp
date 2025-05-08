@@ -67,7 +67,7 @@
 <span>  <span class="va">incubation_period</span>,</span>
 <span>  <span class="va">num.initial.cases</span>,</span>
 <span>  <span class="va">prop.asym</span>,</span>
-<span>  <span class="va">quarantine</span>,</span>
+<span>  quarantine <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r0subclin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  disp.subclin <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -190,35 +190,36 @@ the same set of parameters. The table has columns</p><ul><li><p>week: The week i
 <span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       week weekly_cases cumulative effective_r0               cases_per_gen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;                      &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     0            8          8     2.123749   6, 17, 22, 43, 80,214,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1           20         28     2.123749   6, 17, 22, 43, 80,214,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     2           31         59     2.123749   6, 17, 22, 43, 80,214,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     3           71        130     2.123749   6, 17, 22, 43, 80,214,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     4          163        293     2.123749   6, 17, 22, 43, 80,214,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 261:    48            0          5     0.000000                           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 262:    49            0          5     0.000000                           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 263:    50            0          5     0.000000                           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 264:    51            0          5     0.000000                           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 265:    52            0          5     0.000000                           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sim</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 261:     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 262:     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 263:     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 264:     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 265:     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        sim  week weekly_cases cumulative effective_r0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     1     0            4          4      3.07329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1     1           14         18      3.07329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     1     2           86        104      3.07329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     1     3          337        441      3.07329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     1     4          764       1205      3.07329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261:     5    48            0          6      0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262:     5    49            0          6      0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263:     5    50            0          6      0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264:     5    51            0          6      0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265:     5    52            0          6      0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      cases_per_gen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:   29, 103, 183, 423,1136,2629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:   29, 103, 183, 423,1136,2629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:   29, 103, 183, 423,1136,2629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   29, 103, 183, 423,1136,2629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:   29, 103, 183, 423,1136,2629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261:                           1,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262:                           1,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263:                           1,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264:                           1,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265:                           1,0</span>
 </code></pre></div>
     </div>
   </div>
