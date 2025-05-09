@@ -18,7 +18,8 @@
 #' @param k a `numeric` scalar: skew parameter for sampling the serial
 #'   interval from the incubation period
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
-#'   `TRUE` then traced contacts are isolated before symptom onset
+#'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
+#'   `FALSE`
 #' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
 #'   are completely asymptomatic (sublinical) (between 0 and 1)
 #' @param onset_to_isolation a `function`: a random number generating
@@ -75,7 +76,7 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
                            r0subclin = NULL, disp.iso = NULL,
                            disp.com = NULL, disp.subclin = NULL,
                            k, onset_to_isolation, incubation_period,
-                           prop.asym = NULL, quarantine = NULL) {
+                           prop.asym = NULL, quarantine = FALSE) {
 
   # Set initial values for loop indices
   total.cases <- num.initial.cases
