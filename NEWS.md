@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* Changed internal sampling to vector draws in several locations; in some cases, this was an optimization, but in others it was a bug fix correcting the use of single draw where there should have been many. Also incorporates other vectorization changes to improve performance. Because of the bug fix, users should expect results to change. Addresses issues #90, #92, #94, in #98 by @pearsonca (now added as a contributor) with review by @sbfnk and @joshwlambert.
+
 # ringbp 0.1.2
 
 * Improved package infrastructure by remove the number of dependencies, removing deprecated function calls and reducing clutter in the repo. In #70, #71, #72 and #73 by @sbfnk.
