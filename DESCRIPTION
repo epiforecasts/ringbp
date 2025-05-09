@@ -3,11 +3,11 @@ Type: Package
 Title: Simulate and evaluate contact tracing scenarios
 Version: 0.1.2.9999
 Authors@R: c(
-    person(given = "Joel Hellewell",
+    person("Joel", "Hellewell",
            role = c("aut", "cre"),
            email = "Joel.Hellewell@lshtm.ac.uk",
            comment = c(ORCID = "0000-0003-2683-0849")),
-    person(given = "Sam Abbott",
+    person("Sam", "Abbott",
            role = c("aut"),
            email = "contact@samabbott.co.uk",
            comment = c(ORCID = "0000-0001-8057-8037")),
@@ -27,10 +27,14 @@ Authors@R: c(
            email = "hugo.gruson@data.org",
            role = c("ctb"),
            comment = c(ORCID = "https://orcid.org/0000-0002-4094-1476")),
-    person("Carl", "Pearson", "A. B.",
+    person("Carl A. B.", "Pearson",
            email = "carl.ab.pearson@gmail.com",
            role = c("ctb"),
-           comment = c(ORCID = "0000-0003-0701-7860"))
+           comment = c(ORCID = "0000-0003-0701-7860")),
+    person("Joshua W.", "Lambert",
+           email = "joshua.lambert@lshtm.ac.uk", 
+           role = c("ctb"),
+           comment = c(ORCID = "0000-0001-5218-3046"))
            )
 Description: A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
 License: MIT + file LICENSE
