@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* Fixed a bug in the implementation of quarantine, where isolation could happen later than onset + delay, if this was earlier than the isolation time of the infector. By @sbfnk in #107 and reviewed by @pearsonca and @joshwlambert.
+
 # ringbp 0.1.2
 
 * Improved package infrastructure by remove the number of dependencies, removing deprecated function calls and reducing clutter in the repo. In #70, #71, #72 and #73 by @sbfnk.
