@@ -19,7 +19,7 @@
 #'   interval from the incubation period
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
 #'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
-#'   `FALSE``
+#'   `FALSE`
 #' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
 #'   are completely asymptomatic (sublinical) (between 0 and 1)
 #' @param onset_to_isolation a `function`: a random number generating
