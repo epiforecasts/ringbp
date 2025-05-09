@@ -71,7 +71,7 @@ are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
-`FALSE``}
+\code{FALSE}}
 }
 \value{
 \code{data.table} of cases by week, cumulative cases, and the effective
