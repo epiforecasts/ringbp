@@ -56,7 +56,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
                           r0isolated = NULL, r0community = NULL,
                           prop.asym = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop.ascertain = NULL,
-                          k = NULL, quarantine = NULL, r0subclin = NULL,
+                          k = NULL, quarantine = FALSE, r0subclin = NULL,
                           disp.subclin = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
@@ -118,8 +118,9 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
       asym == TRUE, Inf,
       # If not asymptomatic, but are missed, isolated at your symptom onset
       missed == TRUE, ref_time,
-      # if quarantine is in effect, isolated at infector's isolation time
-      rep(!is.null(quarantine) && (quarantine == TRUE), .N), infector_iso_time,
+      # if quarantine is in effect, isolated at the earlier of infector's or
+      # infectee's isolation time
+      rep(quarantine, .N), pmin(ref_time, infector_iso_time),
       # isolated at symptom onset time if after infector isolation time,
       # otherwise at the earlier of infector and infectee isolation times
       default = pmin(ref_time, pmax(onset, infector_iso_time))

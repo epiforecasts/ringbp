@@ -19,7 +19,7 @@ outbreak_model(
   onset_to_isolation,
   incubation_period,
   prop.asym = NULL,
-  quarantine = NULL
+  quarantine = FALSE
 )
 }
 \arguments{
@@ -70,7 +70,8 @@ output).}
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
-\code{TRUE} then traced contacts are isolated before symptom onset}
+\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
+\code{FALSE}}
 }
 \value{
 \code{data.table} of cases by week, cumulative cases, and the effective
