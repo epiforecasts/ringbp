@@ -67,7 +67,8 @@ or starting cases which are all assumed to be missed.}
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
-\code{TRUE} then traced contacts are isolated before symptom onset}
+\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
+`FALSE``}
 
 \item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}

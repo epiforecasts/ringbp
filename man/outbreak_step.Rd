@@ -15,7 +15,7 @@ outbreak_step(
   onset_to_isolation = NULL,
   prop.ascertain = NULL,
   k = NULL,
-  quarantine = NULL,
+  quarantine = FALSE,
   r0subclin = NULL,
   disp.subclin = NULL
 )
@@ -55,7 +55,8 @@ infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 interval from the incubation period}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
-\code{TRUE} then traced contacts are isolated before symptom onset}
+\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
+`FALSE``}
 
 \item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
