@@ -17,7 +17,6 @@
 #' @autoglobal
 #' @export
 #' @importFrom data.table data.table
-#' @importFrom stats rbinom
 #' @importFrom stats runif
 #'
 #' @examples

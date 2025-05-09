@@ -9,7 +9,6 @@
 #'   onset-to-hospitalisation delay Weibull distribution
 #'
 #' @importFrom data.table data.table rbindlist fcase fifelse
-#' @importFrom stats rbinom
 #' @importFrom stats runif
 #' @importFrom stats rnbinom
 #'
@@ -92,7 +91,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     exposure = inf_fn(rep(onset, new_cases), k),
     # records the infector of each new person
     infector = rep(caseid, new_cases),
-    # records when infector was isolated    
+    # records when infector was isolated
     infector_iso_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
     infector_asym = rep(asym, new_cases),
