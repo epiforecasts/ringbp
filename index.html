@@ -99,8 +99,8 @@
 <span>  r0community <span class="op">=</span> <span class="fl">2.5</span>, <span class="co">## non-isolated individuals have R0 of 2.5</span></span>
 <span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>, <span class="co">## dispersion parameter in the community</span></span>
 <span>  disp.iso <span class="op">=</span> <span class="fl">1</span>, <span class="co">## dispersion  parameter of those isolated</span></span>
-<span>  delay_shape <span class="op">=</span> <span class="fl">1.651524</span>, <span class="co">## shape parameter of time from onset to isolation</span></span>
-<span>  delay_scale <span class="op">=</span> <span class="fl">4.287786</span>, <span class="co">## scale parameter of time from onset to isolation</span></span>
+<span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.651524</span>, scale <span class="op">=</span> <span class="fl">4.287786</span><span class="op">)</span>, <span class="co">## time from onset to isolation</span></span>
+<span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.322737</span>, scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span>, <span class="co">## incubation period</span></span>
 <span>  k <span class="op">=</span> <span class="fl">0</span>, <span class="co">## skew of generation interval to be beyond onset of symptoms</span></span>
 <span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span> <span class="co">## whether quarantine is in effect</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -121,7 +121,33 @@
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/extinct_prob.html">extinct_prob</a></span><span class="op">(</span><span class="va">res</span>, cap_cases <span class="op">=</span> <span class="fl">4500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.8</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="contributors">Contributors<a class="anchor" aria-label="anchor" href="#contributors"></a>
+</h2>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<p>All contributions to this project are gratefully acknowledged using the <a href="https://github.com/ropensci/allcontributors" class="external-link"><code>allcontributors</code> package</a> following the <a href="https://allcontributors.org" class="external-link">all-contributors</a> specification. Contributions of any kind are welcome!</p>
+<div class="section level3">
+<h3 id="code">Code<a class="anchor" aria-label="anchor" href="#code"></a>
+</h3>
+<p><a href="https://github.com/epiforecasts/ringbp/commits?author=seabbs" class="external-link">seabbs</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=sbfnk" class="external-link">sbfnk</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=jhellewell14" class="external-link">jhellewell14</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=timcdlucas" class="external-link">timcdlucas</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=amygimma" class="external-link">amygimma</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=joshwlambert" class="external-link">joshwlambert</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=Bisaloo" class="external-link">Bisaloo</a>, <a href="https://github.com/epiforecasts/ringbp/commits?author=actions-user" class="external-link">actions-user</a></p>
+</div>
+<div class="section level3">
+<h3 id="issue-authors">Issue Authors<a class="anchor" aria-label="anchor" href="#issue-authors"></a>
+</h3>
+<p><a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Apearsonca" class="external-link">pearsonca</a>, <a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Asophiemeakin" class="external-link">sophiemeakin</a></p>
+</div>
+<div class="section level3">
+<h3 id="issue-contributors">Issue Contributors<a class="anchor" aria-label="anchor" href="#issue-contributors"></a>
+</h3>
+<p><a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Athimotei" class="external-link">thimotei</a>, <a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Aadamkucharski" class="external-link">adamkucharski</a>, <a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Adcadam" class="external-link">dcadam</a>, <a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam" class="external-link">jamesmbaazam</a></p>
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 </div>
 </div>
 </div>
