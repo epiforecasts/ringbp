@@ -30,7 +30,11 @@ Authors@R: c(
     person("Carl", "Pearson", "A. B.",
            email = "carl.ab.pearson@gmail.com",
            role = c("ctb"),
-           comment = c(ORCID = "0000-0003-0701-7860"))
+           comment = c(ORCID = "0000-0003-0701-7860")),
+    person("Joshua W.", "Lambert",
+           email = "joshua.lambert@lshtm.ac.uk", 
+           role = c("ctb"),
+           comment = c(ORCID = "0000-0001-5218-3046"))
            )
 Description: A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
 License: MIT + file LICENSE
