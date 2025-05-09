@@ -8,7 +8,7 @@
 #' @param onset_to_isolation a `function` that samples from the
 #'   onset-to-hospitalisation delay Weibull distribution
 #'
-#' @importFrom data.table data.table rbindlist fcase
+#' @importFrom data.table data.table rbindlist fcase fifelse
 #' @importFrom stats rbinom
 #' @importFrom stats runif
 #' @importFrom stats rnbinom
