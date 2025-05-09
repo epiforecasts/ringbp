@@ -64,7 +64,7 @@
 <span>  onset_to_isolation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prop.ascertain <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  quarantine <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  r0subclin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  disp.subclin <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -129,7 +129,8 @@ interval from the incubation period</p></dd>
 
 <dt id="arg-quarantine">quarantine<a class="anchor" aria-label="anchor" href="#arg-quarantine"></a></dt>
 <dd><p>a <code>logical</code> scalar: whether quarantine is in effect, if
-<code>TRUE</code> then traced contacts are isolated before symptom onset</p></dd>
+<code>TRUE</code> then traced contacts are isolated before symptom onset; defaults to
+<code>FALSE</code></p></dd>
 
 
 <dt id="arg-r-subclin">r0subclin<a class="anchor" aria-label="anchor" href="#arg-r-subclin"></a></dt>
