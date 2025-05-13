@@ -16,8 +16,8 @@ outbreak_step(
   prop_ascertain = NULL,
   k = NULL,
   quarantine = FALSE,
-  r0subclin = NULL,
-  disp_subclin = NULL
+  r0asymptomatic = NULL,
+  disp_asymptomatic = NULL
 )
 }
 \arguments{
@@ -58,11 +58,11 @@ interval from the incubation period}
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
 
-\item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
+\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
-\item{disp_subclin}{a positive \code{numeric} scalar: dispersion parameter for
-sub-clincial non-isolated cases (must be >0)}
+\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
+for sub-clincial non-isolated cases (must be >0)}
 }
 \value{
 A \code{list} with three elements:
@@ -95,9 +95,9 @@ out <- outbreak_step(
   case_data = case_data,
   disp_iso = 1,
   disp_com = 0.16,
-  disp_subclin = 0.16,
+  disp_asymptomatic = 0.16,
   r0isolated = 0,
-  r0subclin = 1.25,
+  r0asymptomatic = 1.25,
   r0community = 2.5,
   prop_asym = 0,
   incubation_period = incubation_period,

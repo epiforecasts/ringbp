@@ -11,10 +11,10 @@ outbreak_model(
   cap_cases = NULL,
   r0isolated = NULL,
   r0community = NULL,
-  r0subclin = NULL,
+  r0asymptomatic = NULL,
   disp_iso = NULL,
   disp_com = NULL,
-  disp_subclin = NULL,
+  disp_asymptomatic = NULL,
   k,
   onset_to_isolation,
   incubation_period,
@@ -41,7 +41,7 @@ isolated cases (must be >0)}
 \item{r0community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
+\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
 \item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
@@ -50,8 +50,8 @@ isolated cases (must be >0)}
 \item{disp_com}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
-\item{disp_subclin}{a positive \code{numeric} scalar: dispersion parameter for
-sub-clincial non-isolated cases (must be >0)}
+\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
+for sub-clincial non-isolated cases (must be >0)}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
@@ -96,10 +96,10 @@ out <- outbreak_model(
   cap_cases = 4500,
   r0isolated = 0.5,
   r0community = 2.5,
-  r0subclin = 2.5,
+  r0asymptomatic = 2.5,
   disp_iso = 1,
   disp_com = 0.16,
-  disp_subclin = 0.16,
+  disp_asymptomatic = 0.16,
   k = 0,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),

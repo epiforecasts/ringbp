@@ -5,13 +5,13 @@
 #'   isolated cases (must be >0)
 #' @param disp_com a positive `numeric` scalar: dispersion parameter for
 #'   non-isolated cases (must be >0)
-#' @param disp_subclin a positive `numeric` scalar: dispersion parameter for
-#'   sub-clincial non-isolated cases (must be >0)
+#' @param disp_asymptomatic a positive `numeric` scalar: dispersion parameter
+#'   for sub-clincial non-isolated cases (must be >0)
 #' @param r0isolated a positive `numeric` scalar: reproduction number for
 #'   isolated cases (must be >0)
 #' @param r0community a positive `numeric` scalar: reproduction number for
 #'   non-isolated cases (must be >0)
-#' @param r0subclin a positive `numeric` scalar: reproduction number for
+#' @param r0asymptomatic a positive `numeric` scalar: reproduction number for
 #'   sub-clinical non-isolated cases (must be >0)
 #' @param prop_ascertain a nonnegative `numeric` scalar: proportion of
 #'   infectious contacts ascertained by contact tracing (must be 0<=x<=1)
@@ -59,10 +59,10 @@
 #'   cap_cases = 4500,
 #'   r0isolated = 0.5,
 #'   r0community = 2.5,
-#'   r0subclin = 2.5,
+#'   r0asymptomatic = 2.5,
 #'   disp_iso = 1,
 #'   disp_com = 0.16,
-#'   disp_subclin = 0.16,
+#'   disp_asymptomatic = 0.16,
 #'   k = 0,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
@@ -73,8 +73,8 @@
 outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
-                           r0subclin = NULL, disp_iso = NULL,
-                           disp_com = NULL, disp_subclin = NULL,
+                           r0asymptomatic = NULL, disp_iso = NULL,
+                           disp_com = NULL, disp_asymptomatic = NULL,
                            k, onset_to_isolation, incubation_period,
                            prop_asym = NULL, quarantine = FALSE) {
 
@@ -101,10 +101,10 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
     out <- outbreak_step(case_data = case_data,
                              disp_iso = disp_iso,
                              disp_com = disp_com,
-                             disp_subclin = disp_subclin,
+                             disp_asymptomatic = disp_asymptomatic,
                              r0isolated = r0isolated,
                              r0community = r0community,
-                             r0subclin = r0subclin,
+                             r0asymptomatic = r0asymptomatic,
                              incubation_period = incubation_period,
                              onset_to_isolation = onset_to_isolation,
                              prop_ascertain = prop_ascertain,

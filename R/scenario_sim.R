@@ -38,15 +38,15 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp_iso, disp_com, k,
                          onset_to_isolation, incubation_period,
                          num_initial_cases, prop_asym, quarantine = FALSE,
-                         r0subclin = NULL, disp_subclin = NULL) {
+                         r0asymptomatic = NULL, disp_asymptomatic = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
-  if(is.null(r0subclin)) {
-    r0subclin <- r0community
+  if(is.null(r0asymptomatic)) {
+    r0asymptomatic <- r0community
   }
 
-  if(is.null(disp_subclin)) {
-    disp_subclin <- disp_com
+  if(is.null(disp_asymptomatic)) {
+    disp_asymptomatic <- disp_com
   }
   # Run n_sim number of model runs and put them all together in a big data.frame
   res <- replicate(
@@ -57,8 +57,8 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
       cap_cases = cap_cases,
       r0isolated = r0isolated,
       r0community = r0community,
-      r0subclin = r0subclin,
-      disp_subclin = disp_subclin,
+      r0asymptomatic = r0asymptomatic,
+      disp_asymptomatic = disp_asymptomatic,
       disp_iso = disp_iso,
       disp_com = disp_com,
       onset_to_isolation = onset_to_isolation,

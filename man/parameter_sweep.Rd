@@ -71,7 +71,7 @@ sim_with_params <- purrr::partial(
   cap_cases = 5000,
   r0isolated = 0,
   disp_iso= 1,
-  disp_subclin = 0.16,
+  disp_asymptomatic = 0.16,
   disp_com = 0.16
 )
 

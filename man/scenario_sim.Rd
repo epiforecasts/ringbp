@@ -19,8 +19,8 @@ scenario_sim(
   num_initial_cases,
   prop_asym,
   quarantine = FALSE,
-  r0subclin = NULL,
-  disp_subclin = NULL
+  r0asymptomatic = NULL,
+  disp_asymptomatic = NULL
 )
 }
 \arguments{
@@ -70,11 +70,11 @@ are completely asymptomatic (sublinical) (between 0 and 1)}
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
 
-\item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
+\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
-\item{disp_subclin}{a positive \code{numeric} scalar: dispersion parameter for
-sub-clincial non-isolated cases (must be >0)}
+\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
+for sub-clincial non-isolated cases (must be >0)}
 }
 \value{
 A \code{data.table} object returning the results for multiple simulations using

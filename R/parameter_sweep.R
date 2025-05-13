@@ -63,7 +63,7 @@
 #'   cap_cases = 5000,
 #'   r0isolated = 0,
 #'   disp_iso= 1,
-#'   disp_subclin = 0.16,
+#'   disp_asymptomatic = 0.16,
 #'   disp_com = 0.16
 #' )
 #'
@@ -98,8 +98,8 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       n_sim = samples,
       num_initial_cases = x$num_initial_cases,
       r0community = x$index_R0,
-      r0subclin = ifelse(
-        "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
+      r0asymptomatic = ifelse(
+        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$index_R0),
       k = x$k,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],
