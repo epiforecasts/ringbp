@@ -1,6 +1,6 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n.sim a positive `integer` scalar: number of simulations to run
+#' @param n_sim a positive `integer` scalar: number of simulations to run
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
@@ -18,53 +18,53 @@
 #'
 #' @examples
 #' res <- scenario_sim(
-#'   n.sim = 5,
-#'   num.initial.cases = 5,
+#'   n_sim = 5,
+#'   num_initial_cases = 5,
 #'   cap_max_days = 365,
 #'   cap_cases = 2000,
 #'   r0isolated = 0,
 #'   r0community = 2.5,
-#'   disp.iso = 1,
-#'   disp.com = 0.16,
+#'   disp_iso = 1,
+#'   disp_com = 0.16,
 #'   k = 0.7,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop.asym = 0,
-#'   prop.ascertain = 0,
+#'   prop_asym = 0,
+#'   prop_ascertain = 0,
 #'   quarantine = TRUE
 #' )
 #' res
-scenario_sim <- function(n.sim, prop.ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp.iso, disp.com, k,
+scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
+                         r0isolated, r0community, disp_iso, disp_com, k,
                          onset_to_isolation, incubation_period,
-                         num.initial.cases, prop.asym, quarantine = FALSE,
-                         r0subclin = NULL, disp.subclin = NULL) {
+                         num_initial_cases, prop_asym, quarantine = FALSE,
+                         r0subclin = NULL, disp_subclin = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
   if(is.null(r0subclin)) {
     r0subclin <- r0community
   }
 
-  if(is.null(disp.subclin)) {
-    disp.subclin <- disp.com
+  if(is.null(disp_subclin)) {
+    disp_subclin <- disp_com
   }
-  # Run n.sim number of model runs and put them all together in a big data.frame
+  # Run n_sim number of model runs and put them all together in a big data.frame
   res <- replicate(
-    n.sim, outbreak_model(
-      num.initial.cases = num.initial.cases,
-      prop.ascertain = prop.ascertain,
+    n_sim, outbreak_model(
+      num_initial_cases = num_initial_cases,
+      prop_ascertain = prop_ascertain,
       cap_max_days = cap_max_days,
       cap_cases = cap_cases,
       r0isolated = r0isolated,
       r0community = r0community,
       r0subclin = r0subclin,
-      disp.subclin = disp.subclin,
-      disp.iso = disp.iso,
-      disp.com = disp.com,
+      disp_subclin = disp_subclin,
+      disp_iso = disp_iso,
+      disp_com = disp_com,
       onset_to_isolation = onset_to_isolation,
       incubation_period = incubation_period,
       k = k,
-      prop.asym = prop.asym,
+      prop_asym = prop_asym,
       quarantine = quarantine
     ), simplify = FALSE)
 

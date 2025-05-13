@@ -5,15 +5,15 @@
 \title{Set up initial cases for branching process}
 \usage{
 outbreak_setup(
-  num.initial.cases,
+  num_initial_cases,
   incubation_period,
   onset_to_isolation,
   k,
-  prop.asym
+  prop_asym
 )
 }
 \arguments{
-\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+\item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{incubation_period}{a \code{function}: a random number generating
@@ -29,7 +29,7 @@ length of the \code{function} output.}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
+\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
@@ -55,11 +55,11 @@ incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
 onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 out <- outbreak_setup(
-  num.initial.cases = 1,
+  num_initial_cases = 1,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   k = 1.95,
-  prop.asym = 0
+  prop_asym = 0
 )
 out
 }

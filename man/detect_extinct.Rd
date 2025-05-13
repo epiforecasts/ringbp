@@ -26,16 +26,16 @@ Calculate whether outbreaks went extinct or not
 }
 \examples{
 res <- scenario_sim(
-  n.sim = 10,
-  num.initial.cases = 1,
-  prop.asym = 0,
-  prop.ascertain = 0.2,
+  n_sim = 10,
+  num_initial_cases = 1,
+  prop_asym = 0,
+  prop_ascertain = 0.2,
   cap_cases = 4500,
   cap_max_days = 350,
   r0isolated = 0.5,
   r0community = 2.5,
-  disp.com = 0.16,
-  disp.iso = 1,
+  disp_com = 0.16,
+  disp_iso = 1,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
   k = 0,

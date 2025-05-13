@@ -43,9 +43,9 @@ scenarios <- data.table(
       k = c(1, 0.88)
     )),
     index_R0 = c(1.1, 1.5),
-    prop.asym = c(0, 0.1),
+    prop_asym = c(0, 0.1),
     control_effectiveness = seq(0, 1, 0.25),
-    num.initial.cases = c(5, 10),
+    num_initial_cases = c(5, 10),
     quarantine = FALSE
   )
 )
@@ -70,9 +70,9 @@ sim_with_params <- purrr::partial(
   cap_max_days = 365,
   cap_cases = 5000,
   r0isolated = 0,
-  disp.iso= 1,
-  disp.subclin = 0.16,
-  disp.com = 0.16
+  disp_iso= 1,
+  disp_subclin = 0.16,
+  disp_com = 0.16
 )
 
 ## parameter_sweep uses the future_lapply() function

@@ -27,43 +27,43 @@
 #' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 #' # generate initial cases
 #' case_data <- outbreak_setup(
-#'   num.initial.cases = 5,
+#'   num_initial_cases = 5,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
-#'   prop.asym = 0
+#'   prop_asym = 0
 #' )
 #' case_data
 #' # generate next generation of cases
 #' out <- outbreak_step(
 #'   case_data = case_data,
-#'   disp.iso = 1,
-#'   disp.com = 0.16,
-#'   disp.subclin = 0.16,
+#'   disp_iso = 1,
+#'   disp_com = 0.16,
+#'   disp_subclin = 0.16,
 #'   r0isolated = 0,
 #'   r0subclin = 1.25,
 #'   r0community = 2.5,
-#'   prop.asym = 0,
+#'   prop_asym = 0,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
-#'   prop.ascertain = 0,
+#'   prop_ascertain = 0,
 #'   k = 1.95,
 #'   quarantine = FALSE
 #' )
 #' case_data <- out[[1]]
 #' case_data
-outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
+outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
                           r0isolated = NULL, r0community = NULL,
-                          prop.asym = NULL, incubation_period = NULL,
-                          onset_to_isolation = NULL, prop.ascertain = NULL,
+                          prop_asym = NULL, incubation_period = NULL,
+                          onset_to_isolation = NULL, prop_ascertain = NULL,
                           k = NULL, quarantine = FALSE, r0subclin = NULL,
-                          disp.subclin = NULL) {
+                          disp_subclin = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := rnbinom(
     .N,
-    size = fifelse(isolated, disp.iso, fifelse(asym, disp.subclin, disp.com)),
+    size = fifelse(isolated, disp_iso, fifelse(asym, disp_subclin, disp_com)),
     mu = fifelse(isolated, r0isolated, fifelse(asym, r0subclin, r0community))
   )]
 
@@ -101,7 +101,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     isolated = FALSE, new_cases = NA
   )][,
     # draws a sample to see if this person is asymptomatic
-    asym := runif(.N) < prop.asym
+    asym := runif(.N) < prop_asym
   ][
     exposure < infector_iso_time # keep only news cases that are pre-isolation
   ][,
@@ -109,7 +109,7 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
   ]
 
   # draw a sample for missing
-  prob_samples[infector_asym == FALSE, missed := runif(.N) > prop.ascertain]
+  prob_samples[infector_asym == FALSE, missed := runif(.N) > prop_ascertain]
 
   prob_samples[, isolated_time := {
     ref_time <- onset + onset_to_isolation(.N)

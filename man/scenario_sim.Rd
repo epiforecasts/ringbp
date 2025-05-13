@@ -5,28 +5,28 @@
 \title{Run a specified number of simulations with identical parameters}
 \usage{
 scenario_sim(
-  n.sim,
-  prop.ascertain,
+  n_sim,
+  prop_ascertain,
   cap_max_days,
   cap_cases,
   r0isolated,
   r0community,
-  disp.iso,
-  disp.com,
+  disp_iso,
+  disp_com,
   k,
   onset_to_isolation,
   incubation_period,
-  num.initial.cases,
-  prop.asym,
+  num_initial_cases,
+  prop_asym,
   quarantine = FALSE,
   r0subclin = NULL,
-  disp.subclin = NULL
+  disp_subclin = NULL
 )
 }
 \arguments{
-\item{n.sim}{a positive \code{integer} scalar: number of simulations to run}
+\item{n_sim}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{prop.ascertain}{a nonnegative \code{numeric} scalar: proportion of
+\item{prop_ascertain}{a nonnegative \code{numeric} scalar: proportion of
 infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
 
 \item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
@@ -41,10 +41,10 @@ isolated cases (must be >0)}
 \item{r0community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{disp.iso}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
-\item{disp.com}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_com}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
@@ -60,10 +60,10 @@ length of the \code{function} output.}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+\item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
+\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
 are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
@@ -73,7 +73,7 @@ are completely asymptomatic (sublinical) (between 0 and 1)}
 \item{r0subclin}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
-\item{disp.subclin}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_subclin}{a positive \code{numeric} scalar: dispersion parameter for
 sub-clincial non-isolated cases (must be >0)}
 }
 \value{
@@ -93,19 +93,19 @@ Run a specified number of simulations with identical parameters
 }
 \examples{
 res <- scenario_sim(
-  n.sim = 5,
-  num.initial.cases = 5,
+  n_sim = 5,
+  num_initial_cases = 5,
   cap_max_days = 365,
   cap_cases = 2000,
   r0isolated = 0,
   r0community = 2.5,
-  disp.iso = 1,
-  disp.com = 0.16,
+  disp_iso = 1,
+  disp_com = 0.16,
   k = 0.7,
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop.asym = 0,
-  prop.ascertain = 0,
+  prop_asym = 0,
+  prop_ascertain = 0,
   quarantine = TRUE
 )
 res
