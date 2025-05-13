@@ -58,10 +58,10 @@ test_that('extinct_prob works as expected', {
   expect_true(r1 >= 0)
   expect_length(r1, 1)
 
-  is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
+  is_wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
     abs(x - round(x)) < tol
   }
-  expect_true(is.wholenumber(r1 * sims))
+  expect_true(is_wholenumber(r1 * sims))
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
