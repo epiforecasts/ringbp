@@ -12,7 +12,7 @@ outbreak_model(
   r0isolated = NULL,
   r0community = NULL,
   r0asymptomatic = NULL,
-  disp_iso = NULL,
+  disp_isolated = NULL,
   disp_community = NULL,
   disp_asymptomatic = NULL,
   k,
@@ -44,7 +44,7 @@ non-isolated cases (must be >0)}
 \item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
-\item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
 \item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
@@ -97,7 +97,7 @@ out <- outbreak_model(
   r0isolated = 0.5,
   r0community = 2.5,
   r0asymptomatic = 2.5,
-  disp_iso = 1,
+  disp_isolated = 1,
   disp_community = 0.16,
   disp_asymptomatic = 0.16,
   k = 0,

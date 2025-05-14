@@ -18,7 +18,7 @@ test_that("A basic sim returns the correct object", {
   # generate next generation of cases
   case_data2 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
@@ -41,7 +41,7 @@ test_that("A basic sim returns the correct object", {
   # With R0 = 0 we should get no additional cases.
   case_data3 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
@@ -74,7 +74,7 @@ test_that("Sim with multiple infectors makes senes", {
   # generate next generation of cases
   case_data2 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
@@ -111,7 +111,7 @@ test_that("R0isolated is working properly", {
   # generate next generation of cases
   case_data2 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0, # Shoiuld get zero cases
@@ -129,7 +129,7 @@ test_that("R0isolated is working properly", {
   # generate next generation of cases
   case_data3 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 500, # Shoiuld get lots of cases
@@ -161,7 +161,7 @@ test_that('Test a bunch of args',{
   # generate next generation of cases
   case_data2 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
@@ -178,7 +178,7 @@ test_that('Test a bunch of args',{
 
   case_data3 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
@@ -196,7 +196,7 @@ test_that('Test a bunch of args',{
 
   case_data4 <- outbreak_step(
     case_data = case_data,
-    disp_iso = 1,
+    disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,

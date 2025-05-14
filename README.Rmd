@@ -54,7 +54,7 @@ res <- scenario_sim(
   r0isolated = 0.5, ## isolated individuals have R0 of 0.5
   r0community = 2.5, ## non-isolated individuals have R0 of 2.5
   disp_community = 0.16, ## dispersion parameter in the community
-  disp_iso = 1, ## dispersion  parameter of those isolated
+  disp_isolated = 1, ## dispersion  parameter of those isolated
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786), ## time from onset to isolation
   incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), ## incubation period
   k = 0, ## skew of generation interval to be beyond onset of symptoms

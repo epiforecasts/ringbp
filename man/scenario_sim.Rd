@@ -11,7 +11,7 @@ scenario_sim(
   cap_cases,
   r0isolated,
   r0community,
-  disp_iso,
+  disp_isolated,
   disp_community,
   k,
   onset_to_isolation,
@@ -41,7 +41,7 @@ isolated cases (must be >0)}
 \item{r0community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
 \item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
@@ -99,7 +99,7 @@ res <- scenario_sim(
   cap_cases = 2000,
   r0isolated = 0,
   r0community = 2.5,
-  disp_iso = 1,
+  disp_isolated = 1,
   disp_community = 0.16,
   k = 0.7,
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),

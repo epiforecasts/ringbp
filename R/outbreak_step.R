@@ -37,7 +37,7 @@
 #' # generate next generation of cases
 #' out <- outbreak_step(
 #'   case_data = case_data,
-#'   disp_iso = 1,
+#'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
 #'   r0isolated = 0,
@@ -52,7 +52,7 @@
 #' )
 #' case_data <- out[[1]]
 #' case_data
-outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_community = NULL,
+outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community = NULL,
                           r0isolated = NULL, r0community = NULL,
                           prop_asymptomatic = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop_ascertain = NULL,
@@ -63,7 +63,7 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_community = NU
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := rnbinom(
     .N,
-    size = fifelse(isolated, disp_iso, fifelse(asymptomatic, disp_asymptomatic, disp_community)),
+    size = fifelse(isolated, disp_isolated, fifelse(asymptomatic, disp_asymptomatic, disp_community)),
     mu = fifelse(isolated, r0isolated, fifelse(asymptomatic, r0asymptomatic, r0community))
   )]
 

@@ -62,7 +62,7 @@
 #'   cap_max_days = 365,
 #'   cap_cases = 5000,
 #'   r0isolated = 0,
-#'   disp_iso= 1,
+#'   disp_isolated = 1,
 #'   disp_asymptomatic = 0.16,
 #'   disp_community = 0.16
 #' )

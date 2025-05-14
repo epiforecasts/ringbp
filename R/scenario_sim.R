@@ -24,7 +24,7 @@
 #'   cap_cases = 2000,
 #'   r0isolated = 0,
 #'   r0community = 2.5,
-#'   disp_iso = 1,
+#'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   k = 0.7,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
@@ -35,7 +35,7 @@
 #' )
 #' res
 scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp_iso, disp_community, k,
+                         r0isolated, r0community, disp_isolated, disp_community, k,
                          onset_to_isolation, incubation_period,
                          num_initial_cases, prop_asymptomatic, quarantine = FALSE,
                          r0asymptomatic = NULL, disp_asymptomatic = NULL) {
@@ -59,7 +59,7 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
       r0community = r0community,
       r0asymptomatic = r0asymptomatic,
       disp_asymptomatic = disp_asymptomatic,
-      disp_iso = disp_iso,
+      disp_isolated = disp_isolated,
       disp_community = disp_community,
       onset_to_isolation = onset_to_isolation,
       incubation_period = incubation_period,

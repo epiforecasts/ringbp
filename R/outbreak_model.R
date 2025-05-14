@@ -1,7 +1,7 @@
 
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
-#' @param disp_iso a positive `numeric` scalar: dispersion parameter for
+#' @param disp_isolated a positive `numeric` scalar: dispersion parameter for
 #'   isolated cases (must be >0)
 #' @param disp_community a positive `numeric` scalar: dispersion parameter for
 #'   non-isolated cases (must be >0)
@@ -60,7 +60,7 @@
 #'   r0isolated = 0.5,
 #'   r0community = 2.5,
 #'   r0asymptomatic = 2.5,
-#'   disp_iso = 1,
+#'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
 #'   k = 0,
@@ -73,7 +73,7 @@
 outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
-                           r0asymptomatic = NULL, disp_iso = NULL,
+                           r0asymptomatic = NULL, disp_isolated = NULL,
                            disp_community = NULL, disp_asymptomatic = NULL,
                            k, onset_to_isolation, incubation_period,
                            prop_asymptomatic = NULL, quarantine = FALSE) {
@@ -99,7 +99,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
   while (latest_onset < cap_max_days & total_cases < cap_cases & !extinct) {
 
     out <- outbreak_step(case_data = case_data,
-                             disp_iso = disp_iso,
+                             disp_isolated = disp_isolated,
                              disp_community = disp_community,
                              disp_asymptomatic = disp_asymptomatic,
                              r0isolated = r0isolated,
