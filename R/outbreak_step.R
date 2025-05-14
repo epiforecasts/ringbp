@@ -92,7 +92,7 @@ outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated
-    infector_iso_time = rep(isolated_time, new_cases),
+    infector_isolation_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
     infector_asymptomatic = rep(asymptomatic, new_cases),
     # cases whose parents are asymptomatic are automatically missed;
@@ -103,7 +103,7 @@ outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < prop_asymptomatic
   ][
-    exposure < infector_iso_time # keep only news cases that are pre-isolation
+    exposure < infector_isolation_time # keep only news cases that are pre-isolation
   ][,
     onset := exposure + incubation_period(.N) # onset of new case is exposure + incubation period sample
   ]
@@ -120,14 +120,14 @@ outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community
       missed == TRUE, ref_time,
       # if quarantine is in effect, isolated at the earlier of infector's or
       # infectee's isolation time
-      rep(quarantine, .N), pmin(ref_time, infector_iso_time),
+      rep(quarantine, .N), pmin(ref_time, infector_isolation_time),
       # isolated at symptom onset time if after infector isolation time,
       # otherwise at the earlier of infector and infectee isolation times
-      default = pmin(ref_time, pmax(onset, infector_iso_time))
+      default = pmin(ref_time, pmax(onset, infector_isolation_time))
     )}]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("infector_iso_time", "infector_asymptomatic") := NULL]
+  prob_samples[, c("infector_isolation_time", "infector_asymptomatic") := NULL]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 
