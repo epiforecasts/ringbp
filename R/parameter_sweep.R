@@ -34,7 +34,7 @@
 #'       theta = c("<1%", "15%"),
 #'       k = c(1, 0.88)
 #'     )),
-#'     index_R0 = c(1.1, 1.5),
+#'     r0community = c(1.1, 1.5),
 #'     prop_asymptomatic = c(0, 0.1),
 #'     prop_ascertain = seq(0, 1, 0.25),
 #'     num_initial_cases = c(5, 10),
@@ -97,9 +97,9 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     \(x) safe_sim_fn(
       n_sim = samples,
       num_initial_cases = x$num_initial_cases,
-      r0community = x$index_R0,
+      r0community = x$r0community,
       r0asymptomatic = ifelse(
-        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$index_R0),
+        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0community),
       k = x$k,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],

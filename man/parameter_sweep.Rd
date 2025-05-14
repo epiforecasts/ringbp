@@ -42,7 +42,7 @@ scenarios <- data.table(
       theta = c("<1\%", "15\%"),
       k = c(1, 0.88)
     )),
-    index_R0 = c(1.1, 1.5),
+    r0community = c(1.1, 1.5),
     prop_asymptomatic = c(0, 0.1),
     prop_ascertain = seq(0, 1, 0.25),
     num_initial_cases = c(5, 10),
