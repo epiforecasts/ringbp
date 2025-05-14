@@ -8,12 +8,12 @@ utils::globalVariables(c(
   "week", # <outbreak_model>
   "onset", # <outbreak_model>
   "cumulative", # <outbreak_model>
-  "asym", # <outbreak_setup>
+  "asymptomatic", # <outbreak_setup>
   "isolated_time", # <outbreak_setup>
   "onset", # <outbreak_setup>
   "new_cases", # <outbreak_step>
   "isolated", # <outbreak_step>
-  "asym", # <outbreak_step>
+  "asymptomatic", # <outbreak_step>
   "onset", # <outbreak_step>
   "caseid", # <outbreak_step>
   "isolated_time", # <outbreak_step>

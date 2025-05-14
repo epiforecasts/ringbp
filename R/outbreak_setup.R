@@ -6,7 +6,7 @@
 #'
 #' @return `data.table` of cases in outbreak so far. `data.table` columns are:
 #' * `$exposure`: `numeric`
-#' * `$asym`: `logical`
+#' * `$asymptomatic`: `logical`
 #' * `$caseid`: `integer`
 #' * `$infector`: `numeric`
 #' * `$missed`: `logical`
@@ -36,7 +36,7 @@ outbreak_setup <- function(num_initial_cases, incubation_period, onset_to_isolat
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases
-    asym = runif(num_initial_cases) < prop_asymptomatic,
+    asymptomatic = runif(num_initial_cases) < prop_asymptomatic,
     caseid = seq_len(num_initial_cases), # set case id
     infector = 0,
     isolated = FALSE,
@@ -48,7 +48,7 @@ outbreak_setup <- function(num_initial_cases, incubation_period, onset_to_isolat
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
   case_data <- case_data[
-    asym == FALSE,
+    asymptomatic == FALSE,
     isolated_time := onset + onset_to_isolation(.N)
   ]
 

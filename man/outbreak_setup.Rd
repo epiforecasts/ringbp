@@ -36,7 +36,7 @@ that are completely asymptomatic (sublinical) (between 0 and 1)}
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
 \itemize{
 \item \verb{$exposure}: \code{numeric}
-\item \verb{$asym}: \code{logical}
+\item \verb{$asymptomatic}: \code{logical}
 \item \verb{$caseid}: \code{integer}
 \item \verb{$infector}: \code{numeric}
 \item \verb{$missed}: \code{logical}

@@ -63,8 +63,8 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := rnbinom(
     .N,
-    size = fifelse(isolated, disp_iso, fifelse(asym, disp_asymptomatic, disp_com)),
-    mu = fifelse(isolated, r0isolated, fifelse(asym, r0asymptomatic, r0community))
+    size = fifelse(isolated, disp_iso, fifelse(asymptomatic, disp_asymptomatic, disp_com)),
+    mu = fifelse(isolated, r0isolated, fifelse(asymptomatic, r0asymptomatic, r0community))
   )]
 
   # Select cases that have generated any new cases
@@ -94,14 +94,14 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
     # records when infector was isolated
     infector_iso_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
-    infector_asym = rep(asym, new_cases),
+    infector_asym = rep(asymptomatic, new_cases),
     # cases whose parents are asymptomatic are automatically missed;
     # will draw this for infector_asym == FALSE
     missed = TRUE,
     isolated = FALSE, new_cases = NA
   )][,
     # draws a sample to see if this person is asymptomatic
-    asym := runif(.N) < prop_asymptomatic
+    asymptomatic := runif(.N) < prop_asymptomatic
   ][
     exposure < infector_iso_time # keep only news cases that are pre-isolation
   ][,
@@ -115,7 +115,7 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
     ref_time <- onset + onset_to_isolation(.N)
     fcase(
       # If asymptomatic, never isolated: time is Inf
-      asym == TRUE, Inf,
+      asymptomatic == TRUE, Inf,
       # If not asymptomatic, but are missed, isolated at your symptom onset
       missed == TRUE, ref_time,
       # if quarantine is in effect, isolated at the earlier of infector's or
