@@ -2,7 +2,7 @@ context("Test basic usage")
 
 set.seed(20200410)
 res <- ringbp::scenario_sim(
-  n_sim = 2, num_initial_cases = 10, prop_asym = 0, prop_ascertain = 0.2,
+  n_sim = 2, num_initial_cases = 10, prop_asymptomatic = 0, prop_ascertain = 0.2,
   cap_cases = 20, cap_max_days = 100, r0isolated = 0, r0community = 2.5,
   disp_com = 0.16, disp_iso = 1,
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),

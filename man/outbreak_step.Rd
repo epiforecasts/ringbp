@@ -10,7 +10,7 @@ outbreak_step(
   disp_com = NULL,
   r0isolated = NULL,
   r0community = NULL,
-  prop_asym = NULL,
+  prop_asymptomatic = NULL,
   incubation_period = NULL,
   onset_to_isolation = NULL,
   prop_ascertain = NULL,
@@ -36,8 +36,8 @@ isolated cases (must be >0)}
 \item{r0community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
+that are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{incubation_period}{a \code{function}: a random number generating
 \code{function} that samples from incubation period distribution, the
@@ -87,7 +87,7 @@ case_data <- outbreak_setup(
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   k = 1.95,
-  prop_asym = 0
+  prop_asymptomatic = 0
 )
 case_data
 # generate next generation of cases
@@ -99,7 +99,7 @@ out <- outbreak_step(
   r0isolated = 0,
   r0asymptomatic = 1.25,
   r0community = 2.5,
-  prop_asym = 0,
+  prop_asymptomatic = 0,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   prop_ascertain = 0,

@@ -12,7 +12,7 @@ test_that("A basic sim returns the correct object", {
     incubation_period = incubation_period,
     onset_to_isolation  =  onset_to_isolation,
     k = 1.95,
-    prop_asym = 0
+    prop_asymptomatic = 0
   )
 
   # generate next generation of cases
@@ -24,7 +24,7 @@ test_that("A basic sim returns the correct object", {
     r0isolated = 0,
     r0community = 500, # almost guarentees to get new cases
     r0asymptomatic = 500,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -47,7 +47,7 @@ test_that("A basic sim returns the correct object", {
     r0isolated = 0,
     r0community = 0, # almost guarentees to get new cases
     r0asymptomatic = 0,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -68,7 +68,7 @@ test_that("Sim with multiple infectors makes senes", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 0
+    prop_asymptomatic = 0
   )
 
   # generate next generation of cases
@@ -80,7 +80,7 @@ test_that("Sim with multiple infectors makes senes", {
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     r0asymptomatic = 10000,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -104,7 +104,7 @@ test_that("R0isolated is working properly", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 0
+    prop_asymptomatic = 0
   )
   case_data$isolated <- TRUE
 
@@ -117,7 +117,7 @@ test_that("R0isolated is working properly", {
     r0isolated = 0, # Shoiuld get zero cases
     r0community = 500, # Case is isolated so irrelevent
     r0asymptomatic = 500,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -135,7 +135,7 @@ test_that("R0isolated is working properly", {
     r0isolated = 500, # Shoiuld get lots of cases
     r0community = 0, # Case is isolated so irrelevent
     r0asymptomatic = 0,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -155,7 +155,7 @@ test_that('Test a bunch of args',{
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 0
+    prop_asymptomatic = 0
   )
 
   # generate next generation of cases
@@ -167,7 +167,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     r0asymptomatic = 100000,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
@@ -184,7 +184,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
     r0asymptomatic = 100000,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 1,
@@ -202,7 +202,7 @@ test_that('Test a bunch of args',{
     r0isolated = 0,
     r0community = 100000, # To test a mix make sure there's loads of cases.
     r0asymptomatic = 100000,
-    prop_asym = 0,
+    prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0.5,

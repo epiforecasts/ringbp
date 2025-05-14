@@ -20,8 +20,8 @@
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
 #'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
 #'   `FALSE`
-#' @param prop_asym a nonnegative `numeric` scalar: proportion of cases that
-#'   are completely asymptomatic (sublinical) (between 0 and 1)
+#' @param prop_asymptomatic a nonnegative `numeric` scalar: proportion of cases
+#'   that are completely asymptomatic (sublinical) (between 0 and 1)
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
@@ -66,7 +66,7 @@
 #'   k = 0,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_asym = 0,
+#'   prop_asymptomatic = 0,
 #'   quarantine = FALSE
 #' )
 #' out
@@ -76,7 +76,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                            r0asymptomatic = NULL, disp_iso = NULL,
                            disp_com = NULL, disp_asymptomatic = NULL,
                            k, onset_to_isolation, incubation_period,
-                           prop_asym = NULL, quarantine = FALSE) {
+                           prop_asymptomatic = NULL, quarantine = FALSE) {
 
   # Set initial values for loop indices
   total_cases <- num_initial_cases
@@ -88,7 +88,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                               incubation_period = incubation_period,
                               onset_to_isolation = onset_to_isolation,
                               k = k,
-                              prop_asym = prop_asym)
+                              prop_asymptomatic = prop_asymptomatic)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -110,7 +110,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                              prop_ascertain = prop_ascertain,
                              k = k,
                              quarantine = quarantine,
-                             prop_asym = prop_asym)
+                             prop_asymptomatic = prop_asymptomatic)
 
 
     case_data <- out[[1]]

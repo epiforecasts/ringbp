@@ -31,7 +31,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' res <- scenario_sim(
 #'   n_sim = 10,
 #'   num_initial_cases = 1,
-#'   prop_asym = 0,
+#'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0.2,
 #'   cap_cases = 4500,
 #'   cap_max_days = 350,
@@ -75,7 +75,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #' res <- scenario_sim(
 #'   n_sim = 10,
 #'   num_initial_cases = 1,
-#'   prop_asym = 0,
+#'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0.2,
 #'   cap_cases = 4500,
 #'   cap_max_days = 350,

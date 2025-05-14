@@ -18,7 +18,7 @@ outbreak_model(
   k,
   onset_to_isolation,
   incubation_period,
-  prop_asym = NULL,
+  prop_asymptomatic = NULL,
   quarantine = FALSE
 )
 }
@@ -66,8 +66,8 @@ length of the \code{function} output.}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
+that are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
@@ -103,7 +103,7 @@ out <- outbreak_model(
   k = 0,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop_asym = 0,
+  prop_asymptomatic = 0,
   quarantine = FALSE
 )
 out

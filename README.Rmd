@@ -47,7 +47,7 @@ library("ggplot2")
 res <- scenario_sim(
   n_sim = 10, ## 10 simulations
   num_initial_cases = 1, ## one initial case in each of the simulations
-  prop_asym = 0, ## no asymptomatic infections
+  prop_asymptomatic = 0, ## no asymptomatic infections
   prop_ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
   cap_cases = 4500, ## don't simulate beyond 4500 infections
   cap_max_days = 350, ## don't simulate beyond 350 days

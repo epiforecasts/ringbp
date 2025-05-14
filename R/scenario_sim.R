@@ -29,7 +29,7 @@
 #'   k = 0.7,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_asym = 0,
+#'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0,
 #'   quarantine = TRUE
 #' )
@@ -37,7 +37,7 @@
 scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp_iso, disp_com, k,
                          onset_to_isolation, incubation_period,
-                         num_initial_cases, prop_asym, quarantine = FALSE,
+                         num_initial_cases, prop_asymptomatic, quarantine = FALSE,
                          r0asymptomatic = NULL, disp_asymptomatic = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
@@ -64,7 +64,7 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
       onset_to_isolation = onset_to_isolation,
       incubation_period = incubation_period,
       k = k,
-      prop_asym = prop_asym,
+      prop_asymptomatic = prop_asymptomatic,
       quarantine = quarantine
     ), simplify = FALSE)
 

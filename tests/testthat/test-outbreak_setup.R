@@ -12,7 +12,7 @@ test_that("A basic sim setup returns the correct object", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 0
+    prop_asymptomatic = 0
   )
 
   expect_equal(nrow(case_data), 5)
@@ -31,7 +31,7 @@ test_that("asym arg works properly", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 1
+    prop_asymptomatic = 1
   )
   expect_true(all(all_asym$asym))
 
@@ -43,7 +43,7 @@ test_that("asym arg works properly", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
-    prop_asym = 0.5
+    prop_asymptomatic = 0.5
   )
 
   expect_length(unique(mix$asym), 2)

@@ -17,7 +17,7 @@ scenario_sim(
   onset_to_isolation,
   incubation_period,
   num_initial_cases,
-  prop_asym,
+  prop_asymptomatic,
   quarantine = FALSE,
   r0asymptomatic = NULL,
   disp_asymptomatic = NULL
@@ -63,8 +63,8 @@ output).}
 \item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
+that are completely asymptomatic (sublinical) (between 0 and 1)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
@@ -104,7 +104,7 @@ res <- scenario_sim(
   k = 0.7,
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop_asym = 0,
+  prop_asymptomatic = 0,
   prop_ascertain = 0,
   quarantine = TRUE
 )

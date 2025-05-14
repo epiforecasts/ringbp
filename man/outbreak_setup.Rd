@@ -9,7 +9,7 @@ outbreak_setup(
   incubation_period,
   onset_to_isolation,
   k,
-  prop_asym
+  prop_asymptomatic
 )
 }
 \arguments{
@@ -29,8 +29,8 @@ length of the \code{function} output.}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{prop_asym}{a nonnegative \code{numeric} scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
+that are completely asymptomatic (sublinical) (between 0 and 1)}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -59,7 +59,7 @@ out <- outbreak_setup(
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   k = 1.95,
-  prop_asym = 0
+  prop_asymptomatic = 0
 )
 out
 }

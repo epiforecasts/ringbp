@@ -29,14 +29,14 @@
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
-#'   prop_asym = 0
+#'   prop_asymptomatic = 0
 #' )
 #' out
-outbreak_setup <- function(num_initial_cases, incubation_period, onset_to_isolation, k, prop_asym) {
+outbreak_setup <- function(num_initial_cases, incubation_period, onset_to_isolation, k, prop_asymptomatic) {
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases
-    asym = runif(num_initial_cases) < prop_asym,
+    asym = runif(num_initial_cases) < prop_asymptomatic,
     caseid = seq_len(num_initial_cases), # set case id
     infector = 0,
     isolated = FALSE,

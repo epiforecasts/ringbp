@@ -43,7 +43,7 @@ scenarios <- data.table(
       k = c(1, 0.88)
     )),
     index_R0 = c(1.1, 1.5),
-    prop_asym = c(0, 0.1),
+    prop_asymptomatic = c(0, 0.1),
     control_effectiveness = seq(0, 1, 0.25),
     num_initial_cases = c(5, 10),
     quarantine = FALSE

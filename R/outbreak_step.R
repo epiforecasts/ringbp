@@ -31,7 +31,7 @@
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
-#'   prop_asym = 0
+#'   prop_asymptomatic = 0
 #' )
 #' case_data
 #' # generate next generation of cases
@@ -43,7 +43,7 @@
 #'   r0isolated = 0,
 #'   r0asymptomatic = 1.25,
 #'   r0community = 2.5,
-#'   prop_asym = 0,
+#'   prop_asymptomatic = 0,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   prop_ascertain = 0,
@@ -54,7 +54,7 @@
 #' case_data
 outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
                           r0isolated = NULL, r0community = NULL,
-                          prop_asym = NULL, incubation_period = NULL,
+                          prop_asymptomatic = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop_ascertain = NULL,
                           k = NULL, quarantine = FALSE, r0asymptomatic = NULL,
                           disp_asymptomatic = NULL) {
@@ -101,7 +101,7 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
     isolated = FALSE, new_cases = NA
   )][,
     # draws a sample to see if this person is asymptomatic
-    asym := runif(.N) < prop_asym
+    asym := runif(.N) < prop_asymptomatic
   ][
     exposure < infector_iso_time # keep only news cases that are pre-isolation
   ][,

@@ -35,7 +35,7 @@
 #'       k = c(1, 0.88)
 #'     )),
 #'     index_R0 = c(1.1, 1.5),
-#'     prop_asym = c(0, 0.1),
+#'     prop_asymptomatic = c(0, 0.1),
 #'     control_effectiveness = seq(0, 1, 0.25),
 #'     num_initial_cases = c(5, 10),
 #'     quarantine = FALSE
@@ -105,7 +105,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       incubation_period = x$incubation_period[[1]],
       prop_ascertain = x$control_effectiveness,
       quarantine = x$quarantine,
-      prop_asym = x$prop_asym
+      prop_asymptomatic = x$prop_asymptomatic
     )[[1]],
     future.scheduling = 20,
     future.seed = TRUE
