@@ -36,7 +36,7 @@
 #'     )),
 #'     index_R0 = c(1.1, 1.5),
 #'     prop_asymptomatic = c(0, 0.1),
-#'     control_effectiveness = seq(0, 1, 0.25),
+#'     prop_ascertain = seq(0, 1, 0.25),
 #'     num_initial_cases = c(5, 10),
 #'     quarantine = FALSE
 #'   )
@@ -103,7 +103,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
       k = x$k,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],
-      prop_ascertain = x$control_effectiveness,
+      prop_ascertain = x$prop_ascertain,
       quarantine = x$quarantine,
       prop_asymptomatic = x$prop_asymptomatic
     )[[1]],
