@@ -13,7 +13,7 @@ outbreak_model(
   r0community = NULL,
   r0asymptomatic = NULL,
   disp_iso = NULL,
-  disp_com = NULL,
+  disp_community = NULL,
   disp_asymptomatic = NULL,
   k,
   onset_to_isolation,
@@ -47,7 +47,7 @@ sub-clinical non-isolated cases (must be >0)}
 \item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
-\item{disp_com}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
 \item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
@@ -98,7 +98,7 @@ out <- outbreak_model(
   r0community = 2.5,
   r0asymptomatic = 2.5,
   disp_iso = 1,
-  disp_com = 0.16,
+  disp_community = 0.16,
   disp_asymptomatic = 0.16,
   k = 0,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),

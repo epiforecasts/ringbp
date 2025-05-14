@@ -53,7 +53,7 @@ res <- scenario_sim(
   cap_max_days = 350, ## don't simulate beyond 350 days
   r0isolated = 0.5, ## isolated individuals have R0 of 0.5
   r0community = 2.5, ## non-isolated individuals have R0 of 2.5
-  disp_com = 0.16, ## dispersion parameter in the community
+  disp_community = 0.16, ## dispersion parameter in the community
   disp_iso = 1, ## dispersion  parameter of those isolated
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786), ## time from onset to isolation
   incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), ## incubation period

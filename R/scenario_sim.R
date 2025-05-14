@@ -25,7 +25,7 @@
 #'   r0isolated = 0,
 #'   r0community = 2.5,
 #'   disp_iso = 1,
-#'   disp_com = 0.16,
+#'   disp_community = 0.16,
 #'   k = 0.7,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
@@ -35,7 +35,7 @@
 #' )
 #' res
 scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp_iso, disp_com, k,
+                         r0isolated, r0community, disp_iso, disp_community, k,
                          onset_to_isolation, incubation_period,
                          num_initial_cases, prop_asymptomatic, quarantine = FALSE,
                          r0asymptomatic = NULL, disp_asymptomatic = NULL) {
@@ -46,7 +46,7 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
   }
 
   if(is.null(disp_asymptomatic)) {
-    disp_asymptomatic <- disp_com
+    disp_asymptomatic <- disp_community
   }
   # Run n_sim number of model runs and put them all together in a big data.frame
   res <- replicate(
@@ -60,7 +60,7 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
       r0asymptomatic = r0asymptomatic,
       disp_asymptomatic = disp_asymptomatic,
       disp_iso = disp_iso,
-      disp_com = disp_com,
+      disp_community = disp_community,
       onset_to_isolation = onset_to_isolation,
       incubation_period = incubation_period,
       k = k,

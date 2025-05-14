@@ -12,7 +12,7 @@ scenario_sim(
   r0isolated,
   r0community,
   disp_iso,
-  disp_com,
+  disp_community,
   k,
   onset_to_isolation,
   incubation_period,
@@ -44,7 +44,7 @@ non-isolated cases (must be >0)}
 \item{disp_iso}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
-\item{disp_com}{a positive \code{numeric} scalar: dispersion parameter for
+\item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
@@ -100,7 +100,7 @@ res <- scenario_sim(
   r0isolated = 0,
   r0community = 2.5,
   disp_iso = 1,
-  disp_com = 0.16,
+  disp_community = 0.16,
   k = 0.7,
   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),

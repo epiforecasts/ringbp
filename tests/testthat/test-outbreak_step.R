@@ -19,7 +19,7 @@ test_that("A basic sim returns the correct object", {
   case_data2 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 500, # almost guarentees to get new cases
@@ -42,7 +42,7 @@ test_that("A basic sim returns the correct object", {
   case_data3 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 0, # almost guarentees to get new cases
@@ -75,7 +75,7 @@ test_that("Sim with multiple infectors makes senes", {
   case_data2 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
@@ -112,7 +112,7 @@ test_that("R0isolated is working properly", {
   case_data2 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0, # Shoiuld get zero cases
     r0community = 500, # Case is isolated so irrelevent
@@ -130,7 +130,7 @@ test_that("R0isolated is working properly", {
   case_data3 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 500, # Shoiuld get lots of cases
     r0community = 0, # Case is isolated so irrelevent
@@ -162,7 +162,7 @@ test_that('Test a bunch of args',{
   case_data2 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
@@ -179,7 +179,7 @@ test_that('Test a bunch of args',{
   case_data3 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 10000, # almost guarentees both index cases create infections
@@ -197,7 +197,7 @@ test_that('Test a bunch of args',{
   case_data4 <- outbreak_step(
     case_data = case_data,
     disp_iso = 1,
-    disp_com = 0.16,
+    disp_community = 0.16,
     disp_asymptomatic = 0.16,
     r0isolated = 0,
     r0community = 100000, # To test a mix make sure there's loads of cases.

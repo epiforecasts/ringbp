@@ -3,7 +3,7 @@
 #' @author Joel Hellewell
 #' @param disp_iso a positive `numeric` scalar: dispersion parameter for
 #'   isolated cases (must be >0)
-#' @param disp_com a positive `numeric` scalar: dispersion parameter for
+#' @param disp_community a positive `numeric` scalar: dispersion parameter for
 #'   non-isolated cases (must be >0)
 #' @param disp_asymptomatic a positive `numeric` scalar: dispersion parameter
 #'   for sub-clincial non-isolated cases (must be >0)
@@ -61,7 +61,7 @@
 #'   r0community = 2.5,
 #'   r0asymptomatic = 2.5,
 #'   disp_iso = 1,
-#'   disp_com = 0.16,
+#'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
 #'   k = 0,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
@@ -74,7 +74,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0asymptomatic = NULL, disp_iso = NULL,
-                           disp_com = NULL, disp_asymptomatic = NULL,
+                           disp_community = NULL, disp_asymptomatic = NULL,
                            k, onset_to_isolation, incubation_period,
                            prop_asymptomatic = NULL, quarantine = FALSE) {
 
@@ -100,7 +100,7 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
 
     out <- outbreak_step(case_data = case_data,
                              disp_iso = disp_iso,
-                             disp_com = disp_com,
+                             disp_community = disp_community,
                              disp_asymptomatic = disp_asymptomatic,
                              r0isolated = r0isolated,
                              r0community = r0community,

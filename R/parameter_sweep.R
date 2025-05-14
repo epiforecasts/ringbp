@@ -64,7 +64,7 @@
 #'   r0isolated = 0,
 #'   disp_iso= 1,
 #'   disp_asymptomatic = 0.16,
-#'   disp_com = 0.16
+#'   disp_community = 0.16
 #' )
 #'
 #' ## parameter_sweep uses the future_lapply() function

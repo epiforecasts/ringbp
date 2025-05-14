@@ -38,7 +38,7 @@
 #' out <- outbreak_step(
 #'   case_data = case_data,
 #'   disp_iso = 1,
-#'   disp_com = 0.16,
+#'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
 #'   r0isolated = 0,
 #'   r0asymptomatic = 1.25,
@@ -52,7 +52,7 @@
 #' )
 #' case_data <- out[[1]]
 #' case_data
-outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
+outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_community = NULL,
                           r0isolated = NULL, r0community = NULL,
                           prop_asymptomatic = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop_ascertain = NULL,
@@ -63,7 +63,7 @@ outbreak_step <- function(case_data = NULL, disp_iso = NULL, disp_com = NULL,
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := rnbinom(
     .N,
-    size = fifelse(isolated, disp_iso, fifelse(asymptomatic, disp_asymptomatic, disp_com)),
+    size = fifelse(isolated, disp_iso, fifelse(asymptomatic, disp_asymptomatic, disp_community)),
     mu = fifelse(isolated, r0isolated, fifelse(asymptomatic, r0asymptomatic, r0community))
   )]
 
