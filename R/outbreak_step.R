@@ -40,9 +40,9 @@
 #'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
-#'   r0isolated = 0,
-#'   r0asymptomatic = 1.25,
-#'   r0community = 2.5,
+#'   r0_isolated = 0,
+#'   r0_asymptomatic = 1.25,
+#'   r0_community = 2.5,
 #'   prop_asymptomatic = 0,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
@@ -53,10 +53,10 @@
 #' case_data <- out[[1]]
 #' case_data
 outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community = NULL,
-                          r0isolated = NULL, r0community = NULL,
+                          r0_isolated = NULL, r0_community = NULL,
                           prop_asymptomatic = NULL, incubation_period = NULL,
                           onset_to_isolation = NULL, prop_ascertain = NULL,
-                          k = NULL, quarantine = FALSE, r0asymptomatic = NULL,
+                          k = NULL, quarantine = FALSE, r0_asymptomatic = NULL,
                           disp_asymptomatic = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
@@ -64,7 +64,7 @@ outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community
   case_data[, new_cases := rnbinom(
     .N,
     size = fifelse(isolated, disp_isolated, fifelse(asymptomatic, disp_asymptomatic, disp_community)),
-    mu = fifelse(isolated, r0isolated, fifelse(asymptomatic, r0asymptomatic, r0community))
+    mu = fifelse(isolated, r0_isolated, fifelse(asymptomatic, r0_asymptomatic, r0_community))
   )]
 
   # Select cases that have generated any new cases

@@ -22,8 +22,8 @@
 #'   initial_cases = 5,
 #'   cap_max_days = 365,
 #'   cap_cases = 2000,
-#'   r0isolated = 0,
-#'   r0community = 2.5,
+#'   r0_isolated = 0,
+#'   r0_community = 2.5,
 #'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   k = 0.7,
@@ -35,14 +35,14 @@
 #' )
 #' res
 scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
-                         r0isolated, r0community, disp_isolated, disp_community, k,
+                         r0_isolated, r0_community, disp_isolated, disp_community, k,
                          onset_to_isolation, incubation_period,
                          initial_cases, prop_asymptomatic, quarantine = FALSE,
-                         r0asymptomatic = NULL, disp_asymptomatic = NULL) {
+                         r0_asymptomatic = NULL, disp_asymptomatic = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
-  if(is.null(r0asymptomatic)) {
-    r0asymptomatic <- r0community
+  if(is.null(r0_asymptomatic)) {
+    r0_asymptomatic <- r0_community
   }
 
   if(is.null(disp_asymptomatic)) {
@@ -55,9 +55,9 @@ scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
       prop_ascertain = prop_ascertain,
       cap_max_days = cap_max_days,
       cap_cases = cap_cases,
-      r0isolated = r0isolated,
-      r0community = r0community,
-      r0asymptomatic = r0asymptomatic,
+      r0_isolated = r0_isolated,
+      r0_community = r0_community,
+      r0_asymptomatic = r0_asymptomatic,
       disp_asymptomatic = disp_asymptomatic,
       disp_isolated = disp_isolated,
       disp_community = disp_community,

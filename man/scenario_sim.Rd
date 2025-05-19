@@ -9,8 +9,8 @@ scenario_sim(
   prop_ascertain,
   cap_max_days,
   cap_cases,
-  r0isolated,
-  r0community,
+  r0_isolated,
+  r0_community,
   disp_isolated,
   disp_community,
   k,
@@ -19,7 +19,7 @@ scenario_sim(
   initial_cases,
   prop_asymptomatic,
   quarantine = FALSE,
-  r0asymptomatic = NULL,
+  r0_asymptomatic = NULL,
   disp_asymptomatic = NULL
 )
 }
@@ -35,10 +35,10 @@ this many days is reached.}
 \item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
 which the branching process (simulation) was terminated}
 
-\item{r0isolated}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_isolated}{a positive \code{numeric} scalar: reproduction number for
 isolated cases (must be >0)}
 
-\item{r0community}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
 \item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
@@ -70,7 +70,7 @@ that are completely asymptomatic (sublinical) (between 0 and 1)}
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
 
-\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
 \item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
@@ -97,8 +97,8 @@ res <- scenario_sim(
   initial_cases = 5,
   cap_max_days = 365,
   cap_cases = 2000,
-  r0isolated = 0,
-  r0community = 2.5,
+  r0_isolated = 0,
+  r0_community = 2.5,
   disp_isolated = 1,
   disp_community = 0.16,
   k = 0.7,

@@ -21,9 +21,9 @@ test_that("A basic sim returns the correct object", {
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 500, # almost guarentees to get new cases
-    r0asymptomatic = 500,
+    r0_isolated = 0,
+    r0_community = 500, # almost guarentees to get new cases
+    r0_asymptomatic = 500,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -44,9 +44,9 @@ test_that("A basic sim returns the correct object", {
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 0, # almost guarentees to get new cases
-    r0asymptomatic = 0,
+    r0_isolated = 0,
+    r0_community = 0, # almost guarentees to get new cases
+    r0_asymptomatic = 0,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -77,9 +77,9 @@ test_that("Sim with multiple infectors makes senes", {
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 10000, # almost guarentees both index cases create infections
-    r0asymptomatic = 10000,
+    r0_isolated = 0,
+    r0_community = 10000, # almost guarentees both index cases create infections
+    r0_asymptomatic = 10000,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -94,7 +94,7 @@ test_that("Sim with multiple infectors makes senes", {
 })
 
 
-test_that("R0isolated is working properly", {
+test_that("r0_isolated is working properly", {
   incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
@@ -114,9 +114,9 @@ test_that("R0isolated is working properly", {
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0, # Shoiuld get zero cases
-    r0community = 500, # Case is isolated so irrelevent
-    r0asymptomatic = 500,
+    r0_isolated = 0, # Shoiuld get zero cases
+    r0_community = 500, # Case is isolated so irrelevent
+    r0_asymptomatic = 500,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -132,9 +132,9 @@ test_that("R0isolated is working properly", {
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 500, # Shoiuld get lots of cases
-    r0community = 0, # Case is isolated so irrelevent
-    r0asymptomatic = 0,
+    r0_isolated = 500, # Shoiuld get lots of cases
+    r0_community = 0, # Case is isolated so irrelevent
+    r0_asymptomatic = 0,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -164,9 +164,9 @@ test_that('Test a bunch of args',{
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 10000, # almost guarentees both index cases create infections
-    r0asymptomatic = 100000,
+    r0_isolated = 0,
+    r0_community = 10000, # almost guarentees both index cases create infections
+    r0_asymptomatic = 100000,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -181,9 +181,9 @@ test_that('Test a bunch of args',{
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 10000, # almost guarentees both index cases create infections
-    r0asymptomatic = 100000,
+    r0_isolated = 0,
+    r0_community = 10000, # almost guarentees both index cases create infections
+    r0_asymptomatic = 100000,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
@@ -199,9 +199,9 @@ test_that('Test a bunch of args',{
     disp_isolated = 1,
     disp_community = 0.16,
     disp_asymptomatic = 0.16,
-    r0isolated = 0,
-    r0community = 100000, # To test a mix make sure there's loads of cases.
-    r0asymptomatic = 100000,
+    r0_isolated = 0,
+    r0_community = 100000, # To test a mix make sure there's loads of cases.
+    r0_asymptomatic = 100000,
     prop_asymptomatic = 0,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,

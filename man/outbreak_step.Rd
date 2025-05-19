@@ -8,15 +8,15 @@ outbreak_step(
   case_data = NULL,
   disp_isolated = NULL,
   disp_community = NULL,
-  r0isolated = NULL,
-  r0community = NULL,
+  r0_isolated = NULL,
+  r0_community = NULL,
   prop_asymptomatic = NULL,
   incubation_period = NULL,
   onset_to_isolation = NULL,
   prop_ascertain = NULL,
   k = NULL,
   quarantine = FALSE,
-  r0asymptomatic = NULL,
+  r0_asymptomatic = NULL,
   disp_asymptomatic = NULL
 )
 }
@@ -30,10 +30,10 @@ isolated cases (must be >0)}
 \item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
-\item{r0isolated}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_isolated}{a positive \code{numeric} scalar: reproduction number for
 isolated cases (must be >0)}
 
-\item{r0community}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
 \item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
@@ -58,7 +58,7 @@ interval from the incubation period}
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
 
-\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
 \item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
@@ -96,9 +96,9 @@ out <- outbreak_step(
   disp_isolated = 1,
   disp_community = 0.16,
   disp_asymptomatic = 0.16,
-  r0isolated = 0,
-  r0asymptomatic = 1.25,
-  r0community = 2.5,
+  r0_isolated = 0,
+  r0_asymptomatic = 1.25,
+  r0_community = 2.5,
   prop_asymptomatic = 0,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,

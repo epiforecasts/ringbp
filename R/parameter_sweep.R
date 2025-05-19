@@ -34,7 +34,7 @@
 #'       theta = c("<1%", "15%"),
 #'       k = c(1, 0.88)
 #'     )),
-#'     r0community = c(1.1, 1.5),
+#'     r0_community = c(1.1, 1.5),
 #'     prop_asymptomatic = c(0, 0.1),
 #'     prop_ascertain = seq(0, 1, 0.25),
 #'     initial_cases = c(5, 10),
@@ -61,7 +61,7 @@
 #'   ringbp::scenario_sim,
 #'   cap_max_days = 365,
 #'   cap_cases = 5000,
-#'   r0isolated = 0,
+#'   r0_isolated = 0,
 #'   disp_isolated = 1,
 #'   disp_asymptomatic = 0.16,
 #'   disp_community = 0.16
@@ -97,9 +97,9 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     \(x) safe_sim_fn(
       n = samples,
       initial_cases = x$initial_cases,
-      r0community = x$r0community,
-      r0asymptomatic = ifelse(
-        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0community),
+      r0_community = x$r0_community,
+      r0_asymptomatic = ifelse(
+        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0_community),
       k = x$k,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],

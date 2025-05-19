@@ -9,9 +9,9 @@ outbreak_model(
   prop_ascertain = NULL,
   cap_max_days = NULL,
   cap_cases = NULL,
-  r0isolated = NULL,
-  r0community = NULL,
-  r0asymptomatic = NULL,
+  r0_isolated = NULL,
+  r0_community = NULL,
+  r0_asymptomatic = NULL,
   disp_isolated = NULL,
   disp_community = NULL,
   disp_asymptomatic = NULL,
@@ -35,13 +35,13 @@ this many days is reached.}
 \item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
 which the branching process (simulation) was terminated}
 
-\item{r0isolated}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_isolated}{a positive \code{numeric} scalar: reproduction number for
 isolated cases (must be >0)}
 
-\item{r0community}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{r0asymptomatic}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
 \item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
@@ -94,9 +94,9 @@ out <- outbreak_model(
   prop_ascertain = 0.2,
   cap_max_days = 350,
   cap_cases = 4500,
-  r0isolated = 0.5,
-  r0community = 2.5,
-  r0asymptomatic = 2.5,
+  r0_isolated = 0.5,
+  r0_community = 2.5,
+  r0_asymptomatic = 2.5,
   disp_isolated = 1,
   disp_community = 0.16,
   disp_asymptomatic = 0.16,
