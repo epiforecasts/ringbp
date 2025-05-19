@@ -102,10 +102,10 @@ from <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
 <span class="r-in"><span>      theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;1%"</span>, <span class="st">"15%"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.88</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    index_R0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    prop.asym <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    control_effectiveness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.25</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    num.initial.cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    r0_community <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    prop_asymptomatic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    prop_ascertain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.25</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    initial_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -120,20 +120,20 @@ from <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
 <span class="r-in"><span>  <span class="va">expanded_groups</span>, <span class="va">expanded_k</span>, by <span class="op">=</span> <span class="va">non_list_cols</span>, allow.cartesian <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scenarios</span><span class="op">[</span>, <span class="va">scenario</span> <span class="op">:=</span>  <span class="fl">1</span><span class="op">:</span><span class="va">.N</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;index_R0, prop.asym, control_effectiveness, num.initial.cases, quarantine&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      index_R0 prop.asym control_effectiveness num.initial.cases quarantine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;     &lt;num&gt;                 &lt;num&gt;             &lt;num&gt;     &lt;lgcl&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      1.1       0.0                     0                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 156:      1.5       0.1                     1                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 157:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 158:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 159:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 160:      1.5       0.1                     1                10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;r0_community, prop_asymptomatic, prop_ascertain, initial_cases, quarantine&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      r0_community prop_asymptomatic prop_ascertain initial_cases quarantine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;             &lt;num&gt;          &lt;num&gt;         &lt;num&gt;     &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:          1.1               0.0              0            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156:          1.5               0.1              1             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160:          1.5               0.1              1            10      FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       delay onset_to_isolation  theta     k scenario</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt;             &lt;list&gt; &lt;char&gt; &lt;num&gt;    &lt;int&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1:   SARS      &lt;function[1]&gt;    &lt;1%  1.00        1</span>
@@ -150,20 +150,20 @@ from <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">incub</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.65</span>, scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scenarios</span><span class="op">[</span>, <span class="va">incubation_period</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">incub</span><span class="op">)</span>, <span class="va">.N</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;index_R0, prop.asym, control_effectiveness, num.initial.cases, quarantine&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      index_R0 prop.asym control_effectiveness num.initial.cases quarantine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;     &lt;num&gt;                 &lt;num&gt;             &lt;num&gt;     &lt;lgcl&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      1.1       0.0                     0                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      1.1       0.0                     0                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 156:      1.5       0.1                     1                 5      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 157:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 158:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 159:      1.5       0.1                     1                10      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 160:      1.5       0.1                     1                10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;r0_community, prop_asymptomatic, prop_ascertain, initial_cases, quarantine&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      r0_community prop_asymptomatic prop_ascertain initial_cases quarantine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;             &lt;num&gt;          &lt;num&gt;         &lt;num&gt;     &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:          1.1               0.0              0             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:          1.1               0.0              0            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156:          1.5               0.1              1             5      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159:          1.5               0.1              1            10      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160:          1.5               0.1              1            10      FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       delay onset_to_isolation  theta     k scenario incubation_period</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt;             &lt;list&gt; &lt;char&gt; &lt;num&gt;    &lt;int&gt;            &lt;list&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1:   SARS      &lt;function[1]&gt;    &lt;1%  1.00        1     &lt;function[1]&gt;</span>
@@ -183,10 +183,10 @@ from <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
 <span class="r-in"><span>  <span class="fu">ringbp</span><span class="fu">::</span><span class="va"><a href="scenario_sim.html">scenario_sim</a></span>,</span></span>
 <span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
 <span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">5000</span>,</span></span>
-<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  disp.iso<span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  disp.subclin <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span></span></span>
+<span class="r-in"><span>  r0_isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  disp_asymptomatic <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  disp_community <span class="op">=</span> <span class="fl">0.16</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## parameter_sweep uses the future_lapply() function</span></span></span>

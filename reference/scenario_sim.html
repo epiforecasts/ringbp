@@ -54,22 +54,22 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scenario_sim</span><span class="op">(</span></span>
-<span>  <span class="va">n.sim</span>,</span>
-<span>  <span class="va">prop.ascertain</span>,</span>
+<span>  <span class="va">n</span>,</span>
+<span>  <span class="va">prop_ascertain</span>,</span>
 <span>  <span class="va">cap_max_days</span>,</span>
 <span>  <span class="va">cap_cases</span>,</span>
-<span>  <span class="va">r0isolated</span>,</span>
-<span>  <span class="va">r0community</span>,</span>
-<span>  <span class="va">disp.iso</span>,</span>
-<span>  <span class="va">disp.com</span>,</span>
+<span>  <span class="va">r0_isolated</span>,</span>
+<span>  <span class="va">r0_community</span>,</span>
+<span>  <span class="va">disp_isolated</span>,</span>
+<span>  <span class="va">disp_community</span>,</span>
 <span>  <span class="va">k</span>,</span>
 <span>  <span class="va">onset_to_isolation</span>,</span>
 <span>  <span class="va">incubation_period</span>,</span>
-<span>  <span class="va">num.initial.cases</span>,</span>
-<span>  <span class="va">prop.asym</span>,</span>
+<span>  <span class="va">initial_cases</span>,</span>
+<span>  <span class="va">prop_asymptomatic</span>,</span>
 <span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  r0subclin <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  disp.subclin <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  r0_asymptomatic <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  disp_asymptomatic <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -77,13 +77,14 @@
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-n-sim">n.sim<a class="anchor" aria-label="anchor" href="#arg-n-sim"></a></dt>
+<dl><dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>a positive <code>integer</code> scalar: number of simulations to run</p></dd>
 
 
-<dt id="arg-prop-ascertain">prop.ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
-<dd><p>a nonnegative <code>numeric</code> scalar: proportion of
-infectious contacts ascertained by contact tracing (must be 0&lt;=x&lt;=1)</p></dd>
+<dt id="arg-prop-ascertain">prop_ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
+inclusive): proportion of infectious contacts ascertained by contact
+tracing</p></dd>
 
 
 <dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
@@ -96,22 +97,22 @@ this many days is reached.</p></dd>
 which the branching process (simulation) was terminated</p></dd>
 
 
-<dt id="arg-r-isolated">r0isolated<a class="anchor" aria-label="anchor" href="#arg-r-isolated"></a></dt>
+<dt id="arg-r-isolated">r0_isolated<a class="anchor" aria-label="anchor" href="#arg-r-isolated"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: reproduction number for
 isolated cases (must be &gt;0)</p></dd>
 
 
-<dt id="arg-r-community">r0community<a class="anchor" aria-label="anchor" href="#arg-r-community"></a></dt>
+<dt id="arg-r-community">r0_community<a class="anchor" aria-label="anchor" href="#arg-r-community"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: reproduction number for
 non-isolated cases (must be &gt;0)</p></dd>
 
 
-<dt id="arg-disp-iso">disp.iso<a class="anchor" aria-label="anchor" href="#arg-disp-iso"></a></dt>
+<dt id="arg-disp-isolated">disp_isolated<a class="anchor" aria-label="anchor" href="#arg-disp-isolated"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
 isolated cases (must be &gt;0)</p></dd>
 
 
-<dt id="arg-disp-com">disp.com<a class="anchor" aria-label="anchor" href="#arg-disp-com"></a></dt>
+<dt id="arg-disp-community">disp_community<a class="anchor" aria-label="anchor" href="#arg-disp-community"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
 non-isolated cases (must be &gt;0)</p></dd>
 
@@ -135,14 +136,15 @@ times to sample the incubation period (i.e. length of the <code>function</code>
 output).</p></dd>
 
 
-<dt id="arg-num-initial-cases">num.initial.cases<a class="anchor" aria-label="anchor" href="#arg-num-initial-cases"></a></dt>
+<dt id="arg-initial-cases">initial_cases<a class="anchor" aria-label="anchor" href="#arg-initial-cases"></a></dt>
 <dd><p>a nonnegative <code>integer</code> scalar: number of initial
 or starting cases which are all assumed to be missed.</p></dd>
 
 
-<dt id="arg-prop-asym">prop.asym<a class="anchor" aria-label="anchor" href="#arg-prop-asym"></a></dt>
-<dd><p>a nonnegative <code>numeric</code> scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)</p></dd>
+<dt id="arg-prop-asymptomatic">prop_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-prop-asymptomatic"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
+inclusive): proportion of cases that are completely asymptomatic
+(subclinical)</p></dd>
 
 
 <dt id="arg-quarantine">quarantine<a class="anchor" aria-label="anchor" href="#arg-quarantine"></a></dt>
@@ -151,14 +153,14 @@ are completely asymptomatic (sublinical) (between 0 and 1)</p></dd>
 <code>FALSE</code></p></dd>
 
 
-<dt id="arg-r-subclin">r0subclin<a class="anchor" aria-label="anchor" href="#arg-r-subclin"></a></dt>
+<dt id="arg-r-asymptomatic">r0_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-r-asymptomatic"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: reproduction number for
 sub-clinical non-isolated cases (must be &gt;0)</p></dd>
 
 
-<dt id="arg-disp-subclin">disp.subclin<a class="anchor" aria-label="anchor" href="#arg-disp-subclin"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
-sub-clincial non-isolated cases (must be &gt;0)</p></dd>
+<dt id="arg-disp-asymptomatic">disp_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-disp-asymptomatic"></a></dt>
+<dd><p>a positive <code>numeric</code> scalar: dispersion parameter
+for sub-clincial non-isolated cases (must be &gt;0)</p></dd>
 
 </dl></div>
     <div id="value">
@@ -179,19 +181,19 @@ the same set of parameters. The table has columns</p><ul><li><p>week: The week i
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">scenario_sim</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  n.sim <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  initial_cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
 <span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">2000</span>,</span></span>
-<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  r0_isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  r0_community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  disp_community <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
 <span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0.7</span>,</span></span>
 <span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop_asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop_ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span></span></span>

@@ -87,16 +87,16 @@ week range to test for whether an extinction occurred.</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="scenario_sim.html">scenario_sim</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  n.sim <span class="op">=</span> <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>  num.initial.cases <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  prop.asym <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  prop.ascertain <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  initial_cases <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  prop_asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop_ascertain <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
 <span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>,</span></span>
 <span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>,</span></span>
-<span class="r-in"><span>  r0isolated <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
-<span class="r-in"><span>  r0community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>  disp.com <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>  disp.iso <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  r0_isolated <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  r0_community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  disp_community <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.65</span>, scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.322737</span>, scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0</span>,</span></span>
