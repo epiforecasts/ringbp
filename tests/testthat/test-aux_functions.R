@@ -39,7 +39,7 @@ test_that('extinct_prob works as expected', {
   sims <- 5
   res <- scenario_sim(
     n = sims,
-    num_initial_cases = 5,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
     r0isolated = 0,
@@ -83,7 +83,7 @@ test_that('extinct_prob works as expected', {
   # Very high r0, shouldn't ever go extinct.
   res3 <- scenario_sim(
     n = sims,
-    num_initial_cases = 5,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
     r0isolated = 100,
@@ -103,7 +103,7 @@ test_that('extinct_prob works as expected', {
   # r0 of 0, should always go extinct.
   res3 <- scenario_sim(
     n = sims,
-    num_initial_cases = 5,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
     r0isolated = 0,
@@ -126,7 +126,7 @@ test_that('extinct_prob week_range argument works', {
   sims <- 2
   res <- scenario_sim(
     n = 2,
-    num_initial_cases = 5,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
     r0isolated = 0,
@@ -202,7 +202,7 @@ test_that('detect_extinct works', {
   sims <- 2
   res <- scenario_sim(
     n = 2,
-    num_initial_cases = 5,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
     r0isolated = 0,

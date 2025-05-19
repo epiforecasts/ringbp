@@ -19,7 +19,7 @@
 #' @examples
 #' res <- scenario_sim(
 #'   n = 5,
-#'   num_initial_cases = 5,
+#'   initial_cases = 5,
 #'   cap_max_days = 365,
 #'   cap_cases = 2000,
 #'   r0isolated = 0,
@@ -37,7 +37,7 @@
 scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp_isolated, disp_community, k,
                          onset_to_isolation, incubation_period,
-                         num_initial_cases, prop_asymptomatic, quarantine = FALSE,
+                         initial_cases, prop_asymptomatic, quarantine = FALSE,
                          r0asymptomatic = NULL, disp_asymptomatic = NULL) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
@@ -51,7 +51,7 @@ scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(
-      num_initial_cases = num_initial_cases,
+      initial_cases = initial_cases,
       prop_ascertain = prop_ascertain,
       cap_max_days = cap_max_days,
       cap_cases = cap_cases,

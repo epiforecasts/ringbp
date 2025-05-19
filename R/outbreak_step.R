@@ -27,7 +27,7 @@
 #' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 #' # generate initial cases
 #' case_data <- outbreak_setup(
-#'   num_initial_cases = 5,
+#'   initial_cases = 5,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,

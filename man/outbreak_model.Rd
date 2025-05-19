@@ -5,7 +5,7 @@
 \title{Run a single instance of the branching process model}
 \usage{
 outbreak_model(
-  num_initial_cases = NULL,
+  initial_cases = NULL,
   prop_ascertain = NULL,
   cap_max_days = NULL,
   cap_cases = NULL,
@@ -23,7 +23,7 @@ outbreak_model(
 )
 }
 \arguments{
-\item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{prop_ascertain}{a nonnegative \code{numeric} scalar: proportion of
@@ -90,7 +90,7 @@ Run a single instance of the branching process model
 \examples{
 set.seed(1)
 out <- outbreak_model(
-  num_initial_cases = 1,
+  initial_cases = 1,
   prop_ascertain = 0.2,
   cap_max_days = 350,
   cap_cases = 4500,

@@ -37,7 +37,7 @@
 #'     r0community = c(1.1, 1.5),
 #'     prop_asymptomatic = c(0, 0.1),
 #'     prop_ascertain = seq(0, 1, 0.25),
-#'     num_initial_cases = c(5, 10),
+#'     initial_cases = c(5, 10),
 #'     quarantine = FALSE
 #'   )
 #' )
@@ -96,7 +96,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
     data,
     \(x) safe_sim_fn(
       n = samples,
-      num_initial_cases = x$num_initial_cases,
+      initial_cases = x$initial_cases,
       r0community = x$r0community,
       r0asymptomatic = ifelse(
         "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0community),

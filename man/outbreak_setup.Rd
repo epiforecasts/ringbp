@@ -5,7 +5,7 @@
 \title{Set up initial cases for branching process}
 \usage{
 outbreak_setup(
-  num_initial_cases,
+  initial_cases,
   incubation_period,
   onset_to_isolation,
   k,
@@ -13,7 +13,7 @@ outbreak_setup(
 )
 }
 \arguments{
-\item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{incubation_period}{a \code{function}: a random number generating
@@ -55,7 +55,7 @@ incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
 onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 out <- outbreak_setup(
-  num_initial_cases = 1,
+  initial_cases = 1,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   k = 1.95,

@@ -25,7 +25,7 @@ Calculate proportion of runs that have controlled outbreak
 \examples{
 res <- scenario_sim(
   n = 10,
-  num_initial_cases = 1,
+  initial_cases = 1,
   prop_asymptomatic = 0,
   prop_ascertain = 0.2,
   cap_cases = 4500,

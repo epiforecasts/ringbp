@@ -8,7 +8,7 @@ test_that("A basic sim returns the correct object", {
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
-    num_initial_cases = 1,
+    initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation  =  onset_to_isolation,
     k = 1.95,
@@ -64,7 +64,7 @@ test_that("Sim with multiple infectors makes senes", {
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
-    num_initial_cases = 2,
+    initial_cases = 2,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
@@ -100,7 +100,7 @@ test_that("R0isolated is working properly", {
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
-    num_initial_cases = 1,
+    initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
@@ -151,7 +151,7 @@ test_that('Test a bunch of args',{
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
-    num_initial_cases = 1,
+    initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,

@@ -8,7 +8,7 @@ test_that("A basic sim setup returns the correct object", {
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
-    num_initial_cases = 5,
+    initial_cases = 5,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
@@ -27,7 +27,7 @@ test_that("asymptomatic arg works properly", {
   # generate initial cases
   # All asymptomatics
   all_asymptomatic <- outbreak_setup(
-    num_initial_cases = 5,
+    initial_cases = 5,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,
@@ -39,7 +39,7 @@ test_that("asymptomatic arg works properly", {
   # With 10000 cases, probability of 0 symptomatic or 0 asympt is less than
   # machine precision
   mix <- outbreak_setup(
-    num_initial_cases = 10000,
+    initial_cases = 10000,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     k = 1.95,

@@ -16,7 +16,7 @@ scenario_sim(
   k,
   onset_to_isolation,
   incubation_period,
-  num_initial_cases,
+  initial_cases,
   prop_asymptomatic,
   quarantine = FALSE,
   r0asymptomatic = NULL,
@@ -60,7 +60,7 @@ length of the \code{function} output.}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{num_initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
@@ -94,7 +94,7 @@ Run a specified number of simulations with identical parameters
 \examples{
 res <- scenario_sim(
   n = 5,
-  num_initial_cases = 5,
+  initial_cases = 5,
   cap_max_days = 365,
   cap_cases = 2000,
   r0isolated = 0,

@@ -30,7 +30,7 @@
 #'   `function` accepts a single `integer` argument specifying the number of
 #'   times to sample the incubation period (i.e. length of the `function`
 #'   output).
-#' @param num_initial_cases a nonnegative `integer` scalar: number of initial
+#' @param initial_cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
 #'   which the branching process (simulation) was terminated
@@ -53,7 +53,7 @@
 #' @examples
 #' set.seed(1)
 #' out <- outbreak_model(
-#'   num_initial_cases = 1,
+#'   initial_cases = 1,
 #'   prop_ascertain = 0.2,
 #'   cap_max_days = 350,
 #'   cap_cases = 4500,
@@ -70,7 +70,7 @@
 #'   quarantine = FALSE
 #' )
 #' out
-outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
+outbreak_model <- function(initial_cases = NULL, prop_ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
                            r0isolated = NULL, r0community = NULL,
                            r0asymptomatic = NULL, disp_isolated = NULL,
@@ -79,12 +79,12 @@ outbreak_model <- function(num_initial_cases = NULL, prop_ascertain = NULL,
                            prop_asymptomatic = NULL, quarantine = FALSE) {
 
   # Set initial values for loop indices
-  total_cases <- num_initial_cases
+  total_cases <- initial_cases
   latest_onset <- 0
   extinct <- FALSE
 
   # Initial setup
-  case_data <- outbreak_setup(num_initial_cases = num_initial_cases,
+  case_data <- outbreak_setup(initial_cases = initial_cases,
                               incubation_period = incubation_period,
                               onset_to_isolation = onset_to_isolation,
                               k = k,
