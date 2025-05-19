@@ -13,15 +13,17 @@
 #'   non-isolated cases (must be >0)
 #' @param r0_asymptomatic a positive `numeric` scalar: reproduction number for
 #'   sub-clinical non-isolated cases (must be >0)
-#' @param prop_ascertain a nonnegative `numeric` scalar: proportion of
-#'   infectious contacts ascertained by contact tracing (must be 0<=x<=1)
+#' @param prop_ascertain a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of infectious contacts ascertained by contact
+#'   tracing
 #' @param k a `numeric` scalar: skew parameter for sampling the serial
 #'   interval from the incubation period
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
 #'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
 #'   `FALSE`
-#' @param prop_asymptomatic a nonnegative `numeric` scalar: proportion of cases
-#'   that are completely asymptomatic (sublinical) (between 0 and 1)
+#' @param prop_asymptomatic a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of cases that are completely asymptomatic
+#'   (subclinical)
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.

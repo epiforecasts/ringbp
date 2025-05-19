@@ -29,8 +29,9 @@ length of the \code{function} output.}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
-that are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of cases that are completely asymptomatic
+(subclinical)}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:

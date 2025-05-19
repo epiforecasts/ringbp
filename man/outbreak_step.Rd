@@ -36,8 +36,9 @@ isolated cases (must be >0)}
 \item{r0_community}{a positive \code{numeric} scalar: reproduction number for
 non-isolated cases (must be >0)}
 
-\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
-that are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of cases that are completely asymptomatic
+(subclinical)}
 
 \item{incubation_period}{a \code{function}: a random number generating
 \code{function} that samples from incubation period distribution, the
@@ -48,8 +49,9 @@ output).}
 \item{onset_to_isolation}{a \code{function} that samples from the
 onset-to-hospitalisation delay Weibull distribution}
 
-\item{prop_ascertain}{a nonnegative \code{numeric} scalar: proportion of
-infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+\item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of infectious contacts ascertained by contact
+tracing}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}

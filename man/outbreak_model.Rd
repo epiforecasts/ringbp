@@ -26,8 +26,9 @@ outbreak_model(
 \item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{prop_ascertain}{a nonnegative \code{numeric} scalar: proportion of
-infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
+\item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of infectious contacts ascertained by contact
+tracing}
 
 \item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
 this many days is reached.}
@@ -66,8 +67,9 @@ length of the \code{function} output.}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{prop_asymptomatic}{a nonnegative \code{numeric} scalar: proportion of cases
-that are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of cases that are completely asymptomatic
+(subclinical)}
 
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
