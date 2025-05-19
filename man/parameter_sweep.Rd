@@ -42,10 +42,10 @@ scenarios <- data.table(
       theta = c("<1\%", "15\%"),
       k = c(1, 0.88)
     )),
-    index_R0 = c(1.1, 1.5),
-    prop.asym = c(0, 0.1),
-    control_effectiveness = seq(0, 1, 0.25),
-    num.initial.cases = c(5, 10),
+    r0_community = c(1.1, 1.5),
+    prop_asymptomatic = c(0, 0.1),
+    prop_ascertain = seq(0, 1, 0.25),
+    initial_cases = c(5, 10),
     quarantine = FALSE
   )
 )
@@ -69,10 +69,10 @@ sim_with_params <- purrr::partial(
   ringbp::scenario_sim,
   cap_max_days = 365,
   cap_cases = 5000,
-  r0isolated = 0,
-  disp.iso= 1,
-  disp.subclin = 0.16,
-  disp.com = 0.16
+  r0_isolated = 0,
+  disp_isolated = 1,
+  disp_asymptomatic = 0.16,
+  disp_community = 0.16
 )
 
 ## parameter_sweep uses the future_lapply() function

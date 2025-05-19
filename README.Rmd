@@ -45,16 +45,16 @@ library("ringbp")
 library("ggplot2")
 
 res <- scenario_sim(
-  n.sim = 10, ## 10 simulations
-  num.initial.cases = 1, ## one initial case in each of the simulations
-  prop.asym = 0, ## no asymptomatic infections
-  prop.ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
+  n = 10, ## 10 simulations
+  initial_cases = 1, ## one initial case in each of the simulations
+  prop_asymptomatic = 0, ## no asymptomatic infections
+  prop_ascertain = 0.2, ## 20% probability of ascertainment by contact tracing
   cap_cases = 4500, ## don't simulate beyond 4500 infections
   cap_max_days = 350, ## don't simulate beyond 350 days
-  r0isolated = 0.5, ## isolated individuals have R0 of 0.5
-  r0community = 2.5, ## non-isolated individuals have R0 of 2.5
-  disp.com = 0.16, ## dispersion parameter in the community
-  disp.iso = 1, ## dispersion  parameter of those isolated
+  r0_isolated = 0.5, ## isolated individuals have R0 of 0.5
+  r0_community = 2.5, ## non-isolated individuals have R0 of 2.5
+  disp_community = 0.16, ## dispersion parameter in the community
+  disp_isolated = 1, ## dispersion  parameter of those isolated
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786), ## time from onset to isolation
   incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), ## incubation period
   k = 0, ## skew of generation interval to be beyond onset of symptoms

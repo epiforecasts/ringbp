@@ -27,44 +27,44 @@
 #' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 #' # generate initial cases
 #' case_data <- outbreak_setup(
-#'   num.initial.cases = 5,
+#'   initial_cases = 5,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
-#'   prop.asym = 0
+#'   prop_asymptomatic = 0
 #' )
 #' case_data
 #' # generate next generation of cases
 #' out <- outbreak_step(
 #'   case_data = case_data,
-#'   disp.iso = 1,
-#'   disp.com = 0.16,
-#'   disp.subclin = 0.16,
-#'   r0isolated = 0,
-#'   r0subclin = 1.25,
-#'   r0community = 2.5,
-#'   prop.asym = 0,
+#'   disp_isolated = 1,
+#'   disp_community = 0.16,
+#'   disp_asymptomatic = 0.16,
+#'   r0_isolated = 0,
+#'   r0_asymptomatic = 1.25,
+#'   r0_community = 2.5,
+#'   prop_asymptomatic = 0,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
-#'   prop.ascertain = 0,
+#'   prop_ascertain = 0,
 #'   k = 1.95,
 #'   quarantine = FALSE
 #' )
 #' case_data <- out[[1]]
 #' case_data
-outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
-                          r0isolated = NULL, r0community = NULL,
-                          prop.asym = NULL, incubation_period = NULL,
-                          onset_to_isolation = NULL, prop.ascertain = NULL,
-                          k = NULL, quarantine = FALSE, r0subclin = NULL,
-                          disp.subclin = NULL) {
+outbreak_step <- function(case_data = NULL, disp_isolated = NULL, disp_community = NULL,
+                          r0_isolated = NULL, r0_community = NULL,
+                          prop_asymptomatic = NULL, incubation_period = NULL,
+                          onset_to_isolation = NULL, prop_ascertain = NULL,
+                          k = NULL, quarantine = FALSE, r0_asymptomatic = NULL,
+                          disp_asymptomatic = NULL) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE
   case_data[, new_cases := rnbinom(
     .N,
-    size = fifelse(isolated, disp.iso, fifelse(asym, disp.subclin, disp.com)),
-    mu = fifelse(isolated, r0isolated, fifelse(asym, r0subclin, r0community))
+    size = fifelse(isolated, disp_isolated, fifelse(asymptomatic, disp_asymptomatic, disp_community)),
+    mu = fifelse(isolated, r0_isolated, fifelse(asymptomatic, r0_asymptomatic, r0_community))
   )]
 
   # Select cases that have generated any new cases
@@ -92,42 +92,42 @@ outbreak_step <- function(case_data = NULL, disp.iso = NULL, disp.com = NULL,
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated
-    infector_iso_time = rep(isolated_time, new_cases),
+    infector_isolation_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
-    infector_asym = rep(asym, new_cases),
+    infector_asymptomatic = rep(asymptomatic, new_cases),
     # cases whose parents are asymptomatic are automatically missed;
-    # will draw this for infector_asym == FALSE
+    # will draw this for infector_asymptomatic == FALSE
     missed = TRUE,
     isolated = FALSE, new_cases = NA
   )][,
     # draws a sample to see if this person is asymptomatic
-    asym := runif(.N) < prop.asym
+    asymptomatic := runif(.N) < prop_asymptomatic
   ][
-    exposure < infector_iso_time # keep only news cases that are pre-isolation
+    exposure < infector_isolation_time # keep only news cases that are pre-isolation
   ][,
     onset := exposure + incubation_period(.N) # onset of new case is exposure + incubation period sample
   ]
 
   # draw a sample for missing
-  prob_samples[infector_asym == FALSE, missed := runif(.N) > prop.ascertain]
+  prob_samples[infector_asymptomatic == FALSE, missed := runif(.N) > prop_ascertain]
 
   prob_samples[, isolated_time := {
     ref_time <- onset + onset_to_isolation(.N)
     fcase(
       # If asymptomatic, never isolated: time is Inf
-      asym == TRUE, Inf,
+      asymptomatic == TRUE, Inf,
       # If not asymptomatic, but are missed, isolated at your symptom onset
       missed == TRUE, ref_time,
       # if quarantine is in effect, isolated at the earlier of infector's or
       # infectee's isolation time
-      rep(quarantine, .N), pmin(ref_time, infector_iso_time),
+      rep(quarantine, .N), pmin(ref_time, infector_isolation_time),
       # isolated at symptom onset time if after infector isolation time,
       # otherwise at the earlier of infector and infectee isolation times
-      default = pmin(ref_time, pmax(onset, infector_iso_time))
+      default = pmin(ref_time, pmax(onset, infector_isolation_time))
     )}]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("infector_iso_time", "infector_asym") := NULL]
+  prob_samples[, c("infector_isolation_time", "infector_asymptomatic") := NULL]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 

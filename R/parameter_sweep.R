@@ -34,10 +34,10 @@
 #'       theta = c("<1%", "15%"),
 #'       k = c(1, 0.88)
 #'     )),
-#'     index_R0 = c(1.1, 1.5),
-#'     prop.asym = c(0, 0.1),
-#'     control_effectiveness = seq(0, 1, 0.25),
-#'     num.initial.cases = c(5, 10),
+#'     r0_community = c(1.1, 1.5),
+#'     prop_asymptomatic = c(0, 0.1),
+#'     prop_ascertain = seq(0, 1, 0.25),
+#'     initial_cases = c(5, 10),
 #'     quarantine = FALSE
 #'   )
 #' )
@@ -61,10 +61,10 @@
 #'   ringbp::scenario_sim,
 #'   cap_max_days = 365,
 #'   cap_cases = 5000,
-#'   r0isolated = 0,
-#'   disp.iso= 1,
-#'   disp.subclin = 0.16,
-#'   disp.com = 0.16
+#'   r0_isolated = 0,
+#'   disp_isolated = 1,
+#'   disp_asymptomatic = 0.16,
+#'   disp_community = 0.16
 #' )
 #'
 #' ## parameter_sweep uses the future_lapply() function
@@ -95,17 +95,17 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
   scenario_sims[, sims := future_lapply(
     data,
     \(x) safe_sim_fn(
-      n.sim = samples,
-      num.initial.cases = x$num.initial.cases,
-      r0community = x$index_R0,
-      r0subclin = ifelse(
-        "subclin_R0" %in% names(scenarios), x$subclin_R0, x$index_R0),
+      n = samples,
+      initial_cases = x$initial_cases,
+      r0_community = x$r0_community,
+      r0_asymptomatic = ifelse(
+        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0_community),
       k = x$k,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],
-      prop.ascertain = x$control_effectiveness,
+      prop_ascertain = x$prop_ascertain,
       quarantine = x$quarantine,
-      prop.asym = x$prop.asym
+      prop_asymptomatic = x$prop_asymptomatic
     )[[1]],
     future.scheduling = 20,
     future.seed = TRUE

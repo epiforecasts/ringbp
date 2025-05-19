@@ -5,15 +5,15 @@
 \title{Set up initial cases for branching process}
 \usage{
 outbreak_setup(
-  num.initial.cases,
+  initial_cases,
   incubation_period,
   onset_to_isolation,
   k,
-  prop.asym
+  prop_asymptomatic
 )
 }
 \arguments{
-\item{num.initial.cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{incubation_period}{a \code{function}: a random number generating
@@ -29,14 +29,15 @@ length of the \code{function} output.}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{prop.asym}{a nonnegative \code{numeric} scalar: proportion of cases that
-are completely asymptomatic (sublinical) (between 0 and 1)}
+\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of cases that are completely asymptomatic
+(subclinical)}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
 \itemize{
 \item \verb{$exposure}: \code{numeric}
-\item \verb{$asym}: \code{logical}
+\item \verb{$asymptomatic}: \code{logical}
 \item \verb{$caseid}: \code{integer}
 \item \verb{$infector}: \code{numeric}
 \item \verb{$missed}: \code{logical}
@@ -55,11 +56,11 @@ incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
 # delay distribution sampling function
 onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 out <- outbreak_setup(
-  num.initial.cases = 1,
+  initial_cases = 1,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   k = 1.95,
-  prop.asym = 0
+  prop_asymptomatic = 0
 )
 out
 }

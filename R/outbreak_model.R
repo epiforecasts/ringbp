@@ -1,27 +1,29 @@
 
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
-#' @param disp.iso a positive `numeric` scalar: dispersion parameter for
+#' @param disp_isolated a positive `numeric` scalar: dispersion parameter for
 #'   isolated cases (must be >0)
-#' @param disp.com a positive `numeric` scalar: dispersion parameter for
+#' @param disp_community a positive `numeric` scalar: dispersion parameter for
 #'   non-isolated cases (must be >0)
-#' @param disp.subclin a positive `numeric` scalar: dispersion parameter for
-#'   sub-clincial non-isolated cases (must be >0)
-#' @param r0isolated a positive `numeric` scalar: reproduction number for
+#' @param disp_asymptomatic a positive `numeric` scalar: dispersion parameter
+#'   for sub-clincial non-isolated cases (must be >0)
+#' @param r0_isolated a positive `numeric` scalar: reproduction number for
 #'   isolated cases (must be >0)
-#' @param r0community a positive `numeric` scalar: reproduction number for
+#' @param r0_community a positive `numeric` scalar: reproduction number for
 #'   non-isolated cases (must be >0)
-#' @param r0subclin a positive `numeric` scalar: reproduction number for
+#' @param r0_asymptomatic a positive `numeric` scalar: reproduction number for
 #'   sub-clinical non-isolated cases (must be >0)
-#' @param prop.ascertain a nonnegative `numeric` scalar: proportion of
-#'   infectious contacts ascertained by contact tracing (must be 0<=x<=1)
+#' @param prop_ascertain a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of infectious contacts ascertained by contact
+#'   tracing
 #' @param k a `numeric` scalar: skew parameter for sampling the serial
 #'   interval from the incubation period
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
 #'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
 #'   `FALSE`
-#' @param prop.asym a nonnegative `numeric` scalar: proportion of cases that
-#'   are completely asymptomatic (sublinical) (between 0 and 1)
+#' @param prop_asymptomatic a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of cases that are completely asymptomatic
+#'   (subclinical)
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
@@ -30,7 +32,7 @@
 #'   `function` accepts a single `integer` argument specifying the number of
 #'   times to sample the incubation period (i.e. length of the `function`
 #'   output).
-#' @param num.initial.cases a nonnegative `integer` scalar: number of initial
+#' @param initial_cases a nonnegative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
 #'   which the branching process (simulation) was terminated
@@ -53,42 +55,42 @@
 #' @examples
 #' set.seed(1)
 #' out <- outbreak_model(
-#'   num.initial.cases = 1,
-#'   prop.ascertain = 0.2,
+#'   initial_cases = 1,
+#'   prop_ascertain = 0.2,
 #'   cap_max_days = 350,
 #'   cap_cases = 4500,
-#'   r0isolated = 0.5,
-#'   r0community = 2.5,
-#'   r0subclin = 2.5,
-#'   disp.iso = 1,
-#'   disp.com = 0.16,
-#'   disp.subclin = 0.16,
+#'   r0_isolated = 0.5,
+#'   r0_community = 2.5,
+#'   r0_asymptomatic = 2.5,
+#'   disp_isolated = 1,
+#'   disp_community = 0.16,
+#'   disp_asymptomatic = 0.16,
 #'   k = 0,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop.asym = 0,
+#'   prop_asymptomatic = 0,
 #'   quarantine = FALSE
 #' )
 #' out
-outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
+outbreak_model <- function(initial_cases = NULL, prop_ascertain = NULL,
                            cap_max_days = NULL, cap_cases = NULL,
-                           r0isolated = NULL, r0community = NULL,
-                           r0subclin = NULL, disp.iso = NULL,
-                           disp.com = NULL, disp.subclin = NULL,
+                           r0_isolated = NULL, r0_community = NULL,
+                           r0_asymptomatic = NULL, disp_isolated = NULL,
+                           disp_community = NULL, disp_asymptomatic = NULL,
                            k, onset_to_isolation, incubation_period,
-                           prop.asym = NULL, quarantine = FALSE) {
+                           prop_asymptomatic = NULL, quarantine = FALSE) {
 
   # Set initial values for loop indices
-  total.cases <- num.initial.cases
-  latest.onset <- 0
+  total_cases <- initial_cases
+  latest_onset <- 0
   extinct <- FALSE
 
   # Initial setup
-  case_data <- outbreak_setup(num.initial.cases = num.initial.cases,
+  case_data <- outbreak_setup(initial_cases = initial_cases,
                               incubation_period = incubation_period,
                               onset_to_isolation = onset_to_isolation,
                               k = k,
-                              prop.asym = prop.asym)
+                              prop_asymptomatic = prop_asymptomatic)
 
   # Preallocate
   effective_r0_vect <- c()
@@ -96,28 +98,28 @@ outbreak_model <- function(num.initial.cases = NULL, prop.ascertain = NULL,
 
 
   # Model loop
-  while (latest.onset < cap_max_days & total.cases < cap_cases & !extinct) {
+  while (latest_onset < cap_max_days & total_cases < cap_cases & !extinct) {
 
     out <- outbreak_step(case_data = case_data,
-                             disp.iso = disp.iso,
-                             disp.com = disp.com,
-                             disp.subclin = disp.subclin,
-                             r0isolated = r0isolated,
-                             r0community = r0community,
-                             r0subclin = r0subclin,
+                             disp_isolated = disp_isolated,
+                             disp_community = disp_community,
+                             disp_asymptomatic = disp_asymptomatic,
+                             r0_isolated = r0_isolated,
+                             r0_community = r0_community,
+                             r0_asymptomatic = r0_asymptomatic,
                              incubation_period = incubation_period,
                              onset_to_isolation = onset_to_isolation,
-                             prop.ascertain = prop.ascertain,
+                             prop_ascertain = prop_ascertain,
                              k = k,
                              quarantine = quarantine,
-                             prop.asym = prop.asym)
+                             prop_asymptomatic = prop_asymptomatic)
 
 
     case_data <- out[[1]]
     effective_r0_vect <- c(effective_r0_vect, out[[2]])
     cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
-    total.cases <- nrow(case_data)
-    latest.onset <- max(case_data$onset)
+    total_cases <- nrow(case_data)
+    latest_onset <- max(case_data$onset)
     extinct <- all(case_data$isolated)
   }
 

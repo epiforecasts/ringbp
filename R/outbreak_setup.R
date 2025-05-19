@@ -6,7 +6,7 @@
 #'
 #' @return `data.table` of cases in outbreak so far. `data.table` columns are:
 #' * `$exposure`: `numeric`
-#' * `$asym`: `logical`
+#' * `$asymptomatic`: `logical`
 #' * `$caseid`: `integer`
 #' * `$infector`: `numeric`
 #' * `$missed`: `logical`
@@ -25,30 +25,30 @@
 #' # delay distribution sampling function
 #' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
 #' out <- outbreak_setup(
-#'   num.initial.cases = 1,
+#'   initial_cases = 1,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   k = 1.95,
-#'   prop.asym = 0
+#'   prop_asymptomatic = 0
 #' )
 #' out
-outbreak_setup <- function(num.initial.cases, incubation_period, onset_to_isolation, k, prop.asym) {
+outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, k, prop_asymptomatic) {
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases
-    asym = runif(num.initial.cases) < prop.asym,
-    caseid = seq_len(num.initial.cases), # set case id
+    asymptomatic = runif(initial_cases) < prop_asymptomatic,
+    caseid = seq_len(initial_cases), # set case id
     infector = 0,
     isolated = FALSE,
     missed = TRUE,
-    onset = incubation_period(num.initial.cases),
+    onset = incubation_period(initial_cases),
     new_cases = NA,
     isolated_time = Inf
   )
 
   # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
   case_data <- case_data[
-    asym == FALSE,
+    asymptomatic == FALSE,
     isolated_time := onset + onset_to_isolation(.N)
   ]
 

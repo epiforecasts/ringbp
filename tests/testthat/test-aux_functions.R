@@ -38,19 +38,19 @@ test_that('extinct_prob works as expected', {
   cap <- 100
   sims <- 5
   res <- scenario_sim(
-    n.sim = sims,
-    num.initial.cases = 5,
+    n = sims,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
-    r0isolated = 0,
-    r0community = 2.5,
-    disp.iso = 1,
-    disp.com = 0.16,
+    r0_isolated = 0,
+    r0_community = 2.5,
+    disp_isolated = 1,
+    disp_community = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop.asym = 0,
-    prop.ascertain = 0
+    prop_asymptomatic = 0,
+    prop_ascertain = 0
   )
 
   r1 <- extinct_prob(res, cap)
@@ -58,10 +58,10 @@ test_that('extinct_prob works as expected', {
   expect_true(r1 >= 0)
   expect_length(r1, 1)
 
-  is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
+  is_wholenumber <- function(x, tol = .Machine$double.eps^0.5) {
     abs(x - round(x)) < tol
   }
-  expect_true(is.wholenumber(r1 * sims))
+  expect_true(is_wholenumber(r1 * sims))
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
@@ -82,19 +82,19 @@ test_that('extinct_prob works as expected', {
   # Run some sims with almost certain outputs
   # Very high r0, shouldn't ever go extinct.
   res3 <- scenario_sim(
-    n.sim = sims,
-    num.initial.cases = 5,
+    n = sims,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
-    r0isolated = 100,
-    r0community = 100,
-    disp.iso = 1,
-    disp.com = 0.16,
+    r0_isolated = 100,
+    r0_community = 100,
+    disp_isolated = 1,
+    disp_community = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop.asym = 0,
-    prop.ascertain = 0
+    prop_asymptomatic = 0,
+    prop_ascertain = 0
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -102,19 +102,19 @@ test_that('extinct_prob works as expected', {
 
   # r0 of 0, should always go extinct.
   res3 <- scenario_sim(
-    n.sim = sims,
-    num.initial.cases = 5,
+    n = sims,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
-    r0isolated = 0,
-    r0community = 0,
-    disp.iso = 1,
-    disp.com = 0.16,
+    r0_isolated = 0,
+    r0_community = 0,
+    disp_isolated = 1,
+    disp_community = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop.asym = 0,
-    prop.ascertain = 0
+    prop_asymptomatic = 0,
+    prop_ascertain = 0
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -125,19 +125,19 @@ test_that('extinct_prob week_range argument works', {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
-    n.sim = 2,
-    num.initial.cases = 5,
+    n = 2,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
-    r0isolated = 0,
-    r0community = 2.5,
-    disp.iso = 1,
-    disp.com = 0.16,
+    r0_isolated = 0,
+    r0_community = 2.5,
+    disp_isolated = 1,
+    disp_community = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop.asym = 0,
-    prop.ascertain = 0
+    prop_asymptomatic = 0,
+    prop_ascertain = 0
   )
 
   # Manually build an output with known proportion of extinctions
@@ -201,19 +201,19 @@ test_that('detect_extinct works', {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
-    n.sim = 2,
-    num.initial.cases = 5,
+    n = 2,
+    initial_cases = 5,
     cap_max_days = 100,
     cap_cases = cap,
-    r0isolated = 0,
-    r0community = 2.5,
-    disp.iso = 1,
-    disp.com = 0.16,
+    r0_isolated = 0,
+    r0_community = 2.5,
+    disp_isolated = 1,
+    disp_community = 0.16,
     k = 0.7,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop.asym = 0,
-    prop.ascertain = 0
+    prop_asymptomatic = 0,
+    prop_ascertain = 0
   )
 
   # Manually build an output with known proportion of extinctions
