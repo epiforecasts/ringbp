@@ -29,7 +29,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #'
 #' @examples
 #' res <- scenario_sim(
-#'   n_sim = 10,
+#'   n = 10,
 #'   num_initial_cases = 1,
 #'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0.2,
@@ -47,10 +47,10 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #' extinct_prob(res, cap_cases = 4500)
 extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
 
-  n_sim <- max(outbreak_df_week$sim)
+  n <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
-  out <-  sum(extinct_runs$extinct) / n_sim
+  out <-  sum(extinct_runs$extinct) / n
 
   return(out)
 }
@@ -73,7 +73,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #'
 #' @examples
 #' res <- scenario_sim(
-#'   n_sim = 10,
+#'   n = 10,
 #'   num_initial_cases = 1,
 #'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0.2,

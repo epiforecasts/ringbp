@@ -26,7 +26,7 @@ Calculate whether outbreaks went extinct or not
 }
 \examples{
 res <- scenario_sim(
-  n_sim = 10,
+  n = 10,
   num_initial_cases = 1,
   prop_asymptomatic = 0,
   prop_ascertain = 0.2,

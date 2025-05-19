@@ -1,6 +1,6 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n_sim a positive `integer` scalar: number of simulations to run
+#' @param n a positive `integer` scalar: number of simulations to run
 #'
 #' @inheritParams outbreak_model
 #' @inheritParams outbreak_step
@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' res <- scenario_sim(
-#'   n_sim = 5,
+#'   n = 5,
 #'   num_initial_cases = 5,
 #'   cap_max_days = 365,
 #'   cap_cases = 2000,
@@ -34,7 +34,7 @@
 #'   quarantine = TRUE
 #' )
 #' res
-scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
+scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
                          r0isolated, r0community, disp_isolated, disp_community, k,
                          onset_to_isolation, incubation_period,
                          num_initial_cases, prop_asymptomatic, quarantine = FALSE,
@@ -48,9 +48,9 @@ scenario_sim <- function(n_sim, prop_ascertain, cap_max_days, cap_cases,
   if(is.null(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
-  # Run n_sim number of model runs and put them all together in a big data.frame
+  # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
-    n_sim, outbreak_model(
+    n, outbreak_model(
       num_initial_cases = num_initial_cases,
       prop_ascertain = prop_ascertain,
       cap_max_days = cap_max_days,

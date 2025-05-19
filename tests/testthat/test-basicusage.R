@@ -2,7 +2,7 @@ context("Test basic usage")
 
 set.seed(20200410)
 res <- ringbp::scenario_sim(
-  n_sim = 2, num_initial_cases = 10, prop_asymptomatic = 0, prop_ascertain = 0.2,
+  n = 2, num_initial_cases = 10, prop_asymptomatic = 0, prop_ascertain = 0.2,
   cap_cases = 20, cap_max_days = 100, r0isolated = 0, r0community = 2.5,
   disp_community = 0.16, disp_isolated = 1,
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
@@ -18,7 +18,7 @@ test_that("A basic sim returns the correct object", {
   expect_true(inherits(res, 'data.table'))
 
   # Test that weeks increase.
-  # As we have n_sim = 2, exactly 1 sim should be smaller the the previous week
+  # As we have n = 2, exactly 1 sim should be smaller the the previous week
   # Same for cumulative cases.
   expect_equal(
     sum((res$week[seq(2,nrow(res))] - res$week[seq(nrow(res) - 1)]) < 0), 1

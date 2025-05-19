@@ -95,7 +95,7 @@ parameter_sweep <- function(scenarios = NULL, samples = 1,
   scenario_sims[, sims := future_lapply(
     data,
     \(x) safe_sim_fn(
-      n_sim = samples,
+      n = samples,
       num_initial_cases = x$num_initial_cases,
       r0community = x$r0community,
       r0asymptomatic = ifelse(

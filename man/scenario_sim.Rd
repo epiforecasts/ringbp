@@ -5,7 +5,7 @@
 \title{Run a specified number of simulations with identical parameters}
 \usage{
 scenario_sim(
-  n_sim,
+  n,
   prop_ascertain,
   cap_max_days,
   cap_cases,
@@ -24,7 +24,7 @@ scenario_sim(
 )
 }
 \arguments{
-\item{n_sim}{a positive \code{integer} scalar: number of simulations to run}
+\item{n}{a positive \code{integer} scalar: number of simulations to run}
 
 \item{prop_ascertain}{a nonnegative \code{numeric} scalar: proportion of
 infectious contacts ascertained by contact tracing (must be 0<=x<=1)}
@@ -93,7 +93,7 @@ Run a specified number of simulations with identical parameters
 }
 \examples{
 res <- scenario_sim(
-  n_sim = 5,
+  n = 5,
   num_initial_cases = 5,
   cap_max_days = 365,
   cap_cases = 2000,
