@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* Function argument and variable names are consistently named and styled (snake case). Arguments that were abbreviated (e.g. `iso`) now use the full word, and arguments that had aliases (e.g. `prop_ascertain` and `control_effectiveness`) now use a single name. By @joshwlambert in #112 and reviewed by @pearsnca and @sbfnk. 
+
 * Fixed a bug in the implementation of quarantine, where isolation could happen later than onset + delay, if this was earlier than the isolation time of the infector. By @sbfnk in #107 and reviewed by @pearsonca and @joshwlambert.
 
 * Changed internal sampling to vector draws in several locations; in some cases, this was an optimization, but in others it was a bug fix correcting the use of single draw where there should have been many. Also incorporates other vectorization changes to improve performance. Because of the bug fix, users should expect results to change. Addresses issues #90, #92, #94, in #98 by @pearsonca (now added as a contributor) with review by @sbfnk and @joshwlambert.
