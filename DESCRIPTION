@@ -46,6 +46,7 @@ RoxygenNote: 7.3.2
 Depends:
     R (>= 4.4.0)
 Imports: 
+    checkmate,
     data.table,
     future.apply,
     purrr,
