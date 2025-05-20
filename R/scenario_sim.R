@@ -55,6 +55,27 @@ scenario_sim <- function(n,
   if(is.null(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
+
+  check_outbreak_input(
+    func = "scenario_sim",
+    n = n,
+    initial_cases = initial_cases,
+    r0_community = r0_community,
+    r0_isolated = r0_isolated,
+    r0_asymptomatic = r0_asymptomatic,
+    disp_community = disp_community,
+    disp_isolated = disp_isolated,
+    disp_asymptomatic = disp_asymptomatic,
+    incubation_period = incubation_period,
+    k = k,
+    onset_to_isolation = onset_to_isolation,
+    prop_ascertain = prop_ascertain,
+    prop_asymptomatic = prop_asymptomatic,
+    cap_max_days = cap_max_days,
+    cap_cases = cap_cases,
+    quarantine = quarantine
+  )
+
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(
