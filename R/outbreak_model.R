@@ -60,7 +60,6 @@ outbreak_model <- function(initial_cases,
   case_data <- outbreak_setup(initial_cases = initial_cases,
                               incubation_period = incubation_period,
                               onset_to_isolation = onset_to_isolation,
-                              k = k,
                               prop_asymptomatic = prop_asymptomatic)
 
   # Preallocate

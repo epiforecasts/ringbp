@@ -11,7 +11,6 @@ test_that("A basic sim returns the correct object", {
     initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation  =  onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0
   )
 
@@ -67,7 +66,6 @@ test_that("Sim with multiple infectors makes senes", {
     initial_cases = 2,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0
   )
 
@@ -103,7 +101,6 @@ test_that("r0_isolated is working properly", {
     initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0
   )
   case_data$isolated <- TRUE
@@ -154,7 +151,6 @@ test_that('Test a bunch of args',{
     initial_cases = 1,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0
   )
 

@@ -89,7 +89,6 @@ case_data <- outbreak_setup(
   initial_cases = 5,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
-  k = 1.95,
   prop_asymptomatic = 0
 )
 case_data
