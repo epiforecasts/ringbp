@@ -86,6 +86,10 @@ parameter_sweep <- function(scenarios,
                             sim_fn,
                             samples = 1) {
 
+  checkmate::assert_data_frame(scenarios)
+  checkmate::assert_function(sim_fn)
+  checkmate::assert_number(samples, lower = 1, finite = TRUE)
+
   safe_sim_fn <- purrr::safely(sim_fn)
 
   ## create list column

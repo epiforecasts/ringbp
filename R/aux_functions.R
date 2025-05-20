@@ -50,6 +50,10 @@ inf_fn <- function(inc_samp, k) {
 #' extinct_prob(res, cap_cases = 4500)
 extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
+  checkmate::assert_data_frame(outbreak_df_week)
+  checkmate::assert_number(cap_cases, lower = 0)
+  checkmate::assert_numeric(week_range)
+
   n <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
@@ -99,6 +103,10 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
+
+  checkmate::assert_data_frame(outbreak_df_week)
+  checkmate::assert_number(cap_cases, lower = 0)
+  checkmate::assert_numeric(week_range)
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
