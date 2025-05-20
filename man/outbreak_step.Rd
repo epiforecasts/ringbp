@@ -5,19 +5,19 @@
 \title{Move forward one generation in the branching process}
 \usage{
 outbreak_step(
-  case_data = NULL,
-  disp_isolated = NULL,
-  disp_community = NULL,
-  r0_isolated = NULL,
-  r0_community = NULL,
-  prop_asymptomatic = NULL,
-  incubation_period = NULL,
-  onset_to_isolation = NULL,
-  prop_ascertain = NULL,
-  k = NULL,
+  case_data,
+  disp_isolated,
+  disp_community,
+  r0_isolated,
+  r0_community,
+  prop_asymptomatic,
+  incubation_period,
+  onset_to_isolation,
+  prop_ascertain,
+  k,
   quarantine = FALSE,
-  r0_asymptomatic = NULL,
-  disp_asymptomatic = NULL
+  r0_asymptomatic,
+  disp_asymptomatic
 )
 }
 \arguments{
