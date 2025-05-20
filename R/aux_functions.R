@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
-inf_fn <- function(inc_samp = NULL, k = NULL) {
+inf_fn <- function(inc_samp, k) {
 
   out <- sn::rsn(n = length(inc_samp),
                  xi = inc_samp,
