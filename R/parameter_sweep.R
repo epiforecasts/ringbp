@@ -82,8 +82,9 @@
 #' )
 #'
 #' sweep_results
-parameter_sweep <- function(scenarios, samples = 1,
-                            sim_fn) {
+parameter_sweep <- function(scenarios,
+                            sim_fn,
+                            samples = 1) {
 
   safe_sim_fn <- purrr::safely(sim_fn)
 

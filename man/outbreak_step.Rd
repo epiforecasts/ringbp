@@ -15,9 +15,9 @@ outbreak_step(
   onset_to_isolation,
   prop_ascertain,
   k,
-  quarantine = FALSE,
   r0_asymptomatic,
-  disp_asymptomatic
+  disp_asymptomatic,
+  quarantine = FALSE
 )
 }
 \arguments{
@@ -56,15 +56,15 @@ tracing}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
-\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
-\code{FALSE}}
-
 \item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
 sub-clinical non-isolated cases (must be >0)}
 
 \item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
 for sub-clincial non-isolated cases (must be >0)}
+
+\item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
+\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
+\code{FALSE}}
 }
 \value{
 A \code{list} with three elements:
