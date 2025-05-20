@@ -22,6 +22,8 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 
 #' Calculate proportion of runs that have controlled outbreak
 #'
+#' @inherit detect_extinct details
+#'
 #' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
 #' @export
@@ -45,7 +47,7 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #'   quarantine = FALSE
 #' )
 #' extinct_prob(res, cap_cases = 4500)
-extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
+extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   n <- max(outbreak_df_week$sim)
 
