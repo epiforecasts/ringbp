@@ -32,7 +32,7 @@
 #'   prop_asymptomatic = 0
 #' )
 #' out
-outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, k, prop_asymptomatic) {
+outbreak_setup <- function(initial_cases, incubation_period, k, onset_to_isolation, prop_asymptomatic) {
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases

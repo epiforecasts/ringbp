@@ -6,47 +6,52 @@
 \usage{
 scenario_sim(
   n,
-  prop_ascertain,
-  cap_max_days,
-  cap_cases,
-  r0_isolated,
+  initial_cases,
   r0_community,
-  disp_isolated,
+  r0_isolated,
+  r0_asymptomatic = NULL,
   disp_community,
+  disp_isolated,
+  disp_asymptomatic = NULL,
+  incubation_period,
   k,
   onset_to_isolation,
-  incubation_period,
-  initial_cases,
+  prop_ascertain,
   prop_asymptomatic,
-  quarantine = FALSE,
-  r0_asymptomatic = NULL,
-  disp_asymptomatic = NULL
+  cap_max_days,
+  cap_cases,
+  quarantine = FALSE
 )
 }
 \arguments{
 \item{n}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of infectious contacts ascertained by contact
-tracing}
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
 
-\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
-this many days is reached.}
-
-\item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
-which the branching process (simulation) was terminated}
+\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
+non-isolated cases (must be >0)}
 
 \item{r0_isolated}{a positive \code{numeric} scalar: reproduction number for
 isolated cases (must be >0)}
 
-\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
+\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
+sub-clinical non-isolated cases (must be >0)}
+
+\item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
 non-isolated cases (must be >0)}
 
 \item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
 isolated cases (must be >0)}
 
-\item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
-non-isolated cases (must be >0)}
+\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
+for sub-clincial non-isolated cases (must be >0)}
+
+\item{incubation_period}{a \code{function}: a random number generating
+\code{function} that samples from incubation period distribution, the
+\code{function} accepts a single \code{integer} argument specifying the number of
+times to sample the incubation period (i.e. length of the \code{function}
+output).}
 
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
@@ -55,28 +60,23 @@ interval from the incubation period}
 \code{function} that accepts a single \code{integer} argument specifying the
 length of the \code{function} output.}
 
-\item{incubation_period}{a \code{function}: a random number generating
-\code{function} that samples from incubation period distribution, the
-\code{function} accepts a single \code{integer} argument specifying the number of
-times to sample the incubation period (i.e. length of the \code{function}
-output).}
-
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
-or starting cases which are all assumed to be missed.}
+\item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of infectious contacts ascertained by contact
+tracing}
 
 \item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
 inclusive): proportion of cases that are completely asymptomatic
 (subclinical)}
 
+\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
+this many days is reached.}
+
+\item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
+which the branching process (simulation) was terminated}
+
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
-
-\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
-sub-clinical non-isolated cases (must be >0)}
-
-\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
-for sub-clincial non-isolated cases (must be >0)}
 }
 \value{
 A \code{data.table} object returning the results for multiple simulations using

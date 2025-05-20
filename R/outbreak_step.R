@@ -52,12 +52,13 @@
 #' )
 #' case_data <- out[[1]]
 #' case_data
-outbreak_step <- function(case_data, disp_isolated, disp_community,
-                          r0_isolated, r0_community,
-                          prop_asymptomatic, incubation_period,
-                          onset_to_isolation, prop_ascertain,
-                          k, r0_asymptomatic,
-                          disp_asymptomatic, quarantine = FALSE) {
+outbreak_step <- function(case_data,
+                          r0_community, r0_isolated, r0_asymptomatic,
+                          disp_community, disp_isolated, disp_asymptomatic,
+                          incubation_period, k,
+                          onset_to_isolation,
+                          prop_ascertain, prop_asymptomatic,
+                          quarantine = FALSE) {
 
   # For each case in case_data, draw new_cases from a negative binomial distribution
   # with an R0 and dispersion dependent on if isolated=TRUE

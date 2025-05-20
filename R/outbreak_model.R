@@ -72,13 +72,14 @@
 #'   quarantine = FALSE
 #' )
 #' out
-outbreak_model <- function(initial_cases, prop_ascertain,
+outbreak_model <- function(initial_cases,
+                           r0_community, r0_isolated, r0_asymptomatic,
+                           disp_community, disp_isolated, disp_asymptomatic,
+                           incubation_period, k,
+                           onset_to_isolation,
+                           prop_ascertain, prop_asymptomatic,
                            cap_max_days, cap_cases,
-                           r0_isolated, r0_community,
-                           r0_asymptomatic, disp_isolated,
-                           disp_community, disp_asymptomatic,
-                           k, onset_to_isolation, incubation_period,
-                           prop_asymptomatic, quarantine = FALSE) {
+                           quarantine = FALSE) {
 
   # Set initial values for loop indices
   total_cases <- initial_cases
