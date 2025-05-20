@@ -14,7 +14,7 @@ outbreak model}
 which the branching process (simulation) was terminated}
 
 \item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
-week range to test for whether an extinction occurred.}
+week range to test for whether an extinction occurred. Default is \code{12:16}.}
 }
 \value{
 a single \code{numeric} with the probability of extinction

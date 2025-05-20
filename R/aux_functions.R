@@ -57,12 +57,18 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 
 
 #' Calculate whether outbreaks went extinct or not
+#'
+#' @details
+#' The `cap_cases` argument should be equal to the value supplied to
+#' [outbreak_model()] (possibly passed from [scenario_sim()] or
+#' [parameter_sweep()]).
+#'
 #' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
 #' @inheritParams outbreak_model
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
-#'   week range to test for whether an extinction occurred.
+#'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table as.data.table fifelse
 #'
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
@@ -89,7 +95,7 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #'   quarantine = FALSE
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
-detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
+detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]

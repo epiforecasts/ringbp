@@ -4,7 +4,7 @@
 \alias{detect_extinct}
 \title{Calculate whether outbreaks went extinct or not}
 \usage{
-detect_extinct(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
+detect_extinct(outbreak_df_week, cap_cases, week_range = 12:16)
 }
 \arguments{
 \item{outbreak_df_week}{a \code{data.table}: weekly cases produced by the
@@ -14,7 +14,7 @@ outbreak model}
 which the branching process (simulation) was terminated}
 
 \item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
-week range to test for whether an extinction occurred.}
+week range to test for whether an extinction occurred. Default is \code{12:16}.}
 }
 \value{
 A \code{data.table}, with two columns \code{sim} and \code{extinct}, for a binary
@@ -23,6 +23,11 @@ replicate. \code{1} is an outbreak that went extinct, \code{0} if not.
 }
 \description{
 Calculate whether outbreaks went extinct or not
+}
+\details{
+The \code{cap_cases} argument should be equal to the value supplied to
+\code{\link[=outbreak_model]{outbreak_model()}} (possibly passed from \code{\link[=scenario_sim]{scenario_sim()}} or
+\code{\link[=parameter_sweep]{parameter_sweep()}}).
 }
 \examples{
 res <- scenario_sim(
