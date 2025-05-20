@@ -5,20 +5,20 @@
 \title{Run a single instance of the branching process model}
 \usage{
 outbreak_model(
-  initial_cases = NULL,
-  prop_ascertain = NULL,
-  cap_max_days = NULL,
-  cap_cases = NULL,
-  r0_isolated = NULL,
-  r0_community = NULL,
-  r0_asymptomatic = NULL,
-  disp_isolated = NULL,
-  disp_community = NULL,
-  disp_asymptomatic = NULL,
+  initial_cases,
+  prop_ascertain,
+  cap_max_days,
+  cap_cases,
+  r0_isolated,
+  r0_community,
+  r0_asymptomatic,
+  disp_isolated,
+  disp_community,
+  disp_asymptomatic,
   k,
   onset_to_isolation,
   incubation_period,
-  prop_asymptomatic = NULL,
+  prop_asymptomatic,
   quarantine = FALSE
 )
 }
