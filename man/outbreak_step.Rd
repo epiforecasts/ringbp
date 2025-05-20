@@ -51,8 +51,9 @@ output).}
 \item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
-\item{onset_to_isolation}{a \code{function} that samples from the
-onset-to-hospitalisation delay Weibull distribution}
+\item{onset_to_isolation}{a \code{function}: a random number generating
+\code{function} that accepts a single \code{integer} argument specifying the
+length of the \code{function} output.}
 
 \item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
 inclusive): proportion of infectious contacts ascertained by contact

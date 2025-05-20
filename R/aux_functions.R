@@ -2,7 +2,8 @@
 #'
 #' @param inc_samp a positive `numeric` vector: samples from the incubation
 #'   period distribution
-#' @inheritParams outbreak_model
+#' @param k a `numeric` scalar: skew parameter for sampling the serial
+#'   interval from the incubation period
 #'
 #' @return a `numeric` vector of equal length to the vector input to `inc_samp`
 #' @export

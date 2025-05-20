@@ -1,7 +1,8 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @inheritParams outbreak_model
+#' @param initial_cases a nonnegative `integer` scalar: number of initial
+#'   or starting cases which are all assumed to be missed.
 #' @inheritParams outbreak_step
 #'
 #' @return `data.table` of cases in outbreak so far. `data.table` columns are:

@@ -1,44 +1,14 @@
 
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
-#' @param disp_isolated a positive `numeric` scalar: dispersion parameter for
-#'   isolated cases (must be >0)
-#' @param disp_community a positive `numeric` scalar: dispersion parameter for
-#'   non-isolated cases (must be >0)
-#' @param disp_asymptomatic a positive `numeric` scalar: dispersion parameter
-#'   for sub-clincial non-isolated cases (must be >0)
-#' @param r0_isolated a positive `numeric` scalar: reproduction number for
-#'   isolated cases (must be >0)
-#' @param r0_community a positive `numeric` scalar: reproduction number for
-#'   non-isolated cases (must be >0)
-#' @param r0_asymptomatic a positive `numeric` scalar: reproduction number for
-#'   sub-clinical non-isolated cases (must be >0)
-#' @param prop_ascertain a `numeric` scalar probability (between 0 and 1
-#'   inclusive): proportion of infectious contacts ascertained by contact
-#'   tracing
-#' @param k a `numeric` scalar: skew parameter for sampling the serial
-#'   interval from the incubation period
-#' @param quarantine a `logical` scalar: whether quarantine is in effect, if
-#'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
-#'   `FALSE`
-#' @param prop_asymptomatic a `numeric` scalar probability (between 0 and 1
-#'   inclusive): proportion of cases that are completely asymptomatic
-#'   (subclinical)
-#' @param onset_to_isolation a `function`: a random number generating
-#'   `function` that accepts a single `integer` argument specifying the
-#'   length of the `function` output.
-#' @param incubation_period a `function`: a random number generating
-#'   `function` that samples from incubation period distribution, the
-#'   `function` accepts a single `integer` argument specifying the number of
-#'   times to sample the incubation period (i.e. length of the `function`
-#'   output).
-#' @param initial_cases a nonnegative `integer` scalar: number of initial
-#'   or starting cases which are all assumed to be missed.
-#' @param cap_cases a positive `integer` scalar: number of cumulative cases at
-#'   which the branching process (simulation) was terminated
+#'
+#' @inheritParams outbreak_setup
+#' @inheritParams outbreak_step
+#' @inheritParams inf_fn
 #' @param cap_max_days a positive `integer` scalar: stop the simulation when
 #'   this many days is reached.
-#'
+#' @param cap_cases a positive `integer` scalar: number of cumulative cases at
+#'   which the branching process (simulation) was terminated
 #'
 #' @return `data.table` of cases by week, cumulative cases, and the effective
 #' reproduction number of the outbreak. `data.table` columns are:

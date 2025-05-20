@@ -1,9 +1,12 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n a positive `integer` scalar: number of simulations to run
 #'
-#' @inheritParams outbreak_model
+#' @param n a positive `integer` scalar: number of simulations to run
+#' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
+#' @inheritParams inf_fn
+#' @inheritParams outbreak_model
+#'
 #' @importFrom data.table rbindlist
 #' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
