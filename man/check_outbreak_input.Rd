@@ -4,13 +4,7 @@
 \alias{check_outbreak_input}
 \title{Check the function arguments of the outbreak simulation functions}
 \usage{
-check_outbreak_input(
-  func = c("outbreak_setup", "outbreak_step", "outbreak_model", "scenario_sim")
-)
-}
-\arguments{
-\item{func}{A \code{character} string with the name of the function where the
-function is called to check the correct set of arguments.}
+check_outbreak_input()
 }
 \value{
 \code{TRUE} if all the checks pass or an error thrown by a \pkg{checkmate}
