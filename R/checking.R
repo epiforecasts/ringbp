@@ -13,7 +13,9 @@ check_outbreak_input <- function() {
   ## get name of the calling function as a character string
   func <- deparse(as.list(sys.call(-1))[[1]])
   func <- match.arg(func, choices = c(
-    "outbreak_setup", "outbreak_step", "outbreak_model", "scenario_sim"
+    "outbreak_setup", "outbreak_step", "outbreak_model", "scenario_sim",
+    "ringbp::outbreak_setup", "ringbp::outbreak_step", "ringbp::outbreak_model",
+    "ringbp::scenario_sim"
   ))
   args <- as.list(parent.frame())
 
