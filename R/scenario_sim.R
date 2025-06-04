@@ -56,7 +56,7 @@ scenario_sim <- function(n,
     disp_asymptomatic <- disp_community
   }
 
-  check_outbreak_input(func = "scenario_sim")
+  check_outbreak_input()
 
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
