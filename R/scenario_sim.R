@@ -39,8 +39,8 @@
 #' res
 scenario_sim <- function(n,
                          initial_cases,
-                         r0_community, r0_isolated, r0_asymptomatic = NULL,
-                         disp_community, disp_isolated, disp_asymptomatic = NULL,
+                         r0_community, r0_isolated, r0_asymptomatic,
+                         disp_community, disp_isolated, disp_asymptomatic,
                          incubation_period, k,
                          onset_to_isolation,
                          prop_ascertain, prop_asymptomatic,
@@ -48,11 +48,11 @@ scenario_sim <- function(n,
                          quarantine = FALSE) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
-  if(is.null(r0_asymptomatic)) {
+  if(missing(r0_asymptomatic)) {
     r0_asymptomatic <- r0_community
   }
 
-  if(is.null(disp_asymptomatic)) {
+  if(missing(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
 
