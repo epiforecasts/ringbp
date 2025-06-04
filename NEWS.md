@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* Added input checking, including new `check_outbreak_input()` function, removed unused argument defaults, consistently ordered arguments in functions, and moved function argument documentation to functions that use the argument. Addresses #89, #91, #93, #116 by @joshwlambert in #117 and reviewed by @pearsonca and @sbfnk.
+
 * Function argument and variable names are consistently named and styled (snake case). Arguments that were abbreviated (e.g. `iso`) now use the full word, and arguments that had aliases (e.g. `prop_ascertain` and `control_effectiveness`) now use a single name. By @joshwlambert in #112 and reviewed by @pearsonca and @sbfnk. 
 
 * Fixed a bug in the implementation of quarantine, where isolation could happen later than onset + delay, if this was earlier than the isolation time of the infector. By @sbfnk in #107 and reviewed by @pearsonca and @joshwlambert.
