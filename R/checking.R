@@ -6,17 +6,12 @@
 #'   Arguments being checked are taken from the parent environment
 #'   ([parent.frame()]) rather than passed via named arguments.
 #'
-#' @param func A `character` string with the name of the function where the
-#'   function is called to check the correct set of arguments.
-#'
 #' @return `TRUE` if all the checks pass or an error thrown by a \pkg{checkmate}
 #' `assert_*()` function if one or more of the inputs is invalid.
 #' @keywords internal
-check_outbreak_input <- function(func = c("outbreak_setup",
-                                          "outbreak_step",
-                                          "outbreak_model",
-                                          "scenario_sim")) {
-  func <- match.arg(func)
+check_outbreak_input <- function() {
+  ## get name of the calling function as a character string
+  func <- deparse(as.list(sys.call(-1))[[1]])
   args <- as.list(parent.frame())
 
   checkmate::assert_function(args$incubation_period)
@@ -40,8 +35,8 @@ check_outbreak_input <- function(func = c("outbreak_setup",
   }
 
   if (func %in% c("outbreak_model", "scenario_sim")) {
-    checkmate::assert_number(args$cap_max_days, lower = 1)
-    checkmate::assert_number(args$cap_cases, lower = 1)
+    checkmate::assert_int(args$cap_max_days, lower = 1)
+    checkmate::assert_int(args$cap_cases, lower = 1)
   }
 
   if (func == "outbreak_step") {

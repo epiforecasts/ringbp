@@ -34,7 +34,7 @@
 #' out
 outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, prop_asymptomatic) {
 
-  check_outbreak_input(func = "outbreak_setup")
+  check_outbreak_input()
 
   # Set up table of initial cases
   case_data <- data.table(
