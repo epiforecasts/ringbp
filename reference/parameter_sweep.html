@@ -57,7 +57,7 @@ outside of the function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameter_sweep</span><span class="op">(</span>scenarios <span class="op">=</span> <span class="cn">NULL</span>, samples <span class="op">=</span> <span class="fl">1</span>, sim_fn <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameter_sweep</span><span class="op">(</span><span class="va">scenarios</span>, <span class="va">sim_fn</span>, samples <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -66,17 +66,17 @@ outside of the function.</p>
 
 <dl><dt id="arg-scenarios">scenarios<a class="anchor" aria-label="anchor" href="#arg-scenarios"></a></dt>
 <dd><p>a <code>data.frame</code>: containing all gridded scenarios - see the
-examples for the required structure. Defaults to <code>NULL</code>.</p></dd>
+examples for the required structure.</p></dd>
+
+
+<dt id="arg-sim-fn">sim_fn<a class="anchor" aria-label="anchor" href="#arg-sim-fn"></a></dt>
+<dd><p>a <code>function</code>: The vectorised model
+simulation function - see the examples for usage.</p></dd>
 
 
 <dt id="arg-samples">samples<a class="anchor" aria-label="anchor" href="#arg-samples"></a></dt>
 <dd><p>a positive <code>integer</code> scalar: the number of samples to take.
 Defaults to <code>1</code>.</p></dd>
-
-
-<dt id="arg-sim-fn">sim_fn<a class="anchor" aria-label="anchor" href="#arg-sim-fn"></a></dt>
-<dd><p>a <code>function</code>: defaults to <code>NULL</code>. The vectorised model
-simulation function - see the examples for usage.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -204,19 +204,19 @@ from <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sweep_results</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      scenario               data               sims</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;int&gt;             &lt;list&gt;             &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:        1 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       50 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       88 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       66 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      145 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 156:       38 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 157:      157 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 158:       11 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 159:      110 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 160:      118 &lt;data.table[1x10]&gt; &lt;data.table[53x6]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      scenario               data   sims</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;int&gt;             &lt;list&gt; &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:        1 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       50 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       88 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       66 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      145 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 156:       38 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 157:      157 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 158:       11 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 159:      110 &lt;data.table[1x10]&gt; [NULL]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 160:      118 &lt;data.table[1x10]&gt; [NULL]</span>
 </code></pre></div>
     </div>
   </div>

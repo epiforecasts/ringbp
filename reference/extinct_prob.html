@@ -53,7 +53,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extinct_prob</span><span class="op">(</span>outbreak_df_week <span class="op">=</span> <span class="cn">NULL</span>, cap_cases <span class="op">=</span> <span class="cn">NULL</span>, week_range <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">outbreak_df_week</span>, <span class="va">cap_cases</span>, week_range <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,12 +72,18 @@ which the branching process (simulation) was terminated</p></dd>
 
 <dt id="arg-week-range">week_range<a class="anchor" aria-label="anchor" href="#arg-week-range"></a></dt>
 <dd><p>a positive <code>integer</code> vector: giving the (zero indexed)
-week range to test for whether an extinction occurred.</p></dd>
+week range to test for whether an extinction occurred. Default is <code>12:16</code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>a single <code>numeric</code> with the probability of extinction</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>The <code>cap_cases</code> argument should be equal to the value supplied to
+<code><a href="outbreak_model.html">outbreak_model()</a></code> (possibly passed from <code><a href="scenario_sim.html">scenario_sim()</a></code> or
+<code><a href="parameter_sweep.html">parameter_sweep()</a></code>).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

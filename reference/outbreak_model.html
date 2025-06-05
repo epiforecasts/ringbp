@@ -54,20 +54,20 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">outbreak_model</span><span class="op">(</span></span>
-<span>  initial_cases <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  prop_ascertain <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  cap_max_days <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  cap_cases <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r0_isolated <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r0_community <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r0_asymptomatic <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  disp_isolated <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  disp_community <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  disp_asymptomatic <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">initial_cases</span>,</span>
+<span>  <span class="va">r0_community</span>,</span>
+<span>  <span class="va">r0_isolated</span>,</span>
+<span>  <span class="va">r0_asymptomatic</span>,</span>
+<span>  <span class="va">disp_community</span>,</span>
+<span>  <span class="va">disp_isolated</span>,</span>
+<span>  <span class="va">disp_asymptomatic</span>,</span>
+<span>  <span class="va">incubation_period</span>,</span>
 <span>  <span class="va">k</span>,</span>
 <span>  <span class="va">onset_to_isolation</span>,</span>
-<span>  <span class="va">incubation_period</span>,</span>
-<span>  prop_asymptomatic <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">prop_ascertain</span>,</span>
+<span>  <span class="va">prop_asymptomatic</span>,</span>
+<span>  <span class="va">cap_max_days</span>,</span>
+<span>  <span class="va">cap_cases</span>,</span>
 <span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -81,20 +81,9 @@
 or starting cases which are all assumed to be missed.</p></dd>
 
 
-<dt id="arg-prop-ascertain">prop_ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
-<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
-inclusive): proportion of infectious contacts ascertained by contact
-tracing</p></dd>
-
-
-<dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: stop the simulation when
-this many days is reached.</p></dd>
-
-
-<dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: number of cumulative cases at
-which the branching process (simulation) was terminated</p></dd>
+<dt id="arg-r-community">r0_community<a class="anchor" aria-label="anchor" href="#arg-r-community"></a></dt>
+<dd><p>a positive <code>numeric</code> scalar: reproduction number for
+non-isolated cases (must be &gt;0)</p></dd>
 
 
 <dt id="arg-r-isolated">r0_isolated<a class="anchor" aria-label="anchor" href="#arg-r-isolated"></a></dt>
@@ -102,19 +91,9 @@ which the branching process (simulation) was terminated</p></dd>
 isolated cases (must be &gt;0)</p></dd>
 
 
-<dt id="arg-r-community">r0_community<a class="anchor" aria-label="anchor" href="#arg-r-community"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: reproduction number for
-non-isolated cases (must be &gt;0)</p></dd>
-
-
 <dt id="arg-r-asymptomatic">r0_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-r-asymptomatic"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: reproduction number for
 sub-clinical non-isolated cases (must be &gt;0)</p></dd>
-
-
-<dt id="arg-disp-isolated">disp_isolated<a class="anchor" aria-label="anchor" href="#arg-disp-isolated"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
-isolated cases (must be &gt;0)</p></dd>
 
 
 <dt id="arg-disp-community">disp_community<a class="anchor" aria-label="anchor" href="#arg-disp-community"></a></dt>
@@ -122,9 +101,22 @@ isolated cases (must be &gt;0)</p></dd>
 non-isolated cases (must be &gt;0)</p></dd>
 
 
+<dt id="arg-disp-isolated">disp_isolated<a class="anchor" aria-label="anchor" href="#arg-disp-isolated"></a></dt>
+<dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
+isolated cases (must be &gt;0)</p></dd>
+
+
 <dt id="arg-disp-asymptomatic">disp_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-disp-asymptomatic"></a></dt>
 <dd><p>a positive <code>numeric</code> scalar: dispersion parameter
 for sub-clincial non-isolated cases (must be &gt;0)</p></dd>
+
+
+<dt id="arg-incubation-period">incubation_period<a class="anchor" aria-label="anchor" href="#arg-incubation-period"></a></dt>
+<dd><p>a <code>function</code>: a random number generating
+<code>function</code> that samples from incubation period distribution, the
+<code>function</code> accepts a single <code>integer</code> argument specifying the number of
+times to sample the incubation period (i.e. length of the <code>function</code>
+output).</p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
@@ -138,18 +130,26 @@ interval from the incubation period</p></dd>
 length of the <code>function</code> output.</p></dd>
 
 
-<dt id="arg-incubation-period">incubation_period<a class="anchor" aria-label="anchor" href="#arg-incubation-period"></a></dt>
-<dd><p>a <code>function</code>: a random number generating
-<code>function</code> that samples from incubation period distribution, the
-<code>function</code> accepts a single <code>integer</code> argument specifying the number of
-times to sample the incubation period (i.e. length of the <code>function</code>
-output).</p></dd>
+<dt id="arg-prop-ascertain">prop_ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
+inclusive): proportion of infectious contacts ascertained by contact
+tracing</p></dd>
 
 
 <dt id="arg-prop-asymptomatic">prop_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-prop-asymptomatic"></a></dt>
 <dd><p>a <code>numeric</code> scalar probability (between 0 and 1
 inclusive): proportion of cases that are completely asymptomatic
 (subclinical)</p></dd>
+
+
+<dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
+<dd><p>a positive <code>integer</code> scalar: stop the simulation when
+this many days is reached.</p></dd>
+
+
+<dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
+<dd><p>a positive <code>integer</code> scalar: number of cumulative cases at
+which the branching process (simulation) was terminated</p></dd>
 
 
 <dt id="arg-quarantine">quarantine<a class="anchor" aria-label="anchor" href="#arg-quarantine"></a></dt>
