@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* The `inf_fn()` function has been renamed to `incubation_to_generation_time()` and the `k` function argument (`scenario_sim()`, `outbreak_model()`, `outbreak_step()`) has been renamed `prop_presymptomatic` (in `scenario_sim()` and `outbreak_model()`) or `alpha` (in `outbreak_step()`). The internal `prop_presymptomatic_to_alpha()` function has been added to do the conversion from `prop_presymptomatic` to `alpha`. Addresses #119, #120 by @joshwlambert in #123 and reviewed by @pearsonca and @sbfnk.
+
 * Added input checking, including new `check_outbreak_input()` function, removed unused argument defaults, consistently ordered arguments in functions, and moved function argument documentation to functions that use the argument. Addresses #89, #91, #93, #116 by @joshwlambert in #117 and reviewed by @pearsonca and @sbfnk.
 
 * Function argument and variable names are consistently named and styled (snake case). Arguments that were abbreviated (e.g. `iso`) now use the full word, and arguments that had aliases (e.g. `prop_ascertain` and `control_effectiveness`) now use a single name. By @joshwlambert in #112 and reviewed by @pearsonca and @sbfnk. 

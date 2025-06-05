@@ -27,7 +27,7 @@ test_that("A basic sim returns the correct object", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
 
@@ -50,7 +50,7 @@ test_that("A basic sim returns the correct object", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
 
@@ -82,7 +82,7 @@ test_that("Sim with multiple infectors makes senes", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
 
@@ -118,7 +118,7 @@ test_that("r0_isolated is working properly", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
   expect_equal(nrow(case_data2$cases), 1)
@@ -136,7 +136,7 @@ test_that("r0_isolated is working properly", {
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
   expect_gt(nrow(case_data3$cases), 1)
@@ -167,7 +167,7 @@ test_that('Test a bunch of args',{
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
   expect_true(all(case_data2$cases$missed))
@@ -184,7 +184,7 @@ test_that('Test a bunch of args',{
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 1,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
   # The index case should be missed but no others.
@@ -202,7 +202,7 @@ test_that('Test a bunch of args',{
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = 0.5,
-    k = 1.95,
+    alpha = 1.95,
     quarantine = FALSE
   )
   # After ignoring the index case we should still get both true and false.

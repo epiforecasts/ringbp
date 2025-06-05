@@ -13,7 +13,7 @@ outbreak_model(
   disp_isolated,
   disp_asymptomatic,
   incubation_period,
-  k,
+  prop_presymptomatic,
   onset_to_isolation,
   prop_ascertain,
   prop_asymptomatic,
@@ -50,8 +50,8 @@ for sub-clincial non-isolated cases (must be >0)}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
-interval from the incubation period}
+\item{prop_presymptomatic}{a \code{numeric} scalar probability (between 0 and 1
+inclusive): proportion of transmission that occurs before symptom onset.}
 
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the
@@ -102,7 +102,7 @@ out <- outbreak_model(
   disp_isolated = 1,
   disp_community = 0.16,
   disp_asymptomatic = 0.16,
-  k = 0,
+  prop_presymptomatic = 0.5,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
   prop_asymptomatic = 0,

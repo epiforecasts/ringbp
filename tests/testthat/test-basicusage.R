@@ -7,7 +7,7 @@ res <- ringbp::scenario_sim(
   disp_community = 0.16, disp_isolated = 1,
   onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786),
   incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-  k = 0, quarantine = FALSE)
+  prop_presymptomatic = 0.5, quarantine = FALSE)
 
 test_that("A basic sim returns the correct object", {
 

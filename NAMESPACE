@@ -2,7 +2,7 @@
 
 export(detect_extinct)
 export(extinct_prob)
-export(inf_fn)
+export(incubation_to_generation_time)
 export(outbreak_model)
 export(outbreak_setup)
 export(outbreak_step)
