@@ -8,7 +8,6 @@ outbreak_setup(
   initial_cases,
   incubation_period,
   onset_to_isolation,
-  k,
   prop_asymptomatic
 )
 }
@@ -25,9 +24,6 @@ output).}
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the
 length of the \code{function} output.}
-
-\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
-interval from the incubation period}
 
 \item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
 inclusive): proportion of cases that are completely asymptomatic
@@ -59,7 +55,6 @@ out <- outbreak_setup(
   initial_cases = 1,
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
-  k = 1.95,
   prop_asymptomatic = 0
 )
 out

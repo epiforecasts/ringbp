@@ -4,7 +4,7 @@
 \alias{extinct_prob}
 \title{Calculate proportion of runs that have controlled outbreak}
 \usage{
-extinct_prob(outbreak_df_week = NULL, cap_cases = NULL, week_range = 12:16)
+extinct_prob(outbreak_df_week, cap_cases, week_range = 12:16)
 }
 \arguments{
 \item{outbreak_df_week}{a \code{data.table}: weekly cases produced by the
@@ -14,13 +14,18 @@ outbreak model}
 which the branching process (simulation) was terminated}
 
 \item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
-week range to test for whether an extinction occurred.}
+week range to test for whether an extinction occurred. Default is \code{12:16}.}
 }
 \value{
 a single \code{numeric} with the probability of extinction
 }
 \description{
 Calculate proportion of runs that have controlled outbreak
+}
+\details{
+The \code{cap_cases} argument should be equal to the value supplied to
+\code{\link[=outbreak_model]{outbreak_model()}} (possibly passed from \code{\link[=scenario_sim]{scenario_sim()}} or
+\code{\link[=parameter_sweep]{parameter_sweep()}}).
 }
 \examples{
 res <- scenario_sim(

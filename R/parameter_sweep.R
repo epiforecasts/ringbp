@@ -5,10 +5,10 @@
 #' outside of the function.
 #'
 #' @param scenarios a `data.frame`: containing all gridded scenarios - see the
-#'   examples for the required structure. Defaults to `NULL`.
+#'   examples for the required structure.
 #' @param samples a positive `integer` scalar: the number of samples to take.
 #'   Defaults to `1`.
-#' @param sim_fn a `function`: defaults to `NULL`. The vectorised model
+#' @param sim_fn a `function`: The vectorised model
 #'   simulation function - see the examples for usage.
 #'
 #' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
@@ -82,8 +82,13 @@
 #' )
 #'
 #' sweep_results
-parameter_sweep <- function(scenarios = NULL, samples = 1,
-                            sim_fn = NULL) {
+parameter_sweep <- function(scenarios,
+                            sim_fn,
+                            samples = 1) {
+
+  checkmate::assert_data_frame(scenarios)
+  checkmate::assert_function(sim_fn)
+  checkmate::assert_number(samples, lower = 1, finite = TRUE)
 
   safe_sim_fn <- purrr::safely(sim_fn)
 

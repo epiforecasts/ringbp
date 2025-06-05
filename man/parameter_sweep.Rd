@@ -4,17 +4,17 @@
 \alias{parameter_sweep}
 \title{Sweep across parameters}
 \usage{
-parameter_sweep(scenarios = NULL, samples = 1, sim_fn = NULL)
+parameter_sweep(scenarios, sim_fn, samples = 1)
 }
 \arguments{
 \item{scenarios}{a \code{data.frame}: containing all gridded scenarios - see the
-examples for the required structure. Defaults to \code{NULL}.}
+examples for the required structure.}
+
+\item{sim_fn}{a \code{function}: The vectorised model
+simulation function - see the examples for usage.}
 
 \item{samples}{a positive \code{integer} scalar: the number of samples to take.
 Defaults to \code{1}.}
-
-\item{sim_fn}{a \code{function}: defaults to \code{NULL}. The vectorised model
-simulation function - see the examples for usage.}
 }
 \value{
 A nested \code{data.table} containing the parameters for each scenario and a nested list of output

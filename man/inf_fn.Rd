@@ -4,7 +4,7 @@
 \alias{inf_fn}
 \title{Samples the serial interval for given incubation period samples}
 \usage{
-inf_fn(inc_samp = NULL, k = NULL)
+inf_fn(inc_samp, k)
 }
 \arguments{
 \item{inc_samp}{a positive \code{numeric} vector: samples from the incubation

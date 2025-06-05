@@ -1,7 +1,8 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @inheritParams outbreak_model
+#' @param initial_cases a nonnegative `integer` scalar: number of initial
+#'   or starting cases which are all assumed to be missed.
 #' @inheritParams outbreak_step
 #'
 #' @return `data.table` of cases in outbreak so far. `data.table` columns are:
@@ -28,11 +29,13 @@
 #'   initial_cases = 1,
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
-#'   k = 1.95,
 #'   prop_asymptomatic = 0
 #' )
 #' out
-outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, k, prop_asymptomatic) {
+outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, prop_asymptomatic) {
+
+  check_outbreak_input()
+
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases

@@ -1,9 +1,12 @@
 #' Run a specified number of simulations with identical parameters
 #' @author Joel Hellewell
-#' @param n a positive `integer` scalar: number of simulations to run
 #'
-#' @inheritParams outbreak_model
+#' @param n a positive `integer` scalar: number of simulations to run
+#' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
+#' @inheritParams inf_fn
+#' @inheritParams outbreak_model
+#'
 #' @importFrom data.table rbindlist
 #' @return A `data.table` object returning the results for multiple simulations using
 #' the same set of parameters. The table has columns
@@ -34,20 +37,27 @@
 #'   quarantine = TRUE
 #' )
 #' res
-scenario_sim <- function(n, prop_ascertain, cap_max_days, cap_cases,
-                         r0_isolated, r0_community, disp_isolated, disp_community, k,
-                         onset_to_isolation, incubation_period,
-                         initial_cases, prop_asymptomatic, quarantine = FALSE,
-                         r0_asymptomatic = NULL, disp_asymptomatic = NULL) {
+scenario_sim <- function(n,
+                         initial_cases,
+                         r0_community, r0_isolated, r0_asymptomatic,
+                         disp_community, disp_isolated, disp_asymptomatic,
+                         incubation_period, k,
+                         onset_to_isolation,
+                         prop_ascertain, prop_asymptomatic,
+                         cap_max_days, cap_cases,
+                         quarantine = FALSE) {
 
   # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
-  if(is.null(r0_asymptomatic)) {
+  if(missing(r0_asymptomatic)) {
     r0_asymptomatic <- r0_community
   }
 
-  if(is.null(disp_asymptomatic)) {
+  if(missing(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
+
+  check_outbreak_input()
+
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(

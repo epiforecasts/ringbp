@@ -11,7 +11,6 @@ test_that("A basic sim setup returns the correct object", {
     initial_cases = 5,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0
   )
 
@@ -30,7 +29,6 @@ test_that("asymptomatic arg works properly", {
     initial_cases = 5,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 1
   )
   expect_true(all(all_asymptomatic$asymptomatic))
@@ -42,7 +40,6 @@ test_that("asymptomatic arg works properly", {
     initial_cases = 10000,
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    k = 1.95,
     prop_asymptomatic = 0.5
   )
 

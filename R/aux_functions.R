@@ -2,7 +2,8 @@
 #'
 #' @param inc_samp a positive `numeric` vector: samples from the incubation
 #'   period distribution
-#' @inheritParams outbreak_model
+#' @param k a `numeric` scalar: skew parameter for sampling the serial
+#'   interval from the incubation period
 #'
 #' @return a `numeric` vector of equal length to the vector input to `inc_samp`
 #' @export
@@ -10,7 +11,7 @@
 #'
 #' @examples
 #' inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
-inf_fn <- function(inc_samp = NULL, k = NULL) {
+inf_fn <- function(inc_samp, k) {
 
   out <- sn::rsn(n = length(inc_samp),
                  xi = inc_samp,
@@ -21,6 +22,8 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 }
 
 #' Calculate proportion of runs that have controlled outbreak
+#'
+#' @inherit detect_extinct details
 #'
 #' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
@@ -45,7 +48,11 @@ inf_fn <- function(inc_samp = NULL, k = NULL) {
 #'   quarantine = FALSE
 #' )
 #' extinct_prob(res, cap_cases = 4500)
-extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range = 12:16) {
+extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
+
+  checkmate::assert_data_frame(outbreak_df_week)
+  checkmate::assert_number(cap_cases, lower = 0)
+  checkmate::assert_numeric(week_range)
 
   n <- max(outbreak_df_week$sim)
 
@@ -57,12 +64,18 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 
 
 #' Calculate whether outbreaks went extinct or not
+#'
+#' @details
+#' The `cap_cases` argument should be equal to the value supplied to
+#' [outbreak_model()] (possibly passed from [scenario_sim()] or
+#' [parameter_sweep()]).
+#'
 #' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
 #' @inheritParams outbreak_model
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
-#'   week range to test for whether an extinction occurred.
+#'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table as.data.table fifelse
 #'
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
@@ -89,7 +102,11 @@ extinct_prob <- function(outbreak_df_week = NULL, cap_cases  = NULL, week_range 
 #'   quarantine = FALSE
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
-detect_extinct <- function(outbreak_df_week  = NULL, cap_cases  = NULL, week_range = 12:16) {
+detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
+
+  checkmate::assert_data_frame(outbreak_df_week)
+  checkmate::assert_number(cap_cases, lower = 0)
+  checkmate::assert_integerish(week_range)
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
