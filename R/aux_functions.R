@@ -1,20 +1,24 @@
 #' Samples the generation time for given incubation period samples
 #'
-#' @param inc_samp a positive `numeric` vector: samples from the incubation
-#'   period distribution
+#' @param incubation_period_samples a positive `numeric` vector: samples from
+#'   the incubation period distribution
 #' @param alpha a `numeric` scalar: skew parameter for sampling the generation
 #'   time from the incubation period
 #'
-#' @return a `numeric` vector of equal length to the vector input to `inc_samp`
+#' @return a `numeric` vector of equal length to the vector input to
+#'   `incubation_period_samples`
 #' @export
 #' @importFrom sn rsn
 #'
 #' @examples
-#' incubation_to_generation_time(inc_samp = c(1, 2, 3, 4, 1), alpha = 2)
-incubation_to_generation_time <- function(inc_samp, alpha) {
+#' incubation_to_generation_time(
+#'   incubation_period_samples = c(1, 2, 3, 4, 1),
+#'   alpha = 2
+#' )
+incubation_to_generation_time <- function(incubation_period_samples, alpha) {
 
-  out <- sn::rsn(n = length(inc_samp),
-                 xi = inc_samp,
+  out <- sn::rsn(n = length(incubation_period_samples),
+                 xi = incubation_period_samples,
                  omega = 2,
                  alpha = alpha)
 

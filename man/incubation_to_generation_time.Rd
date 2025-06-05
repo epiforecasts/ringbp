@@ -4,21 +4,25 @@
 \alias{incubation_to_generation_time}
 \title{Samples the generation time for given incubation period samples}
 \usage{
-incubation_to_generation_time(inc_samp, alpha)
+incubation_to_generation_time(incubation_period_samples, alpha)
 }
 \arguments{
-\item{inc_samp}{a positive \code{numeric} vector: samples from the incubation
-period distribution}
+\item{incubation_period_samples}{a positive \code{numeric} vector: samples from
+the incubation period distribution}
 
 \item{alpha}{a \code{numeric} scalar: skew parameter for sampling the generation
 time from the incubation period}
 }
 \value{
-a \code{numeric} vector of equal length to the vector input to \code{inc_samp}
+a \code{numeric} vector of equal length to the vector input to
+\code{incubation_period_samples}
 }
 \description{
 Samples the generation time for given incubation period samples
 }
 \examples{
-incubation_to_generation_time(inc_samp = c(1, 2, 3, 4, 1), alpha = 2)
+incubation_to_generation_time(
+  incubation_period_samples = c(1, 2, 3, 4, 1),
+  alpha = 2
+)
 }
