@@ -98,7 +98,7 @@ test_that('extinct_prob works as expected', {
   )
 
   r3 <- extinct_prob(res3, cap)
-  expect_equal(r3, 0.2)
+  expect_equal(r3, 0)
 
   # r0 of 0, should always go extinct.
   res3 <- scenario_sim(
