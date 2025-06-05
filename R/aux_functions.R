@@ -21,6 +21,26 @@ inf_fn <- function(inc_samp, k) {
   return(pmax(1, out))
 }
 
+#' Calculate skew normal alpha parameter from proportion of presymptomatic
+#' transmission
+#'
+#' @param prop_presymptomatic a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of transmission that occurs before symptom onset.
+#'
+#' @return A `numeric` scalar: The `$minimum` output from [optimise()] to find
+#'   the best `alpha` parameter to get the desired proportion of presymptomatic
+#'   transmission.
+#' @keywords internal
+prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
+  objective <- function(alpha) {
+    # fix x, xi and omega for optimisation
+    p_current <- sn::psn(x = 0, xi = 0, omega = 2, alpha = alpha)
+    return((p_current - prop_presymptomatic)^2)
+  }
+  # alpha domain is (-Inf, Inf), approximate with large numbers
+  optimise(f = objective, interval = c(-1e5, 1e5))$minimum
+}
+
 #' Calculate proportion of runs that have controlled outbreak
 #'
 #' @inherit detect_extinct details
