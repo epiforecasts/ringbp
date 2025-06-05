@@ -21,7 +21,7 @@
 #'   `function` accepts a single `integer` argument specifying the number of
 #'   times to sample the incubation period (i.e. length of the `function`
 #'   output).
-#' @inheritParams inf_fn
+#' @inheritParams incubation_to_generation_time
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
@@ -117,7 +117,7 @@ outbreak_step <- function(case_data,
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
   prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
-    exposure = inf_fn(rep(onset, new_cases), alpha),
+    exposure = incubation_to_generation_time(rep(onset, new_cases), alpha),
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated

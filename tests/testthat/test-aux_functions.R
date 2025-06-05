@@ -2,11 +2,11 @@ context("Test all aux functions")
 
 set.seed(515)
 
-test_that("inf_fn parameters behave as expected", {
-  r1 <- inf_fn(c(1, 4, 1), 2)
+test_that("incubation_to_generation_time parameters behave as expected", {
+  r1 <- incubation_to_generation_time(c(1, 4, 1), 2)
   expect_length(r1, 3)
 
-  r2 <- inf_fn(rep(0.01, 1e6), 2)
+  r2 <- incubation_to_generation_time(rep(0.01, 1e6), 2)
   expect_length(r2, 1e6)
   expect_true(is.numeric(r2))
   expect_false(anyNA(r2))
@@ -20,16 +20,16 @@ test_that("inf_fn parameters behave as expected", {
   # Probability that normal with mean 1e6, sd 2 being less than 4.7
   # is vanishingly small pnorm(4.7, 1e6, 2) < 1e-200.
   # So this test should almost certainly pass if code is correct.
-  r3 <- inf_fn(c(0, 1e6), 0)
+  r3 <- incubation_to_generation_time(c(0, 1e6), 0)
   expect_lt(r3[1], r3[2])
 
   # Test the alpha parameter.
   # positive is right skew so mean is greater than median.
-  r4 <- inf_fn(rep(100, 1e6), 10)
+  r4 <- incubation_to_generation_time(rep(100, 1e6), 10)
   expect_gt(mean(r4), median(r4))
 
   # negative is left skew so mean is less than median.
-  r5 <- inf_fn(rep(100, 1e6), -10)
+  r5 <- incubation_to_generation_time(rep(100, 1e6), -10)
   expect_lt(mean(r5), median(r5))
 })
 

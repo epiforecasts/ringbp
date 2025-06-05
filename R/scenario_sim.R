@@ -4,7 +4,7 @@
 #' @param n a positive `integer` scalar: number of simulations to run
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
-#' @inheritParams inf_fn
+#' @inheritParams incubation_to_generation_time
 #' @inheritParams outbreak_model
 #'
 #' @importFrom data.table rbindlist
