@@ -45,7 +45,7 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
     return((p_current - prop_presymptomatic)^2)
   }
   # alpha domain is (-Inf, Inf), approximate with large numbers
-  optimise(f = objective, interval = c(-1e5, 1e5))$minimum
+  stats::optimise(f = objective, interval = c(-1e5, 1e5))$minimum
 }
 
 #' Calculate proportion of runs that have controlled outbreak
