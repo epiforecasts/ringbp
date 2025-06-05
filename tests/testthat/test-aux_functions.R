@@ -42,7 +42,7 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
     alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
   )
   expect_equal(
-    sum(exposure < incubation_period) / length(res),
+    sum(exposure < incubation_period) / length(exposure),
     expected = prop_presymptomatic,
     tolerance = 0.1
   )
@@ -54,7 +54,7 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
     alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
   )
   expect_equal(
-    sum(exposure < incubation_period) / length(res),
+    sum(exposure < incubation_period) / length(exposure),
     expected = prop_presymptomatic,
     tolerance = 0.1
   )
