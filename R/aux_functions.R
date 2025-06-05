@@ -17,6 +17,9 @@
 #' )
 incubation_to_generation_time <- function(incubation_period_samples, alpha) {
 
+  checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_number(args$alpha, finite = TRUE)
+
   out <- sn::rsn(n = length(incubation_period_samples),
                  xi = incubation_period_samples,
                  omega = 2,
