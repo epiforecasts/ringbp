@@ -2,7 +2,7 @@
 % Please edit documentation in R/aux_functions.R
 \name{incubation_to_generation_time}
 \alias{incubation_to_generation_time}
-\title{Samples the serial interval for given incubation period samples}
+\title{Samples the generation time for given incubation period samples}
 \usage{
 incubation_to_generation_time(inc_samp, alpha)
 }
@@ -10,14 +10,14 @@ incubation_to_generation_time(inc_samp, alpha)
 \item{inc_samp}{a positive \code{numeric} vector: samples from the incubation
 period distribution}
 
-\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the serial
-interval from the incubation period}
+\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the generation
+time from the incubation period}
 }
 \value{
 a \code{numeric} vector of equal length to the vector input to \code{inc_samp}
 }
 \description{
-Samples the serial interval for given incubation period samples
+Samples the generation time for given incubation period samples
 }
 \examples{
 incubation_to_generation_time(inc_samp = c(1, 2, 3, 4, 1), alpha = 2)

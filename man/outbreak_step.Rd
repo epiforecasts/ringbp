@@ -48,8 +48,8 @@ for sub-clincial non-isolated cases (must be >0)}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the serial
-interval from the incubation period}
+\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the generation
+time from the incubation period}
 
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the

@@ -116,7 +116,7 @@ outbreak_step <- function(case_data,
 
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
   prob_samples <- new_case_data[, list(
-    # time when new cases were exposed, a draw from serial interval based on infector's onset
+    # time when new cases were exposed, a draw from generation time based on infector's onset
     exposure = incubation_to_generation_time(rep(onset, new_cases), alpha),
     # records the infector of each new person
     infector = rep(caseid, new_cases),
