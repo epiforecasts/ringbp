@@ -33,6 +33,33 @@ test_that("incubation_to_generation_time parameters behave as expected", {
   expect_lt(mean(r5), median(r5))
 })
 
+test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
+  # ~50% presymptomatic
+  incubation_period <- 5
+  prop_presymptomatic <- 0.5
+  exposure <- incubation_to_generation_time(
+    incubation_period_samples = rep(incubation_period, 1e5),
+    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+  )
+  expect_equal(
+    sum(exposure < incubation_period) / length(res),
+    expected = prop_presymptomatic,
+    tolerance = 0.1
+  )
+
+  # ~10% presymptomatic
+  prop_presymptomatic <- 0.1
+  exposure <- incubation_to_generation_time(
+    incubation_period_samples = rep(incubation_period, 1e5),
+    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+  )
+  expect_equal(
+    sum(exposure < incubation_period) / length(res),
+    expected = prop_presymptomatic,
+    tolerance = 0.1
+  )
+})
+
 
 test_that('extinct_prob works as expected', {
   cap <- 100
