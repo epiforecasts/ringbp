@@ -33,7 +33,6 @@ check_outbreak_input <- function() {
     checkmate::assert_number(args$disp_community, lower = 0, finite = TRUE)
     checkmate::assert_number(args$disp_isolated, lower = 0, finite = TRUE)
     checkmate::assert_number(args$disp_asymptomatic, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$k)
     checkmate::assert_number(args$prop_ascertain, lower = 0, upper = 1)
     checkmate::assert_logical(args$quarantine, any.missing = FALSE, len = 1)
   }

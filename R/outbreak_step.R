@@ -73,7 +73,7 @@
 #'   incubation_period = incubation_period,
 #'   onset_to_isolation = onset_to_isolation,
 #'   prop_ascertain = 0,
-#'   k = 1.95,
+#'   alpha = 1.95,
 #'   quarantine = FALSE
 #' )
 #' case_data <- out[[1]]
@@ -81,7 +81,7 @@
 outbreak_step <- function(case_data,
                           r0_community, r0_isolated, r0_asymptomatic,
                           disp_community, disp_isolated, disp_asymptomatic,
-                          incubation_period, k,
+                          incubation_period, alpha,
                           onset_to_isolation,
                           prop_ascertain, prop_asymptomatic,
                           quarantine = FALSE) {
@@ -117,7 +117,7 @@ outbreak_step <- function(case_data,
   # Compile a data.table for all new cases, new_cases is the amount of people that each infector has infected
   prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from serial interval based on infector's onset
-    exposure = inf_fn(rep(onset, new_cases), k),
+    exposure = inf_fn(rep(onset, new_cases), alpha),
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated

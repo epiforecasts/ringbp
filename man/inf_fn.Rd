@@ -4,13 +4,13 @@
 \alias{inf_fn}
 \title{Samples the serial interval for given incubation period samples}
 \usage{
-inf_fn(inc_samp, k)
+inf_fn(inc_samp, alpha)
 }
 \arguments{
 \item{inc_samp}{a positive \code{numeric} vector: samples from the incubation
 period distribution}
 
-\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
+\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 }
 \value{
@@ -20,5 +20,5 @@ a \code{numeric} vector of equal length to the vector input to \code{inc_samp}
 Samples the serial interval for given incubation period samples
 }
 \examples{
-inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
+inf_fn(inc_samp = c(1, 2, 3, 4, 1), alpha = 2)
 }

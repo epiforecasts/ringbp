@@ -2,7 +2,7 @@
 #'
 #' @param inc_samp a positive `numeric` vector: samples from the incubation
 #'   period distribution
-#' @param k a `numeric` scalar: skew parameter for sampling the serial
+#' @param alpha a `numeric` scalar: skew parameter for sampling the serial
 #'   interval from the incubation period
 #'
 #' @return a `numeric` vector of equal length to the vector input to `inc_samp`
@@ -10,13 +10,13 @@
 #' @importFrom sn rsn
 #'
 #' @examples
-#' inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
-inf_fn <- function(inc_samp, k) {
+#' inf_fn(inc_samp = c(1, 2, 3, 4, 1), alpha = 2)
+inf_fn <- function(inc_samp, alpha) {
 
   out <- sn::rsn(n = length(inc_samp),
                  xi = inc_samp,
                  omega = 2,
-                 alpha = k)
+                 alpha = alpha)
 
   return(pmax(1, out))
 }
@@ -64,7 +64,7 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
 #'   disp_isolated = 1,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   k = 0,
+#'   prop_presymptomatic = 0.5,
 #'   quarantine = FALSE
 #' )
 #' extinct_prob(res, cap_cases = 4500)
@@ -118,7 +118,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'   disp_isolated = 1,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   k = 0,
+#'   prop_presymptomatic = 0.5,
 #'   quarantine = FALSE
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)

@@ -14,7 +14,7 @@ test_that("inf_fn parameters behave as expected", {
   expect_equal(min(r2), 1)
   expect_true(all(r2 >= 1))
 
-  # skew normal collapses to normal with alpha = k = 0
+  # skew normal collapses to normal with alpha = 0
   # SD is hard coded as 2.
   # Upper 99% of normal with mean 0 sd 2: qnorm(0.99, 0, 2) = 4.7.
   # Probability that normal with mean 1e6, sd 2 being less than 4.7
@@ -46,7 +46,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -90,7 +90,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 100,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -110,7 +110,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 0,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -133,7 +133,7 @@ test_that('extinct_prob week_range argument works', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -209,7 +209,7 @@ test_that('detect_extinct works', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,

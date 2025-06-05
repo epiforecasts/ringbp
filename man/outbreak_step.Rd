@@ -13,7 +13,7 @@ outbreak_step(
   disp_isolated,
   disp_asymptomatic,
   incubation_period,
-  k,
+  alpha,
   onset_to_isolation,
   prop_ascertain,
   prop_asymptomatic,
@@ -48,7 +48,7 @@ for sub-clincial non-isolated cases (must be >0)}
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
 
-\item{k}{a \code{numeric} scalar: skew parameter for sampling the serial
+\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the serial
 interval from the incubation period}
 
 \item{onset_to_isolation}{a \code{function}: a random number generating
@@ -105,7 +105,7 @@ out <- outbreak_step(
   incubation_period = incubation_period,
   onset_to_isolation = onset_to_isolation,
   prop_ascertain = 0,
-  k = 1.95,
+  alpha = 1.95,
   quarantine = FALSE
 )
 case_data <- out[[1]]

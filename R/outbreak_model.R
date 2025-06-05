@@ -4,7 +4,7 @@
 #'
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
-#' @inheritParams inf_fn
+#' @inheritParams prop_presymptomatic_to_alpha
 #' @param cap_max_days a positive `integer` scalar: stop the simulation when
 #'   this many days is reached.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
@@ -35,7 +35,7 @@
 #'   disp_isolated = 1,
 #'   disp_community = 0.16,
 #'   disp_asymptomatic = 0.16,
-#'   k = 0,
+#'   prop_presymptomatic = 0.5,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop_asymptomatic = 0,
@@ -45,13 +45,19 @@
 outbreak_model <- function(initial_cases,
                            r0_community, r0_isolated, r0_asymptomatic,
                            disp_community, disp_isolated, disp_asymptomatic,
-                           incubation_period, k,
+                           incubation_period, prop_presymptomatic,
                            onset_to_isolation,
                            prop_ascertain, prop_asymptomatic,
                            cap_max_days, cap_cases,
                            quarantine = FALSE) {
 
   check_outbreak_input()
+
+
+  # calculate alpha parameter from prop_presymptomatic
+  alpha <- prop_presymptomatic_to_alpha(
+    prop_presymptomatic = prop_presymptomatic
+  )
 
   # Set initial values for loop indices
   total_cases <- initial_cases
@@ -82,7 +88,7 @@ outbreak_model <- function(initial_cases,
                              incubation_period = incubation_period,
                              onset_to_isolation = onset_to_isolation,
                              prop_ascertain = prop_ascertain,
-                             k = k,
+                             alpha = alpha,
                              quarantine = quarantine,
                              prop_asymptomatic = prop_asymptomatic)
 
