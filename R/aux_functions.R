@@ -3,7 +3,7 @@
 #' This is done assuming the generation time distribution of each individual is
 #' given by a skew-normal distribution with a location parameter equal to their
 #' incubation period.
-#' 
+#'
 #' @param incubation_period_samples a positive `numeric` vector: samples from
 #'   the incubation period distribution
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal distribution
@@ -48,7 +48,14 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
     return((p_current - prop_presymptomatic)^2)
   }
   # alpha domain is (-Inf, Inf), approximate with large numbers
-  stats::optimise(f = objective, interval = c(-1e5, 1e5))$minimum
+  res <- stats::optimise(f = objective, interval = c(-1e5, 1e5))
+  if (res$objective > 1e-5) {
+    stop(
+      "Estimating the `alpha` parameter from `prop_presymptomatic` ",
+      "did not converge."
+    )
+  }
+  return(res$minimum)
 }
 
 #' Calculate proportion of runs that have controlled outbreak
