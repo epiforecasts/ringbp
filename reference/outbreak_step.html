@@ -62,7 +62,7 @@
 <span>  <span class="va">disp_isolated</span>,</span>
 <span>  <span class="va">disp_asymptomatic</span>,</span>
 <span>  <span class="va">incubation_period</span>,</span>
-<span>  <span class="va">k</span>,</span>
+<span>  <span class="va">alpha</span>,</span>
 <span>  <span class="va">onset_to_isolation</span>,</span>
 <span>  <span class="va">prop_ascertain</span>,</span>
 <span>  <span class="va">prop_asymptomatic</span>,</span>
@@ -117,9 +117,8 @@ times to sample the incubation period (i.e. length of the <code>function</code>
 output).</p></dd>
 
 
-<dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>a <code>numeric</code> scalar: skew parameter for sampling the serial
-interval from the incubation period</p></dd>
+<dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
+<dd><p>a <code>numeric</code> scalar: skew parameter of the skew-normal distribution</p></dd>
 
 
 <dt id="arg-onset-to-isolation">onset_to_isolation<a class="anchor" aria-label="anchor" href="#arg-onset-to-isolation"></a></dt>
@@ -200,7 +199,7 @@ generation</p></li>
 <span class="r-in"><span>  incubation_period <span class="op">=</span> <span class="va">incubation_period</span>,</span></span>
 <span class="r-in"><span>  onset_to_isolation <span class="op">=</span> <span class="va">onset_to_isolation</span>,</span></span>
 <span class="r-in"><span>  prop_ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
+<span class="r-in"><span>  alpha <span class="op">=</span> <span class="fl">1.95</span>,</span></span>
 <span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>

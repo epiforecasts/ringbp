@@ -62,7 +62,7 @@
 <span>  <span class="va">disp_isolated</span>,</span>
 <span>  <span class="va">disp_asymptomatic</span>,</span>
 <span>  <span class="va">incubation_period</span>,</span>
-<span>  <span class="va">k</span>,</span>
+<span>  <span class="va">prop_presymptomatic</span>,</span>
 <span>  <span class="va">onset_to_isolation</span>,</span>
 <span>  <span class="va">prop_ascertain</span>,</span>
 <span>  <span class="va">prop_asymptomatic</span>,</span>
@@ -119,9 +119,9 @@ times to sample the incubation period (i.e. length of the <code>function</code>
 output).</p></dd>
 
 
-<dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>a <code>numeric</code> scalar: skew parameter for sampling the serial
-interval from the incubation period</p></dd>
+<dt id="arg-prop-presymptomatic">prop_presymptomatic<a class="anchor" aria-label="anchor" href="#arg-prop-presymptomatic"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
+inclusive): proportion of transmission that occurs before symptom onset.</p></dd>
 
 
 <dt id="arg-onset-to-isolation">onset_to_isolation<a class="anchor" aria-label="anchor" href="#arg-onset-to-isolation"></a></dt>
@@ -186,7 +186,7 @@ reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul
 <span class="r-in"><span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  disp_community <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
 <span class="r-in"><span>  disp_asymptomatic <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>  k <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  prop_presymptomatic <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
 <span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.65</span>, scale <span class="op">=</span> <span class="fl">4.28</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prop_asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
