@@ -38,11 +38,8 @@ scenarios <- data.table(
         \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
       )
     )),
-    k_group = list(data.table(
-      theta = c("<1\%", "15\%"),
-      k = c(1, 0.88)
-    )),
     r0_community = c(1.1, 1.5),
+    prop_presymptomatic = c(0.01, 0.15),
     prop_asymptomatic = c(0, 0.1),
     prop_ascertain = seq(0, 1, 0.25),
     initial_cases = c(5, 10),
@@ -53,12 +50,7 @@ scenarios <- data.table(
 list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 non_list_cols <- setdiff(colnames(scenarios), list_cols)
 
-expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
-expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
-
-scenarios <- merge(
-  expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
-)
+scenarios <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
 scenarios[, scenario :=  1:.N]
 
 incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)

@@ -41,7 +41,7 @@ res <- scenario_sim(
   disp_isolated = 1,
   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-  k = 0,
+  prop_presymptomatic = 0.5,
   quarantine = FALSE
 )
 extinct_prob(res, cap_cases = 4500)

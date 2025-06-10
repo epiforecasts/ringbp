@@ -2,11 +2,11 @@ context("Test all aux functions")
 
 set.seed(515)
 
-test_that("inf_fn parameters behave as expected", {
-  r1 <- inf_fn(c(1, 4, 1), 2)
+test_that("incubation_to_generation_time parameters behave as expected", {
+  r1 <- incubation_to_generation_time(c(1, 4, 1), 2)
   expect_length(r1, 3)
 
-  r2 <- inf_fn(rep(0.01, 1e6), 2)
+  r2 <- incubation_to_generation_time(rep(0.01, 1e6), 2)
   expect_length(r2, 1e6)
   expect_true(is.numeric(r2))
   expect_false(anyNA(r2))
@@ -14,23 +14,50 @@ test_that("inf_fn parameters behave as expected", {
   expect_equal(min(r2), 1)
   expect_true(all(r2 >= 1))
 
-  # skew normal collapses to normal with alpha = k = 0
+  # skew normal collapses to normal with alpha = 0
   # SD is hard coded as 2.
   # Upper 99% of normal with mean 0 sd 2: qnorm(0.99, 0, 2) = 4.7.
   # Probability that normal with mean 1e6, sd 2 being less than 4.7
   # is vanishingly small pnorm(4.7, 1e6, 2) < 1e-200.
   # So this test should almost certainly pass if code is correct.
-  r3 <- inf_fn(c(0, 1e6), 0)
+  r3 <- incubation_to_generation_time(c(0, 1e6), 0)
   expect_lt(r3[1], r3[2])
 
   # Test the alpha parameter.
   # positive is right skew so mean is greater than median.
-  r4 <- inf_fn(rep(100, 1e6), 10)
+  r4 <- incubation_to_generation_time(rep(100, 1e6), 10)
   expect_gt(mean(r4), median(r4))
 
   # negative is left skew so mean is less than median.
-  r5 <- inf_fn(rep(100, 1e6), -10)
+  r5 <- incubation_to_generation_time(rep(100, 1e6), -10)
   expect_lt(mean(r5), median(r5))
+})
+
+test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
+  # ~50% presymptomatic
+  incubation_period <- 5
+  prop_presymptomatic <- 0.5
+  exposure <- incubation_to_generation_time(
+    incubation_period_samples = rep(incubation_period, 1e5),
+    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+  )
+  expect_equal(
+    sum(exposure < incubation_period) / length(exposure),
+    expected = prop_presymptomatic,
+    tolerance = 0.01
+  )
+
+  # ~10% presymptomatic
+  prop_presymptomatic <- 0.1
+  exposure <- incubation_to_generation_time(
+    incubation_period_samples = rep(incubation_period, 1e5),
+    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+  )
+  expect_equal(
+    sum(exposure < incubation_period) / length(exposure),
+    expected = prop_presymptomatic,
+    tolerance = 0.01
+  )
 })
 
 
@@ -46,7 +73,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -90,7 +117,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 100,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -98,7 +125,7 @@ test_that('extinct_prob works as expected', {
   )
 
   r3 <- extinct_prob(res3, cap)
-  expect_equal(r3, 0.2)
+  expect_equal(r3, 0)
 
   # r0 of 0, should always go extinct.
   res3 <- scenario_sim(
@@ -110,7 +137,7 @@ test_that('extinct_prob works as expected', {
     r0_community = 0,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -133,7 +160,7 @@ test_that('extinct_prob week_range argument works', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,
@@ -209,7 +236,7 @@ test_that('detect_extinct works', {
     r0_community = 2.5,
     disp_isolated = 1,
     disp_community = 0.16,
-    k = 0.7,
+    prop_presymptomatic = 0.3,
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
     incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
     prop_asymptomatic = 0,

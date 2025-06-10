@@ -30,11 +30,8 @@
 #'         \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
 #'       )
 #'     )),
-#'     k_group = list(data.table(
-#'       theta = c("<1%", "15%"),
-#'       k = c(1, 0.88)
-#'     )),
 #'     r0_community = c(1.1, 1.5),
+#'     prop_presymptomatic = c(0.01, 0.15),
 #'     prop_asymptomatic = c(0, 0.1),
 #'     prop_ascertain = seq(0, 1, 0.25),
 #'     initial_cases = c(5, 10),
@@ -45,12 +42,7 @@
 #' list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 #' non_list_cols <- setdiff(colnames(scenarios), list_cols)
 #'
-#' expanded_groups <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
-#' expanded_k <- scenarios[, rbindlist(k_group), by = c(non_list_cols)]
-#'
-#' scenarios <- merge(
-#'   expanded_groups, expanded_k, by = non_list_cols, allow.cartesian = TRUE
-#' )
+#' scenarios <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
 #' scenarios[, scenario :=  1:.N]
 #'
 #' incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
@@ -105,7 +97,7 @@ parameter_sweep <- function(scenarios,
       r0_community = x$r0_community,
       r0_asymptomatic = ifelse(
         "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0_community),
-      k = x$k,
+      prop_presymptomatic = x$prop_presymptomatic,
       onset_to_isolation = x$onset_to_isolation[[1]],
       incubation_period = x$incubation_period[[1]],
       prop_ascertain = x$prop_ascertain,

@@ -1,24 +1,61 @@
-#' Samples the serial interval for given incubation period samples
+#' Samples the generation time for given incubation period samples
 #'
-#' @param inc_samp a positive `numeric` vector: samples from the incubation
-#'   period distribution
-#' @param k a `numeric` scalar: skew parameter for sampling the serial
-#'   interval from the incubation period
+#' This is done assuming the generation time distribution of each individual is
+#' given by a skew-normal distribution with a location parameter equal to their
+#' incubation period.
 #'
-#' @return a `numeric` vector of equal length to the vector input to `inc_samp`
+#' @param incubation_period_samples a positive `numeric` vector: samples from
+#'   the incubation period distribution
+#' @param alpha a `numeric` scalar: skew parameter of the skew-normal distribution
+#'
+#' @return a `numeric` vector of equal length to the vector input to
+#'   `incubation_period_samples`
 #' @export
 #' @importFrom sn rsn
 #'
 #' @examples
-#' inf_fn(inc_samp = c(1, 2, 3, 4, 1), k = 2)
-inf_fn <- function(inc_samp, k) {
+#' incubation_to_generation_time(
+#'   incubation_period_samples = c(1, 2, 3, 4, 1),
+#'   alpha = 2
+#' )
+incubation_to_generation_time <- function(incubation_period_samples, alpha) {
 
-  out <- sn::rsn(n = length(inc_samp),
-                 xi = inc_samp,
+  checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_number(alpha, finite = TRUE)
+
+  out <- sn::rsn(n = length(incubation_period_samples),
+                 xi = incubation_period_samples,
                  omega = 2,
-                 alpha = k)
+                 alpha = alpha)
 
   return(pmax(1, out))
+}
+
+#' Estimate skew normal alpha parameter from proportion of presymptomatic
+#' transmission
+#'
+#' @param prop_presymptomatic a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of transmission that occurs before symptom onset.
+#'
+#' @return A `numeric` scalar: The `$minimum` output from [optimise()] to find
+#'   the best `alpha` parameter to get the desired proportion of presymptomatic
+#'   transmission.
+#' @keywords internal
+prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
+  objective <- function(alpha) {
+    # fix x, xi and omega for optimisation
+    p_current <- sn::psn(x = 0, xi = 0, omega = 2, alpha = alpha)
+    return((p_current - prop_presymptomatic)^2)
+  }
+  # alpha domain is (-Inf, Inf), approximate with large numbers
+  res <- stats::optimise(f = objective, interval = c(-1e5, 1e5))
+  if (res$objective > 1e-5) {
+    stop(
+      "Estimating the `alpha` parameter from `prop_presymptomatic` ",
+      "did not converge."
+    )
+  }
+  return(res$minimum)
 }
 
 #' Calculate proportion of runs that have controlled outbreak
@@ -44,7 +81,7 @@ inf_fn <- function(inc_samp, k) {
 #'   disp_isolated = 1,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   k = 0,
+#'   prop_presymptomatic = 0.5,
 #'   quarantine = FALSE
 #' )
 #' extinct_prob(res, cap_cases = 4500)
@@ -98,7 +135,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'   disp_isolated = 1,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
 #'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   k = 0,
+#'   prop_presymptomatic = 0.5,
 #'   quarantine = FALSE
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
