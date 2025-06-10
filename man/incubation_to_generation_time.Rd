@@ -10,15 +10,16 @@ incubation_to_generation_time(incubation_period_samples, alpha)
 \item{incubation_period_samples}{a positive \code{numeric} vector: samples from
 the incubation period distribution}
 
-\item{alpha}{a \code{numeric} scalar: skew parameter for sampling the generation
-time from the incubation period}
+\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal distribution}
 }
 \value{
 a \code{numeric} vector of equal length to the vector input to
 \code{incubation_period_samples}
 }
 \description{
-Samples the generation time for given incubation period samples
+This is done assuming the generation time distribution of each individual is
+given by a skew-normal distribution with a location parameter equal to their
+incubation period.
 }
 \examples{
 incubation_to_generation_time(

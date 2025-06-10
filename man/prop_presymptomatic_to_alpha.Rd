@@ -2,7 +2,7 @@
 % Please edit documentation in R/aux_functions.R
 \name{prop_presymptomatic_to_alpha}
 \alias{prop_presymptomatic_to_alpha}
-\title{Calculate skew normal alpha parameter from proportion of presymptomatic
+\title{Estimate skew normal alpha parameter from proportion of presymptomatic
 transmission}
 \usage{
 prop_presymptomatic_to_alpha(prop_presymptomatic)
@@ -17,7 +17,7 @@ the best \code{alpha} parameter to get the desired proportion of presymptomatic
 transmission.
 }
 \description{
-Calculate skew normal alpha parameter from proportion of presymptomatic
+Estimate skew normal alpha parameter from proportion of presymptomatic
 transmission
 }
 \keyword{internal}
