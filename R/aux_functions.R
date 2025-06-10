@@ -1,9 +1,12 @@
 #' Samples the generation time for given incubation period samples
 #'
+#' This is done assuming the generation time distribution of each individual is
+#' given by a skew-normal distribution with a location parameter equal to their
+#' incubation period.
+#' 
 #' @param incubation_period_samples a positive `numeric` vector: samples from
 #'   the incubation period distribution
-#' @param alpha a `numeric` scalar: skew parameter for sampling the generation
-#'   time from the incubation period
+#' @param alpha a `numeric` scalar: skew parameter of the skew-normal distribution
 #'
 #' @return a `numeric` vector of equal length to the vector input to
 #'   `incubation_period_samples`
