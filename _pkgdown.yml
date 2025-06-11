@@ -10,7 +10,6 @@ reference:
     - incubation_to_generation_time
   - subtitle: Loop wrappers for scenario modelling
     contents:
-    - parameter_sweep
     - scenario_sim
   - subtitle: Model parameters and control options
     contents:

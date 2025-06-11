@@ -107,8 +107,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'
 #' @details
 #' The `cap_cases` argument should be equal to the value supplied to
-#' [outbreak_model()] (possibly passed from [scenario_sim()] or
-#' [parameter_sweep()]).
+#' [outbreak_model()] (possibly passed from [scenario_sim()]).
 #'
 #' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the

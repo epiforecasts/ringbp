@@ -26,8 +26,7 @@ Calculate whether outbreaks went extinct or not
 }
 \details{
 The \code{cap_cases} argument should be equal to the value supplied to
-\code{\link[=outbreak_model]{outbreak_model()}} (possibly passed from \code{\link[=scenario_sim]{scenario_sim()}} or
-\code{\link[=parameter_sweep]{parameter_sweep()}}).
+\code{\link[=outbreak_model]{outbreak_model()}} (possibly passed from \code{\link[=scenario_sim]{scenario_sim()}}).
 }
 \examples{
 res <- scenario_sim(
