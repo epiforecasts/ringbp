@@ -4,30 +4,11 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(
-  initial_cases,
-  incubation_period,
-  onset_to_isolation,
-  prop_asymptomatic
-)
+outbreak_setup(parameters)
 }
 \arguments{
 \item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
-
-\item{incubation_period}{a \code{function}: a random number generating
-\code{function} that samples from incubation period distribution, the
-\code{function} accepts a single \code{integer} argument specifying the number of
-times to sample the incubation period (i.e. length of the \code{function}
-output).}
-
-\item{onset_to_isolation}{a \code{function}: a random number generating
-\code{function} that accepts a single \code{integer} argument specifying the
-length of the \code{function} output.}
-
-\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of cases that are completely asymptomatic
-(subclinical)}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -47,17 +28,25 @@ inclusive): proportion of cases that are completely asymptomatic
 Set up initial cases for branching process
 }
 \examples{
-# incubation period sampling function
-incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
-# delay distribution sampling function
-onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
-out <- outbreak_setup(
-  initial_cases = 1,
-  incubation_period = incubation_period,
-  onset_to_isolation = onset_to_isolation,
-  prop_asymptomatic = 0
+parameters <- parameters(
+  initial_cases = 5,
+  r0_community = 2.5,
+  r0_isolated = 0,
+  r0_asymptomatic = 1.25,
+  disp_community = 0.16,
+  disp_isolated = 1,
+  disp_asymptomatic = 0.16,
+  incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+  prop_presymptomatic = 0.15,
+  onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+  prop_ascertain = 0,
+  prop_asymptomatic = 0,
+  quarantine = FALSE
 )
-out
+
+# generate initial cases
+case_data <- outbreak_setup(parameters = parameters)
+case_data
 }
 \author{
 Joel Hellewell

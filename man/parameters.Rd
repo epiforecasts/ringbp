@@ -73,6 +73,10 @@ A \code{list} with class \verb{<ringbp_parameters>}.
 \description{
 Create a list of parameters to run the \pkg{ringbp} model
 }
+\details{
+If \code{r0_asymptomatic} or \code{disp_asymptomatic} are not provided they will be
+specified as the values of \code{r0_community} and \code{disp_community}, respectively.
+}
 \examples{
 parameters(
   initial_cases = 10,

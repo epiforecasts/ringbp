@@ -71,19 +71,20 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
 #' @examples
 #' res <- scenario_sim(
 #'   n = 10,
-#'   initial_cases = 1,
-#'   prop_asymptomatic = 0,
-#'   prop_ascertain = 0.2,
-#'   cap_cases = 4500,
-#'   cap_max_days = 350,
-#'   r0_isolated = 0.5,
-#'   r0_community = 2.5,
-#'   disp_community = 0.16,
-#'   disp_isolated = 1,
-#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_presymptomatic = 0.5,
-#'   quarantine = FALSE
+#'   parameters = parameters(
+#'     initial_cases = 1,
+#'     r0_community = 2.5,
+#'     r0_isolated = 0.5,
+#'     disp_community = 0.16,
+#'     disp_isolated = 1,
+#'     incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+#'     prop_presymptomatic = 0.5,
+#'     onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'     prop_ascertain = 0.2,
+#'     prop_asymptomatic = 0,
+#'     quarantine = FALSE
+#'   ),
+#'   control = control(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' extinct_prob(res, cap_cases = 4500)
 extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
@@ -125,19 +126,20 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' @examples
 #' res <- scenario_sim(
 #'   n = 10,
-#'   initial_cases = 1,
-#'   prop_asymptomatic = 0,
-#'   prop_ascertain = 0.2,
-#'   cap_cases = 4500,
-#'   cap_max_days = 350,
-#'   r0_isolated = 0.5,
-#'   r0_community = 2.5,
-#'   disp_community = 0.16,
-#'   disp_isolated = 1,
-#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_presymptomatic = 0.5,
-#'   quarantine = FALSE
+#'   parameters = parameters(
+#'     initial_cases = 1,
+#'     r0_community = 2.5,
+#'     r0_isolated = 0.5,
+#'     disp_community = 0.16,
+#'     disp_isolated = 1,
+#'     incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+#'     prop_presymptomatic = 0.5,
+#'     onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'     prop_ascertain = 0.2,
+#'     prop_asymptomatic = 0,
+#'     quarantine = FALSE
+#'   ),
+#'   control = control(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {

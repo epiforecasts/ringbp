@@ -4,21 +4,7 @@
 \alias{outbreak_step}
 \title{Move forward one generation in the branching process}
 \usage{
-outbreak_step(
-  case_data,
-  r0_community,
-  r0_isolated,
-  r0_asymptomatic,
-  disp_community,
-  disp_isolated,
-  disp_asymptomatic,
-  incubation_period,
-  alpha,
-  onset_to_isolation,
-  prop_ascertain,
-  prop_asymptomatic,
-  quarantine = FALSE
-)
+outbreak_step(case_data, parameters)
 }
 \arguments{
 \item{case_data}{a \code{data.table}: cases in outbreak so far; initially
@@ -47,9 +33,6 @@ for sub-clincial non-isolated cases (must be >0)}
 \code{function} accepts a single \code{integer} argument specifying the number of
 times to sample the incubation period (i.e. length of the \code{function}
 output).}
-
-\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
-distribution}
 
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the
@@ -80,33 +63,29 @@ generation
 Move forward one generation in the branching process
 }
 \examples{
-# incubation period sampling function
-incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
-# delay distribution sampling function
-onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
-# generate initial cases
-case_data <- outbreak_setup(
+parameters <- parameters(
   initial_cases = 5,
-  incubation_period = incubation_period,
-  onset_to_isolation = onset_to_isolation,
-  prop_asymptomatic = 0
+  r0_community = 2.5,
+  r0_isolated = 0,
+  r0_asymptomatic = 1.25,
+  disp_community = 0.16,
+  disp_isolated = 1,
+  disp_asymptomatic = 0.16,
+  incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+  prop_presymptomatic = 0.15,
+  onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+  prop_ascertain = 0,
+  prop_asymptomatic = 0,
+  quarantine = FALSE
 )
+
+# generate initial cases
+case_data <- outbreak_setup(parameters = parameters)
 case_data
 # generate next generation of cases
 out <- outbreak_step(
   case_data = case_data,
-  disp_isolated = 1,
-  disp_community = 0.16,
-  disp_asymptomatic = 0.16,
-  r0_isolated = 0,
-  r0_asymptomatic = 1.25,
-  r0_community = 2.5,
-  prop_asymptomatic = 0,
-  incubation_period = incubation_period,
-  onset_to_isolation = onset_to_isolation,
-  prop_ascertain = 0,
-  alpha = 1.95,
-  quarantine = FALSE
+  parameters = parameters
 )
 case_data <- out[[1]]
 case_data
