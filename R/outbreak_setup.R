@@ -32,7 +32,10 @@
 #'   prop_asymptomatic = 0
 #' )
 #' out
-outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, prop_asymptomatic) {
+outbreak_setup <- function(initial_cases,
+                           incubation_period,
+                           onset_to_isolation,
+                           prop_asymptomatic) {
 
   check_outbreak_input()
 
@@ -49,12 +52,12 @@ outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation,
     isolated_time = Inf
   )
 
-  # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
+  # set isolation time for cluster to minimum time of onset of symptoms + draw
+  # from delay distribution
   case_data <- case_data[
     asymptomatic == FALSE,
     isolated_time := onset + onset_to_isolation(.N)
   ]
 
-  # return
   return(case_data)
 }

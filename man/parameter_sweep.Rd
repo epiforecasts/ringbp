@@ -17,13 +17,14 @@ simulation function - see the examples for usage.}
 Defaults to \code{1}.}
 }
 \value{
-A nested \code{data.table} containing the parameters for each scenario and a nested list of output
-from \code{\link[=scenario_sim]{scenario_sim()}}.
+A nested \code{data.table} containing the parameters for each scenario
+and a nested list of output from \code{\link[=scenario_sim]{scenario_sim()}}.
 }
 \description{
-Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
-are included in the grid are currently hard coded. Use the \code{future} package to control parallisation
-outside of the function.
+Explore scenarios using gridding with sampling for parameters
+not in the grid. Parameters that are included in the grid are currently
+hard coded. Use the \code{future} package to control parallisation outside of
+the function.
 }
 \examples{
 \dontshow{if (requireNamespace("data.table", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

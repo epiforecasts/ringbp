@@ -8,3 +8,4 @@ codecov.yml
 \.github
 README.Rmd
 ^_pkgdown\.yml$
+^\.lintr$

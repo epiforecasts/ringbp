@@ -142,7 +142,7 @@ test_that("r0_isolated is working properly", {
   expect_gt(nrow(case_data3$cases), 1)
 })
 
-test_that('Test a bunch of args',{
+test_that("Test a bunch of args", {
   incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)

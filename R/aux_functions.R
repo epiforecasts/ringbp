@@ -6,7 +6,8 @@
 #'
 #' @param incubation_period_samples a positive `numeric` vector: samples from
 #'   the incubation period distribution
-#' @param alpha a `numeric` scalar: skew parameter of the skew-normal distribution
+#' @param alpha a `numeric` scalar: skew parameter of the skew-normal
+#'   distribution
 #'
 #' @return a `numeric` vector of equal length to the vector input to
 #'   `incubation_period_samples`
@@ -147,7 +148,8 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
-  outbreak_df_week[, list(
+  out <- outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim]
+  return(out)
 }

@@ -8,13 +8,14 @@
 #' @inheritParams outbreak_model
 #'
 #' @importFrom data.table rbindlist
-#' @return A `data.table` object returning the results for multiple simulations using
-#' the same set of parameters. The table has columns
+#' @return A `data.table` object returning the results for multiple simulations
+#'   using the same set of parameters. The table has columns
 #' * week: The week in the simulation.
 #' * weekly_cases: The number of new cases that week.
 #' * cumulative: The cumulative cases.
 #' * effective_r0: The effective reproduction rate for the whole simulation
-#' * cases_per_gen: A list column with the cases per generation. This is repeated each row.
+#' * cases_per_gen: A list column with the cases per generation. This is
+#'   repeated each row.
 #' * sim: Index column for which simulation.
 #' @autoglobal
 #' @export
@@ -47,12 +48,13 @@ scenario_sim <- function(n,
                          cap_max_days, cap_cases,
                          quarantine = FALSE) {
 
-  # Set infectiousness of subclinical cases to be equal to clinical cases unless specified otherwise
-  if(missing(r0_asymptomatic)) {
+  # Set infectiousness of subclinical cases to be equal to clinical cases
+  # unless specified otherwise
+  if (missing(r0_asymptomatic)) {
     r0_asymptomatic <- r0_community
   }
 
-  if(missing(disp_asymptomatic)) {
+  if (missing(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
 
@@ -76,7 +78,9 @@ scenario_sim <- function(n,
       prop_presymptomatic = prop_presymptomatic,
       prop_asymptomatic = prop_asymptomatic,
       quarantine = quarantine
-    ), simplify = FALSE)
+    ),
+    simplify = FALSE
+  )
 
   # bind output together and add simulation index
   res <- data.table::rbindlist(res, idcol = "sim")

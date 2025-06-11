@@ -1,8 +1,9 @@
 #' Sweep across parameters
 #'
-#' @description Explore scenarios using gridding with sampling for parameters not in the grid. Parameters that
-#' are included in the grid are currently hard coded. Use the `future` package to control parallisation
-#' outside of the function.
+#' @description Explore scenarios using gridding with sampling for parameters
+#'   not in the grid. Parameters that are included in the grid are currently
+#'   hard coded. Use the `future` package to control parallisation outside of
+#'   the function.
 #'
 #' @param scenarios a `data.frame`: containing all gridded scenarios - see the
 #'   examples for the required structure.
@@ -11,8 +12,8 @@
 #' @param sim_fn a `function`: The vectorised model
 #'   simulation function - see the examples for usage.
 #'
-#' @return A nested `data.table` containing the parameters for each scenario and a nested list of output
-#' from [scenario_sim()].
+#' @return A nested `data.table` containing the parameters for each scenario
+#'   and a nested list of output from [scenario_sim()].
 #' @autoglobal
 #' @export
 #' @importFrom future.apply future_lapply
@@ -90,20 +91,24 @@ parameter_sweep <- function(scenarios,
   scenario_sims <- scenario_sims[sample(.N), ]
   ## Run simulations
   scenario_sims[, sims := future_lapply(
-    data,
-    \(x) safe_sim_fn(
-      n = samples,
-      initial_cases = x$initial_cases,
-      r0_community = x$r0_community,
-      r0_asymptomatic = ifelse(
-        "asymptomatic_R0" %in% names(scenarios), x$asymptomatic_R0, x$r0_community),
-      prop_presymptomatic = x$prop_presymptomatic,
-      onset_to_isolation = x$onset_to_isolation[[1]],
-      incubation_period = x$incubation_period[[1]],
-      prop_ascertain = x$prop_ascertain,
-      quarantine = x$quarantine,
-      prop_asymptomatic = x$prop_asymptomatic
-    )[[1]],
+    data, \(x) {
+      safe_sim_fn(
+        n = samples,
+        initial_cases = x$initial_cases,
+        r0_community = x$r0_community,
+        r0_asymptomatic = ifelse(
+          "asymptomatic_R0" %in% names(scenarios),
+          x$asymptomatic_R0,
+          x$r0_community
+        ),
+        prop_presymptomatic = x$prop_presymptomatic,
+        onset_to_isolation = x$onset_to_isolation[[1]],
+        incubation_period = x$incubation_period[[1]],
+        prop_ascertain = x$prop_ascertain,
+        quarantine = x$quarantine,
+        prop_asymptomatic = x$prop_asymptomatic
+      )[[1]]
+    },
     future.scheduling = 20,
     future.seed = TRUE
   )]

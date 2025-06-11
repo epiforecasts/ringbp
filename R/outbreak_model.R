@@ -53,7 +53,6 @@ outbreak_model <- function(initial_cases,
 
   check_outbreak_input()
 
-
   # calculate alpha parameter from prop_presymptomatic
   alpha <- prop_presymptomatic_to_alpha(
     prop_presymptomatic = prop_presymptomatic
@@ -76,22 +75,21 @@ outbreak_model <- function(initial_cases,
 
 
   # Model loop
-  while (latest_onset < cap_max_days & total_cases < cap_cases & !extinct) {
+  while (latest_onset < cap_max_days && total_cases < cap_cases && !extinct) {
 
     out <- outbreak_step(case_data = case_data,
-                             disp_isolated = disp_isolated,
-                             disp_community = disp_community,
-                             disp_asymptomatic = disp_asymptomatic,
-                             r0_isolated = r0_isolated,
-                             r0_community = r0_community,
-                             r0_asymptomatic = r0_asymptomatic,
-                             incubation_period = incubation_period,
-                             onset_to_isolation = onset_to_isolation,
-                             prop_ascertain = prop_ascertain,
-                             alpha = alpha,
-                             quarantine = quarantine,
-                             prop_asymptomatic = prop_asymptomatic)
-
+                         disp_isolated = disp_isolated,
+                         disp_community = disp_community,
+                         disp_asymptomatic = disp_asymptomatic,
+                         r0_isolated = r0_isolated,
+                         r0_community = r0_community,
+                         r0_asymptomatic = r0_asymptomatic,
+                         incubation_period = incubation_period,
+                         onset_to_isolation = onset_to_isolation,
+                         prop_ascertain = prop_ascertain,
+                         alpha = alpha,
+                         quarantine = quarantine,
+                         prop_asymptomatic = prop_asymptomatic)
 
     case_data <- out[[1]]
     effective_r0_vect <- c(effective_r0_vect, out[[2]])

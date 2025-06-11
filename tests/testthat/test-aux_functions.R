@@ -61,7 +61,7 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
 })
 
 
-test_that('extinct_prob works as expected', {
+test_that("extinct_prob works as expected", {
   cap <- 100
   sims <- 5
   res <- scenario_sim(
@@ -148,7 +148,7 @@ test_that('extinct_prob works as expected', {
   expect_equal(r3, 1)
 })
 
-test_that('extinct_prob week_range argument works', {
+test_that("extinct_prob week_range argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
@@ -224,7 +224,7 @@ test_that('extinct_prob week_range argument works', {
   expect_equal(r6b, 0)
 })
 
-test_that('detect_extinct works', {
+test_that("detect_extinct works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
