@@ -21,63 +21,42 @@
 #' @export
 #'
 #' @examples
-#' res <- scenario_sim(
-#'   n = 5,
+#' parameters <- parameters(
 #'   initial_cases = 5,
-#'   cap_max_days = 365,
-#'   cap_cases = 2000,
-#'   r0_isolated = 0,
 #'   r0_community = 2.5,
-#'   disp_isolated = 1,
+#'   r0_isolated = 0,
 #'   disp_community = 0.16,
+#'   disp_isolated = 1,
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
 #'   prop_presymptomatic = 0.3,
 #'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_asymptomatic = 0,
 #'   prop_ascertain = 0,
+#'   prop_asymptomatic = 0,
 #'   quarantine = TRUE
+#' )
+#' control <- control(
+#'   cap_max_days = 365,
+#'   cap_cases = 2000
+#' )
+#' res <- scenario_sim(
+#'   n = 5,
+#'   parameters = parameters,
+#'   control = control
 #' )
 #' res
 scenario_sim <- function(n,
-                         initial_cases,
-                         r0_community, r0_isolated, r0_asymptomatic,
-                         disp_community, disp_isolated, disp_asymptomatic,
-                         incubation_period, prop_presymptomatic,
-                         onset_to_isolation,
-                         prop_ascertain, prop_asymptomatic,
-                         cap_max_days, cap_cases,
-                         quarantine = FALSE) {
+                         parameters,
+                         control) {
 
-  # Set infectiousness of subclinical cases to be equal to clinical cases
-  # unless specified otherwise
-  if (missing(r0_asymptomatic)) {
-    r0_asymptomatic <- r0_community
-  }
-
-  if (missing(disp_asymptomatic)) {
-    disp_asymptomatic <- disp_community
-  }
-
-  check_outbreak_input()
+  checkmate::assert_number(n, lower = 1, finite = TRUE)
+  checkmate::assert_class(parameters, "ringbp_parameters")
+  checkmate::assert_class(control, "ringbp_control")
 
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(
-      initial_cases = initial_cases,
-      prop_ascertain = prop_ascertain,
-      cap_max_days = cap_max_days,
-      cap_cases = cap_cases,
-      r0_isolated = r0_isolated,
-      r0_community = r0_community,
-      r0_asymptomatic = r0_asymptomatic,
-      disp_asymptomatic = disp_asymptomatic,
-      disp_isolated = disp_isolated,
-      disp_community = disp_community,
-      onset_to_isolation = onset_to_isolation,
-      incubation_period = incubation_period,
-      prop_presymptomatic = prop_presymptomatic,
-      prop_asymptomatic = prop_asymptomatic,
-      quarantine = quarantine
+      parameters = parameters,
+      control = control
     ),
     simplify = FALSE
   )

@@ -21,33 +21,38 @@
 #' @importFrom stats runif
 #'
 #' @examples
-#' # incubation period sampling function
-#' incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
-#' # delay distribution sampling function
-#' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
-#' out <- outbreak_setup(
-#'   initial_cases = 1,
-#'   incubation_period = incubation_period,
-#'   onset_to_isolation = onset_to_isolation,
-#'   prop_asymptomatic = 0
+#' parameters <- parameters(
+#'   initial_cases = 5,
+#'   r0_community = 2.5,
+#'   r0_isolated = 0,
+#'   r0_asymptomatic = 1.25,
+#'   disp_community = 0.16,
+#'   disp_isolated = 1,
+#'   disp_asymptomatic = 0.16,
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+#'   prop_presymptomatic = 0.15,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   prop_ascertain = 0,
+#'   prop_asymptomatic = 0,
+#'   quarantine = FALSE
 #' )
-#' out
-outbreak_setup <- function(initial_cases,
-                           incubation_period,
-                           onset_to_isolation,
-                           prop_asymptomatic) {
+#'
+#' # generate initial cases
+#' case_data <- outbreak_setup(parameters = parameters)
+#' case_data
+outbreak_setup <- function(parameters) {
 
-  check_outbreak_input()
+  checkmate::assert_class(parameters, "ringbp_parameters")
 
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases
-    asymptomatic = runif(initial_cases) < prop_asymptomatic,
-    caseid = seq_len(initial_cases), # set case id
+    asymptomatic = runif(parameters$initial_cases) < parameters$prop_asymptomatic,
+    caseid = seq_len(parameters$initial_cases), # set case id
     infector = 0,
     isolated = FALSE,
     missed = TRUE,
-    onset = incubation_period(initial_cases),
+    onset = parameters$incubation_period(parameters$initial_cases),
     new_cases = NA,
     isolated_time = Inf
   )
@@ -56,7 +61,7 @@ outbreak_setup <- function(initial_cases,
   # from delay distribution
   case_data <- case_data[
     asymptomatic == FALSE,
-    isolated_time := onset + onset_to_isolation(.N)
+    isolated_time := onset + parameters$onset_to_isolation(.N)
   ]
 
   return(case_data)
