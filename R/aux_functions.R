@@ -191,13 +191,6 @@ parameters <- function(initial_cases,
                        prop_ascertain, prop_asymptomatic,
                        quarantine = FALSE) {
 
-  check_outbreak_input(func = "parameters")
-
-  # calculate alpha parameter from prop_presymptomatic
-  alpha <- prop_presymptomatic_to_alpha(
-    prop_presymptomatic = prop_presymptomatic
-  )
-
   # Set infectiousness of subclinical cases to be equal to clinical cases
   # unless specified otherwise
   if (missing(r0_asymptomatic)) {
@@ -207,6 +200,13 @@ parameters <- function(initial_cases,
   if (missing(disp_asymptomatic)) {
     disp_asymptomatic <- disp_community
   }
+
+  check_outbreak_input(func = "parameters")
+
+  # calculate alpha parameter from prop_presymptomatic
+  alpha <- prop_presymptomatic_to_alpha(
+    prop_presymptomatic = prop_presymptomatic
+  )
 
   parameters <- list(
     initial_cases = initial_cases,
