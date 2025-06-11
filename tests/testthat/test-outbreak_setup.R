@@ -3,7 +3,7 @@ context("Test basic usage")
 set.seed(20200410)
 
 test_that("A basic sim setup returns the correct object", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
@@ -20,7 +20,7 @@ test_that("A basic sim setup returns the correct object", {
 })
 
 test_that("asymptomatic arg works properly", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases

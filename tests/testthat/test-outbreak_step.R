@@ -3,7 +3,7 @@ context("Test basic usage")
 set.seed(12345678)
 
 test_that("A basic sim returns the correct object", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
@@ -58,7 +58,7 @@ test_that("A basic sim returns the correct object", {
 })
 
 test_that("Sim with multiple infectors makes senes", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
@@ -93,7 +93,7 @@ test_that("Sim with multiple infectors makes senes", {
 
 
 test_that("r0_isolated is working properly", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
@@ -143,7 +143,7 @@ test_that("r0_isolated is working properly", {
 })
 
 test_that("Test a bunch of args", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
+  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49)
   # delay distribution sampling function
   onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
