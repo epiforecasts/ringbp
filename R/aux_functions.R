@@ -237,7 +237,7 @@ parameters <- function(initial_cases,
     disp_asymptomatic <- disp_community
   }
 
-  check_outbreak_input(func = "parameters")
+  check_outbreak_input(parent_func = "parameters")
 
   # calculate alpha parameter from prop_presymptomatic
   alpha <- prop_presymptomatic_to_alpha(
@@ -286,7 +286,7 @@ parameters <- function(initial_cases,
 #' )
 control <- function(cap_max_days = 350, cap_cases  = 5000) {
 
-  check_outbreak_input(func = "control")
+  check_outbreak_input(parent_func = "control")
 
   control <- list(
     cap_max_days = cap_max_days,
