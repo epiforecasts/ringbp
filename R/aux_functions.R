@@ -156,6 +156,10 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
 #' Create a list of parameters to run the \pkg{ringbp} model
 #'
+#' @details
+#' If `r0_asymptomatic` or `disp_asymptomatic` are not provided they will be
+#' specified as the values of `r0_community` and `disp_community`, respectively.
+#'
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
 #' @inheritParams prop_presymptomatic_to_alpha
@@ -187,6 +191,23 @@ parameters <- function(initial_cases,
                        prop_ascertain, prop_asymptomatic,
                        quarantine = FALSE) {
 
+  check_outbreak_input(func = "parameters")
+
+  # calculate alpha parameter from prop_presymptomatic
+  alpha <- prop_presymptomatic_to_alpha(
+    prop_presymptomatic = prop_presymptomatic
+  )
+
+  # Set infectiousness of subclinical cases to be equal to clinical cases
+  # unless specified otherwise
+  if (missing(r0_asymptomatic)) {
+    r0_asymptomatic <- r0_community
+  }
+
+  if (missing(disp_asymptomatic)) {
+    disp_asymptomatic <- disp_community
+  }
+
   parameters <- list(
     initial_cases = initial_cases,
     r0_community = r0_community,
@@ -196,7 +217,7 @@ parameters <- function(initial_cases,
     disp_isolated = disp_isolated,
     disp_asymptomatic = disp_asymptomatic,
     incubation_period = incubation_period,
-    prop_presymptomatic = prop_presymptomatic,
+    alpha = alpha,
     onset_to_isolation = onset_to_isolation,
     prop_ascertain = prop_ascertain,
     prop_asymptomatic = prop_asymptomatic,
@@ -225,6 +246,8 @@ parameters <- function(initial_cases,
 #'   cap_cases = 1000
 #' )
 control <- function(cap_max_days = 350, cap_cases  = 5000) {
+
+  check_outbreak_input(func = "control")
 
   control <- list(
     cap_max_days = cap_max_days,
