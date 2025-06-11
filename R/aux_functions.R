@@ -153,3 +153,85 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   ), by = sim]
   return(out)
 }
+
+#' Create a list of parameters to run the \pkg{ringbp} model
+#'
+#' @inheritParams outbreak_setup
+#' @inheritParams outbreak_step
+#' @inheritParams prop_presymptomatic_to_alpha
+#'
+#' @return A `list` with class `<ringbp_parameters>`.
+#' @export
+#'
+#' @examples
+#' parameters(
+#'   initial_cases = 10,
+#'   r0_community = 2.5,
+#'   r0_isolated = 0.5,
+#'   r0_asymptomatic = 2.5,
+#'   disp_community = 0.16,
+#'   disp_isolated = 1,
+#'   disp_asymptomatic = 0.16,
+#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
+#'   prop_presymptomatic = 0.5,
+#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
+#'   prop_ascertain = 0.2,
+#'   prop_asymptomatic = 0.1,
+#'   quarantine = FALSE
+#' )
+parameters <- function(initial_cases,
+                       r0_community, r0_isolated, r0_asymptomatic,
+                       disp_community, disp_isolated, disp_asymptomatic,
+                       incubation_period, prop_presymptomatic,
+                       onset_to_isolation,
+                       prop_ascertain, prop_asymptomatic,
+                       quarantine = FALSE) {
+
+  parameters <- list(
+    initial_cases = initial_cases,
+    r0_community = r0_community,
+    r0_isolated = r0_isolated,
+    r0_asymptomatic = r0_asymptomatic,
+    disp_community = disp_community,
+    disp_isolated = disp_isolated,
+    disp_asymptomatic = disp_asymptomatic,
+    incubation_period = incubation_period,
+    prop_presymptomatic = prop_presymptomatic,
+    onset_to_isolation = onset_to_isolation,
+    prop_ascertain = prop_ascertain,
+    prop_asymptomatic = prop_asymptomatic,
+    quarantine = quarantine
+  )
+
+  class(parameters) <- "ringbp_parameters"
+
+  return(parameters)
+}
+
+#' Create a list of control options for the \pkg{ringbp} model
+#'
+#' @inheritParams outbreak_model
+#'
+#' @return A `list` with class `<ringbp_control>`.
+#' @export
+#'
+#' @examples
+#' # default control options
+#' control()
+#'
+#' # specifying custom control options
+#' control(
+#'   cap_max_days = 140,
+#'   cap_cases = 1000
+#' )
+control <- function(cap_max_days = 350, cap_cases  = 5000) {
+
+  control <- list(
+    cap_max_days = cap_max_days,
+    cap_cases = cap_cases
+  )
+
+  class(control) <- "ringbp_control"
+
+  return(control)
+}
