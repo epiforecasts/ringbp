@@ -63,10 +63,11 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
 #'
 #' @inherit detect_extinct details
 #'
+#' @inheritParams detect_extinct
+#'
 #' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
 #' @export
-#' @inheritParams detect_extinct
 #'
 #' @examples
 #' res <- scenario_sim(
@@ -112,7 +113,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
-#' @inheritParams outbreak_model
+#' @inheritParams control
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
 #'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table as.data.table fifelse
@@ -165,6 +166,39 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
 #' @inheritParams prop_presymptomatic_to_alpha
+#'
+#' @param initial_cases a nonnegative `integer` scalar: number of initial
+#'   or starting cases which are all assumed to be missed.
+#' @param r0_community a positive `numeric` scalar: reproduction number for
+#'   non-isolated cases (must be >0)
+#' @param r0_isolated a positive `numeric` scalar: reproduction number for
+#'   isolated cases (must be >0)
+#' @param r0_asymptomatic a positive `numeric` scalar: reproduction number for
+#'   sub-clinical non-isolated cases (must be >0)
+#' @param disp_community a positive `numeric` scalar: dispersion parameter for
+#'   non-isolated cases (must be >0)
+#' @param disp_isolated a positive `numeric` scalar: dispersion parameter for
+#'   isolated cases (must be >0)
+#' @param disp_asymptomatic a positive `numeric` scalar: dispersion parameter
+#'   for sub-clincial non-isolated cases (must be >0)
+#' @param incubation_period a `function`: a random number generating
+#'   `function` that samples from incubation period distribution, the
+#'   `function` accepts a single `integer` argument specifying the number of
+#'   times to sample the incubation period (i.e. length of the `function`
+#'   output).
+#' @inheritParams prop_presymptomatic_to_alpha
+#' @param onset_to_isolation a `function`: a random number generating
+#'   `function` that accepts a single `integer` argument specifying the
+#'   length of the `function` output.
+#' @param prop_ascertain a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of infectious contacts ascertained by contact
+#'   tracing
+#' @param prop_asymptomatic a `numeric` scalar probability (between 0 and 1
+#'   inclusive): proportion of cases that are completely asymptomatic
+#'   (subclinical)
+#' @param quarantine a `logical` scalar: whether quarantine is in effect, if
+#'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
+#'   `FALSE`
 #'
 #' @return A `list` with class `<ringbp_parameters>`.
 #' @export
@@ -233,7 +267,10 @@ parameters <- function(initial_cases,
 
 #' Create a list of control options for the \pkg{ringbp} model
 #'
-#' @inheritParams outbreak_model
+#' @param cap_max_days a positive `integer` scalar: stop the simulation when
+#'   this many days is reached.
+#' @param cap_cases a positive `integer` scalar: number of cumulative cases at
+#'   which the branching process (simulation) was terminated
 #'
 #' @return A `list` with class `<ringbp_control>`.
 #' @export

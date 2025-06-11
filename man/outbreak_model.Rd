@@ -7,11 +7,11 @@
 outbreak_model(parameters, control)
 }
 \arguments{
-\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
-this many days is reached.}
+\item{parameters}{a \code{list} with class \verb{<ringbp_parameters>}: the model
+parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{parameters()}}}
 
-\item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
-which the branching process (simulation) was terminated}
+\item{control}{a \code{list} with class \verb{<ringbp_control>}: the control options
+for the \pkg{ringbp} model, returned by \code{\link[=control]{control()}}}
 }
 \value{
 \code{data.table} of cases by week, cumulative cases, and the effective

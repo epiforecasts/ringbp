@@ -6,6 +6,9 @@
 \usage{
 check_outbreak_input(func = c("parameters", "control"))
 }
+\arguments{
+\item{func}{a \code{character} string: the name of the calling function.}
+}
 \value{
 \code{TRUE} if all the checks pass or an error thrown by a \pkg{checkmate}
 \verb{assert_*()} function if one or more of the inputs is invalid.

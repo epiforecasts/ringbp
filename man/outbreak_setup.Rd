@@ -7,8 +7,8 @@
 outbreak_setup(parameters)
 }
 \arguments{
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
-or starting cases which are all assumed to be missed.}
+\item{parameters}{a \code{list} with class \verb{<ringbp_parameters>}: the model
+parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{parameters()}}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:

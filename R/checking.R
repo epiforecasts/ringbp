@@ -6,6 +6,8 @@
 #'   Arguments being checked are taken from the parent environment
 #'   ([parent.frame()]) rather than passed via named arguments.
 #'
+#' @param func a `character` string: the name of the calling function.
+#'
 #' @return `TRUE` if all the checks pass or an error thrown by a \pkg{checkmate}
 #' `assert_*()` function if one or more of the inputs is invalid.
 #' @keywords internal

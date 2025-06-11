@@ -1,13 +1,9 @@
 #' Run a single instance of the branching process model
 #' @author Joel Hellewell
 #'
-#' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
-#' @inheritParams prop_presymptomatic_to_alpha
-#' @param cap_max_days a positive `integer` scalar: stop the simulation when
-#'   this many days is reached.
-#' @param cap_cases a positive `integer` scalar: number of cumulative cases at
-#'   which the branching process (simulation) was terminated
+#' @param control a `list` with class `<ringbp_control>`: the control options
+#'   for the \pkg{ringbp} model, returned by [control()]
 #'
 #' @return `data.table` of cases by week, cumulative cases, and the effective
 #' reproduction number of the outbreak. `data.table` columns are:

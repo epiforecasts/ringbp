@@ -8,6 +8,12 @@ scenario_sim(n, parameters, control)
 }
 \arguments{
 \item{n}{a positive \code{integer} scalar: number of simulations to run}
+
+\item{parameters}{a \code{list} with class \verb{<ringbp_parameters>}: the model
+parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{parameters()}}}
+
+\item{control}{a \code{list} with class \verb{<ringbp_control>}: the control options
+for the \pkg{ringbp} model, returned by \code{\link[=control]{control()}}}
 }
 \value{
 A \code{data.table} object returning the results for multiple simulations
