@@ -9,3 +9,5 @@ codecov.yml
 README.Rmd
 ^_pkgdown\.yml$
 ^\.lintr$
+^doc$
+^Meta$
