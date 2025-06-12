@@ -61,23 +61,24 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
 })
 
 
-test_that('extinct_prob works as expected', {
+test_that("extinct_prob works as expected", {
   cap <- 100
   sims <- 5
   res <- scenario_sim(
     n = sims,
-    initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    parameters = parameters(
+      initial_cases = 5,
+      r0_community = 2.5,
+      r0_isolated = 0,
+      disp_community = 0.16,
+      disp_isolated = 1,
+      incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+      prop_presymptomatic = 0.3,
+      onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+      prop_ascertain = 0,
+      prop_asymptomatic = 0
+    ),
+    control = control(cap_max_days = 100, cap_cases = cap)
   )
 
   r1 <- extinct_prob(res, cap)
@@ -110,18 +111,19 @@ test_that('extinct_prob works as expected', {
   # Very high r0, shouldn't ever go extinct.
   res3 <- scenario_sim(
     n = sims,
-    initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 100,
-    r0_community = 100,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    parameters = parameters(
+      initial_cases = 5,
+      r0_community = 100,
+      r0_isolated = 100,
+      disp_community = 0.16,
+      disp_isolated = 1,
+      incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+      prop_presymptomatic = 0.3,
+      onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+      prop_ascertain = 0,
+      prop_asymptomatic = 0
+    ),
+    control = control(cap_max_days = 100, cap_cases = cap)
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -130,41 +132,43 @@ test_that('extinct_prob works as expected', {
   # r0 of 0, should always go extinct.
   res3 <- scenario_sim(
     n = sims,
-    initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 0,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    parameters = parameters(
+      initial_cases = 5,
+      r0_community = 0,
+      r0_isolated = 0,
+      disp_community = 0.16,
+      disp_isolated = 1,
+      incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+      prop_presymptomatic = 0.3,
+      onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+      prop_ascertain = 0,
+      prop_asymptomatic = 0
+    ),
+    control = control(cap_max_days = 100, cap_cases = cap)
   )
 
   r3 <- extinct_prob(res3, cap)
   expect_equal(r3, 1)
 })
 
-test_that('extinct_prob week_range argument works', {
+test_that("extinct_prob week_range argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
     n = 2,
-    initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    parameters = parameters(
+      initial_cases = 5,
+      r0_community = 2.5,
+      r0_isolated = 0,
+      disp_community = 0.16,
+      disp_isolated = 1,
+      incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+      prop_presymptomatic = 0.3,
+      onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+      prop_ascertain = 0,
+      prop_asymptomatic = 0
+    ),
+    control = control(cap_max_days = 100, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions
@@ -224,23 +228,24 @@ test_that('extinct_prob week_range argument works', {
   expect_equal(r6b, 0)
 })
 
-test_that('detect_extinct works', {
+test_that("detect_extinct works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
     n = 2,
-    initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    parameters = parameters(
+      initial_cases = 5,
+      r0_community = 2.5,
+      r0_isolated = 0,
+      disp_community = 0.16,
+      disp_isolated = 1,
+      incubation_period = \(x) stats::rweibull(n = x, shape = 2.32, scale = 6.49),
+      prop_presymptomatic = 0.3,
+      onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
+      prop_ascertain = 0,
+      prop_asymptomatic = 0
+    ),
+    control = control(cap_max_days = 100, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions

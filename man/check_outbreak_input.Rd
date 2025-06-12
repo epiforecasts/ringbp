@@ -4,7 +4,10 @@
 \alias{check_outbreak_input}
 \title{Check the function arguments of the outbreak simulation functions}
 \usage{
-check_outbreak_input()
+check_outbreak_input(parent_func = c("parameters", "control"))
+}
+\arguments{
+\item{parent_func}{a \code{character} string: the name of the calling function.}
 }
 \value{
 \code{TRUE} if all the checks pass or an error thrown by a \pkg{checkmate}

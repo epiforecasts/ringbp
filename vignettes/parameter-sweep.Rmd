@@ -1,0 +1,201 @@
+---
+title: "Scenario parameter sweep"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Scenario parameter sweep}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette demonstrates how to run an analysis using the {ringbp} simulation across multiple scenarios.
+
+::: {.alert .alert-info}
+The functionality included in this vignette was previously in the `parameter_sweep()` function in {ringbp} <= v0.1.2. This function has been removed as it is preferred to demonstrate the functionality but allow users the flexibility and control to run scenarios in whichever way they choose.
+:::
+
+```{r setup}
+library(ringbp)
+library(data.table)
+```
+
+The `scenario_sim()` function is the core function to run outbreak simulations using {ringbp}, because it allows running the `outbreak_model()` over multiple replicates. 
+
+## Set up scenario parameter space
+
+The first step to construct a `data.frame` (in this example we will use a `data.table`) with a grid of parameters, i.e. a parameter space to explore. We use `expand.grid()` to create all the combinations of parameters.
+
+Parameters that are grouped are put into a nested `data.table` to make sure they are coupled and combinations of these parameters are not mixed. See `delay_group` below for an example of this.
+
+```{r}
+# Put parameters that are grouped by disease into this data.table
+scenarios <- data.table(
+ expand.grid(
+   delay_group = list(data.table(
+     delay = c("SARS", "Wuhan"),
+     onset_to_isolation = c(
+       \(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
+       \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
+     )
+   )),
+   r0_community = c(1.1, 1.5),
+   r0_isolated = 0,
+   disp_isolated = 1,
+   disp_asymptomatic = 0.16,
+   disp_community = 0.16,
+   prop_presymptomatic = c(0.01, 0.15),
+   prop_asymptomatic = c(0, 0.1),
+   prop_ascertain = seq(0, 1, 0.25),
+   initial_cases = c(5, 10),
+   quarantine = FALSE,
+   cap_max_days = 365,
+   cap_cases = 5000
+ )
+)
+```
+
+To unnest the `data.table` in order to sweep across the scenarios, a few data manipulation steps are required:
+
+```{r}
+list_cols <- grep("_group", colnames(scenarios), value = TRUE)
+non_list_cols <- setdiff(colnames(scenarios), list_cols)
+scenarios <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
+```
+
+Lastly in setting up the parameter grid we add a column called `scenario` which is numbered 1 to the total number of scenarios; and we add the incubation period to the parameter grid.
+
+```{r}
+scenarios[, scenario :=  1:.N]
+incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
+scenarios[, incubation_period := rep(list(incub), .N)]
+```
+
+## Parameter sweep across scenarios
+
+Before we run `scenario_sim()` across each parameter set, we split the scenarios into a list. This makes it easy to loop over the resulting list using R functions like `lapply()`. 
+
+```{r}
+scenario_sims <- scenarios[, list(data = list(.SD)), by = scenario]
+```
+
+For this example we will run 3 replicates for each parameter set. The simulation model is stochastic so by running multiple replicates for each, we can understand the variance within scenarios. For a scientifically robust analysis, the number of replicates should be much higher (e.g. 100-1000).
+
+```{r}
+n <- 3
+res <- lapply(scenario_sims$data, \(x, n) {
+  scenario_sim(
+    n = n, 
+    parameters = parameters(
+      initial_cases = x$initial_cases,
+      r0_community = x$r0_community,
+      r0_isolated = x$r0_isolated,
+      disp_community = x$disp_community,
+      disp_isolated = x$disp_isolated,
+      disp_asymptomatic = x$disp_asymptomatic,
+      incubation_period = x$incubation_period[[1]],
+      prop_presymptomatic = x$prop_presymptomatic,
+      onset_to_isolation = x$onset_to_isolation[[1]],
+      prop_ascertain = x$prop_ascertain,
+      prop_asymptomatic = x$prop_asymptomatic,
+      quarantine = x$quarantine,
+    ), 
+    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+  )
+},
+n = n
+)
+```
+
+The output of this parameter sweep is a list of `data.table`s, so to give an idea of what the output looks like we should the first 3 scenarios (there are `r length(res)` in total). See `?scenario_sim` for more information on the contents of these `data.table`s.
+
+```{r}
+head(res, 3)
+```
+
+## Storing simulations with scenarios
+
+In the previous example we constructed the parameter grid and then ran the parameter sweep storing the simulated outbreaks in a separate object. It can be useful to keep the simulated output together with the parameter grid to be able to check which parameters correspond to which simulated outbreak.
+
+In this example we run the same scenario parameter sweep as before (again with `r n` replicates), but store the simulated outbreak `data.table`s in the same object as the list of scenarios. We append the simulation results to the `scenario_sims` `data.table` and assign them to the `sims` column.
+
+```{r}
+scenario_sims[, sims := lapply(data, \(x, n) {
+  scenario_sim(
+    n = n,
+    parameters = parameters(
+      initial_cases = x$initial_cases,
+      r0_community = x$r0_community,
+      r0_isolated = x$r0_isolated,
+      disp_community = x$disp_community,      
+      disp_isolated = x$disp_isolated,
+      disp_asymptomatic = x$disp_asymptomatic,
+      incubation_period = x$incubation_period[[1]],
+      prop_presymptomatic = x$prop_presymptomatic,
+      onset_to_isolation = x$onset_to_isolation[[1]],
+      prop_ascertain = x$prop_ascertain,
+      prop_asymptomatic = x$prop_asymptomatic,
+      quarantine = x$quarantine,
+    ), 
+    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+  )
+  },
+  n = n
+)]
+scenario_sims
+head(scenario_sims$data, 3)
+head(scenario_sims$sims, 3)
+```
+
+## Running scenarios in parallel
+
+Finally, we demonstrate how the above example can be easily run in parallel using the [{future} framework](). We load the {future} and {future.apply} R packages for this.
+
+```{r}
+library(future)
+library(future.apply)
+```
+
+We can replace the `lapply()` with the `future.apply::future_lapply()` function and then choose how to run the analysis in parallel. See `?future::plan` for details.
+
+Here we show how to run the analysis on 2 separate R sessions running in the background.
+
+```{r, eval=FALSE}
+future::plan("multisession", workers = 2)
+```
+
+Now we re-run the parameter sweep with parallelisation.
+
+```{r, eval=FALSE}
+scenario_sims[, sims := future_lapply(data, \(x, n) {
+  scenario_sim(
+    n = n,
+    parameters = parameters(
+      initial_cases = x$initial_cases,
+      r0_community = x$r0_community,
+      r0_isolated = x$r0_isolated,
+      disp_community = x$disp_community,
+      disp_isolated = x$disp_isolated,
+      disp_asymptomatic = x$disp_asymptomatic,
+      incubation_period = x$incubation_period[[1]],
+      prop_presymptomatic = x$prop_presymptomatic,
+      onset_to_isolation = x$onset_to_isolation[[1]],
+      prop_ascertain = x$prop_ascertain,
+      prop_asymptomatic = x$prop_asymptomatic,
+      quarantine = x$quarantine,
+    ),
+    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+  )
+  },
+  n = n,
+  future.seed = TRUE
+)]
+scenario_sims
+```
+
+Note, we set the `future.seed = TRUE` to ensure that parallel-safe random numbers are produced.

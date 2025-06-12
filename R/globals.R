@@ -21,8 +21,5 @@ utils::globalVariables(c(
   "infector_isolation_time", # <outbreak_step>
   "infector_asymptomatic", # <outbreak_step>
   "missed", # <outbreak_step>
-  "scenario", # <parameter_sweep>
-  "sims", # <parameter_sweep>
-  "data", # <parameter_sweep>
   NULL
 ))

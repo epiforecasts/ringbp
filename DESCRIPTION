@@ -48,14 +48,16 @@ Depends:
 Imports: 
     checkmate,
     data.table,
-    future.apply,
-    purrr,
     sn
 Suggests:
     future,
+    future.apply,
+    knitr,
+    rmarkdown,
     roxyglobals (>= 1.0.0),
     testthat
 URL: https://epiforecasts.io/ringbp, https://github.com/epiforecasts/ringbp
 BugReports: https://github.com/epiforecasts/ringbp/issues
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
+VignetteBuilder: knitr

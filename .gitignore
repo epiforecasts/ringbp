@@ -8,3 +8,6 @@ Rplot*
 .Rapp.history
 Rplots.pdf
 ringbp.Rproj
+inst/doc
+/doc/
+/Meta/
