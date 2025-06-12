@@ -3,11 +3,12 @@
 ^Dockerfile$
 ^data-raw$
 ^LICENSE\.md$
-^inst$
-codecov.yml
-\.github
-README.Rmd
+^codecov\.yml$
+^\.github$
+^README\.Rmd$
 ^_pkgdown\.yml$
+^pkgdown$
 ^\.lintr$
 ^doc$
+^docs$
 ^Meta$
