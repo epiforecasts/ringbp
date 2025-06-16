@@ -4,11 +4,21 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(parameters)
+outbreak_setup(initial_cases, delays, event_probs)
 }
 \arguments{
-\item{parameters}{a \code{list} with class \verb{<ringbp_parameters>}: the model
-parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{parameters()}}}
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
+
+\item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
+delay distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubation_period} and
+\code{onset_to_isolation}}
+
+\item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
+event probabilities for the \pkg{ringbp} model, returned by
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
+\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -28,24 +38,22 @@ parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{para
 Set up initial cases for branching process
 }
 \examples{
-parameters <- parameters(
-  initial_cases = 5,
-  r0_community = 2.5,
-  r0_isolated = 0,
-  r0_asymptomatic = 1.25,
-  disp_community = 0.16,
-  disp_isolated = 1,
-  disp_asymptomatic = 0.16,
-  incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop_presymptomatic = 0.15,
-  onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-  prop_ascertain = 0,
-  prop_asymptomatic = 0,
-  quarantine = FALSE
+delays <- delay_opts(
+  incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+  onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
+)
+event_probs <- event_prob_opts(
+  asymptomatic = 0,
+  presymptomatic_transmission = 0.15,
+  symptomatic_ascertained = 0
 )
 
 # generate initial cases
-case_data <- outbreak_setup(parameters = parameters)
+case_data <- outbreak_setup(
+  initial_cases = 5,
+  delays = delays,
+  event_probs = event_probs
+)
 case_data
 }
 \author{

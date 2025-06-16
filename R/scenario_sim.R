@@ -2,6 +2,7 @@
 #' @author Joel Hellewell
 #'
 #' @param n a positive `integer` scalar: number of simulations to run
+#' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
 #' @inheritParams outbreak_model
 #'
@@ -19,42 +20,60 @@
 #' @export
 #'
 #' @examples
-#' parameters <- parameters(
-#'   initial_cases = 5,
-#'   r0_community = 2.5,
-#'   r0_isolated = 0,
-#'   disp_community = 0.16,
-#'   disp_isolated = 1,
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-#'   prop_presymptomatic = 0.3,
-#'   onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
-#'   prop_ascertain = 0,
-#'   prop_asymptomatic = 0,
-#'   quarantine = TRUE
+#' offspring <- offspring_opts(
+#'   \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+#'   \(n) rnbinom(n = n, mu = 0, size = 1),
+#'   \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
 #' )
-#' control <- control(
+#' delays <- delay_opts(
+#'   incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+#'   onset_to_isolation = \(n) rweibull(n = n, shape = 2.5, scale = 5)
+#' )
+#' event_probs <- event_prob_opts(
+#'   asymptomatic = 0,
+#'   presymptomatic_transmission = 0.3,
+#'   symptomatic_ascertained = 0
+#' )
+#' interventions <- intervention_opts(quarantine = TRUE)
+#' sim <- sim_opts(
 #'   cap_max_days = 365,
 #'   cap_cases = 2000
 #' )
 #' res <- scenario_sim(
 #'   n = 5,
-#'   parameters = parameters,
-#'   control = control
+#'   initial_cases = 5,
+#'   offspring = offspring,
+#'   delays = delays,
+#'   event_probs = event_probs,
+#'   interventions = interventions,
+#'   sim = sim
 #' )
 #' res
 scenario_sim <- function(n,
-                         parameters,
-                         control) {
+                         initial_cases,
+                         offspring,
+                         delays,
+                         event_probs,
+                         interventions,
+                         sim) {
 
   checkmate::assert_number(n, lower = 1, finite = TRUE)
-  checkmate::assert_class(parameters, "ringbp_parameters")
-  checkmate::assert_class(control, "ringbp_control")
+  checkmate::assert_number(initial_cases, lower = 1, finite = TRUE)
+  checkmate::assert_class(offspring, "ringbp_offspring_opts")
+  checkmate::assert_class(delays, "ringbp_delay_opts")
+  checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
+  checkmate::assert_class(interventions, "ringbp_intervention_opts")
+  checkmate::assert_class(sim, "ringbp_sim_opts")
 
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(
-      parameters = parameters,
-      control = control
+      initial_cases = initial_cases,
+      offspring = offspring,
+      delays = delays,
+      event_probs = event_probs,
+      interventions = interventions,
+      sim = sim
     ),
     simplify = FALSE
   )

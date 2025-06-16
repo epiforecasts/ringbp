@@ -4,16 +4,43 @@
 \alias{scenario_sim}
 \title{Run a specified number of simulations with identical parameters}
 \usage{
-scenario_sim(n, parameters, control)
+scenario_sim(
+  n,
+  initial_cases,
+  offspring,
+  delays,
+  event_probs,
+  interventions,
+  sim
+)
 }
 \arguments{
 \item{n}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{parameters}{a \code{list} with class \verb{<ringbp_parameters>}: the model
-parameters for the \pkg{ringbp} model, returned by \code{\link[=parameters]{parameters()}}}
+\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+or starting cases which are all assumed to be missed.}
 
-\item{control}{a \code{list} with class \verb{<ringbp_control>}: the control options
-for the \pkg{ringbp} model, returned by \code{\link[=control]{control()}}}
+\item{offspring}{a \code{list} with class \verb{<ringbp_offspring_opts>}: the
+offspring distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=offspring_opts]{offspring_opts()}}. Contains three elements: \code{community}, \code{isolated},
+and \code{asymptomatic}}
+
+\item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
+delay distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubation_period} and
+\code{onset_to_isolation}}
+
+\item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
+event probabilities for the \pkg{ringbp} model, returned by
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
+\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
+
+\item{interventions}{a \code{list} with class \verb{<ringbp_intervention_opts>}:
+the intervention settings for the \pkg{ringbp} model, returned by
+\code{\link[=intervention_opts]{intervention_opts()}}. Contains one element: \code{quarantine}}
+
+\item{sim}{a \code{list} with class \verb{<ringbp_sim_opts>}: the simulation control
+options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
 A \code{data.table} object returning the results for multiple simulations
@@ -32,27 +59,33 @@ repeated each row.
 Run a specified number of simulations with identical parameters
 }
 \examples{
-parameters <- parameters(
-  initial_cases = 5,
-  r0_community = 2.5,
-  r0_isolated = 0,
-  disp_community = 0.16,
-  disp_isolated = 1,
-  incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop_presymptomatic = 0.3,
-  onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
-  prop_ascertain = 0,
-  prop_asymptomatic = 0,
-  quarantine = TRUE
+offspring <- offspring_opts(
+  \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+  \(n) rnbinom(n = n, mu = 0, size = 1),
+  \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
 )
-control <- control(
+delays <- delay_opts(
+  incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+  onset_to_isolation = \(n) rweibull(n = n, shape = 2.5, scale = 5)
+)
+event_probs <- event_prob_opts(
+  asymptomatic = 0,
+  presymptomatic_transmission = 0.3,
+  symptomatic_ascertained = 0
+)
+interventions <- intervention_opts(quarantine = TRUE)
+sim <- sim_opts(
   cap_max_days = 365,
   cap_cases = 2000
 )
 res <- scenario_sim(
   n = 5,
-  parameters = parameters,
-  control = control
+  initial_cases = 5,
+  offspring = offspring,
+  delays = delays,
+  event_probs = event_probs,
+  interventions = interventions,
+  sim = sim
 )
 res
 }
