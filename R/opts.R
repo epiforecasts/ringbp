@@ -2,7 +2,8 @@
 #'
 #' @details
 #' If `asymptomatic` is not provided it will be specified as the same as
-#' `community`.
+#'   `community` meaning transmission of subclinical cases to be equal to
+#'   clinical cases unless specified otherwise.
 #'
 #' @param community a `function`: a random number generating `function`
 #'   that samples from the community (non-isolated) offspring distribution,
@@ -18,7 +19,8 @@
 #'   that samples from the sub-clinical non-isolated cases offspring
 #'   distribution, the `function` accepts a single `integer` argument
 #'   specifying the number of times to sample the offspring distribution (i.e.
-#'   the length of the `function` output)
+#'   the length of the `function` output). Will be specified as the same as
+#'   the `community` offspring distribution if left unspecified
 #'
 #' @return A `list` with class `<ringbp_offspring_opts>`.
 #' @export
@@ -32,13 +34,7 @@
 #'   isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1),
 #'   asymptomatic = \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
 #' )
-offspring_opts <- function(community, isolated, asymptomatic) {
-
-  # Set infectiousness of subclinical cases to be equal to clinical cases
-  # unless specified otherwise
-  if (missing(asymptomatic)) {
-    asymptomatic <- community
-  }
+offspring_opts <- function(community, isolated, asymptomatic = community) {
 
   check_dist_func(community, dist_name = "community")
   check_dist_func(isolated, dist_name = "isolated")

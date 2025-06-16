@@ -4,7 +4,7 @@
 \alias{offspring_opts}
 \title{Create a list of offspring distributions to run the \pkg{ringbp} model}
 \usage{
-offspring_opts(community, isolated, asymptomatic)
+offspring_opts(community, isolated, asymptomatic = community)
 }
 \arguments{
 \item{community}{a \code{function}: a random number generating \code{function}
@@ -23,7 +23,8 @@ output)}
 that samples from the sub-clinical non-isolated cases offspring
 distribution, the \code{function} accepts a single \code{integer} argument
 specifying the number of times to sample the offspring distribution (i.e.
-the length of the \code{function} output)}
+the length of the \code{function} output). Will be specified as the same as
+the \code{community} offspring distribution if left unspecified}
 }
 \value{
 A \code{list} with class \verb{<ringbp_offspring_opts>}.
@@ -33,7 +34,8 @@ Create a list of offspring distributions to run the \pkg{ringbp} model
 }
 \details{
 If \code{asymptomatic} is not provided it will be specified as the same as
-\code{community}.
+\code{community} meaning transmission of subclinical cases to be equal to
+clinical cases unless specified otherwise.
 }
 \examples{
 # Community R0 of 2.5 and dispersion of 0.16
