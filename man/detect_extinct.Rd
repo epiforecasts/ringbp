@@ -31,20 +31,22 @@ The \code{cap_cases} argument should be equal to the value supplied to
 \examples{
 res <- scenario_sim(
   n = 10,
-  parameters = parameters(
-    initial_cases = 1,
-    r0_community = 2.5,
-    r0_isolated = 0.5,
-    disp_community = 0.16,
-    disp_isolated = 1,
-    incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-    prop_presymptomatic = 0.5,
-    onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-    prop_ascertain = 0.2,
-    prop_asymptomatic = 0,
-    quarantine = FALSE
+  initial_cases = 1,
+  offspring = offspring_opts(
+    community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+    isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
   ),
-  control = control(cap_max_days = 350, cap_cases = 4500)
+  delays = delay_opts(
+    incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+    onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
+  ),
+  event_probs = event_prob_opts(
+    asymptomatic = 0,
+    presymptomatic_transmission = 0.5,
+    symptomatic_ascertained = 0.2
+  ),
+  interventions = intervention_opts(quarantine = FALSE),
+  sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 )
 detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 }

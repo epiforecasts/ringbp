@@ -36,19 +36,18 @@ Parameters that are grouped are put into a nested `data.table` to make sure they
 ```{r}
 # Put parameters that are grouped by disease into this data.table
 scenarios <- data.table(
- expand.grid(
+  expand.grid(
    delay_group = list(data.table(
      delay = c("SARS", "Wuhan"),
      onset_to_isolation = c(
-       \(x) rweibull(n = x, shape = 1.651524, scale = 4.287786),
-       \(x) rweibull(n = x, shape = 2.305172, scale = 9.483875)
+       \(n) rweibull(n = n, shape = 1.651524, scale = 4.287786),
+       \(n) rweibull(n = n, shape = 2.305172, scale = 9.483875)
      )
    )),
    r0_community = c(1.1, 1.5),
    r0_isolated = 0,
-   disp_isolated = 1,
-   disp_asymptomatic = 0.16,
    disp_community = 0.16,
+   disp_isolated = 1,
    prop_presymptomatic = c(0.01, 0.15),
    prop_asymptomatic = c(0, 0.1),
    prop_ascertain = seq(0, 1, 0.25),
@@ -72,7 +71,7 @@ Lastly in setting up the parameter grid we add a column called `scenario` which 
 
 ```{r}
 scenarios[, scenario :=  1:.N]
-incub <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
+incub <- \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 scenarios[, incubation_period := rep(list(incub), .N)]
 ```
 
@@ -90,25 +89,26 @@ For this example we will run 3 replicates for each parameter set. The simulation
 n <- 3
 res <- lapply(scenario_sims$data, \(x, n) {
   scenario_sim(
-    n = n, 
-    parameters = parameters(
-      initial_cases = x$initial_cases,
-      r0_community = x$r0_community,
-      r0_isolated = x$r0_isolated,
-      disp_community = x$disp_community,
-      disp_isolated = x$disp_isolated,
-      disp_asymptomatic = x$disp_asymptomatic,
+    n = n,
+    initial_cases = x$initial_cases,
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = x$r0_community, size = x$disp_community),
+      isolated = \(n) rnbinom(n = n, mu = x$r0_isolated, size = x$disp_isolated)
+    ),
+    delays = delay_opts(
       incubation_period = x$incubation_period[[1]],
-      prop_presymptomatic = x$prop_presymptomatic,
-      onset_to_isolation = x$onset_to_isolation[[1]],
-      prop_ascertain = x$prop_ascertain,
-      prop_asymptomatic = x$prop_asymptomatic,
-      quarantine = x$quarantine,
-    ), 
-    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+      onset_to_isolation = x$onset_to_isolation[[1]]
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = x$prop_asymptomatic,
+      presymptomatic_transmission = x$prop_presymptomatic,
+      symptomatic_ascertained = x$prop_ascertain
+    ),
+    interventions = intervention_opts(quarantine = x$quarantine),
+    sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
   )
-},
-n = n
+  },
+  n = n
 )
 ```
 
@@ -128,21 +128,22 @@ In this example we run the same scenario parameter sweep as before (again with `
 scenario_sims[, sims := lapply(data, \(x, n) {
   scenario_sim(
     n = n,
-    parameters = parameters(
-      initial_cases = x$initial_cases,
-      r0_community = x$r0_community,
-      r0_isolated = x$r0_isolated,
-      disp_community = x$disp_community,      
-      disp_isolated = x$disp_isolated,
-      disp_asymptomatic = x$disp_asymptomatic,
+    initial_cases = x$initial_cases,
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = x$r0_community, size = x$disp_community),
+      isolated = \(n) rnbinom(n = n, mu = x$r0_isolated, size = x$disp_isolated)
+    ),
+    delays = delay_opts(
       incubation_period = x$incubation_period[[1]],
-      prop_presymptomatic = x$prop_presymptomatic,
-      onset_to_isolation = x$onset_to_isolation[[1]],
-      prop_ascertain = x$prop_ascertain,
-      prop_asymptomatic = x$prop_asymptomatic,
-      quarantine = x$quarantine,
-    ), 
-    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+      onset_to_isolation = x$onset_to_isolation[[1]]
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = x$prop_asymptomatic,
+      presymptomatic_transmission = x$prop_presymptomatic,
+      symptomatic_ascertained = x$prop_ascertain
+    ),
+    interventions = intervention_opts(quarantine = x$quarantine),
+    sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
   )
   },
   n = n
@@ -175,21 +176,22 @@ Now we re-run the parameter sweep with parallelisation.
 scenario_sims[, sims := future_lapply(data, \(x, n) {
   scenario_sim(
     n = n,
-    parameters = parameters(
-      initial_cases = x$initial_cases,
-      r0_community = x$r0_community,
-      r0_isolated = x$r0_isolated,
-      disp_community = x$disp_community,
-      disp_isolated = x$disp_isolated,
-      disp_asymptomatic = x$disp_asymptomatic,
-      incubation_period = x$incubation_period[[1]],
-      prop_presymptomatic = x$prop_presymptomatic,
-      onset_to_isolation = x$onset_to_isolation[[1]],
-      prop_ascertain = x$prop_ascertain,
-      prop_asymptomatic = x$prop_asymptomatic,
-      quarantine = x$quarantine,
+    initial_cases = x$initial_cases,
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = x$r0_community, size = x$disp_community),
+      isolated = \(n) rnbinom(n = n, mu = x$r0_isolated, size = x$disp_isolated)
     ),
-    control = control(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
+    delays = delay_opts(
+      incubation_period = x$incubation_period[[1]],
+      onset_to_isolation = x$onset_to_isolation[[1]]
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = x$prop_asymptomatic,
+      presymptomatic_transmission = x$prop_presymptomatic,
+      symptomatic_ascertained = x$prop_ascertain
+    ),
+    interventions = intervention_opts(quarantine = x$quarantine),
+    sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
   )
   },
   n = n,
