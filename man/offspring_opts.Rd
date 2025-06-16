@@ -40,8 +40,8 @@ If \code{asymptomatic} is not provided it will be specified as the same as
 # Isolated R0 of 0.5 and dispersion of 1
 # Asymptomatic R0 of 2.5 and dispersion of 0.16
 offspring_opts(
-  \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
-  \(n) rnbinom(n = n, mu = 0.5, size = 1),
-  \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
+  community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+  isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1),
+  asymptomatic = \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
 )
 }

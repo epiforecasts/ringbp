@@ -21,9 +21,9 @@
 #' @examples
 #' set.seed(1)
 #' offspring <- offspring_opts(
-#'   \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
-#'   \(n) rnbinom(n = n, mu = 0.5, size = 1),
-#'   \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
+#'   community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+#'   isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1),
+#'   asymptomatic = \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
 #' )
 #' delays <- delay_opts(
 #'   incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
