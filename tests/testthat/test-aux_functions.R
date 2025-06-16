@@ -169,7 +169,8 @@ test_that("extinct_prob week_range argument works", {
     offspring = offspring_opts(
       community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
       isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
-    ), delays = delay_opts(
+    ),
+    delays = delay_opts(
       incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
       onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
     ),
