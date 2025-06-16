@@ -158,5 +158,5 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   out <- outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim]
-  return(out)
+  return(out[])
 }
