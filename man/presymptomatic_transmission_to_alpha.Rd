@@ -21,4 +21,9 @@ transmission.
 Estimate skew normal alpha parameter from proportion of presymptomatic
 transmission
 }
+\details{
+Since there isn't any analytical expression for linking the two
+the value of alpha that corresponds to the given proportion presymptomatic
+is obtained via numeric optimisation.
+}
 \keyword{internal}
