@@ -5,7 +5,7 @@
 \title{Check a distribution function returns valid output and has the correct number
 of arguments}
 \usage{
-check_dist_func(func, dist_name, n_req_args = 1)
+check_dist_func(func, dist_name, n_req_args = 1, func_eval_min = 0)
 }
 \arguments{
 \item{func}{a \link{function}.}
@@ -14,6 +14,11 @@ check_dist_func(func, dist_name, n_req_args = 1)
 being passed (e.g. \code{"incubation_period"})}
 
 \item{n_req_args}{a single \code{numeric}: the number of required arguments}
+
+\item{func_eval_min}{a single \code{numeric}: the lower bound of valid numeric
+output by the \code{func} argument (i.e. the minimum of the acceptable value in
+the function's codomain). The default is \code{0} so \code{func} must return
+non-negative values.}
 }
 \value{
 \code{TRUE} if all the checks pass or an error is thrown if the

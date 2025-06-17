@@ -5,16 +5,22 @@
 #' @param dist_name a `character` string: the name of the distribution function
 #'   being passed (e.g. `"incubation_period"`)
 #' @param n_req_args a single `numeric`: the number of required arguments
+#' @param func_eval_min a single `numeric`: the lower bound of valid numeric
+#'   output by the `func` argument (i.e. the minimum of the acceptable value in
+#'   the function's codomain). The default is `0` so `func` must return
+#'   non-negative values.
 #'
 #' @return `TRUE` if all the checks pass or an error is thrown if the
 #'   distribution function is invalid.
 #' @keywords internal
 check_dist_func <- function(func,
                             dist_name,
-                            n_req_args = 1) {
+                            n_req_args = 1,
+                            func_eval_min = 0) {
 
   checkmate::assert_function(func)
   checkmate::assert_count(n_req_args, positive = TRUE)
+  checkmate::assert_count(func_eval_min, positive = TRUE)
   # using formals(args(fn)) to allow checking args of builtin primitives
   # for which formals(fn) would return NULL and cause the check to error
   # errors non-informatively for specials such as `if`
@@ -25,7 +31,11 @@ check_dist_func <- function(func,
     # offspring distribution, incubation_period and onset_to_isolation are
     # non-negative
     checkmate::test_numeric(
-      func(1e5), lower = 0, finite = TRUE, any.missing = FALSE, len = 1e5
+      func(1e5),
+      lower = func_eval_min,
+      finite = TRUE,
+      any.missing = FALSE,
+      len = 1e5
     )
 
   if (!valid_func) {
