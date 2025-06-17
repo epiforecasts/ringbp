@@ -33,7 +33,9 @@ incubation_to_generation_time <- function(incubation_period_samples, alpha) {
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
-#' transmission
+#' transmission. Since there isn't any analytical expression for linking the two
+#' the value of alpha that corresponds to the given proportion presymptomatic
+#' is obtained via numeric optimisation.
 #'
 #' @param presymptomatic_transmission a `numeric` scalar probability
 #'   (between 0 and 1 inclusive): proportion of transmission that occurs
