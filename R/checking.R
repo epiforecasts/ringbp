@@ -20,7 +20,7 @@ check_dist_func <- function(func,
 
   checkmate::assert_function(func)
   checkmate::assert_count(n_req_args, positive = TRUE)
-  checkmate::assert_count(func_eval_min, positive = TRUE)
+  checkmate::assert_count(func_eval_min)
   # using formals(args(fn)) to allow checking args of builtin primitives
   # for which formals(fn) would return NULL and cause the check to error
   # errors non-informatively for specials such as `if`
