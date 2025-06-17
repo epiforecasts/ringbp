@@ -23,7 +23,7 @@ check_dist_func <- function(func,
       is.name(x) && y != "..."
     }, formals(args(func)), names(formals(args(func))))) == n_req_args &&
     # offspring distribution, incubation_period and onset_to_isolation are
-    # strictly positive
+    # non-negative
     checkmate::test_numeric(
       func(1e5), lower = 0, finite = TRUE, any.missing = FALSE, len = 1e5
     )
@@ -31,7 +31,7 @@ check_dist_func <- function(func,
   if (!valid_func) {
     stop(
       dist_name, " must be a function with ", n_req_args, " argument(s) that ",
-      "returns positive numbers."
+      "returns nonnegative numbers."
     )
   }
 
