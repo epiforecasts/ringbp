@@ -7,7 +7,7 @@
 outbreak_setup(initial_cases, delays, event_probs)
 }
 \arguments{
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a non-negative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the

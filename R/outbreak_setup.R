@@ -1,7 +1,7 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @param initial_cases a nonnegative `integer` scalar: number of initial
+#' @param initial_cases a non-negative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @inheritParams outbreak_step
 #'

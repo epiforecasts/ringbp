@@ -41,7 +41,7 @@ check_dist_func <- function(func,
   if (!valid_func) {
     stop(
       dist_name, " must be a function with ", n_req_args, " argument(s) that ",
-      "returns nonnegative numbers."
+      "returns non-negative numbers."
     )
   }
 

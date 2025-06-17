@@ -17,7 +17,7 @@ scenario_sim(
 \arguments{
 \item{n}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a non-negative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
 \item{offspring}{a \code{list} with class \verb{<ringbp_offspring_opts>}: the
