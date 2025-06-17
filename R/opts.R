@@ -26,6 +26,7 @@
 #' @export
 #'
 #' @examples
+#' # Negative binomial offspring distributions with:
 #' # Community R0 of 2.5 and dispersion of 0.16
 #' # Isolated R0 of 0.5 and dispersion of 1
 #' # Asymptomatic R0 of 2.5 and dispersion of 0.16
