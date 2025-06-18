@@ -4,12 +4,12 @@
 \alias{detect_extinct}
 \title{Calculate whether outbreaks went extinct or not}
 \usage{
-detect_extinct(scenario, week_range = 12:16)
+detect_extinct(scenario, extinction_week = 12:16)
 }
 \arguments{
 \item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
-\item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
+\item{extinction_week}{a positive \code{integer} vector: giving the (zero indexed)
 week range to test for whether an extinction occurred. Default is \code{12:16}.}
 }
 \value{

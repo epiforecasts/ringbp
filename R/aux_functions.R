@@ -94,14 +94,14 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' extinct_prob(res)
-extinct_prob <- function(scenario, week_range = 12:16) {
+extinct_prob <- function(scenario, extinction_week = 12:16) {
 
   checkmate::assert_data_frame(scenario)
-  checkmate::assert_numeric(week_range)
+  checkmate::assert_numeric(extinction_week)
 
   n <- max(scenario$sim)
 
-  extinct_runs <- detect_extinct(scenario, week_range)
+  extinct_runs <- detect_extinct(scenario, extinction_week)
   sum(extinct_runs$extinct) / n
 }
 
@@ -120,7 +120,7 @@ extinct_prob <- function(scenario, week_range = 12:16) {
 #' from subsetting the `data.table`).
 #'
 #' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
-#' @param week_range a positive `integer` vector: giving the (zero indexed)
+#' @param extinction_week a positive `integer` vector: giving the (zero indexed)
 #'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table setDT fifelse
 #'
@@ -151,15 +151,15 @@ extinct_prob <- function(scenario, week_range = 12:16) {
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' detect_extinct(scenario = res)
-detect_extinct <- function(scenario, week_range = 12:16) {
+detect_extinct <- function(scenario, extinction_week = 12:16) {
 
   checkmate::assert_data_frame(scenario)
-  checkmate::assert_integerish(week_range)
+  checkmate::assert_integerish(extinction_week)
 
   cap_cases <- attr(scenario, which = "cap_cases")
 
   scenario <- setDT(scenario)
-  scenario <- scenario[week %in% week_range]
+  scenario <- scenario[week %in% extinction_week]
   out <- scenario[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim][]

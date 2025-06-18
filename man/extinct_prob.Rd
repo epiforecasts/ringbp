@@ -4,12 +4,12 @@
 \alias{extinct_prob}
 \title{Calculate proportion of runs that have controlled outbreak}
 \usage{
-extinct_prob(scenario, week_range = 12:16)
+extinct_prob(scenario, extinction_week = 12:16)
 }
 \arguments{
 \item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
-\item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
+\item{extinction_week}{a positive \code{integer} vector: giving the (zero indexed)
 week range to test for whether an extinction occurred. Default is \code{12:16}.}
 }
 \value{
