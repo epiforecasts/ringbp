@@ -122,7 +122,7 @@ extinct_prob <- function(scenario, week_range = 12:16) {
 #' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
 #'   week range to test for whether an extinction occurred. Default is `12:16`.
-#' @importFrom data.table as.data.table fifelse
+#' @importFrom data.table setDT fifelse
 #'
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
 #' classification of whether the outbreak went extinct in each simulation
@@ -158,7 +158,7 @@ detect_extinct <- function(scenario, week_range = 12:16) {
 
   cap_cases <- attr(scenario, which = "cap_cases")
 
-  scenario <- as.data.table(scenario)
+  scenario <- setDT(scenario)
   scenario <- scenario[week %in% week_range]
   out <- scenario[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
