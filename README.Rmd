@@ -62,7 +62,7 @@ res <- scenario_sim(
   event_probs = event_prob_opts(
     ## 10% asymptomatic infections
     asymptomatic = 0.1, 
-    ## probability of onward infection time being before symptom onset
+    ## 50% probability of onward infection time being before symptom onset
     presymptomatic_transmission = 0.5,
     ## 20% probability of ascertainment by contact tracing
     symptomatic_ascertained = 0.2
