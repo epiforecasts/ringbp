@@ -25,6 +25,16 @@
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/parameter-sweep.html">Scenario parameter sweep</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -56,20 +66,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scenario_sim</span><span class="op">(</span></span>
 <span>  <span class="va">n</span>,</span>
 <span>  <span class="va">initial_cases</span>,</span>
-<span>  <span class="va">r0_community</span>,</span>
-<span>  <span class="va">r0_isolated</span>,</span>
-<span>  <span class="va">r0_asymptomatic</span>,</span>
-<span>  <span class="va">disp_community</span>,</span>
-<span>  <span class="va">disp_isolated</span>,</span>
-<span>  <span class="va">disp_asymptomatic</span>,</span>
-<span>  <span class="va">incubation_period</span>,</span>
-<span>  <span class="va">prop_presymptomatic</span>,</span>
-<span>  <span class="va">onset_to_isolation</span>,</span>
-<span>  <span class="va">prop_ascertain</span>,</span>
-<span>  <span class="va">prop_asymptomatic</span>,</span>
-<span>  <span class="va">cap_max_days</span>,</span>
-<span>  <span class="va">cap_cases</span>,</span>
-<span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="va">offspring</span>,</span>
+<span>  <span class="va">delays</span>,</span>
+<span>  <span class="va">event_probs</span>,</span>
+<span>  <span class="va">interventions</span>,</span>
+<span>  <span class="va">sim</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -82,95 +83,51 @@
 
 
 <dt id="arg-initial-cases">initial_cases<a class="anchor" aria-label="anchor" href="#arg-initial-cases"></a></dt>
-<dd><p>a nonnegative <code>integer</code> scalar: number of initial
+<dd><p>a non-negative <code>integer</code> scalar: number of initial
 or starting cases which are all assumed to be missed.</p></dd>
 
 
-<dt id="arg-r-community">r0_community<a class="anchor" aria-label="anchor" href="#arg-r-community"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: reproduction number for
-non-isolated cases (must be &gt;0)</p></dd>
+<dt id="arg-offspring">offspring<a class="anchor" aria-label="anchor" href="#arg-offspring"></a></dt>
+<dd><p>a <code>list</code> with class <code>&lt;ringbp_offspring_opts&gt;</code>: the
+offspring distribution <code>function</code>s for the <span class="pkg">ringbp</span> model, returned
+by <code><a href="offspring_opts.html">offspring_opts()</a></code>. Contains three elements: <code>community</code>, <code>isolated</code>,
+and <code>asymptomatic</code></p></dd>
 
 
-<dt id="arg-r-isolated">r0_isolated<a class="anchor" aria-label="anchor" href="#arg-r-isolated"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: reproduction number for
-isolated cases (must be &gt;0)</p></dd>
+<dt id="arg-delays">delays<a class="anchor" aria-label="anchor" href="#arg-delays"></a></dt>
+<dd><p>a <code>list</code> with class <code>&lt;ringbp_delay_opts&gt;</code>: the
+delay distribution <code>function</code>s for the <span class="pkg">ringbp</span> model, returned
+by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains two elements: <code>incubation_period</code> and
+<code>onset_to_isolation</code></p></dd>
 
 
-<dt id="arg-r-asymptomatic">r0_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-r-asymptomatic"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: reproduction number for
-sub-clinical non-isolated cases (must be &gt;0)</p></dd>
+<dt id="arg-event-probs">event_probs<a class="anchor" aria-label="anchor" href="#arg-event-probs"></a></dt>
+<dd><p>a <code>list</code> with class <code>&lt;ringbp_event_prob_opts&gt;</code>: the
+event probabilities for the <span class="pkg">ringbp</span> model, returned by
+<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains three elements: <code>asymptomatic</code>,
+<code>presymptomatic_transmission</code> and <code>symptomatic_ascertained</code></p></dd>
 
 
-<dt id="arg-disp-community">disp_community<a class="anchor" aria-label="anchor" href="#arg-disp-community"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
-non-isolated cases (must be &gt;0)</p></dd>
+<dt id="arg-interventions">interventions<a class="anchor" aria-label="anchor" href="#arg-interventions"></a></dt>
+<dd><p>a <code>list</code> with class <code>&lt;ringbp_intervention_opts&gt;</code>:
+the intervention settings for the <span class="pkg">ringbp</span> model, returned by
+<code><a href="intervention_opts.html">intervention_opts()</a></code>. Contains one element: <code>quarantine</code></p></dd>
 
 
-<dt id="arg-disp-isolated">disp_isolated<a class="anchor" aria-label="anchor" href="#arg-disp-isolated"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: dispersion parameter for
-isolated cases (must be &gt;0)</p></dd>
-
-
-<dt id="arg-disp-asymptomatic">disp_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-disp-asymptomatic"></a></dt>
-<dd><p>a positive <code>numeric</code> scalar: dispersion parameter
-for sub-clincial non-isolated cases (must be &gt;0)</p></dd>
-
-
-<dt id="arg-incubation-period">incubation_period<a class="anchor" aria-label="anchor" href="#arg-incubation-period"></a></dt>
-<dd><p>a <code>function</code>: a random number generating
-<code>function</code> that samples from incubation period distribution, the
-<code>function</code> accepts a single <code>integer</code> argument specifying the number of
-times to sample the incubation period (i.e. length of the <code>function</code>
-output).</p></dd>
-
-
-<dt id="arg-prop-presymptomatic">prop_presymptomatic<a class="anchor" aria-label="anchor" href="#arg-prop-presymptomatic"></a></dt>
-<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
-inclusive): proportion of transmission that occurs before symptom onset.</p></dd>
-
-
-<dt id="arg-onset-to-isolation">onset_to_isolation<a class="anchor" aria-label="anchor" href="#arg-onset-to-isolation"></a></dt>
-<dd><p>a <code>function</code>: a random number generating
-<code>function</code> that accepts a single <code>integer</code> argument specifying the
-length of the <code>function</code> output.</p></dd>
-
-
-<dt id="arg-prop-ascertain">prop_ascertain<a class="anchor" aria-label="anchor" href="#arg-prop-ascertain"></a></dt>
-<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
-inclusive): proportion of infectious contacts ascertained by contact
-tracing</p></dd>
-
-
-<dt id="arg-prop-asymptomatic">prop_asymptomatic<a class="anchor" aria-label="anchor" href="#arg-prop-asymptomatic"></a></dt>
-<dd><p>a <code>numeric</code> scalar probability (between 0 and 1
-inclusive): proportion of cases that are completely asymptomatic
-(subclinical)</p></dd>
-
-
-<dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: stop the simulation when
-this many days is reached.</p></dd>
-
-
-<dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: number of cumulative cases at
-which the branching process (simulation) was terminated</p></dd>
-
-
-<dt id="arg-quarantine">quarantine<a class="anchor" aria-label="anchor" href="#arg-quarantine"></a></dt>
-<dd><p>a <code>logical</code> scalar: whether quarantine is in effect, if
-<code>TRUE</code> then traced contacts are isolated before symptom onset; defaults to
-<code>FALSE</code></p></dd>
+<dt id="arg-sim">sim<a class="anchor" aria-label="anchor" href="#arg-sim"></a></dt>
+<dd><p>a <code>list</code> with class <code>&lt;ringbp_sim_opts&gt;</code>: the simulation control
+options for the <span class="pkg">ringbp</span> model, returned by <code><a href="sim_opts.html">sim_opts()</a></code></p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>data.table</code> object returning the results for multiple simulations using
-the same set of parameters. The table has columns</p><ul><li><p>week: The week in the simulation.</p></li>
+    <p>A <code>data.table</code> object returning the results for multiple simulations
+using the same set of parameters. The table has columns</p><ul><li><p>week: The week in the simulation.</p></li>
 <li><p>weekly_cases: The number of new cases that week.</p></li>
 <li><p>cumulative: The cumulative cases.</p></li>
 <li><p>effective_r0: The effective reproduction rate for the whole simulation</p></li>
-<li><p>cases_per_gen: A list column with the cases per generation. This is repeated each row.</p></li>
+<li><p>cases_per_gen: A list column with the cases per generation. This is
+repeated each row.</p></li>
 <li><p>sim: Index column for which simulation.</p></li>
 </ul></div>
     <div id="author">
@@ -180,49 +137,61 @@ the same set of parameters. The table has columns</p><ul><li><p>week: The week i
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">scenario_sim</span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">offspring</span> <span class="op">&lt;-</span> <span class="fu"><a href="offspring_opts.html">offspring_opts</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  community <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html" class="external-link">rnbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fl">2.5</span>, size <span class="op">=</span> <span class="fl">0.16</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  isolated <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html" class="external-link">rnbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fl">0</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  asymptomatic <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html" class="external-link">rnbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fl">2.5</span>, size <span class="op">=</span> <span class="fl">0.16</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">delays</span> <span class="op">&lt;-</span> <span class="fu"><a href="delay_opts.html">delay_opts</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, shape <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">event_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="event_prob_opts.html">event_prob_opts</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  presymptomatic_transmission <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>  symptomatic_ascertained <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">interventions</span> <span class="op">&lt;-</span> <span class="fu"><a href="intervention_opts.html">intervention_opts</a></span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim_opts.html">sim_opts</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
+<span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">2000</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">scenario_sim</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  initial_cases <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  cap_max_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
-<span class="r-in"><span>  cap_cases <span class="op">=</span> <span class="fl">2000</span>,</span></span>
-<span class="r-in"><span>  r0_isolated <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  r0_community <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
-<span class="r-in"><span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  disp_community <span class="op">=</span> <span class="fl">0.16</span>,</span></span>
-<span class="r-in"><span>  prop_presymptomatic <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
-<span class="r-in"><span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.32</span>, scale <span class="op">=</span> <span class="fl">6.49</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  prop_asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  prop_ascertain <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>  quarantine <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  offspring <span class="op">=</span> <span class="va">offspring</span>,</span></span>
+<span class="r-in"><span>  delays <span class="op">=</span> <span class="va">delays</span>,</span></span>
+<span class="r-in"><span>  event_probs <span class="op">=</span> <span class="va">event_probs</span>,</span></span>
+<span class="r-in"><span>  interventions <span class="op">=</span> <span class="va">interventions</span>,</span></span>
+<span class="r-in"><span>  sim <span class="op">=</span> <span class="va">sim</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        sim  week weekly_cases cumulative effective_r0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     1     0            4          4     3.071364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1     1           14         18     3.071364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     1     2           84        102     3.071364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     1     3          341        443     3.071364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     1     4          804       1247     3.071364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     1     0            5          5     2.590615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     1     1            5         10     2.590615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:     1     2           10         20     2.590615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:     1     3           46         66     2.590615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:     1     4          143        209     2.590615</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 261:     5    48            0       3720     2.031944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 262:     5    49            0       3720     2.031944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 263:     5    50            0       3720     2.031944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 264:     5    51            0       3720     2.031944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 265:     5    52            0       3720     2.031944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      cases_per_gen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:   29, 103, 183, 423,1133,2617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:   29, 103, 183, 423,1133,2617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:   29, 103, 183, 423,1133,2617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   29, 103, 183, 423,1133,2617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:   29, 103, 183, 423,1133,2617</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 261:    13, 16, 52, 88,133,186,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 262:    13, 16, 52, 88,133,186,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 263:    13, 16, 52, 88,133,186,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 264:    13, 16, 52, 88,133,186,...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 265:    13, 16, 52, 88,133,186,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261:     5    48            0          8     0.300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262:     5    49            0          8     0.300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263:     5    50            0          8     0.300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264:     5    51            0          8     0.300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265:     5    52            0          8     0.300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    cases_per_gen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:   4,  6,  6, 48,111,210,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:   4,  6,  6, 48,111,210,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:   4,  6,  6, 48,111,210,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   4,  6,  6, 48,111,210,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:   4,  6,  6, 48,111,210,...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 261:                         3,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 262:                         3,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 263:                         3,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 264:                         3,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 265:                         3,0</span>
 </code></pre></div>
     </div>
   </div>
