@@ -4,11 +4,10 @@
 \alias{extinct_prob}
 \title{Calculate proportion of runs that have controlled outbreak}
 \usage{
-extinct_prob(outbreak_df_week, week_range = 12:16)
+extinct_prob(scenario, week_range = 12:16)
 }
 \arguments{
-\item{outbreak_df_week}{a \code{data.table}: weekly cases produced by the
-outbreak model}
+\item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
 \item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
 week range to test for whether an extinction occurred. Default is \code{12:16}.}
@@ -20,7 +19,7 @@ a single \code{numeric} with the probability of extinction
 Calculate proportion of runs that have controlled outbreak
 }
 \details{
-The data passed to \code{outbreak_df_week} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.
+The data passed to \code{scenario} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.
 It cannot be produced by \code{\link[=outbreak_model]{outbreak_model()}} as it requires the \code{sim} column,
 which is only appended in \code{\link[=scenario_sim]{scenario_sim()}}.
 

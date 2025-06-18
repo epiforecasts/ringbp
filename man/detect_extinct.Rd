@@ -4,11 +4,10 @@
 \alias{detect_extinct}
 \title{Calculate whether outbreaks went extinct or not}
 \usage{
-detect_extinct(outbreak_df_week, week_range = 12:16)
+detect_extinct(scenario, week_range = 12:16)
 }
 \arguments{
-\item{outbreak_df_week}{a \code{data.table}: weekly cases produced by the
-outbreak model}
+\item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
 \item{week_range}{a positive \code{integer} vector: giving the (zero indexed)
 week range to test for whether an extinction occurred. Default is \code{12:16}.}
@@ -22,7 +21,7 @@ replicate. \code{1} is an outbreak that went extinct, \code{0} if not.
 Calculate whether outbreaks went extinct or not
 }
 \details{
-The data passed to \code{outbreak_df_week} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.
+The data passed to \code{scenario} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.
 It cannot be produced by \code{\link[=outbreak_model]{outbreak_model()}} as it requires the \code{sim} column,
 which is only appended in \code{\link[=scenario_sim]{scenario_sim()}}.
 
@@ -52,5 +51,5 @@ res <- scenario_sim(
   interventions = intervention_opts(quarantine = FALSE),
   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 )
-detect_extinct(outbreak_df_week = res)
+detect_extinct(scenario = res)
 }
