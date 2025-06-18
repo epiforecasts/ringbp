@@ -60,7 +60,7 @@ res <- scenario_sim(
     onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786)
   ),
   event_probs = event_prob_opts(
-    ## no asymptomatic infections
+    ## 10% asymptomatic infections
     asymptomatic = 0.1, 
     ## probability of onward infection time being before symptom onset
     presymptomatic_transmission = 0.5,
