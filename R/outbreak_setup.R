@@ -1,7 +1,7 @@
 #' Set up initial cases for branching process
 #' @author Joel Hellewell
 #'
-#' @param initial_cases a nonnegative `integer` scalar: number of initial
+#' @param initial_cases a non-negative `integer` scalar: number of initial
 #'   or starting cases which are all assumed to be missed.
 #' @inheritParams outbreak_step
 #'
@@ -21,40 +21,48 @@
 #' @importFrom stats runif
 #'
 #' @examples
-#' # incubation period sampling function
-#' incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
-#' # delay distribution sampling function
-#' onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
-#' out <- outbreak_setup(
-#'   initial_cases = 1,
-#'   incubation_period = incubation_period,
-#'   onset_to_isolation = onset_to_isolation,
-#'   prop_asymptomatic = 0
+#' delays <- delay_opts(
+#'   incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+#'   onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 #' )
-#' out
-outbreak_setup <- function(initial_cases, incubation_period, onset_to_isolation, prop_asymptomatic) {
+#' event_probs <- event_prob_opts(
+#'   asymptomatic = 0,
+#'   presymptomatic_transmission = 0.15,
+#'   symptomatic_ascertained = 0
+#' )
+#'
+#' # generate initial cases
+#' case_data <- outbreak_setup(
+#'   initial_cases = 5,
+#'   delays = delays,
+#'   event_probs = event_probs
+#' )
+#' case_data
+outbreak_setup <- function(initial_cases, delays, event_probs) {
 
-  check_outbreak_input()
+  checkmate::assert_number(initial_cases, lower = 1, finite = TRUE)
+  checkmate::assert_class(delays, "ringbp_delay_opts")
+  checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
 
   # Set up table of initial cases
   case_data <- data.table(
     exposure = 0, # Exposure time of 0 for all initial cases
-    asymptomatic = runif(initial_cases) < prop_asymptomatic,
+    asymptomatic = runif(initial_cases) < event_probs$asymptomatic,
     caseid = seq_len(initial_cases), # set case id
     infector = 0,
     isolated = FALSE,
     missed = TRUE,
-    onset = incubation_period(initial_cases),
+    onset = delays$incubation_period(initial_cases),
     new_cases = NA,
     isolated_time = Inf
   )
 
-  # set isolation time for cluster to minimum time of onset of symptoms + draw from delay distribution
+  # set isolation time for cluster to minimum time of onset of symptoms + draw
+  # from delay distribution
   case_data <- case_data[
     asymptomatic == FALSE,
-    isolated_time := onset + onset_to_isolation(.N)
+    isolated_time := onset + delays$onset_to_isolation(.N)
   ]
 
-  # return
-  return(case_data)
+  return(case_data[])
 }

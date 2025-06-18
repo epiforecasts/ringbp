@@ -10,7 +10,8 @@ incubation_to_generation_time(incubation_period_samples, alpha)
 \item{incubation_period_samples}{a positive \code{numeric} vector: samples from
 the incubation period distribution}
 
-\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal distribution}
+\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
+distribution}
 }
 \value{
 a \code{numeric} vector of equal length to the vector input to

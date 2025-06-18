@@ -1,55 +1,48 @@
-#' Check the function arguments of the outbreak simulation functions
+#' Check a distribution function returns valid output and has the correct number
+#' of arguments
 #'
-#' @details If more than one argument is invalid, only a single error is
-#'   thrown with the first invalid argument encountered.
+#' @param func a [function].
+#' @param dist_name a `character` string: the name of the distribution function
+#'   being passed (e.g. `"incubation_period"`)
+#' @param n_req_args a single `numeric`: the number of required arguments
+#' @param func_eval_min a single `numeric`: the lower bound of valid numeric
+#'   output by the `func` argument (i.e. the minimum of the acceptable value in
+#'   the function's codomain). The default is `0` so `func` must return
+#'   non-negative values.
 #'
-#'   Arguments being checked are taken from the parent environment
-#'   ([parent.frame()]) rather than passed via named arguments.
-#'
-#' @return `TRUE` if all the checks pass or an error thrown by a \pkg{checkmate}
-#' `assert_*()` function if one or more of the inputs is invalid.
+#' @return `TRUE` if all the checks pass or an error is thrown if the
+#'   distribution function is invalid.
 #' @keywords internal
-check_outbreak_input <- function() {
-  ## get name of the calling function as a character string
-  func <- deparse(as.list(sys.call(-1))[[1]])
-  func <- gsub(pattern = "ringbp::", replacement = "", x = func)
-  func <- match.arg(func, choices = c(
-    "outbreak_setup", "outbreak_step", "outbreak_model", "scenario_sim"
-  ))
-  args <- as.list(parent.frame())
+check_dist_func <- function(func,
+                            dist_name,
+                            n_req_args = 1,
+                            func_eval_min = 0) {
 
-  checkmate::assert_function(args$incubation_period)
-  checkmate::assert_function(args$onset_to_isolation)
-  checkmate::assert_number(args$prop_asymptomatic, lower = 0, upper = 1)
+  checkmate::assert_function(func)
+  checkmate::assert_count(n_req_args, positive = TRUE)
+  checkmate::assert_count(func_eval_min)
+  # using formals(args(fn)) to allow checking args of builtin primitives
+  # for which formals(fn) would return NULL and cause the check to error
+  # errors non-informatively for specials such as `if`
+  valid_func <- checkmate::test_function(func) &&
+    sum(mapply(function(x, y) { # nolint undesirable function
+      is.name(x) && y != "..."
+    }, formals(args(func)), names(formals(args(func))))) == n_req_args &&
+    # offspring distribution, incubation_period and onset_to_isolation are
+    # non-negative
+    checkmate::test_numeric(
+      func(1e5),
+      lower = func_eval_min,
+      finite = TRUE,
+      any.missing = FALSE,
+      len = 1e5
+    )
 
-  if (func %in% c("outbreak_setup", "outbreak_model", "scenario_sim")) {
-    checkmate::assert_number(args$initial_cases, lower = 1, finite = TRUE)
-  }
-
-  if (func %in% c("outbreak_step", "outbreak_model", "scenario_sim")) {
-    checkmate::assert_number(args$r0_community, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$r0_isolated, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$r0_asymptomatic, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$disp_community, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$disp_isolated, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$disp_asymptomatic, lower = 0, finite = TRUE)
-    checkmate::assert_number(args$prop_ascertain, lower = 0, upper = 1)
-    checkmate::assert_logical(args$quarantine, any.missing = FALSE, len = 1)
-  }
-
-  if (func %in% c("outbreak_model", "scenario_sim")) {
-    checkmate::assert_number(args$prop_presymptomatic, lower = 0, upper = 1)
-    checkmate::assert_int(args$cap_max_days, lower = 1)
-    checkmate::assert_int(args$cap_cases, lower = 1)
-  }
-
-  if (func == "outbreak_step") {
-    checkmate::assert_data_table(args$case_data)
-    checkmate::assert_number(args$alpha, finite = TRUE)
-  }
-
-  if (func == "scenario_sim") {
-    checkmate::assert_number(args$n, lower = 1, finite = TRUE)
+  if (!valid_func) {
+    stop(
+      dist_name, " must be a function with ", n_req_args, " argument(s) that ",
+      "returns non-negative numbers."
+    )
   }
 
   return(TRUE)

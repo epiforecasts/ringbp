@@ -33,13 +33,13 @@ test_that("incubation_to_generation_time parameters behave as expected", {
   expect_lt(mean(r5), median(r5))
 })
 
-test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
+test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_time", {
   # ~50% presymptomatic
   incubation_period <- 5
   prop_presymptomatic <- 0.5
   exposure <- incubation_to_generation_time(
     incubation_period_samples = rep(incubation_period, 1e5),
-    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+    alpha = presymptomatic_transmission_to_alpha(prop_presymptomatic)
   )
   expect_equal(
     sum(exposure < incubation_period) / length(exposure),
@@ -51,7 +51,7 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
   prop_presymptomatic <- 0.1
   exposure <- incubation_to_generation_time(
     incubation_period_samples = rep(incubation_period, 1e5),
-    alpha = prop_presymptomatic_to_alpha(prop_presymptomatic)
+    alpha = presymptomatic_transmission_to_alpha(prop_presymptomatic)
   )
   expect_equal(
     sum(exposure < incubation_period) / length(exposure),
@@ -61,23 +61,27 @@ test_that("prop_presymptomatic_to_alpha and incubation_to_generation_time", {
 })
 
 
-test_that('extinct_prob works as expected', {
+test_that("extinct_prob works as expected", {
   cap <- 100
   sims <- 5
   res <- scenario_sim(
     n = sims,
     initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+      isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_ascertained = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
   r1 <- extinct_prob(res, cap)
@@ -111,17 +115,21 @@ test_that('extinct_prob works as expected', {
   res3 <- scenario_sim(
     n = sims,
     initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 100,
-    r0_community = 100,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = 100, size = 0.16),
+      isolated = \(n) rnbinom(n = n, mu = 100, size = 1)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_ascertained = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
   r3 <- extinct_prob(res3, cap)
@@ -131,40 +139,48 @@ test_that('extinct_prob works as expected', {
   res3 <- scenario_sim(
     n = sims,
     initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 0,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = 0, size = 0.16),
+      isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_ascertained = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
   r3 <- extinct_prob(res3, cap)
   expect_equal(r3, 1)
 })
 
-test_that('extinct_prob week_range argument works', {
+test_that("extinct_prob week_range argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
     n = 2,
     initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+      isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_ascertained = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions
@@ -224,23 +240,27 @@ test_that('extinct_prob week_range argument works', {
   expect_equal(r6b, 0)
 })
 
-test_that('detect_extinct works', {
+test_that("detect_extinct works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
     n = 2,
     initial_cases = 5,
-    cap_max_days = 100,
-    cap_cases = cap,
-    r0_isolated = 0,
-    r0_community = 2.5,
-    disp_isolated = 1,
-    disp_community = 0.16,
-    prop_presymptomatic = 0.3,
-    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 2.5, scale = 5),
-    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272),
-    prop_asymptomatic = 0,
-    prop_ascertain = 0
+    offspring = offspring_opts(
+      community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+      isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2.5, scale = 5)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_ascertained = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions

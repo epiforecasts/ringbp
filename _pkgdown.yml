@@ -10,8 +10,14 @@ reference:
     - incubation_to_generation_time
   - subtitle: Loop wrappers for scenario modelling
     contents:
-    - parameter_sweep
     - scenario_sim
+  - subtitle: Model parameters and control options
+    contents:
+    - delay_opts
+    - event_prob_opts
+    - intervention_opts
+    - offspring_opts
+    - sim_opts
   - title: Post-processing
     contents:
     - detect_extinct

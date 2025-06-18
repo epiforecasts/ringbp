@@ -7,86 +7,51 @@
 scenario_sim(
   n,
   initial_cases,
-  r0_community,
-  r0_isolated,
-  r0_asymptomatic,
-  disp_community,
-  disp_isolated,
-  disp_asymptomatic,
-  incubation_period,
-  prop_presymptomatic,
-  onset_to_isolation,
-  prop_ascertain,
-  prop_asymptomatic,
-  cap_max_days,
-  cap_cases,
-  quarantine = FALSE
+  offspring,
+  delays,
+  event_probs,
+  interventions,
+  sim
 )
 }
 \arguments{
 \item{n}{a positive \code{integer} scalar: number of simulations to run}
 
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a non-negative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{r0_community}{a positive \code{numeric} scalar: reproduction number for
-non-isolated cases (must be >0)}
+\item{offspring}{a \code{list} with class \verb{<ringbp_offspring_opts>}: the
+offspring distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=offspring_opts]{offspring_opts()}}. Contains three elements: \code{community}, \code{isolated},
+and \code{asymptomatic}}
 
-\item{r0_isolated}{a positive \code{numeric} scalar: reproduction number for
-isolated cases (must be >0)}
+\item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
+delay distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubation_period} and
+\code{onset_to_isolation}}
 
-\item{r0_asymptomatic}{a positive \code{numeric} scalar: reproduction number for
-sub-clinical non-isolated cases (must be >0)}
+\item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
+event probabilities for the \pkg{ringbp} model, returned by
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
+\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
 
-\item{disp_community}{a positive \code{numeric} scalar: dispersion parameter for
-non-isolated cases (must be >0)}
+\item{interventions}{a \code{list} with class \verb{<ringbp_intervention_opts>}:
+the intervention settings for the \pkg{ringbp} model, returned by
+\code{\link[=intervention_opts]{intervention_opts()}}. Contains one element: \code{quarantine}}
 
-\item{disp_isolated}{a positive \code{numeric} scalar: dispersion parameter for
-isolated cases (must be >0)}
-
-\item{disp_asymptomatic}{a positive \code{numeric} scalar: dispersion parameter
-for sub-clincial non-isolated cases (must be >0)}
-
-\item{incubation_period}{a \code{function}: a random number generating
-\code{function} that samples from incubation period distribution, the
-\code{function} accepts a single \code{integer} argument specifying the number of
-times to sample the incubation period (i.e. length of the \code{function}
-output).}
-
-\item{prop_presymptomatic}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of transmission that occurs before symptom onset.}
-
-\item{onset_to_isolation}{a \code{function}: a random number generating
-\code{function} that accepts a single \code{integer} argument specifying the
-length of the \code{function} output.}
-
-\item{prop_ascertain}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of infectious contacts ascertained by contact
-tracing}
-
-\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of cases that are completely asymptomatic
-(subclinical)}
-
-\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
-this many days is reached.}
-
-\item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
-which the branching process (simulation) was terminated}
-
-\item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
-\code{TRUE} then traced contacts are isolated before symptom onset; defaults to
-\code{FALSE}}
+\item{sim}{a \code{list} with class \verb{<ringbp_sim_opts>}: the simulation control
+options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
-A \code{data.table} object returning the results for multiple simulations using
-the same set of parameters. The table has columns
+A \code{data.table} object returning the results for multiple simulations
+using the same set of parameters. The table has columns
 \itemize{
 \item week: The week in the simulation.
 \item weekly_cases: The number of new cases that week.
 \item cumulative: The cumulative cases.
 \item effective_r0: The effective reproduction rate for the whole simulation
-\item cases_per_gen: A list column with the cases per generation. This is repeated each row.
+\item cases_per_gen: A list column with the cases per generation. This is
+repeated each row.
 \item sim: Index column for which simulation.
 }
 }
@@ -94,21 +59,33 @@ the same set of parameters. The table has columns
 Run a specified number of simulations with identical parameters
 }
 \examples{
+offspring <- offspring_opts(
+  community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+  isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
+  asymptomatic = \(n) rnbinom(n = n, mu = 2.5, size = 0.16)
+)
+delays <- delay_opts(
+  incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+  onset_to_isolation = \(n) rweibull(n = n, shape = 2.5, scale = 5)
+)
+event_probs <- event_prob_opts(
+  asymptomatic = 0,
+  presymptomatic_transmission = 0.3,
+  symptomatic_ascertained = 0
+)
+interventions <- intervention_opts(quarantine = TRUE)
+sim <- sim_opts(
+  cap_max_days = 365,
+  cap_cases = 2000
+)
 res <- scenario_sim(
   n = 5,
   initial_cases = 5,
-  cap_max_days = 365,
-  cap_cases = 2000,
-  r0_isolated = 0,
-  r0_community = 2.5,
-  disp_isolated = 1,
-  disp_community = 0.16,
-  prop_presymptomatic = 0.3,
-  onset_to_isolation = \(x) rweibull(n = x, shape = 2.5, scale = 5),
-  incubation_period = \(x) rweibull(n = x, shape = 2.32, scale = 6.49),
-  prop_asymptomatic = 0,
-  prop_ascertain = 0,
-  quarantine = TRUE
+  offspring = offspring,
+  delays = delays,
+  event_probs = event_probs,
+  interventions = interventions,
+  sim = sim
 )
 res
 }

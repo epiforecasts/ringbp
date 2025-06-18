@@ -6,7 +6,8 @@
 #'
 #' @param incubation_period_samples a positive `numeric` vector: samples from
 #'   the incubation period distribution
-#' @param alpha a `numeric` scalar: skew parameter of the skew-normal distribution
+#' @param alpha a `numeric` scalar: skew parameter of the skew-normal
+#'   distribution
 #'
 #' @return a `numeric` vector of equal length to the vector input to
 #'   `incubation_period_samples`
@@ -34,24 +35,29 @@ incubation_to_generation_time <- function(incubation_period_samples, alpha) {
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
 #' transmission
 #'
-#' @param prop_presymptomatic a `numeric` scalar probability (between 0 and 1
-#'   inclusive): proportion of transmission that occurs before symptom onset.
+#' @details Since there isn't any analytical expression for linking the two,
+#' the value of alpha that corresponds to the given proportion presymptomatic
+#' is obtained via numeric optimisation.
+#'
+#' @param presymptomatic_transmission a `numeric` scalar probability
+#'   (between 0 and 1 inclusive): proportion of transmission that occurs
+#'   before symptom onset.
 #'
 #' @return A `numeric` scalar: The `$minimum` output from [optimise()] to find
 #'   the best `alpha` parameter to get the desired proportion of presymptomatic
 #'   transmission.
 #' @keywords internal
-prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
+presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
   objective <- function(alpha) {
     # fix x, xi and omega for optimisation
     p_current <- sn::psn(x = 0, xi = 0, omega = 2, alpha = alpha)
-    return((p_current - prop_presymptomatic)^2)
+    return((p_current - presymptomatic_transmission)^2)
   }
   # alpha domain is (-Inf, Inf), approximate with large numbers
   res <- stats::optimise(f = objective, interval = c(-1e5, 1e5))
   if (res$objective > 1e-5) {
     stop(
-      "Estimating the `alpha` parameter from `prop_presymptomatic` ",
+      "Estimating the `alpha` parameter from `presymptomatic_transmission` ",
       "did not converge."
     )
   }
@@ -62,27 +68,31 @@ prop_presymptomatic_to_alpha <- function(prop_presymptomatic) {
 #'
 #' @inherit detect_extinct details
 #'
+#' @inheritParams detect_extinct
+#'
 #' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
 #' @export
-#' @inheritParams detect_extinct
 #'
 #' @examples
 #' res <- scenario_sim(
 #'   n = 10,
 #'   initial_cases = 1,
-#'   prop_asymptomatic = 0,
-#'   prop_ascertain = 0.2,
-#'   cap_cases = 4500,
-#'   cap_max_days = 350,
-#'   r0_isolated = 0.5,
-#'   r0_community = 2.5,
-#'   disp_community = 0.16,
-#'   disp_isolated = 1,
-#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   prop_presymptomatic = 0.5,
-#'   quarantine = FALSE
+#'   offspring = offspring_opts(
+#'     community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+#'     isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
+#'   ),
+#'   delays = delay_opts(
+#'     incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+#'     onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
+#'   ),
+#'   event_probs = event_prob_opts(
+#'     asymptomatic = 0,
+#'     presymptomatic_transmission = 0.5,
+#'     symptomatic_ascertained = 0.2
+#'   ),
+#'   interventions = intervention_opts(quarantine = FALSE),
+#'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' extinct_prob(res, cap_cases = 4500)
 extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
@@ -104,13 +114,12 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'
 #' @details
 #' The `cap_cases` argument should be equal to the value supplied to
-#' [outbreak_model()] (possibly passed from [scenario_sim()] or
-#' [parameter_sweep()]).
+#' [outbreak_model()] (possibly passed from [scenario_sim()]).
 #'
 #' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
-#' @inheritParams outbreak_model
+#' @inheritParams sim_opts
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
 #'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table as.data.table fifelse
@@ -125,18 +134,21 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' res <- scenario_sim(
 #'   n = 10,
 #'   initial_cases = 1,
-#'   prop_asymptomatic = 0,
-#'   prop_ascertain = 0.2,
-#'   cap_cases = 4500,
-#'   cap_max_days = 350,
-#'   r0_isolated = 0.5,
-#'   r0_community = 2.5,
-#'   disp_community = 0.16,
-#'   disp_isolated = 1,
-#'   onset_to_isolation = \(x) rweibull(n = x, shape = 1.65, scale = 4.28),
-#'   incubation_period = \(x) rweibull(n = x, shape = 2.322737, scale = 6.492272),
-#'   prop_presymptomatic = 0.5,
-#'   quarantine = FALSE
+#'   offspring = offspring_opts(
+#'     community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
+#'     isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
+#'   ),
+#'   delays = delay_opts(
+#'     incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+#'     onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
+#'   ),
+#'   event_probs = event_prob_opts(
+#'     asymptomatic = 0,
+#'     presymptomatic_transmission = 0.5,
+#'     symptomatic_ascertained = 0.2
+#'   ),
+#'   interventions = intervention_opts(quarantine = FALSE),
+#'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
@@ -147,7 +159,8 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
-  outbreak_df_week[, list(
+  out <- outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim]
+  return(out[])
 }

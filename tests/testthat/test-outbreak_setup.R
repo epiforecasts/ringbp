@@ -3,15 +3,18 @@ context("Test basic usage")
 set.seed(20200410)
 
 test_that("A basic sim setup returns the correct object", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
-  # delay distribution sampling function
-  onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   case_data <- outbreak_setup(
     initial_cases = 5,
-    incubation_period = incubation_period,
-    onset_to_isolation = onset_to_isolation,
-    prop_asymptomatic = 0
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.5,
+      symptomatic_ascertained = 0
+    )
   )
 
   expect_equal(nrow(case_data), 5)
@@ -20,16 +23,19 @@ test_that("A basic sim setup returns the correct object", {
 })
 
 test_that("asymptomatic arg works properly", {
-  incubation_period <- \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272)
-  # delay distribution sampling function
-  onset_to_isolation <- \(x) stats::rweibull(n = x, shape = 2, scale = 4)
   # generate initial cases
   # All asymptomatics
   all_asymptomatic <- outbreak_setup(
     initial_cases = 5,
-    incubation_period = incubation_period,
-    onset_to_isolation = onset_to_isolation,
-    prop_asymptomatic = 1
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 1,
+      presymptomatic_transmission = 0.5,
+      symptomatic_ascertained = 0
+    )
   )
   expect_true(all(all_asymptomatic$asymptomatic))
 
@@ -38,9 +44,15 @@ test_that("asymptomatic arg works properly", {
   # machine precision
   mix <- outbreak_setup(
     initial_cases = 10000,
-    incubation_period = incubation_period,
-    onset_to_isolation = onset_to_isolation,
-    prop_asymptomatic = 0.5
+    delays = delay_opts(
+      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0.5,
+      presymptomatic_transmission = 0.5,
+      symptomatic_ascertained = 0
+    )
   )
 
   expect_length(unique(mix$asymptomatic), 2)

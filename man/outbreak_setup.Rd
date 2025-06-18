@@ -4,30 +4,21 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(
-  initial_cases,
-  incubation_period,
-  onset_to_isolation,
-  prop_asymptomatic
-)
+outbreak_setup(initial_cases, delays, event_probs)
 }
 \arguments{
-\item{initial_cases}{a nonnegative \code{integer} scalar: number of initial
+\item{initial_cases}{a non-negative \code{integer} scalar: number of initial
 or starting cases which are all assumed to be missed.}
 
-\item{incubation_period}{a \code{function}: a random number generating
-\code{function} that samples from incubation period distribution, the
-\code{function} accepts a single \code{integer} argument specifying the number of
-times to sample the incubation period (i.e. length of the \code{function}
-output).}
+\item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
+delay distribution \code{function}s for the \pkg{ringbp} model, returned
+by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubation_period} and
+\code{onset_to_isolation}}
 
-\item{onset_to_isolation}{a \code{function}: a random number generating
-\code{function} that accepts a single \code{integer} argument specifying the
-length of the \code{function} output.}
-
-\item{prop_asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
-inclusive): proportion of cases that are completely asymptomatic
-(subclinical)}
+\item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
+event probabilities for the \pkg{ringbp} model, returned by
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
+\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -47,17 +38,23 @@ inclusive): proportion of cases that are completely asymptomatic
 Set up initial cases for branching process
 }
 \examples{
-# incubation period sampling function
-incubation_period <- \(x) rweibull(n = x, shape = 2.32, scale = 6.49)
-# delay distribution sampling function
-onset_to_isolation <- \(x) rweibull(n = x, shape = 1.65, scale = 4.28)
-out <- outbreak_setup(
-  initial_cases = 1,
-  incubation_period = incubation_period,
-  onset_to_isolation = onset_to_isolation,
-  prop_asymptomatic = 0
+delays <- delay_opts(
+  incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
+  onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 )
-out
+event_probs <- event_prob_opts(
+  asymptomatic = 0,
+  presymptomatic_transmission = 0.15,
+  symptomatic_ascertained = 0
+)
+
+# generate initial cases
+case_data <- outbreak_setup(
+  initial_cases = 5,
+  delays = delays,
+  event_probs = event_probs
+)
+case_data
 }
 \author{
 Joel Hellewell
