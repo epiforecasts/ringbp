@@ -93,16 +93,15 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'   interventions = intervention_opts(quarantine = FALSE),
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
-#' extinct_prob(res, cap_cases = 4500)
-extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
+#' extinct_prob(res)
+extinct_prob <- function(outbreak_df_week, week_range = 12:16) {
 
   checkmate::assert_data_frame(outbreak_df_week)
-  checkmate::assert_number(cap_cases, lower = 0)
   checkmate::assert_numeric(week_range)
 
   n <- max(outbreak_df_week$sim)
 
-  extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
+  extinct_runs <- detect_extinct(outbreak_df_week, week_range)
   sum(extinct_runs$extinct) / n
 }
 
@@ -110,12 +109,18 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' Calculate whether outbreaks went extinct or not
 #'
 #' @details
-#' The `cap_cases` argument should be equal to the value supplied to
-#' [outbreak_model()] (possibly passed from [scenario_sim()]).
+#' The data passed to `outbreak_df_week` has to be produced by [scenario_sim()].
+#' It cannot be produced by [outbreak_model()] as it requires the `sim` column,
+#' which is only appended in [scenario_sim()].
+#'
+#' ***Warning***: the output from [scenario_sim()] contains an `cap_cases`
+#' attribute which is used by [extinct_prob()] and [detect_extinct()],
+#' therefore if you modify the output of [scenario_sim()] before passing
+#' to [extinct_prob()] be careful not to drop the attribute (e.g.
+#' from subsetting the `data.table`).
 #'
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
-#' @inheritParams sim_opts
 #' @param week_range a positive `integer` vector: giving the (zero indexed)
 #'   week range to test for whether an extinction occurred. Default is `12:16`.
 #' @importFrom data.table as.data.table fifelse
@@ -146,12 +151,13 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'   interventions = intervention_opts(quarantine = FALSE),
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
-#' detect_extinct(outbreak_df_week = res, cap_cases = 4500)
-detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
+#' detect_extinct(outbreak_df_week = res)
+detect_extinct <- function(outbreak_df_week, week_range = 12:16) {
 
   checkmate::assert_data_frame(outbreak_df_week)
-  checkmate::assert_number(cap_cases, lower = 0)
   checkmate::assert_integerish(week_range)
+
+  cap_cases <- attr(outbreak_df_week, which = "cap_cases")
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
