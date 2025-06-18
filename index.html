@@ -102,19 +102,35 @@
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scenario_sim.html">scenario_sim</a></span><span class="op">(</span></span>
 <span>  n <span class="op">=</span> <span class="fl">10</span>, <span class="co">## 10 simulations</span></span>
-<span>  initial_cases <span class="op">=</span> <span class="fl">1</span>, <span class="co">## one initial case in each of the simulations</span></span>
-<span>  prop_asymptomatic <span class="op">=</span> <span class="fl">0</span>, <span class="co">## no asymptomatic infections</span></span>
-<span>  prop_ascertain <span class="op">=</span> <span class="fl">0.2</span>, <span class="co">## 20% probability of ascertainment by contact tracing</span></span>
-<span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>, <span class="co">## don't simulate beyond 4500 infections</span></span>
-<span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>, <span class="co">## don't simulate beyond 350 days</span></span>
-<span>  r0_isolated <span class="op">=</span> <span class="fl">0.5</span>, <span class="co">## isolated individuals have R0 of 0.5</span></span>
-<span>  r0_community <span class="op">=</span> <span class="fl">2.5</span>, <span class="co">## non-isolated individuals have R0 of 2.5</span></span>
-<span>  disp_community <span class="op">=</span> <span class="fl">0.16</span>, <span class="co">## dispersion parameter in the community</span></span>
-<span>  disp_isolated <span class="op">=</span> <span class="fl">1</span>, <span class="co">## dispersion  parameter of those isolated</span></span>
-<span>  onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.651524</span>, scale <span class="op">=</span> <span class="fl">4.287786</span><span class="op">)</span>, <span class="co">## time from onset to isolation</span></span>
-<span>  incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.322737</span>, scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span>, <span class="co">## incubation period</span></span>
-<span>  prop_presymptomatic <span class="op">=</span> <span class="fl">0.5</span>, <span class="co">## probability of onward infection time being before symptom onset</span></span>
-<span>  quarantine <span class="op">=</span> <span class="cn">FALSE</span> <span class="co">## whether quarantine is in effect</span></span>
+<span>  initial_cases <span class="op">=</span> <span class="fl">1</span>, <span class="co">## one initial case in each of the simulations </span></span>
+<span>  offspring <span class="op">=</span> <span class="fu"><a href="reference/offspring_opts.html">offspring_opts</a></span><span class="op">(</span></span>
+<span>    <span class="co">## non-isolated individuals have R0 of 2.5 and a dispersion parameter</span></span>
+<span>    community <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html" class="external-link">rnbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fl">2.5</span>, size <span class="op">=</span> <span class="fl">0.16</span><span class="op">)</span>, </span>
+<span>    <span class="co">## isolated individuals have R0 of 0.5 and a dispersion  parameter</span></span>
+<span>    isolated <span class="op">=</span> \<span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html" class="external-link">rnbinom</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mu <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="co">## by default asymptomatic individuals are assumed to have the same R0 </span></span>
+<span>    <span class="co">## and dispersion as non-isolated individuals</span></span>
+<span>  <span class="op">)</span>, </span>
+<span>  delays <span class="op">=</span> <span class="fu"><a href="reference/delay_opts.html">delay_opts</a></span><span class="op">(</span></span>
+<span>    incubation_period <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">2.322737</span>, scale <span class="op">=</span> <span class="fl">6.492272</span><span class="op">)</span>, </span>
+<span>    onset_to_isolation <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Weibull.html" class="external-link">rweibull</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1.651524</span>, scale <span class="op">=</span> <span class="fl">4.287786</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  event_probs <span class="op">=</span> <span class="fu"><a href="reference/event_prob_opts.html">event_prob_opts</a></span><span class="op">(</span></span>
+<span>    <span class="co">## no asymptomatic infections</span></span>
+<span>    asymptomatic <span class="op">=</span> <span class="fl">0.1</span>, </span>
+<span>    <span class="co">## probability of onward infection time being before symptom onset</span></span>
+<span>    presymptomatic_transmission <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    <span class="co">## 20% probability of ascertainment by contact tracing</span></span>
+<span>    symptomatic_ascertained <span class="op">=</span> <span class="fl">0.2</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="co">## whether quarantine is in effect</span></span>
+<span>  interventions <span class="op">=</span> <span class="fu"><a href="reference/intervention_opts.html">intervention_opts</a></span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  sim <span class="op">=</span> <span class="fu"><a href="reference/sim_opts.html">sim_opts</a></span><span class="op">(</span></span>
+<span>    <span class="co">## don't simulate beyond 350 days</span></span>
+<span>    cap_max_days <span class="op">=</span> <span class="fl">350</span>, </span>
+<span>    <span class="co">## don't simulate beyond 4500 infections</span></span>
+<span>    cap_cases <span class="op">=</span> <span class="fl">4500</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-of-weekly-cases">Plot of weekly cases<a class="anchor" aria-label="anchor" href="#plot-of-weekly-cases"></a>
@@ -133,7 +149,7 @@
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/extinct_prob.html">extinct_prob</a></span><span class="op">(</span><span class="va">res</span>, cap_cases <span class="op">=</span> <span class="fl">4500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.7</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
