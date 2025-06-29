@@ -112,7 +112,7 @@ res <- lapply(scenario_sims$data, \(x, n) {
 )
 ```
 
-The output of this parameter sweep is a list of `data.table`s, so to give an idea of what the output looks like we should the first 3 scenarios (there are `r length(res)` in total). See `?scenario_sim` for more information on the contents of these `data.table`s.
+The output of this parameter sweep is a list of `data.table`s, so to give an idea of what the output looks like we show the first 3 scenarios (there are `r length(res)` in total). See `?scenario_sim` for more information on the contents of these `data.table`s.
 
 ```{r}
 head(res, 3)
@@ -155,7 +155,7 @@ head(scenario_sims$sims, 3)
 
 ## Running scenarios in parallel
 
-Finally, we demonstrate how the above example can be easily run in parallel using the [{future} framework](). We load the {future} and {future.apply} R packages for this.
+Finally, we demonstrate how the above example can be easily run in parallel using the [{future} framework](https://www.futureverse.org/). We load the {future} and {future.apply} R packages for this.
 
 ```{r}
 library(future)
