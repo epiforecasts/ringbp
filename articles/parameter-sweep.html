@@ -192,7 +192,7 @@ higher (e.g. 100-1000).</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The output of this parameter sweep is a list of
 <code>data.table</code>s, so to give an idea of what the output looks
-like we should the first 3 scenarios (there are 160 in total). See
+like we show the first 3 scenarios (there are 160 in total). See
 <code><a href="../reference/scenario_sim.html">?scenario_sim</a></code> for more information on the contents of these
 <code>data.table</code>s.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -403,8 +403,9 @@ column.</p>
 <h2 id="running-scenarios-in-parallel">Running scenarios in parallel<a class="anchor" aria-label="anchor" href="#running-scenarios-in-parallel"></a>
 </h2>
 <p>Finally, we demonstrate how the above example can be easily run in
-parallel using the <a href="">{future} framework</a>. We load the
-{future} and {future.apply} R packages for this.</p>
+parallel using the <a href="https://www.futureverse.org/" class="external-link">{future}
+framework</a>. We load the {future} and {future.apply} R packages for
+this.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></span><span class="op">)</span></span></code></pre></div>
