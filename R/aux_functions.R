@@ -43,11 +43,11 @@ incubation_to_generation_time <- function(incubation_period_samples,
     alpha = alpha
   )
 
-  # convert generation time to absolute time
-  out <- out + exposure_time
+  # ensure no negative or pre-infectious generation times
+  out <- pmax(latent_period, out)
 
-  # ensure no negative or pre-infectious generation times and return
-  pmax(latent_period, out)
+  # convert generation time to absolute time and return
+  out + exposure_time
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
