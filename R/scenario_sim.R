@@ -78,8 +78,6 @@ scenario_sim <- function(n,
     simplify = FALSE
   )
 
-  # bind output together and add simulation index
-  res <- data.table::rbindlist(res, idcol = "sim")
-
-  res[]
+  # bind output together and add simulation index and return
+  data.table::rbindlist(res, idcol = "sim")[]
 }

@@ -104,9 +104,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   n <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
-  out <-  sum(extinct_runs$extinct) / n
-
-  out
+  sum(extinct_runs$extinct) / n
 }
 
 
@@ -159,8 +157,7 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
-  out <- outbreak_df_week[, list(
+  outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
-  ), by = sim]
-  out[]
+  ), by = sim][]
 }
