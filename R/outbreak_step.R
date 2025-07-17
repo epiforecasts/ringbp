@@ -180,5 +180,5 @@ outbreak_step <- function(case_data,
   out <- list(case_data, effective_r0, cases_in_gen)
   names(out) <- c("cases", "effective_r0", "cases_in_gen")
 
-  return(out)
+  out
 }
