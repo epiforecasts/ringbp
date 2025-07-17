@@ -48,6 +48,3 @@ res <- scenario_sim(
 )
 extinct_prob(res, cap_cases = 4500)
 }
-\author{
-Joel Hellewell
-}

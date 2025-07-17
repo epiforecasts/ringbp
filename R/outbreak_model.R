@@ -1,5 +1,4 @@
 #' Run a single instance of the branching process model
-#' @author Joel Hellewell
 #'
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
