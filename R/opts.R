@@ -61,6 +61,11 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
+#' @param latent_period a non-negative `numeric` scalar: the minimum time
+#'   between an individual being exposed and becoming infectious. It is a
+#'   population-wide parameter, with no variability between individuals. It
+#'   sets the minimum generation time in the model. Default is 0 (i.e.
+#'   an individual become immediately infectious after being infected).
 #'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
@@ -70,14 +75,18 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
 #'   onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 #' )
-delay_opts <- function(incubation_period, onset_to_isolation) {
+delay_opts <- function(incubation_period,
+                       onset_to_isolation,
+                       latent_period = 0) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
+  checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
   opts <- list(
     incubation_period = incubation_period,
-    onset_to_isolation = onset_to_isolation
+    onset_to_isolation = onset_to_isolation,
+    latent_period = latent_period
   )
 
   class(opts) <- "ringbp_delay_opts"
