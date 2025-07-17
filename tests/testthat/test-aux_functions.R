@@ -10,9 +10,9 @@ test_that("incubation_to_generation_time parameters behave as expected", {
   expect_length(r2, 1e6)
   expect_true(is.numeric(r2))
   expect_false(anyNA(r2))
-  # Function forces a minimum of 1.
-  expect_equal(min(r2), 1)
-  expect_true(all(r2 >= 1))
+  # Function forces a minimum of 0.
+  expect_equal(min(r2), 0)
+  expect_true(all(r2 >= 0))
 
   # skew normal collapses to normal with alpha = 0
   # SD is hard coded as 2.
