@@ -4,7 +4,12 @@
 \alias{incubation_to_generation_time}
 \title{Samples the generation time for given incubation period samples}
 \usage{
-incubation_to_generation_time(incubation_period_samples, alpha)
+incubation_to_generation_time(
+  incubation_period_samples,
+  alpha,
+  exposure_time = 0,
+  latent_period = 0
+)
 }
 \arguments{
 \item{incubation_period_samples}{a positive \code{numeric} vector: samples from
@@ -12,6 +17,16 @@ the incubation period distribution}
 
 \item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
 distribution}
+
+\item{exposure_time}{a non-negative \code{numeric} vector: exposure samples
+from the case data. Used to convert symptom onset in absolute time to
+relative time for each infectee. Default is 0.}
+
+\item{latent_period}{a non-negative \code{numeric} scalar: the minimum time
+between an individual being exposed and becoming infectious. It is a
+population-wide parameter, with no variability between individuals. It
+sets the minimum generation time in the model. Default is 0 (i.e.
+an individual become immediately infectious after being infected).}
 }
 \value{
 a \code{numeric} vector of equal length to the vector input to

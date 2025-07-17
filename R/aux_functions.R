@@ -8,6 +8,10 @@
 #'   the incubation period distribution
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
 #'   distribution
+#' @param exposure_time a non-negative `numeric` vector: exposure samples
+#'   from the case data. Used to convert symptom onset in absolute time to
+#'   relative time for each infectee. Default is 0.
+#' @inheritParams delay_opts
 #'
 #' @return a `numeric` vector of equal length to the vector input to
 #'   `incubation_period_samples`
@@ -19,17 +23,31 @@
 #'   incubation_period_samples = c(1, 2, 3, 4, 1),
 #'   alpha = 2
 #' )
-incubation_to_generation_time <- function(incubation_period_samples, alpha) {
+incubation_to_generation_time <- function(incubation_period_samples,
+                                          alpha,
+                                          exposure_time = 0,
+                                          latent_period = 0) {
 
   checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
   checkmate::assert_number(alpha, finite = TRUE)
+  checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
-  out <- sn::rsn(n = length(incubation_period_samples),
-                 xi = incubation_period_samples,
-                 omega = 2,
-                 alpha = alpha)
+  # individual's incubation period delay not absolute time
+  individual_incubation <- incubation_period_samples - exposure_time
 
-  pmax(1, out)
+  out <- sn::rsn(
+    n = length(individual_incubation),
+    xi = individual_incubation,
+    omega = 2,
+    alpha = alpha
+  )
+
+  # convert generation time to absolute time
+  out <- out + exposure_time
+
+  # ensure no negative or pre-infectious generation times and return
+  pmax(latent_period, out)
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
