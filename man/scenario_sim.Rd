@@ -89,6 +89,3 @@ res <- scenario_sim(
 )
 res
 }
-\author{
-Joel Hellewell
-}

@@ -1,5 +1,4 @@
 #' Run a specified number of simulations with identical parameters
-#' @author Joel Hellewell
 #'
 #' @param n a positive `integer` scalar: number of simulations to run
 #' @inheritParams outbreak_setup

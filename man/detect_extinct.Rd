@@ -50,6 +50,3 @@ res <- scenario_sim(
 )
 detect_extinct(outbreak_df_week = res, cap_cases = 4500)
 }
-\author{
-Joel Hellewell
-}
