@@ -64,5 +64,5 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     isolated_time := onset + delays$onset_to_isolation(.N)
   ]
 
-  return(case_data[])
+  case_data[]
 }

@@ -48,7 +48,7 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
   )
 
   class(opts) <- "ringbp_offspring_opts"
-  return(opts)
+  opts
 }
 
 #' Create a list of delay distributions to run the \pkg{ringbp} model
@@ -81,7 +81,7 @@ delay_opts <- function(incubation_period, onset_to_isolation) {
   )
 
   class(opts) <- "ringbp_delay_opts"
-  return(opts)
+  opts
 }
 
 #' Create a list of event probabilities to run the \pkg{ringbp} model
@@ -123,7 +123,7 @@ event_prob_opts <- function(asymptomatic,
   )
 
   class(opts) <- "ringbp_event_prob_opts"
-  return(opts)
+  opts
 }
 
 #' Create a list of intervention settings to run the \pkg{ringbp} model
@@ -141,7 +141,7 @@ intervention_opts <- function(quarantine = FALSE) {
   checkmate::assert_logical(quarantine, any.missing = FALSE, len = 1)
   opts <- list(quarantine = quarantine)
   class(opts) <- "ringbp_intervention_opts"
-  return(opts)
+  opts
 }
 
 #' Create a list of simulation control options for the \pkg{ringbp} model
@@ -174,5 +174,5 @@ sim_opts <- function(cap_max_days = 350, cap_cases  = 5000) {
   )
 
   class(opts) <- "ringbp_sim_opts"
-  return(opts)
+  opts
 }

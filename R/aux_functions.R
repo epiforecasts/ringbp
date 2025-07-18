@@ -29,7 +29,7 @@ incubation_to_generation_time <- function(incubation_period_samples, alpha) {
                  omega = 2,
                  alpha = alpha)
 
-  return(pmax(1, out))
+  pmax(1, out)
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
@@ -51,7 +51,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
   objective <- function(alpha) {
     # fix x, xi and omega for optimisation
     p_current <- sn::psn(x = 0, xi = 0, omega = 2, alpha = alpha)
-    return((p_current - presymptomatic_transmission)^2)
+    (p_current - presymptomatic_transmission)^2
   }
   # alpha domain is (-Inf, Inf), approximate with large numbers
   res <- stats::optimise(f = objective, interval = c(-1e5, 1e5))
@@ -61,7 +61,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
       "did not converge."
     )
   }
-  return(res$minimum)
+  res$minimum
 }
 
 #' Calculate proportion of runs that have controlled outbreak
@@ -104,9 +104,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   n <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
-  out <-  sum(extinct_runs$extinct) / n
-
-  return(out)
+  sum(extinct_runs$extinct) / n
 }
 
 
@@ -159,8 +157,7 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
-  out <- outbreak_df_week[, list(
+  outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
-  ), by = sim]
-  return(out[])
+  ), by = sim][]
 }

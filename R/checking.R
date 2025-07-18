@@ -45,5 +45,5 @@ check_dist_func <- function(func,
     )
   }
 
-  return(TRUE)
+  TRUE
 }
