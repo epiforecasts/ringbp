@@ -83,6 +83,17 @@ delay_opts <- function(incubation_period,
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
+  if (latent_period > 0) {
+    warning(
+      "A latent_period > 0 may cause the proportion of presymptomatic ",
+      "transmission to be less than specified.\n",
+      "(`presymptomatic_transmission` in `event_prob_opts()`)\nSee the ",
+      "following warning for realised proportion of presymptomatic ",
+      "transmission.",
+      call. = FALSE
+    )
+  }
+
   opts <- list(
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
