@@ -70,7 +70,6 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'
 #' @inheritParams detect_extinct
 #'
-#' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
 #' @export
 #'
@@ -114,7 +113,6 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' The `cap_cases` argument should be equal to the value supplied to
 #' [outbreak_model()] (possibly passed from [scenario_sim()]).
 #'
-#' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
 #' @inheritParams sim_opts
