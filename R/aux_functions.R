@@ -36,7 +36,7 @@ incubation_to_generation_time <- function(incubation_period_samples,
   # individual's incubation period delay not absolute time
   individual_incubation <- incubation_period_samples - exposure_time
 
-  out <- sn::rsn(
+  gt <- sn::rsn(
     n = length(individual_incubation),
     xi = individual_incubation,
     omega = 2,
@@ -44,10 +44,10 @@ incubation_to_generation_time <- function(incubation_period_samples,
   )
 
   # ensure no negative or pre-infectious generation times
-  out <- pmax(latent_period, out)
+  gt <- pmax(latent_period, gt)
 
   # convert generation time to absolute time and return
-  out + exposure_time
+  gt + exposure_time
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
