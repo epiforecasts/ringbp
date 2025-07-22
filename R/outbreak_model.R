@@ -96,15 +96,13 @@ outbreak_model <- function(initial_cases,
 
   # only warn if non-zero latent period and any transmission
   if (delays$latent_period > 0 && nrow(case_data) > 1) {
-    presymptomatic_transmission <- c()
-    for (idx in unique(case_data$infector)) {
-      presymptomatic_transmission <- c(
-        presymptomatic_transmission,
-        case_data[infector == idx, exposure] < case_data[idx, onset]
-      )
-    }
-    prop_presymptomatic_transmission <- sum(presymptomatic_transmission) /
-      length(presymptomatic_transmission)
+    # self-join to compare exposure and infector onset times by row
+    prop_presymptomatic_transmission <- case_data[
+      , list(exposure, caseid, infector, onset)
+    ][case_data[, list(infector_id = seq_len(.N), onset)],
+      on = c("infector" = "infector_id"),
+      nomatch = NULL
+    ][, mean(exposure < i.onset)]
 
     warning(
       "The realised proportion of presymptomatic transmission is: ",
