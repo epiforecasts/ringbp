@@ -94,6 +94,25 @@ outbreak_model <- function(initial_cases,
     extinct <- all(case_data$isolated)
   }
 
+  # only warn if non-zero latent period and any transmission
+  if (delays$latent_period > 0 && nrow(case_data) > 1) {
+    presymptomatic_transmission <- c()
+    for (idx in unique(case_data$infector)) {
+      presymptomatic_transmission <- c(
+        presymptomatic_transmission,
+        case_data[infector == idx, exposure] < case_data[idx, onset]
+      )
+    }
+    prop_presymptomatic_transmission <- sum(presymptomatic_transmission) /
+      length(presymptomatic_transmission)
+
+    warning(
+      "The realised proportion of presymptomatic transmission is: ",
+      signif(prop_presymptomatic_transmission, digits = 3),
+      call. = FALSE
+    )
+  }
+
   # Prepare output, group into weeks
   weekly_cases <- case_data[, week := floor(onset / 7)
                             ][, list(weekly_cases = .N), by = week
