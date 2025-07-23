@@ -21,7 +21,12 @@ length of the \code{function} output.}
 between an individual being exposed and becoming infectious. It is a
 population-wide parameter, with no variability between individuals. It
 sets the minimum generation time in the model. Default is 0 (i.e.
-an individual become immediately infectious after being infected).}
+an individual becomes immediately infectious after being infected).
+
+If \code{latent_period} is positive then the generation time distribution may
+become left-truncated depending on the \code{incubation_period} distribution
+and \code{presymptomatic_transmission} (in \code{\link[=event_prob_opts]{event_prob_opts()}}), due to the
+conditioning to be greater than \code{latent_period}.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_delay_opts>}.

@@ -36,15 +36,29 @@ incubation_to_generation_time <- function(incubation_period_samples,
   # individual's incubation period delay not absolute time
   individual_incubation <- incubation_period_samples - exposure_time
 
-  gt <- sn::rsn(
-    n = length(individual_incubation),
-    xi = individual_incubation,
-    omega = 2,
-    alpha = alpha
-  )
-
+  # initialise generation time vector to trigger sampling loop
+  gt <- rep(-Inf, times = length(individual_incubation))
+  # loop counter to stop infinite loop
+  counter <- 0
   # ensure no negative or pre-infectious generation times
-  gt <- pmax(latent_period, gt)
+  while (any(gt < latent_period)) {
+    resample_idx <- gt < latent_period
+    gt[resample_idx] <- sn::rsn(
+      n = sum(resample_idx),
+      xi = individual_incubation[resample_idx],
+      omega = 2,
+      alpha = alpha
+    )
+    # arbitrary large number to break while loop and throw error
+    if (counter > 1000) {
+      stop(
+        "Cannot sample generation time given `incubation_period` and ",
+        "`latent_period` specified. Please try with different values.",
+        call. = FALSE
+      )
+    }
+    counter <- counter + 1
+  }
 
   # convert generation time to absolute time and return
   gt + exposure_time
