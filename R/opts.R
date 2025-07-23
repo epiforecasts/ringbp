@@ -65,7 +65,12 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   between an individual being exposed and becoming infectious. It is a
 #'   population-wide parameter, with no variability between individuals. It
 #'   sets the minimum generation time in the model. Default is 0 (i.e.
-#'   an individual become immediately infectious after being infected).
+#'   an individual becomes immediately infectious after being infected).
+#'
+#'   If `latent_period` is positive then the generation time distribution may
+#'   become left-truncated depending on the `incubation_period` distribution
+#'   and `presymptomatic_transmission` (in [event_prob_opts()]), due to the
+#'   conditioning to be greater than `latent_period`.
 #'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
