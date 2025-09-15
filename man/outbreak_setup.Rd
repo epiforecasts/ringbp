@@ -56,6 +56,3 @@ case_data <- outbreak_setup(
 )
 case_data
 }
-\author{
-Joel Hellewell
-}
