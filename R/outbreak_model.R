@@ -71,7 +71,7 @@ outbreak_model <- function(initial_cases,
 
 
   # Model loop
-  while (sim$continue(case_data, sim)) {
+  while (sim_continue(case_data, sim)) {
 
     out <- outbreak_step(
       case_data = case_data,
