@@ -53,5 +53,14 @@ jobs:
       - name: Test coverage
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: covr::codecov(quiet = FALSE)
+        run: |
+          cov <- covr::package_codecov(quiet = FALSE)
+          saveRDS(cov, "coverage.rds")
         shell: Rscript {0}
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-data
+          path: coverage.rds
+          retention-days: 1

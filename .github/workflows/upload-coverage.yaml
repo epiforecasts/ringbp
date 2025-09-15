@@ -1,0 +1,33 @@
+name: upload-coverage
+
+on:
+  workflow_run:
+    workflows: ["test-coverage"]
+    types: [completed]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Download coverage data
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-data
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - name: Install covr
+        run: install.packages("covr")
+        shell: Rscript {0}
+
+      - name: Upload to Codecov
+        run: |
+          cov <- readRDS("coverage.rds")
+          covr::codecov(coverage = cov, quiet = FALSE)
+        shell: Rscript {0}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
