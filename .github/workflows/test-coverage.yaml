@@ -40,27 +40,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr
+          extra-packages: |
+            any::covr
+            any::xml2
           needs: coverage
 
       - name: Test coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           cov <- covr::package_coverage(quiet = FALSE)
-          saveRDS(cov, "coverage.rds")
+          covr::to_cobertura(cov, "coverage.xml")
         shell: Rscript {0}
 
+      - name: Save PR info
+        run: |
+          echo "${{ github.event.number }}" > pr_number.txt
+          echo "${{ github.event.pull_request.head.sha }}" > pr_sha.txt
+        if: github.event_name == 'pull_request'
+
       - name: Upload coverage data
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-data
-          path: coverage.rds
-          retention-days: 1
+          path: |
+            coverage.xml
+            pr_number.txt
+            pr_sha.txt

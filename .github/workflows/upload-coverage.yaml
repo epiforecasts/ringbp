@@ -18,16 +18,22 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Get PR info
+        id: pr
+        run: |
+          if [ -f pr_number.txt ]; then
+            echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+            echo "sha=$(cat pr_sha.txt)" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Install covr
-        run: install.packages("covr")
-        shell: Rscript {0}
+      - name: Checkout PR commit
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.pr.outputs.sha || github.sha }}
 
       - name: Upload to Codecov
-        run: |
-          cov <- readRDS("coverage.rds")
-          covr::codecov(coverage = cov, quiet = FALSE)
-        shell: Rscript {0}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+          fail_ci_if_error: false
