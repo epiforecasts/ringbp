@@ -165,11 +165,11 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   return(out[])
 }
 
-#' Control whether simulation continues stepping
+#' Control whether outbreak simulation continues stepping
 #'
 #' @description
 #' Used in a while loop to determine whether the [outbreak_model()]
-#' continues to call [outbreak_step()], or to end the simulation.
+#'   continues to call [outbreak_step()], or to end the simulation.
 #'
 #' @inheritParams outbreak_step
 #' @inheritParams outbreak_model
@@ -178,7 +178,7 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #'   continue (`TRUE`) or if the outbreak is extinct or has reached a stopping
 #'   criterion (`FALSE`).
 #' @keywords internal
-sim_continue <- function(case_data, sim) {
+outbreak_continue <- function(case_data, sim) {
 
   latest_onset <- max(case_data$onset)
   total_cases <- nrow(case_data)
