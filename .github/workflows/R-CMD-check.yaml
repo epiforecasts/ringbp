@@ -68,7 +68,7 @@ jobs:
       _R_CHECK_LENGTH_COLON_: true
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - uses: r-lib/actions/setup-pandoc@v2
 
