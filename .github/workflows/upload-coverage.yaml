@@ -1,0 +1,48 @@
+name: upload-coverage
+
+on:
+  workflow_run:
+    workflows: ["test-coverage"]
+    types: [completed]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Download coverage data
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-data
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Get PR info
+        id: pr
+        run: |
+          if [ -f pr_number.txt ]; then
+            echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+            echo "sha=$(cat pr_sha.txt)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout PR commit
+        if: steps.pr.outputs.sha != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.sha }}
+
+      - name: Checkout triggering commit (fallback)
+        if: steps.pr.outputs.sha == ''
+        uses: actions/checkout@v4
+        with:
+          # head_sha exists on workflow_run events; fallback to github.sha
+          # if needed
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+          fail_ci_if_error: false
