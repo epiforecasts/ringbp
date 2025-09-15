@@ -28,13 +28,13 @@ jobs:
 
       - name: Checkout PR commit
         if: steps.pr.outputs.sha != ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ steps.pr.outputs.sha }}
 
       - name: Checkout triggering commit (fallback)
         if: steps.pr.outputs.sha == ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # head_sha exists on workflow_run events; fallback to github.sha
           # if needed
