@@ -1,4 +1,6 @@
 url: https://epiforecasts.io/ringbp/
+template:
+  bootstrap: 5
 
 reference:
   - title: Model
