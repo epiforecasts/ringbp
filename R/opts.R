@@ -168,9 +168,23 @@ sim_opts <- function(cap_max_days = 350, cap_cases  = 5000) {
   checkmate::assert_int(cap_max_days, lower = 1)
   checkmate::assert_int(cap_cases, lower = 1)
 
+  continue <- function(case_data, sim) {
+
+    latest_onset <- max(case_data$onset)
+    total_cases <- nrow(case_data)
+    extinct <- all(case_data$isolated)
+
+    # while logic
+    return(
+      latest_onset < sim$cap_max_days &&
+        total_cases < sim$cap_cases && !extinct
+    )
+  }
+
   opts <- list(
     cap_max_days = cap_max_days,
-    cap_cases = cap_cases
+    cap_cases = cap_cases,
+    continue = continue
   )
 
   class(opts) <- "ringbp_sim_opts"
