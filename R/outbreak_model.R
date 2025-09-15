@@ -107,6 +107,12 @@ outbreak_model <- function(initial_cases,
   # cut at max_week
   weekly_cases <- weekly_cases[week <= max_week]
 
+  # effective_r0_vect and cases_in_gen_vect grow together so only check one
+  if (length(effective_r0_vect) == 0) {
+    effective_r0_vect <- 0
+    cases_in_gen_vect <- 0
+  }
+
   # Add effective R0
   weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
                                                           na.rm = TRUE),
