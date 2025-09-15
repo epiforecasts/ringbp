@@ -54,7 +54,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          cov <- covr::package_codecov(quiet = FALSE)
+          cov <- covr::package_coverage(quiet = FALSE)
           saveRDS(cov, "coverage.rds")
         shell: Rscript {0}
 
