@@ -4,7 +4,7 @@
 #' given by a skew-normal distribution with a location parameter equal to their
 #' incubation period.
 #'
-#' @param incubation_period_samples a positive `numeric` vector: samples from
+#' @param symptom_onset_time a positive `numeric` vector: samples from
 #'   the incubation period distribution
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
 #'   distribution
@@ -14,30 +14,30 @@
 #' @inheritParams delay_opts
 #'
 #' @return a `numeric` vector of equal length to the vector input to
-#'   `incubation_period_samples`
+#'   `symptom_onset_time`
 #' @export
 #' @importFrom sn rsn
 #'
 #' @examples
 #' incubation_to_generation_time(
-#'   incubation_period_samples = c(1, 2, 3, 4, 1),
+#'   symptom_onset_time = c(1, 2, 3, 4, 1),
 #'   alpha = 2
 #' )
-incubation_to_generation_time <- function(incubation_period_samples,
+incubation_to_generation_time <- function(symptom_onset_time,
                                           alpha,
-                                          exposure_time = rep(0, length(incubation_period_samples)),
+                                          exposure_time = rep(0, length(symptom_onset_time)),
                                           latent_period = 0) {
 
-  checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
   checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
   checkmate::assert_number(alpha, finite = TRUE)
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
-  # individual's incubation period delay not absolute time
-  individual_incubation <- incubation_period_samples - exposure_time
+  # convert absolute to relative (individual) symptom onset time using exposure
+  rel_symptom_onset_time <- symptom_onset_time - exposure_time
 
   # initialise generation time vector to trigger sampling loop
-  gt <- rep(-Inf, times = length(individual_incubation))
+  gt <- rep(-Inf, times = length(rel_symptom_onset_time))
   # loop counter to stop infinite loop
   counter <- 0
   # ensure no negative or pre-infectious generation times
@@ -45,7 +45,7 @@ incubation_to_generation_time <- function(incubation_period_samples,
     resample_idx <- gt < latent_period
     gt[resample_idx] <- sn::rsn(
       n = sum(resample_idx),
-      xi = individual_incubation[resample_idx],
+      xi = rel_symptom_onset_time[resample_idx],
       omega = 2,
       alpha = alpha
     )

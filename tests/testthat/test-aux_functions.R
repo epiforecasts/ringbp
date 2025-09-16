@@ -37,7 +37,7 @@ test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_tim
   incubation_period <- 5
   prop_presymptomatic <- 0.5
   exposure <- incubation_to_generation_time(
-    incubation_period_samples = rep(incubation_period, 1e5),
+    symptom_onset_time = rep(incubation_period, 1e5),
     alpha = presymptomatic_transmission_to_alpha(prop_presymptomatic)
   )
   expect_equal(
@@ -49,7 +49,7 @@ test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_tim
   # ~10% presymptomatic
   prop_presymptomatic <- 0.1
   exposure <- incubation_to_generation_time(
-    incubation_period_samples = rep(incubation_period, 1e5),
+    symptom_onset_time = rep(incubation_period, 1e5),
     alpha = presymptomatic_transmission_to_alpha(prop_presymptomatic)
   )
   expect_equal(
