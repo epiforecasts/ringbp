@@ -15,9 +15,11 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: coverage-data
-          path: ./
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Extract coverage data
+        run: unzip -o coverage-data.zip
 
       - name: Get PR info
         id: pr
