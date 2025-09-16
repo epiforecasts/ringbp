@@ -12,12 +12,14 @@ incubation_to_generation_time(
 )
 }
 \arguments{
-\item{symptom_onset_time}{a positive \code{numeric} vector: samples from
-the incubation period distribution}
+\item{symptom_onset_time}{a positive \code{numeric} vector: symptom onset time(s)
+of the infector(s) in the case data. The symptom onset times are generated
+by sampling from the incubation period.}
 
-\item{exposure_time}{a non-negative \code{numeric} vector: exposure samples
-from the case data. Used to convert symptom onset in absolute time to
-relative time for each infectee. Default is for all exposure times to be 0.}
+\item{exposure_time}{a non-negative \code{numeric} vector: time of exposure of
+the infector(s) in the case data. Used to convert symptom onset in absolute
+time to relative time for each infectee. Default is for all exposure
+times to be 0.}
 
 \item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
 distribution}
@@ -35,7 +37,11 @@ conditioning to be greater than \code{latent_period}.}
 }
 \value{
 a \code{numeric} vector of equal length to the vector input to
-\code{symptom_onset_time}
+\code{symptom_onset_time}: the i-th element of the vector contains a sample
+from the generation time distribution of an individual with incubation
+period given by the i-th element of the \code{symptom_onset_time} vector. The
+lower bound of the output generation time vector is set by the
+\code{latent_period}, to prevent transmission before becoming infectious.
 }
 \description{
 This is done assuming the generation time distribution of each individual is

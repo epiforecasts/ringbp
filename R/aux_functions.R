@@ -4,17 +4,23 @@
 #' given by a skew-normal distribution with a location parameter equal to their
 #' incubation period.
 #'
-#' @param symptom_onset_time a positive `numeric` vector: samples from
-#'   the incubation period distribution
-#' @param exposure_time a non-negative `numeric` vector: exposure samples
-#'   from the case data. Used to convert symptom onset in absolute time to
-#'   relative time for each infectee. Default is for all exposure times to be 0.
+#' @param symptom_onset_time a positive `numeric` vector: symptom onset time(s)
+#'   of the infector(s) in the case data. The symptom onset times are generated
+#'   by sampling from the incubation period.
+#' @param exposure_time a non-negative `numeric` vector: time of exposure of
+#'   the infector(s) in the case data. Used to convert symptom onset in absolute
+#'   time to relative time for each infectee. Default is for all exposure
+#'   times to be 0.
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
 #'   distribution
 #' @inheritParams delay_opts
 #'
 #' @return a `numeric` vector of equal length to the vector input to
-#'   `symptom_onset_time`
+#'   `symptom_onset_time`: the i-th element of the vector contains a sample
+#'   from the generation time distribution of an individual with incubation
+#'   period given by the i-th element of the `symptom_onset_time` vector. The
+#'   lower bound of the output generation time vector is set by the
+#'   `latent_period`, to prevent transmission before becoming infectious.
 #' @export
 #' @importFrom sn rsn
 #'
