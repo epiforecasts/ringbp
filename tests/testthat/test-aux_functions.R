@@ -32,6 +32,29 @@ test_that("incubation_to_generation_time parameters behave as expected", {
   expect_lt(mean(r5), median(r5))
 })
 
+test_that("incubation_to_generation_time works with latent period", {
+  latent_period <- 2
+  expect_gte(
+    min(incubation_to_generation_time(
+      symptom_onset_time = c(1, 2, 3, 4, 5),
+      exposure_time = rep(0.5, 5),
+      alpha = 2,
+      latent_period = latent_period
+    )),
+    latent_period
+  )
+})
+
+test_that("incubation_to_generation_time errors with latent period", {
+  expect_error(
+    incubation_to_generation_time(
+      symptom_onset_time = 5,
+      alpha = -5, # ~94% presymptomatic
+      latent_period = 10
+    ), regexp = "(Cannot sample generation time)*(incubation)*(latent)"
+  )
+})
+
 test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_time", {
   # ~50% presymptomatic
   incubation_period <- 5
