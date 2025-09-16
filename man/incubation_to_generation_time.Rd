@@ -6,8 +6,8 @@
 \usage{
 incubation_to_generation_time(
   symptom_onset_time,
-  alpha,
   exposure_time = rep(0, length(symptom_onset_time)),
+  alpha,
   latent_period = 0
 )
 }
@@ -15,12 +15,12 @@ incubation_to_generation_time(
 \item{symptom_onset_time}{a positive \code{numeric} vector: samples from
 the incubation period distribution}
 
-\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
-distribution}
-
 \item{exposure_time}{a non-negative \code{numeric} vector: exposure samples
 from the case data. Used to convert symptom onset in absolute time to
 relative time for each infectee. Default is for all exposure times to be 0.}
+
+\item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
+distribution}
 
 \item{latent_period}{a non-negative \code{numeric} scalar: the minimum time
 between an individual being exposed and becoming infectious. It is a

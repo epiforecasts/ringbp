@@ -6,11 +6,11 @@
 #'
 #' @param symptom_onset_time a positive `numeric` vector: samples from
 #'   the incubation period distribution
-#' @param alpha a `numeric` scalar: skew parameter of the skew-normal
-#'   distribution
 #' @param exposure_time a non-negative `numeric` vector: exposure samples
 #'   from the case data. Used to convert symptom onset in absolute time to
 #'   relative time for each infectee. Default is for all exposure times to be 0.
+#' @param alpha a `numeric` scalar: skew parameter of the skew-normal
+#'   distribution
 #' @inheritParams delay_opts
 #'
 #' @return a `numeric` vector of equal length to the vector input to
@@ -24,8 +24,8 @@
 #'   alpha = 2
 #' )
 incubation_to_generation_time <- function(symptom_onset_time,
-                                          alpha,
                                           exposure_time = rep(0, length(symptom_onset_time)),
+                                          alpha,
                                           latent_period = 0) {
 
   checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
