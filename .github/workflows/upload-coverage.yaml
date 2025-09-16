@@ -15,8 +15,8 @@ jobs:
         uses: dawidd6/action-download-artifact@v6
         with:
           name: coverage-data
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          run_id: ${{ github.event.workflow_run.id }}
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v5
