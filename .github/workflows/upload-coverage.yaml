@@ -12,36 +12,11 @@ jobs:
 
     steps:
       - name: Download coverage data
-        uses: actions/download-artifact@v5
+        uses: dawidd6/action-download-artifact@v6
         with:
           name: coverage-data
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
-
-      - name: Extract coverage data
-        run: unzip -o coverage-data.zip
-
-      - name: Get PR info
-        id: pr
-        run: |
-          if [ -f pr_number.txt ]; then
-            echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
-            echo "sha=$(cat pr_sha.txt)" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Checkout PR commit
-        if: steps.pr.outputs.sha != ''
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ steps.pr.outputs.sha }}
-
-      - name: Checkout triggering commit (fallback)
-        if: steps.pr.outputs.sha == ''
-        uses: actions/checkout@v5
-        with:
-          # head_sha exists on workflow_run events; fallback to github.sha
-          # if needed
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v5

@@ -58,17 +58,8 @@ jobs:
           covr::to_cobertura(cov, "coverage.xml")
         shell: Rscript {0}
 
-      - name: Save PR info
-        run: |
-          echo "${{ github.event.number }}" > pr_number.txt
-          echo "${{ github.event.pull_request.head.sha }}" > pr_sha.txt
-        if: github.event_name == 'pull_request'
-
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
           name: coverage-data
-          path: |
-            coverage.xml
-            pr_number.txt
-            pr_sha.txt
+          path: coverage.xml
