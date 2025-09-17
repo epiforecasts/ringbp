@@ -1,5 +1,3 @@
-context("Test basic usage")
-
 set.seed(1234567)
 
 test_that("A basic sim returns the correct object", {

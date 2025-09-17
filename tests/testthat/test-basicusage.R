@@ -1,5 +1,3 @@
-context("Test basic usage")
-
 set.seed(20200410)
 res <- ringbp::scenario_sim(
   n = 2,
