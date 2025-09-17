@@ -24,7 +24,7 @@ test_that("scenario_sim runs as expected", {
       cap_cases = 2000
     )
   )
-  expect_snapshot(res)
+  expect_snapshot(print(res, topn = 100))
   expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
   expect_identical(
     vapply(res, class, FUN.VALUE = character(1)),
