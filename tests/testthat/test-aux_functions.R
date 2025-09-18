@@ -1,5 +1,3 @@
-context("Test all aux functions")
-
 set.seed(515)
 
 test_that("incubation_to_generation_time parameters behave as expected", {
