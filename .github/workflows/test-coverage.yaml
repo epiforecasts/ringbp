@@ -55,11 +55,11 @@ jobs:
       - name: Test coverage
         run: |
           cov <- covr::package_coverage(quiet = FALSE)
-          covr::to_cobertura(cov, "coverage.xml")
+          covr::to_codecov(cov, "coverage.json")
         shell: Rscript {0}
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
           name: coverage-data
-          path: coverage.xml
+          path: coverage.json
