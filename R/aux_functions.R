@@ -4,32 +4,70 @@
 #' given by a skew-normal distribution with a location parameter equal to their
 #' incubation period.
 #'
-#' @param incubation_period_samples a positive `numeric` vector: samples from
-#'   the incubation period distribution
+#' @param symptom_onset_time a positive `numeric` vector: symptom onset time(s)
+#'   of the infector(s) in the case data. The symptom onset times are generated
+#'   by sampling from the incubation period.
+#' @param exposure_time a non-negative `numeric` vector: time of exposure of
+#'   the infector(s) in the case data. Used to convert symptom onset in absolute
+#'   time to relative time for each infectee. Default is for all exposure
+#'   times to be 0.
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
 #'   distribution
+#' @inheritParams delay_opts
 #'
 #' @return a `numeric` vector of equal length to the vector input to
-#'   `incubation_period_samples`
+#'   `symptom_onset_time`: the i-th element of the vector contains a sample
+#'   from the generation time distribution of an individual with incubation
+#'   period given by the i-th element of the `symptom_onset_time` vector. The
+#'   lower bound of the output generation time vector is set by the
+#'   `latent_period`, to prevent transmission before becoming infectious.
 #' @export
 #' @importFrom sn rsn
 #'
 #' @examples
 #' incubation_to_generation_time(
-#'   incubation_period_samples = c(1, 2, 3, 4, 1),
+#'   symptom_onset_time = c(1, 2, 3, 4, 1),
 #'   alpha = 2
 #' )
-incubation_to_generation_time <- function(incubation_period_samples, alpha) {
+incubation_to_generation_time <- function(symptom_onset_time,
+                                          exposure_time = rep(0, length(symptom_onset_time)),
+                                          alpha,
+                                          latent_period = 0) {
 
-  checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
   checkmate::assert_number(alpha, finite = TRUE)
+  checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
-  out <- sn::rsn(n = length(incubation_period_samples),
-                 xi = incubation_period_samples,
-                 omega = 2,
-                 alpha = alpha)
+  # convert absolute to relative (individual) symptom onset time using exposure
+  rel_symptom_onset_time <- symptom_onset_time - exposure_time
 
-  pmax(1, out)
+  # initialise generation time vector to trigger sampling loop
+  gt <- rep(-Inf, times = length(rel_symptom_onset_time))
+  # loop counter to stop infinite loop
+  counter <- 0
+  # ensure no negative or pre-infectious generation times
+  while (any(gt < latent_period)) {
+    resample_idx <- gt < latent_period
+    gt[resample_idx] <- sn::rsn(
+      n = sum(resample_idx),
+      xi = rel_symptom_onset_time[resample_idx],
+      omega = 2,
+      alpha = alpha
+    )
+    # arbitrary large number to break while loop and throw error
+    if (counter > 1000) {
+      stop(
+        "Cannot sample generation time given `incubation_period` and ",
+        "`latent_period` specified. Please try with different values.",
+        call. = FALSE
+      )
+    }
+    counter <- counter + 1
+  }
+
+  # convert generation time to absolute time and return
+  gt + exposure_time
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
