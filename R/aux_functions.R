@@ -64,54 +64,12 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
   res$minimum
 }
 
-#' Calculate proportion of runs that have controlled outbreak
+#' Outbreak extinction functions
 #'
-#' @inherit detect_extinct details
+#' @description
+#' `extinct_prob()`: Calculate proportion of runs that have controlled outbreak
 #'
-#' @inheritParams detect_extinct
-#'
-#' @return a single `numeric` with the probability of extinction
-#' @export
-#'
-#' @examples
-#' res <- scenario_sim(
-#'   n = 10,
-#'   initial_cases = 1,
-#'   offspring = offspring_opts(
-#'     community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
-#'     isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
-#'   ),
-#'   delays = delay_opts(
-#'     incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
-#'     onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
-#'   ),
-#'   event_probs = event_prob_opts(
-#'     asymptomatic = 0,
-#'     presymptomatic_transmission = 0.5,
-#'     symptomatic_ascertained = 0.2
-#'   ),
-#'   interventions = intervention_opts(quarantine = FALSE),
-#'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
-#' )
-#' extinct_prob(res)
-extinct_prob <- function(scenario,
-                         extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
-
-  checkmate::assert_data_frame(scenario)
-  checkmate::assert_numeric(extinction_week)
-  stopifnot(
-    "`extinction_week` not in simulated outbreak data" =
-      all(extinction_week %in% scenario$week)
-  )
-
-  n <- max(scenario$sim)
-
-  extinct_runs <- detect_extinct(scenario, extinction_week)
-  sum(extinct_runs$extinct) / n
-}
-
-
-#' Calculate whether outbreaks went extinct or not
+#' `detect_extinct()`: Calculate whether outbreaks went extinct or not
 #'
 #' @details
 #' The data passed to `scenario` has to be produced by [scenario_sim()].
@@ -130,13 +88,15 @@ extinct_prob <- function(scenario,
 #'   detect extinction in the last 2 weeks of the simulated outbreak
 #'   `(max(scenario$week) - 1):max(scenario$week)` (i.e. the penultimate and
 #'   last week of the outbreak).
+#'
 #' @importFrom data.table setDT fifelse
 #'
-#' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
+#' @return
+#' `extinct_prob()`: a single `numeric` with the probability of extinction
+#'
+#' `detect_extinct()`: a `data.table`, with two columns `sim` and `extinct`, for a binary
 #' classification of whether the outbreak went extinct in each simulation
 #' replicate. `1` is an outbreak that went extinct, `0` if not.
-#' @autoglobal
-#' @export
 #'
 #' @examples
 #' res <- scenario_sim(
@@ -158,7 +118,36 @@ extinct_prob <- function(scenario,
 #'   interventions = intervention_opts(quarantine = FALSE),
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
-#' detect_extinct(scenario = res)
+#'
+#' # calculate probability of extinction
+#' extinct_prob(res)
+#'
+#' # determine if each outbreak simulation replicate has gone extinct
+#' detect_extinct(res)
+#' @name extinction
+NULL
+
+#' @rdname extinction
+#' @export
+extinct_prob <- function(scenario,
+                         extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
+
+  checkmate::assert_data_frame(scenario)
+  checkmate::assert_numeric(extinction_week)
+  stopifnot(
+    "`extinction_week` not in simulated outbreak data" =
+      all(extinction_week %in% scenario$week)
+  )
+
+  n <- max(scenario$sim)
+
+  extinct_runs <- detect_extinct(scenario, extinction_week)
+  sum(extinct_runs$extinct) / n
+}
+
+#' @rdname extinction
+#' @autoglobal
+#' @export
 detect_extinct <- function(scenario,
                            extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
 
