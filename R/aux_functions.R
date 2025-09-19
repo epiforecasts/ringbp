@@ -160,7 +160,7 @@ detect_extinct <- function(scenario, extinction_week = 12:16) {
 
   scenario <- setDT(scenario)
   scenario <- scenario[week %in% extinction_week]
-  out <- scenario[, list(
+  scenario[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim][]
 }
