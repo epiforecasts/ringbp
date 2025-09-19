@@ -4,13 +4,19 @@
 \alias{detect_extinct}
 \title{Calculate whether outbreaks went extinct or not}
 \usage{
-detect_extinct(scenario, extinction_week = 12:16)
+detect_extinct(
+  scenario,
+  extinction_week = (max(scenario$week) - 1):max(scenario$week)
+)
 }
 \arguments{
 \item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
 \item{extinction_week}{a positive \code{integer} vector: giving the (zero indexed)
-week range to test for whether an extinction occurred. Default is \code{12:16}.}
+week range to test for whether an extinction occurred. Default is to
+detect extinction in the last 2 weeks of the simulated outbreak
+\code{(max(scenario$week) - 1):max(scenario$week)} (i.e. the penultimate and
+last week of the outbreak).}
 }
 \value{
 A \code{data.table}, with two columns \code{sim} and \code{extinct}, for a binary

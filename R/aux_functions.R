@@ -94,7 +94,8 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' extinct_prob(res)
-extinct_prob <- function(scenario, extinction_week = 12:16) {
+extinct_prob <- function(scenario,
+                         extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_numeric(extinction_week)
@@ -125,7 +126,10 @@ extinct_prob <- function(scenario, extinction_week = 12:16) {
 #'
 #' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
 #' @param extinction_week a positive `integer` vector: giving the (zero indexed)
-#'   week range to test for whether an extinction occurred. Default is `12:16`.
+#'   week range to test for whether an extinction occurred. Default is to
+#'   detect extinction in the last 2 weeks of the simulated outbreak
+#'   `(max(scenario$week) - 1):max(scenario$week)` (i.e. the penultimate and
+#'   last week of the outbreak).
 #' @importFrom data.table setDT fifelse
 #'
 #' @return A `data.table`, with two columns `sim` and `extinct`, for a binary
@@ -155,7 +159,8 @@ extinct_prob <- function(scenario, extinction_week = 12:16) {
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #' detect_extinct(scenario = res)
-detect_extinct <- function(scenario, extinction_week = 12:16) {
+detect_extinct <- function(scenario,
+                           extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_integerish(extinction_week)
