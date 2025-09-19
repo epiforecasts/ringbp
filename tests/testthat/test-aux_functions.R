@@ -83,6 +83,9 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   r1 <- extinct_prob(res)
   expect_true(r1 <= 1)
@@ -131,6 +134,9 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   r3 <- extinct_prob(res3)
   expect_equal(r3, 0)
@@ -155,6 +161,9 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   r3 <- extinct_prob(res3)
   expect_equal(r3, 1)
@@ -182,6 +191,9 @@ test_that("extinct_prob extinction_week argument works", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
@@ -262,6 +274,9 @@ test_that("detect_extinct works", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
