@@ -153,24 +153,11 @@ NULL
 extinct_prob <- function(scenario,
                          extinction_week = max(scenario$week) - 1) {
 
-  checkmate::assert_data_frame(scenario)
-  checkmate::assert_numeric(extinction_week)
-
-  if (length(extinction_week) == 1) {
-    extinction_week <- extinction_week:max(scenario$week)
-  } else if (length(extinction_week) == 2) {
-    extinction_week <- min(extinction_week):max(extinction_week)
-  }
-
-  stopifnot(
-    "`extinction_week` not in simulated outbreak data" =
-      all(extinction_week %in% scenario$week)
+  extinct_runs <- detect_extinct(
+    scenario = scenario,
+    extinction_week = extinction_week
   )
-
-  n <- max(scenario$sim)
-
-  extinct_runs <- detect_extinct(scenario, extinction_week)
-  sum(extinct_runs$extinct) / n
+  sum(extinct_runs$extinct) / max(scenario$sim)
 }
 
 #' @rdname extinction
@@ -187,7 +174,10 @@ detect_extinct <- function(scenario,
   } else if (length(extinction_week) == 2) {
     extinction_week <- min(extinction_week):max(extinction_week)
   }
-
+  stopifnot(
+    "`extinction_week` not in simulated outbreak data" =
+      all(extinction_week %in% scenario$week)
+  )
   cap_cases <- attr(scenario, which = "cap_cases")
 
   scenario <- setDT(scenario)
