@@ -83,11 +83,32 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #' from subsetting the `data.table`).
 #'
 #' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
-#' @param extinction_week a positive `integer` vector: giving the (zero indexed)
-#'   week range to test for whether an extinction occurred. Default is to
-#'   detect extinction in the last 2 weeks of the simulated outbreak
-#'   `(max(scenario$week) - 1):max(scenario$week)` (i.e. the penultimate and
-#'   last week of the outbreak).
+#' @param extinction_week a positive `integer` scalar or `integer` vector to
+#'   test if the outbreak has gone extinct (i.e. no new cases) by this week
+#'   (zero indexed):
+#'   * A single `integer` to to test if extinction has occurred by this week.
+#'     For example, `extinction_week = 5` tests whether the outbreak is
+#'     extinct by week 5 (inclusive) until the end of the outbreak. Default is
+#'     to detect extinction in the last 2 weeks of the simulated outbreak:
+#'     `max(scenario$week) - 1` (i.e. the penultimate and last week of the
+#'     outbreak).
+#'   * An `integer` vector of length two can be supplied to provide the lower
+#'     and upper bounds (inclusive) of the week range to test for whether
+#'     extinction occurred by this window. For example
+#'     `extinction_week = c(5, 10)` will test whether the outbreak went extinct
+#'     by week 5 and there we no new cases between weeks 5 and 10 (inclusive).
+#'   * An `integer` vector of length _n_ can be supplied to provide the weeks
+#'     to test for whether extinction occurred by this window. For example
+#'     `extinction_week = 12:16` will test that there are no new infections
+#'     between 12 and 16 weeks after the initial cases (inclusive). These
+#'     integer sequences will most likely be contiguous but the function
+#'     does allow non-contiguous integer sequences.
+#'
+#'   If extinction occurs before the `extinction_week` window then the outbreak
+#'   extinction is considered extinct, however, if the extinction occurs within
+#'   the `extinction_week` window it is not considered extinct. Therefore,
+#'   using a single `integer` for `extinction_week` and thinking of this as
+#'   "_has the outbreak gone extinct by week X_".
 #'
 #' @importFrom data.table setDT fifelse
 #'
@@ -130,10 +151,17 @@ NULL
 #' @rdname extinction
 #' @export
 extinct_prob <- function(scenario,
-                         extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
+                         extinction_week = max(scenario$week) - 1) {
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_numeric(extinction_week)
+
+  if (length(extinction_week) == 1) {
+    extinction_week <- extinction_week:max(scenario$week)
+  } else if (length(extinction_week) == 2) {
+    extinction_week <- min(extinction_week):max(extinction_week)
+  }
+
   stopifnot(
     "`extinction_week` not in simulated outbreak data" =
       all(extinction_week %in% scenario$week)
@@ -149,10 +177,16 @@ extinct_prob <- function(scenario,
 #' @autoglobal
 #' @export
 detect_extinct <- function(scenario,
-                           extinction_week = (max(scenario$week) - 1):max(scenario$week)) {
+                           extinction_week = max(scenario$week) - 1) {
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_integerish(extinction_week)
+
+  if (length(extinction_week) == 1) {
+    extinction_week <- extinction_week:max(scenario$week)
+  } else if (length(extinction_week) == 2) {
+    extinction_week <- min(extinction_week):max(extinction_week)
+  }
 
   cap_cases <- attr(scenario, which = "cap_cases")
 

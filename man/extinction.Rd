@@ -6,24 +6,41 @@
 \alias{detect_extinct}
 \title{Outbreak extinction functions}
 \usage{
-extinct_prob(
-  scenario,
-  extinction_week = (max(scenario$week) - 1):max(scenario$week)
-)
+extinct_prob(scenario, extinction_week = max(scenario$week) - 1)
 
-detect_extinct(
-  scenario,
-  extinction_week = (max(scenario$week) - 1):max(scenario$week)
-)
+detect_extinct(scenario, extinction_week = max(scenario$week) - 1)
 }
 \arguments{
 \item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
-\item{extinction_week}{a positive \code{integer} vector: giving the (zero indexed)
-week range to test for whether an extinction occurred. Default is to
-detect extinction in the last 2 weeks of the simulated outbreak
-\code{(max(scenario$week) - 1):max(scenario$week)} (i.e. the penultimate and
-last week of the outbreak).}
+\item{extinction_week}{a positive \code{integer} scalar or \code{integer} vector to
+test if the outbreak has gone extinct (i.e. no new cases) by this week
+(zero indexed):
+\itemize{
+\item A single \code{integer} to to test if extinction has occurred by this week.
+For example, \code{extinction_week = 5} tests whether the outbreak is
+extinct by week 5 (inclusive) until the end of the outbreak. Default is
+to detect extinction in the last 2 weeks of the simulated outbreak:
+\code{max(scenario$week) - 1} (i.e. the penultimate and last week of the
+outbreak).
+\item An \code{integer} vector of length two can be supplied to provide the lower
+and upper bounds (inclusive) of the week range to test for whether
+extinction occurred by this window. For example
+\code{extinction_week = c(5, 10)} will test whether the outbreak went extinct
+by week 5 and there we no new cases between weeks 5 and 10 (inclusive).
+\item An \code{integer} vector of length \emph{n} can be supplied to provide the weeks
+to test for whether extinction occurred by this window. For example
+\code{extinction_week = 12:16} will test that there are no new infections
+between 12 and 16 weeks after the initial cases (inclusive). These
+integer sequences will most likely be contiguous but the function
+does allow non-contiguous integer sequences.
+}
+
+If extinction occurs before the \code{extinction_week} window then the outbreak
+extinction is considered extinct, however, if the extinction occurs within
+the \code{extinction_week} window it is not considered extinct. Therefore,
+using a single \code{integer} for \code{extinction_week} and thinking of this as
+"\emph{has the outbreak gone extinct by week X}".}
 }
 \value{
 \code{extinct_prob()}: a single \code{numeric} with the probability of extinction
