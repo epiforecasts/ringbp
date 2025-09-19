@@ -132,7 +132,7 @@ test_that("extinct_prob works as expected", {
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
-  r3 <- extinct_prob(res3, cap)
+  r3 <- extinct_prob(res3)
   expect_equal(r3, 0)
 
   # r0 of 0, should always go extinct.
