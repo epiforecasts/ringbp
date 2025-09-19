@@ -15,7 +15,7 @@
 #' @autoglobal
 #' @export
 #'
-#' @importFrom data.table rbindlist
+#' @importFrom data.table rbindlist setattr
 #'
 #' @examples
 #' set.seed(1)
@@ -119,6 +119,9 @@ outbreak_model <- function(initial_cases,
   weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
                                                           na.rm = TRUE),
                                         cases_per_gen = list(cases_in_gen_vect))]
+
+  setattr(weekly_cases, name = "extinct", value = extinct)
+
   # return
   weekly_cases[]
 }

@@ -77,10 +77,15 @@ scenario_sim <- function(n,
     simplify = FALSE
   )
 
+  extinct <- vapply(
+    res, attr, FUN.VALUE = logical(1), which = "extinct", exact = TRUE
+  )
+
   # bind output together and add simulation index
   res <- data.table::rbindlist(res, idcol = "sim")
 
   setattr(res, name = "cap_cases", value = sim$cap_cases)
+  setattr(res, name = "extinct", value = extinct)
 
   res[]
 }
