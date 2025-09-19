@@ -110,7 +110,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'   using a single `integer` for `extinction_week` and thinking of this as
 #'   "_has the outbreak gone extinct by week X_".
 #'
-#' @importFrom data.table setDT fifelse
+#' @importFrom data.table setDT fifelse data.table
 #'
 #' @return
 #' `extinct_prob()`: a single `numeric` with the probability of extinction
@@ -165,6 +165,16 @@ extinct_prob <- function(scenario,
 #' @export
 detect_extinct <- function(scenario,
                            extinction_week = max(scenario$week) - 1) {
+
+  extinct <- attr(scenario, which = "extinct", exact = TRUE)
+  if (!is.null(extinct)) {
+    return(
+      data.table(
+        sim = 1:max(scenario$sim),
+        extinct = as.integer(extinct)
+      )
+    )
+  }
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_integerish(extinction_week)
