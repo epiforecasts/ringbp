@@ -98,6 +98,10 @@ extinct_prob <- function(scenario, extinction_week = 12:16) {
 
   checkmate::assert_data_frame(scenario)
   checkmate::assert_numeric(extinction_week)
+  stopifnot(
+    "`extinction_week` not in simulated outbreak data" =
+      all(extinction_week %in% scenario$week)
+  )
 
   n <- max(scenario$sim)
 
