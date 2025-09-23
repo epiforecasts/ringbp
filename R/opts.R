@@ -67,10 +67,11 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   sets the minimum generation time in the model. Default is 0 (i.e.
 #'   an individual becomes immediately infectious after being infected).
 #'
-#'   If `latent_period` is positive then the generation time distribution may
-#'   become left-truncated depending on the `incubation_period` distribution
-#'   and `presymptomatic_transmission` (in [event_prob_opts()]), due to the
-#'   conditioning to be greater than `latent_period`.
+#'   If `latent_period` is positive then generation times are sampled
+#'   conditional on `gt >= latent_period` (i.e. left-truncated at
+#'   `latent_period`). This may reduce the realised proportion of
+#'   presymptomatic transmission, depending on the `incubation_period`
+#'   distribution and `presymptomatic_transmission` (in [event_prob_opts()]).
 #'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
@@ -90,11 +91,11 @@ delay_opts <- function(incubation_period,
 
   if (latent_period > 0) {
     warning(
-      "A latent_period > 0 may cause the proportion of presymptomatic ",
-      "transmission to be less than specified.\n",
-      "(`presymptomatic_transmission` in `event_prob_opts()`)\nSee the ",
-      "following warning for realised proportion of presymptomatic ",
-      "transmission.",
+      "A `latent_period` > 0 may cause the realised proportion of ",
+      "presymptomatic transmission to be less than specified.\n",
+      "(`presymptomatic_transmission` in `event_prob_opts()`)\n",
+      "The realised proportion of presymptomatic transmission is printed ",
+      "after the simulation.",
       call. = FALSE
     )
   }

@@ -1,8 +1,9 @@
-#' Samples the generation time for given incubation period samples
+#' Convert symptom onset times to generation times
 #'
-#' This is done assuming the generation time distribution of each individual is
-#' given by a skew-normal distribution with a location parameter equal to their
-#' incubation period.
+#' Samples generation times from a skew-normal distribution based on relative
+#' symptom onset times (`symptom_onset_time` - `exposure_time`), ensuring all
+#' generation times are at least `latent_period`. The location parameter of the
+#' skew-normal distribution is set to the relative symptom onset times.
 #'
 #' @param symptom_onset_time a positive `numeric` vector: symptom onset time(s)
 #'   of the infector(s) in the case data. The symptom onset times are generated
@@ -12,14 +13,15 @@
 #'   time to relative time for each infectee. Default is for all exposure
 #'   times to be 0.
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
-#'   distribution
+#'   distribution. Used to model the relationship between incubation period and
+#'   generation time.
 #' @inheritParams delay_opts
 #'
-#' @return a `numeric` vector of equal length to the vector input to
-#'   `symptom_onset_time`: the i-th element of the vector contains a sample
-#'   from the generation time distribution of an individual with incubation
-#'   period given by the i-th element of the `symptom_onset_time` vector. The
-#'   lower bound of the output generation time vector is set by the
+#' @return a `numeric` vector of generation times of equal length to the vector
+#'   input to `symptom_onset_time`: the i-th element of the vector contains a
+#'   sample from the generation time distribution of an individual with
+#'   incubation period given by the i-th element of the `symptom_onset_time`
+#'   vector. The lower bound of the output generation time vector is set by the
 #'   `latent_period`, to prevent transmission before becoming infectious.
 #' @export
 #' @importFrom sn rsn
@@ -58,8 +60,10 @@ incubation_to_generation_time <- function(symptom_onset_time,
     # arbitrary large number to break while loop and throw error
     if (counter > 1000) {
       stop(
-        "Cannot sample generation time given `incubation_period` and ",
-        "`latent_period` specified. Please try with different values.",
+        "Unable to sample generation times satisfying `latent_period` >= ",
+        "`incubation_period`.\nConsider reducing the `latent_period` or ",
+        "checking parameter compatibility with the `incubation_period` ",
+        "distribution.",
         call. = FALSE
       )
     }
