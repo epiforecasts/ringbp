@@ -79,9 +79,10 @@ outbreak_step <- function(case_data,
   # For each case in case_data, draw new_cases from a negative binomial
   # distribution with an R0 and dispersion dependent on if isolated = TRUE
   case_data[, new_cases := fcase(
-    isolated, offspring$isolated(.N),
-    asymptomatic, offspring$asymptomatic(.N),
-    default = offspring$community(.N)
+    isolated & !sampled, offspring$isolated(.N),
+    asymptomatic & !sampled, offspring$asymptomatic(.N),
+    !isolated & !asymptomatic & !sampled, offspring$community(.N),
+    default = 0
   )]
 
   # Select cases that have generated any new cases
@@ -124,7 +125,8 @@ outbreak_step <- function(case_data,
     # will draw this for infector_asymptomatic == FALSE
     missed = TRUE,
     isolated = FALSE,
-    new_cases = NA
+    new_cases = NA,
+    sampled = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
@@ -172,6 +174,7 @@ outbreak_step <- function(case_data,
   # Everyone in case_data so far has had their chance to infect and are
   # therefore considered isolated
   case_data$isolated <- TRUE
+  case_data[, sampled := TRUE]
 
   # bind original cases + new secondary cases
   case_data <- data.table::rbindlist(list(case_data, prob_samples),

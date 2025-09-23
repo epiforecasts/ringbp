@@ -53,7 +53,8 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     missed = TRUE,
     onset = delays$incubation_period(initial_cases),
     new_cases = NA,
-    isolated_time = Inf
+    isolated_time = Inf,
+    sampled = FALSE
   )
 
   # isolate each symptomatic case after an onset-to-isolation delay after

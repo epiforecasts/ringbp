@@ -17,6 +17,7 @@ utils::globalVariables(c(
   "onset", # <outbreak_setup>
   "new_cases", # <outbreak_step>
   "isolated", # <outbreak_step>
+  "sampled", # <outbreak_step>
   "asymptomatic", # <outbreak_step>
   "onset", # <outbreak_step>
   "exposure", # <outbreak_step>
