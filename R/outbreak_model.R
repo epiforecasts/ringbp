@@ -109,8 +109,16 @@ outbreak_model <- function(initial_cases,
 
   # effective_r0_vect and cases_in_gen_vect grow together so only check one
   if (length(effective_r0_vect) == 0) {
-    effective_r0_vect <- 0
-    cases_in_gen_vect <- 0
+    warning(
+      "The outbreak simulation ran for zero generations (i.e. no ",
+      "transmission from initial cases) because either:\n 1) the number of ",
+      "initial cases exceeded the `cap_cases`, or \n 2) the initial case(s) ",
+      "had a symptom onset time greater than the `cap_max_days`.\n See ",
+      "`?sim_opts()` for help.",
+      call. = FALSE
+    )
+    effective_r0_vect <- NA_real_
+    cases_in_gen_vect <- NA_real_
   }
 
   # Add effective R0
