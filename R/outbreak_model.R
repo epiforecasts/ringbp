@@ -105,6 +105,8 @@ outbreak_model <- function(initial_cases,
     ][, mean(exposure < i.onset)]
 
     warning(
+      "The proportion of presymptomatic transmission supplied is: ",
+      event_probs$presymptomatic_transmission, "\n",
       "The realised proportion of presymptomatic transmission is: ",
       signif(prop_presymptomatic_transmission, digits = 3),
       call. = FALSE
