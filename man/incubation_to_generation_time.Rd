@@ -2,29 +2,58 @@
 % Please edit documentation in R/aux_functions.R
 \name{incubation_to_generation_time}
 \alias{incubation_to_generation_time}
-\title{Samples the generation time for given incubation period samples}
+\title{Convert symptom onset times to generation times}
 \usage{
-incubation_to_generation_time(incubation_period_samples, alpha)
+incubation_to_generation_time(
+  symptom_onset_time,
+  exposure_time = rep(0, length(symptom_onset_time)),
+  alpha,
+  latent_period = 0
+)
 }
 \arguments{
-\item{incubation_period_samples}{a positive \code{numeric} vector: samples from
-the incubation period distribution}
+\item{symptom_onset_time}{a positive \code{numeric} vector: symptom onset time(s)
+of the infector(s) in the case data. The symptom onset times are generated
+by sampling from the incubation period.}
+
+\item{exposure_time}{a non-negative \code{numeric} vector: time of exposure of
+the infector(s) in the case data. Used to convert symptom onset in absolute
+time to relative time for each infectee. Default is for all exposure
+times to be 0.}
 
 \item{alpha}{a \code{numeric} scalar: skew parameter of the skew-normal
-distribution}
+distribution. Used to model the relationship between incubation period and
+generation time.}
+
+\item{latent_period}{a non-negative \code{numeric} scalar: the minimum time
+between an individual being exposed and becoming infectious. It is a
+population-wide parameter, with no variability between individuals. It
+sets the minimum generation time in the model. Default is 0 (i.e.
+an individual becomes immediately infectious after being infected).
+
+If \code{latent_period} is positive then generation times are sampled
+conditional on \code{gt >= latent_period} (i.e. left-truncated at
+\code{latent_period}). This may reduce the realised proportion of
+presymptomatic transmission, depending on the \code{incubation_period}
+distribution and \code{presymptomatic_transmission} (in \code{\link[=event_prob_opts]{event_prob_opts()}}).}
 }
 \value{
-a \code{numeric} vector of equal length to the vector input to
-\code{incubation_period_samples}
+a \code{numeric} vector of generation times of equal length to the vector
+input to \code{symptom_onset_time}: the i-th element of the vector contains a
+sample from the generation time distribution of an individual with
+incubation period given by the i-th element of the \code{symptom_onset_time}
+vector. The lower bound of the output generation time vector is set by the
+\code{latent_period}, to prevent transmission before becoming infectious.
 }
 \description{
-This is done assuming the generation time distribution of each individual is
-given by a skew-normal distribution with a location parameter equal to their
-incubation period.
+Samples generation times from a skew-normal distribution based on relative
+symptom onset times (\code{symptom_onset_time} - \code{exposure_time}), ensuring all
+generation times are at least \code{latent_period}. The location parameter of the
+skew-normal distribution is set to the relative symptom onset times.
 }
 \examples{
 incubation_to_generation_time(
-  incubation_period_samples = c(1, 2, 3, 4, 1),
+  symptom_onset_time = c(1, 2, 3, 4, 1),
   alpha = 2
 )
 }

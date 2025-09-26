@@ -4,7 +4,7 @@
 \alias{delay_opts}
 \title{Create a list of delay distributions to run the \pkg{ringbp} model}
 \usage{
-delay_opts(incubation_period, onset_to_isolation)
+delay_opts(incubation_period, onset_to_isolation, latent_period = 0)
 }
 \arguments{
 \item{incubation_period}{a \code{function}: a random number generating
@@ -16,6 +16,18 @@ output).}
 \item{onset_to_isolation}{a \code{function}: a random number generating
 \code{function} that accepts a single \code{integer} argument specifying the
 length of the \code{function} output.}
+
+\item{latent_period}{a non-negative \code{numeric} scalar: the minimum time
+between an individual being exposed and becoming infectious. It is a
+population-wide parameter, with no variability between individuals. It
+sets the minimum generation time in the model. Default is 0 (i.e.
+an individual becomes immediately infectious after being infected).
+
+If \code{latent_period} is positive then generation times are sampled
+conditional on \code{gt >= latent_period} (i.e. left-truncated at
+\code{latent_period}). This may reduce the realised proportion of
+presymptomatic transmission, depending on the \code{incubation_period}
+distribution and \code{presymptomatic_transmission} (in \code{\link[=event_prob_opts]{event_prob_opts()}}).}
 }
 \value{
 A \code{list} with class \verb{<ringbp_delay_opts>}.
