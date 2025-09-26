@@ -144,6 +144,7 @@ event_prob_opts <- function(asymptomatic,
 
   opts <- list(
     asymptomatic = asymptomatic,
+    presymptomatic_transmission = presymptomatic_transmission,
     alpha = alpha,
     symptomatic_ascertained = symptomatic_ascertained
   )
