@@ -47,11 +47,12 @@ incubation_to_generation_time <- function(symptom_onset_time,
   # initialise generation time vector to trigger sampling loop
   gt <- rep(-Inf, times = length(rel_symptom_onset_time))
   # loop counter to stop infinite loop
-  counter <- 0; limit <- 1000
+  counter <- 0
+  limit <- 1000
   resample_idx <- gt < latent_period
   n_resample <- sum(resample_idx)
   # ensure no negative or pre-infectious generation times
-  while (n_resample && counter < limit) {   
+  while (n_resample && counter < limit) {
     gt[resample_idx] <- sn::rsn(
       n = n_resample,
       xi = rel_symptom_onset_time[resample_idx],
@@ -62,13 +63,15 @@ incubation_to_generation_time <- function(symptom_onset_time,
     n_resample <- sum(resample_idx)
     counter <- counter + 1
   }
-  if (n_resample) stop(
-        "Unable to sample generation times satisfying `latent_period` >= ",
-        "`incubation_period`.\nConsider reducing the `latent_period` or ",
-        "checking parameter compatibility with the `incubation_period` ",
-        "distribution.",
-        call. = FALSE
-      )
+  if (n_resample) {
+    stop(
+      "Unable to sample generation times satisfying `latent_period` >= ",
+      "`incubation_period`.\nConsider reducing the `latent_period` or ",
+      "checking parameter compatibility with the `incubation_period` ",
+      "distribution.",
+      call. = FALSE
+    )
+  }
 
   # convert generation time to absolute time and return
   gt + exposure_time
