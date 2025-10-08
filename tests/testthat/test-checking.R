@@ -10,8 +10,8 @@ test_that("check_dist_func errors when not a function", {
 })
 
 dist_func_error <- paste0(
-  "(generator must be a function with 1 argument(s) that returns)*",
-  "(non-negative numbers.)"
+  "(generator must be a function with 1 argument(s) that returns a vector)*",
+  "(of non-negative numbers with length equal to the input argument.)"
 )
 
 test_that("check_dist_func errors with non-negative non-numeric evaluation", {
@@ -28,6 +28,13 @@ test_that("check_dist_func errors with non-negative non-numeric evaluation", {
 test_that("check_dist_func errors with incorrect number of arguments", {
   expect_error(
     check_dist_func(func = \(x, y) x + y, dist_name = "generator"),
+    regexp = dist_func_error
+  )
+})
+
+test_that("check_dist_func errors when output length does not equal input arg", {
+  expect_error(
+    check_dist_func(func = \(n) 1:5, dist_name = "generator"),
     regexp = dist_func_error
   )
 })
