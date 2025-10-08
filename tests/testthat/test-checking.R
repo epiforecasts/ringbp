@@ -5,7 +5,7 @@ test_that("check_dist_func works as expected", {
 test_that("check_dist_func errors when not a function", {
   expect_error(
     check_dist_func(func = "function"),
-    regexp = "(Assertion)*(func)*(failed)*(Must be a function, not)*(character)"
+    regexp = "(func)*(failed)*(Must be a function)"
   )
 })
 
