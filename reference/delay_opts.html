@@ -43,7 +43,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">delay_opts</span><span class="op">(</span><span class="va">incubation_period</span>, <span class="va">onset_to_isolation</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">delay_opts</span><span class="op">(</span><span class="va">incubation_period</span>, <span class="va">onset_to_isolation</span>, latent_period <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,6 +63,19 @@ output).</p></dd>
 <code>function</code> that accepts a single <code>integer</code> argument specifying the
 length of the <code>function</code> output.</p></dd>
 
+
+<dt id="arg-latent-period">latent_period<a class="anchor" aria-label="anchor" href="#arg-latent-period"></a></dt>
+<dd><p>a non-negative <code>numeric</code> scalar: the minimum time
+between an individual being exposed and becoming infectious. It is a
+population-wide parameter, with no variability between individuals. It
+sets the minimum generation time in the model. Default is 0 (i.e.
+an individual becomes immediately infectious after being infected).</p>
+<p>If <code>latent_period</code> is positive then generation times are sampled
+conditional on <code>gt &gt;= latent_period</code> (i.e. left-truncated at
+<code>latent_period</code>). This may reduce the realised proportion of
+presymptomatic transmission, depending on the <code>incubation_period</code>
+distribution and <code>presymptomatic_transmission</code> (in <code><a href="event_prob_opts.html">event_prob_opts()</a></code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -78,12 +91,15 @@ length of the <code>function</code> output.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $incubation_period</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (n) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rweibull(n = n, shape = 2.32, scale = 6.49)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55eb72912398&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564fbae1adf0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $onset_to_isolation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (n) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rweibull(n = n, shape = 1.65, scale = 4.28)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55eb72912398&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564fbae1adf0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $latent_period</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_delay_opts"</span>
