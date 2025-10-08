@@ -61,6 +61,17 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #' @param onset_to_isolation a `function`: a random number generating
 #'   `function` that accepts a single `integer` argument specifying the
 #'   length of the `function` output.
+#' @param latent_period a non-negative `numeric` scalar: the minimum time
+#'   between an individual being exposed and becoming infectious. It is a
+#'   population-wide parameter, with no variability between individuals. It
+#'   sets the minimum generation time in the model. Default is 0 (i.e.
+#'   an individual becomes immediately infectious after being infected).
+#'
+#'   If `latent_period` is positive then generation times are sampled
+#'   conditional on `gt >= latent_period` (i.e. left-truncated at
+#'   `latent_period`). This may reduce the realised proportion of
+#'   presymptomatic transmission, depending on the `incubation_period`
+#'   distribution and `presymptomatic_transmission` (in [event_prob_opts()]).
 #'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
@@ -70,14 +81,29 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
 #'   onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 #' )
-delay_opts <- function(incubation_period, onset_to_isolation) {
+delay_opts <- function(incubation_period,
+                       onset_to_isolation,
+                       latent_period = 0) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
+  checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
+
+  if (latent_period > 0) {
+    warning(
+      "A `latent_period` > 0 may cause the realised proportion of ",
+      "presymptomatic transmission to be less than specified.\n",
+      "(`presymptomatic_transmission` in `event_prob_opts()`)\n",
+      "The realised proportion of presymptomatic transmission is printed ",
+      "after the simulation.",
+      call. = FALSE
+    )
+  }
 
   opts <- list(
     incubation_period = incubation_period,
-    onset_to_isolation = onset_to_isolation
+    onset_to_isolation = onset_to_isolation,
+    latent_period = latent_period
   )
 
   class(opts) <- "ringbp_delay_opts"
@@ -118,6 +144,7 @@ event_prob_opts <- function(asymptomatic,
 
   opts <- list(
     asymptomatic = asymptomatic,
+    presymptomatic_transmission = presymptomatic_transmission,
     alpha = alpha,
     symptomatic_ascertained = symptomatic_ascertained
   )
