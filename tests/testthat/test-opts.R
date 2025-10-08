@@ -35,7 +35,7 @@ test_that("delay_opts works as expected", {
   )
 })
 
-test_that("event_prob_opts works as expectd", {
+test_that("event_prob_opts works as expected", {
   event_probs <- event_prob_opts(
     asymptomatic = 0.5,
     presymptomatic_transmission = 0.5,
