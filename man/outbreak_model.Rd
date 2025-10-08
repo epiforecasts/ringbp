@@ -80,6 +80,3 @@ out <- outbreak_model(
 )
 out
 }
-\author{
-Joel Hellewell
-}

@@ -1,35 +1,80 @@
-#' Samples the generation time for given incubation period samples
+#' Convert symptom onset times to generation times
 #'
-#' This is done assuming the generation time distribution of each individual is
-#' given by a skew-normal distribution with a location parameter equal to their
-#' incubation period.
+#' Samples generation times from a skew-normal distribution based on relative
+#' symptom onset times (`symptom_onset_time` - `exposure_time`), ensuring all
+#' generation times are at least `latent_period`. The location parameter of the
+#' skew-normal distribution is set to the relative symptom onset times.
 #'
-#' @param incubation_period_samples a positive `numeric` vector: samples from
-#'   the incubation period distribution
+#' @param symptom_onset_time a positive `numeric` vector: symptom onset time(s)
+#'   of the infector(s) in the case data. The symptom onset times are generated
+#'   by sampling from the incubation period.
+#' @param exposure_time a non-negative `numeric` vector: time of exposure of
+#'   the infector(s) in the case data. Used to convert symptom onset in absolute
+#'   time to relative time for each infectee. Default is for all exposure
+#'   times to be 0.
 #' @param alpha a `numeric` scalar: skew parameter of the skew-normal
-#'   distribution
+#'   distribution. Used to model the relationship between incubation period and
+#'   generation time.
+#' @inheritParams delay_opts
 #'
-#' @return a `numeric` vector of equal length to the vector input to
-#'   `incubation_period_samples`
+#' @return a `numeric` vector of generation times of equal length to the vector
+#'   input to `symptom_onset_time`: the i-th element of the vector contains a
+#'   sample from the generation time distribution of an individual with
+#'   incubation period given by the i-th element of the `symptom_onset_time`
+#'   vector. The lower bound of the output generation time vector is set by the
+#'   `latent_period`, to prevent transmission before becoming infectious.
 #' @export
 #' @importFrom sn rsn
 #'
 #' @examples
 #' incubation_to_generation_time(
-#'   incubation_period_samples = c(1, 2, 3, 4, 1),
+#'   symptom_onset_time = c(1, 2, 3, 4, 1),
 #'   alpha = 2
 #' )
-incubation_to_generation_time <- function(incubation_period_samples, alpha) {
+incubation_to_generation_time <- function(symptom_onset_time,
+                                          exposure_time = rep(0, length(symptom_onset_time)),
+                                          alpha,
+                                          latent_period = 0) {
 
-  checkmate::assert_numeric(incubation_period_samples, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
   checkmate::assert_number(alpha, finite = TRUE)
+  checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
-  out <- sn::rsn(n = length(incubation_period_samples),
-                 xi = incubation_period_samples,
-                 omega = 2,
-                 alpha = alpha)
+  # convert absolute to relative (individual) symptom onset time using exposure
+  rel_symptom_onset_time <- symptom_onset_time - exposure_time
 
-  return(pmax(1, out))
+  # initialise generation time vector to trigger sampling loop
+  gt <- rep(-Inf, times = length(rel_symptom_onset_time))
+  # loop counter to stop infinite loop
+  counter <- 0
+  limit <- 1000
+  resample_idx <- gt < latent_period
+  n_resample <- sum(resample_idx)
+  # ensure no negative or pre-infectious generation times
+  while (n_resample && counter < limit) {
+    gt[resample_idx] <- sn::rsn(
+      n = n_resample,
+      xi = rel_symptom_onset_time[resample_idx],
+      omega = 2,
+      alpha = alpha
+    )
+    resample_idx <- gt < latent_period
+    n_resample <- sum(resample_idx)
+    counter <- counter + 1
+  }
+  if (n_resample) {
+    stop(
+      "Unable to sample generation times satisfying `latent_period` >= ",
+      "`incubation_period`.\nConsider reducing the `latent_period` or ",
+      "checking parameter compatibility with the `incubation_period` ",
+      "distribution.",
+      call. = FALSE
+    )
+  }
+
+  # convert generation time to absolute time and return
+  gt + exposure_time
 }
 
 #' Estimate skew normal alpha parameter from proportion of presymptomatic
@@ -51,7 +96,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
   objective <- function(alpha) {
     # fix x, xi and omega for optimisation
     p_current <- sn::psn(x = 0, xi = 0, omega = 2, alpha = alpha)
-    return((p_current - presymptomatic_transmission)^2)
+    (p_current - presymptomatic_transmission)^2
   }
   # alpha domain is (-Inf, Inf), approximate with large numbers
   res <- stats::optimise(f = objective, interval = c(-1e5, 1e5))
@@ -61,7 +106,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
       "did not converge."
     )
   }
-  return(res$minimum)
+  res$minimum
 }
 
 #' Calculate proportion of runs that have controlled outbreak
@@ -70,7 +115,6 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'
 #' @inheritParams detect_extinct
 #'
-#' @author Joel Hellewell
 #' @return a single `numeric` with the probability of extinction
 #' @export
 #'
@@ -104,9 +148,7 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   n <- max(outbreak_df_week$sim)
 
   extinct_runs <- detect_extinct(outbreak_df_week, cap_cases, week_range)
-  out <-  sum(extinct_runs$extinct) / n
-
-  return(out)
+  sum(extinct_runs$extinct) / n
 }
 
 
@@ -116,7 +158,6 @@ extinct_prob <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 #' The `cap_cases` argument should be equal to the value supplied to
 #' [outbreak_model()] (possibly passed from [scenario_sim()]).
 #'
-#' @author Joel Hellewell
 #' @param outbreak_df_week a `data.table`: weekly cases produced by the
 #'   outbreak model
 #' @inheritParams sim_opts
@@ -159,10 +200,9 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
 
   outbreak_df_week <- as.data.table(outbreak_df_week)
   outbreak_df_week <- outbreak_df_week[week %in% week_range]
-  out <- outbreak_df_week[, list(
+  outbreak_df_week[, list(
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
-  ), by = sim]
-  return(out[])
+  ), by = sim][]
 }
 
 #' Control whether outbreak simulation continues stepping

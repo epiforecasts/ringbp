@@ -1,5 +1,4 @@
 #' Run a specified number of simulations with identical parameters
-#' @author Joel Hellewell
 #'
 #' @param n a positive `integer` scalar: number of simulations to run
 #' @inheritParams outbreak_setup
@@ -78,8 +77,6 @@ scenario_sim <- function(n,
     simplify = FALSE
   )
 
-  # bind output together and add simulation index
-  res <- data.table::rbindlist(res, idcol = "sim")
-
-  return(res[])
+  # bind output together and add simulation index and return
+  data.table::rbindlist(res, idcol = "sim")[]
 }

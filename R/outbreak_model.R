@@ -1,5 +1,4 @@
 #' Run a single instance of the branching process model
-#' @author Joel Hellewell
 #'
 #' @inheritParams outbreak_setup
 #' @inheritParams outbreak_step
@@ -86,6 +85,25 @@ outbreak_model <- function(initial_cases,
     cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
   }
 
+  # only warn if non-zero latent period and any transmission
+  if (delays$latent_period > 0 && nrow(case_data) > 1) {
+    # self-join to compare exposure and infector onset times by row
+    prop_presymptomatic_transmission <- case_data[
+      , list(exposure, caseid, infector, onset)
+    ][case_data[, list(infector_id = seq_len(.N), onset)],
+      on = c("infector" = "infector_id"),
+      nomatch = NULL
+    ][, mean(exposure < i.onset)]
+
+    warning(
+      "The proportion of presymptomatic transmission supplied is: ",
+      event_probs$presymptomatic_transmission, "\n",
+      "The realised proportion of presymptomatic transmission is: ",
+      signif(prop_presymptomatic_transmission, digits = 3),
+      call. = FALSE
+    )
+  }
+
   # Prepare output, group into weeks
   weekly_cases <- case_data[, week := floor(onset / 7)
                             ][, list(weekly_cases = .N), by = week
@@ -126,5 +144,5 @@ outbreak_model <- function(initial_cases,
                                                           na.rm = TRUE),
                                         cases_per_gen = list(cases_in_gen_vect))]
   # return
-  return(weekly_cases[])
+  weekly_cases[]
 }
