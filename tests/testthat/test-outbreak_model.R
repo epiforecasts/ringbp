@@ -1,15 +1,14 @@
 test_that("outbreak_model runs with no transmission", {
-  set.seed(1)
   res <- outbreak_model(
     initial_cases = 1,
     offspring = offspring_opts(
-      community = \(n) rnbinom(n = n, mu = 0.1, size = 0.16),
-      isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
-      asymptomatic = \(n) rnbinom(n = n, mu = 0.1, size = 0.16)
+      community = \(n) rep(0, n),
+      isolated = \(n) rep(0, n),
+      asymptomatic = \(n) rep(0, n)
     ),
     delays = delay_opts(
-      incubation_period = \(n) rweibull(n = n, shape = 2, scale = 6),
-      onset_to_isolation = \(n) rweibull(n = n, shape = 2, scale = 6)
+      incubation_period = \(n) rep(1, n),
+      onset_to_isolation = \(n) rep(1, n)
     ),
     event_probs = event_prob_opts(
       asymptomatic = 0,
@@ -30,18 +29,17 @@ test_that("outbreak_model runs with no transmission", {
 })
 
 test_that("outbreak_model runs to cap_max_days stopping criterion", {
-  set.seed(3)
   cap_max_days <- 70
   res <- outbreak_model(
     initial_cases = 1,
     offspring = offspring_opts(
-      community = \(n) rnbinom(n = n, mu = 3, size = 0.16),
-      isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1),
-      asymptomatic = \(n) rnbinom(n = n, mu = 3, size = 0.16)
+      community = \(n) rep(3, n),
+      isolated = \(n) rep(1, n),
+      asymptomatic = \(n) rep(3, n)
     ),
     delays = delay_opts(
-      incubation_period = \(n) rweibull(n = n, shape = 2, scale = 6),
-      onset_to_isolation = \(n) rweibull(n = n, shape = 2, scale = 6)
+      incubation_period = \(n) rep(6, n),
+      onset_to_isolation = \(n) rep(6, n)
     ),
     event_probs = event_prob_opts(
       asymptomatic = 0.1,
@@ -61,18 +59,17 @@ test_that("outbreak_model runs to cap_max_days stopping criterion", {
 })
 
 test_that("outbreak_model runs to cap_cases stopping criterion", {
-  set.seed(3)
   cap_cases <- 1000
   res <- outbreak_model(
     initial_cases = 1,
     offspring = offspring_opts(
-      community = \(n) rnbinom(n = n, mu = 3, size = 0.16),
-      isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1),
-      asymptomatic = \(n) rnbinom(n = n, mu = 3, size = 0.16)
+      community = \(n) rep(3, n),
+      isolated = \(n) rep(1, n),
+      asymptomatic = \(n) rep(3, n)
     ),
     delays = delay_opts(
-      incubation_period = \(n) rweibull(n = n, shape = 2, scale = 6),
-      onset_to_isolation = \(n) rweibull(n = n, shape = 2, scale = 6)
+      incubation_period = \(n) rep(6, n),
+      onset_to_isolation = \(n) rep(6, n)
     ),
     event_probs = event_prob_opts(
       asymptomatic = 0.1,
