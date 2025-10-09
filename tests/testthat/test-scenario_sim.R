@@ -36,6 +36,7 @@ test_that("scenario_sim runs as expected", {
 
 test_that("scenario_sim with dynamic seed and parameters runs as expected", {
   seed <- as.integer(Sys.Date())
+  if (on_ci()) message("Seed: ", seed)
   set.seed(seed)
   n_sim <- 5
   res <- scenario_sim(

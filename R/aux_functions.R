@@ -159,3 +159,9 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
     extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim][]
 }
+
+# The following function is copied from `testthat:::on_ci()` from the
+# {testthat} package (version 3.2.3).
+# It is licensed under the MIT license (see LICENSE.md).
+# Copyright (c) [2023] [testthat auhors]
+on_ci <- function() isTRUE(as.logical(Sys.getenv("CI", unset = "FALSE")))

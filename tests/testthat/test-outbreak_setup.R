@@ -18,6 +18,7 @@ test_that("outbreak_setup works as expected", {
 
 test_that("scenario_sim with dynamic seed and parameters runs as expected", {
   seed <- as.integer(Sys.Date())
+  if (on_ci()) message("Seed: ", seed)
   set.seed(seed)
   asymptomatic <- runif(n = 1, min = 0, max = 1)
   res <- outbreak_setup(
