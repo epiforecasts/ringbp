@@ -83,15 +83,18 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #' from subsetting the `data.table`).
 #'
 #' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
-#' @param extinction_week a positive `integer` scalar or `integer` vector to
-#'   test if the outbreak has gone extinct (i.e. no new cases) by this week
-#'   (zero indexed):
-#'   * A single `integer` to to test if extinction has occurred by this week.
+#' @param extinction_week By default `NULL` but also accepts a positive
+#'   `integer` scalar or `integer` vector to test if the outbreak has gone
+#'   extinct (i.e. no new cases) by this week (zero indexed):
+#'   * By default (`NULL`) the extinction status is stored in the output of
+#'     `scenario_sim()` which is supplied to the `scenario` argument. If
+#'     `extinction_week` is not specified or specified as `NULL` then the
+#'     pre-computed extinction status from the outbreak simulation will be used.
+#'     This is defined as all infectious cases have had the opportunity to
+#'     transmit but no new cases are generated.
+#'   * A single `integer` to test if extinction has occurred by this week.
 #'     For example, `extinction_week = 5` tests whether the outbreak is
-#'     extinct by week 5 (inclusive) until the end of the outbreak. Default is
-#'     to detect extinction in the last 2 weeks of the simulated outbreak:
-#'     `max(scenario$week) - 1` (i.e. the penultimate and last week of the
-#'     outbreak).
+#'     extinct by week 5 (inclusive) until the end of the outbreak.
 #'   * An `integer` vector of length two can be supplied to provide the lower
 #'     and upper bounds (inclusive) of the week range to test for whether
 #'     extinction occurred by this window. For example
@@ -151,7 +154,7 @@ NULL
 #' @rdname extinction
 #' @export
 extinct_prob <- function(scenario,
-                         extinction_week = max(scenario$week) - 1) {
+                         extinction_week = NULL) {
 
   extinct_runs <- detect_extinct(
     scenario = scenario,
@@ -164,20 +167,29 @@ extinct_prob <- function(scenario,
 #' @autoglobal
 #' @export
 detect_extinct <- function(scenario,
-                           extinction_week = max(scenario$week) - 1) {
+                           extinction_week = NULL) {
 
   extinct <- attr(scenario, which = "extinct", exact = TRUE)
-  if (!is.null(extinct)) {
-    return(
-      data.table(
-        sim = 1:max(scenario$sim),
-        extinct = as.integer(extinct)
+  if (is.null(extinction_week)) {
+    if (!is.null(extinct)) {
+      return(
+        data.table(
+          sim = 1:max(scenario$sim),
+          extinct = as.integer(extinct)
+        )
       )
-    )
+    } else {
+      stop(
+        "`extinction_week` not specified and `scenario` is missing the ",
+        "`extinct` attribute.\n Use `scenario_sim()` to simulate `scenario`, ",
+        "or specify `extinction_week`.",
+        call. = FALSE
+      )
+    }
   }
 
   checkmate::assert_data_frame(scenario)
-  checkmate::assert_integerish(extinction_week)
+  checkmate::assert_integerish(extinction_week, min.len = 1)
 
   if (length(extinction_week) == 1) {
     extinction_week <- extinction_week:max(scenario$week)

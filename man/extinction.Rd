@@ -6,23 +6,26 @@
 \alias{detect_extinct}
 \title{Outbreak extinction functions}
 \usage{
-extinct_prob(scenario, extinction_week = max(scenario$week) - 1)
+extinct_prob(scenario, extinction_week = NULL)
 
-detect_extinct(scenario, extinction_week = max(scenario$week) - 1)
+detect_extinct(scenario, extinction_week = NULL)
 }
 \arguments{
 \item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
 
-\item{extinction_week}{a positive \code{integer} scalar or \code{integer} vector to
-test if the outbreak has gone extinct (i.e. no new cases) by this week
-(zero indexed):
+\item{extinction_week}{By default \code{NULL} but also accepts a positive
+\code{integer} scalar or \code{integer} vector to test if the outbreak has gone
+extinct (i.e. no new cases) by this week (zero indexed):
 \itemize{
-\item A single \code{integer} to to test if extinction has occurred by this week.
+\item By default (\code{NULL}) the extinction status is stored in the output of
+\code{scenario_sim()} which is supplied to the \code{scenario} argument. If
+\code{extinction_week} is not specified or specified as \code{NULL} then the
+pre-computed extinction status from the outbreak simulation will be used.
+This is defined as all infectious cases have had the opportunity to
+transmit but no new cases are generated.
+\item A single \code{integer} to test if extinction has occurred by this week.
 For example, \code{extinction_week = 5} tests whether the outbreak is
-extinct by week 5 (inclusive) until the end of the outbreak. Default is
-to detect extinction in the last 2 weeks of the simulated outbreak:
-\code{max(scenario$week) - 1} (i.e. the penultimate and last week of the
-outbreak).
+extinct by week 5 (inclusive) until the end of the outbreak.
 \item An \code{integer} vector of length two can be supplied to provide the lower
 and upper bounds (inclusive) of the week range to test for whether
 extinction occurred by this window. For example
