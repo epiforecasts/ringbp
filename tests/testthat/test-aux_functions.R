@@ -365,3 +365,14 @@ test_that("detect_extinct works", {
   expect6b <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6b, expect5b)
 })
+
+test_that("presymptomatic_transmission_to_alpha errors from non-convergence", {
+  expect_error(
+    presymptomatic_transmission_to_alpha(presymptomatic_transmission = 1.1),
+    regexp = paste(
+      "(Estimating)*(alpha)*(from)*(presymptomatic_transmission)",
+      "(did not converge)",
+      sep = "*"
+    )
+  )
+})
