@@ -144,7 +144,7 @@ outbreak_model <- function(initial_cases,
                                                           na.rm = TRUE),
                                         cases_per_gen = list(cases_in_gen_vect))]
 
-  setattr(weekly_cases, name = "extinct", value = extinct)
+  setattr(weekly_cases, name = "extinct", value = all(case_data$isolated))
 
   # return
   weekly_cases[]
