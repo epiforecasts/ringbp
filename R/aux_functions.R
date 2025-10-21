@@ -209,7 +209,11 @@ detect_extinct <- function(scenario,
     min(extinction_week), " to ", max(extinction_week), " (inclusive)."
   )
 
-  cap_cases <- attr(scenario, which = "cap_cases")
+  cap_cases <- attr(scenario, which = "cap_cases", exact = TRUE)
+  stopifnot(
+    "`scenario` is missing the `cap_cases` attribute.
+    Use `scenario_sim()` to simulate `scenario`" = !is.null(cap_cases)
+  )
 
   scenario <- setDT(scenario)
   scenario <- scenario[week %in% extinction_week]
