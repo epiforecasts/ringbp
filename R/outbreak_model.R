@@ -57,11 +57,6 @@ outbreak_model <- function(initial_cases,
   checkmate::assert_class(interventions, "ringbp_intervention_opts")
   checkmate::assert_class(sim, "ringbp_sim_opts")
 
-  # Set initial values for loop indices
-  total_cases <- initial_cases
-  latest_onset <- 0
-  extinct <- FALSE
-
   # Initial setup
   case_data <- outbreak_setup(
     initial_cases = initial_cases,
@@ -75,8 +70,7 @@ outbreak_model <- function(initial_cases,
 
 
   # Model loop
-  while (latest_onset < sim$cap_max_days &&
-         total_cases < sim$cap_cases && !extinct) {
+  while (outbreak_continue(case_data, sim)) {
 
     out <- outbreak_step(
       case_data = case_data,
@@ -89,9 +83,25 @@ outbreak_model <- function(initial_cases,
     case_data <- out[[1]]
     effective_r0_vect <- c(effective_r0_vect, out[[2]])
     cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
-    total_cases <- nrow(case_data)
-    latest_onset <- max(case_data$onset)
-    extinct <- all(case_data$isolated)
+  }
+
+  # only warn if non-zero latent period and any transmission
+  if (delays$latent_period > 0 && nrow(case_data) > 1) {
+    # self-join to compare exposure and infector onset times by row
+    prop_presymptomatic_transmission <- case_data[
+      , list(exposure, caseid, infector, onset)
+    ][case_data[, list(infector_id = seq_len(.N), onset)],
+      on = c("infector" = "infector_id"),
+      nomatch = NULL
+    ][, mean(exposure < i.onset)]
+
+    warning(
+      "The proportion of presymptomatic transmission supplied is: ",
+      event_probs$presymptomatic_transmission, "\n",
+      "The realised proportion of presymptomatic transmission is: ",
+      signif(prop_presymptomatic_transmission, digits = 3),
+      call. = FALSE
+    )
   }
 
   # Prepare output, group into weeks
@@ -114,6 +124,20 @@ outbreak_model <- function(initial_cases,
                                ][, cumulative := cumsum(weekly_cases)]
   # cut at max_week
   weekly_cases <- weekly_cases[week <= max_week]
+
+  # effective_r0_vect and cases_in_gen_vect grow together so only check one
+  if (length(effective_r0_vect) == 0) {
+    warning(
+      "The outbreak simulation ran for zero generations (i.e. no ",
+      "transmission from initial cases) because either:\n 1) the number of ",
+      "initial cases exceeded the `cap_cases`, or \n 2) the initial case(s) ",
+      "had a symptom onset time greater than the `cap_max_days`.\n See ",
+      "`?sim_opts()` for help.",
+      call. = FALSE
+    )
+    effective_r0_vect <- NA_real_
+    cases_in_gen_vect <- NA_real_
+  }
 
   # Add effective R0
   weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
