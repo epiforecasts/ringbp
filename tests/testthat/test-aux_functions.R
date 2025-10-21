@@ -87,7 +87,7 @@ test_that("extinct_prob works as expected", {
   # strip extinct attribute to test extinction calculation
   attr(res, which = "extinct") <- NULL
 
-  r1 <- extinct_prob(res)
+  r1 <- extinct_prob(res, extinction_week = 12:14)
   expect_true(r1 <= 1)
   expect_true(r1 >= 0)
   expect_length(r1, 1)
