@@ -172,6 +172,10 @@ detect_extinct <- function(scenario,
   extinct <- attr(scenario, which = "extinct", exact = TRUE)
   if (is.null(extinction_week)) {
     if (!is.null(extinct)) {
+      message(
+        "Calculating extinction using the extinction status from ",
+        "the simulation."
+      )
       return(
         data.table(
           sim = 1:max(scenario$sim),
@@ -200,6 +204,11 @@ detect_extinct <- function(scenario,
     "`extinction_week` not in simulated outbreak data" =
       all(extinction_week %in% scenario$week)
   )
+  message(
+    "Calculating extinction as no new cases within weeks: ",
+    min(extinction_week), " to ", max(extinction_week), " (inclusive)."
+  )
+
   cap_cases <- attr(scenario, which = "cap_cases")
 
   scenario <- setDT(scenario)
