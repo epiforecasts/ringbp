@@ -109,7 +109,10 @@ outbreak_step <- function(case_data,
     # time when new cases were exposed, a draw from generation time based on
     # infector's onset
     exposure = incubation_to_generation_time(
-      rep(onset, new_cases), event_probs$alpha
+      symptom_onset_time = rep(onset, new_cases),
+      exposure_time = rep(exposure, new_cases),
+      alpha = event_probs$alpha,
+      latent_period = delays$latent_period
     ),
     # records the infector of each new person
     infector = rep(caseid, new_cases),
