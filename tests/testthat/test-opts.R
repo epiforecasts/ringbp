@@ -31,7 +31,8 @@ test_that("delay_opts works as expected", {
   expect_s3_class(delays, "ringbp_delay_opts")
   expect_identical(
     vapply(delays, class, FUN.VALUE = character(1)),
-    c(incubation_period = "function", onset_to_isolation = "function")
+    c(incubation_period = "function", onset_to_isolation = "function",
+      latent_period = "numeric")
   )
 })
 
@@ -44,8 +45,8 @@ test_that("event_prob_opts works as expected", {
   expect_s3_class(event_probs, "ringbp_event_prob_opts")
   expect_identical(
     vapply(event_probs, class, FUN.VALUE = character(1)),
-    c(asymptomatic = "numeric", alpha = "numeric",
-      symptomatic_ascertained = "numeric")
+    c(asymptomatic = "numeric", presymptomatic_transmission = "numeric",
+      alpha = "numeric", symptomatic_ascertained = "numeric")
   )
 })
 
