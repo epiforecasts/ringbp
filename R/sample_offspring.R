@@ -18,6 +18,8 @@
 #'   (for those from the community offspring distribution), respectively.
 #'
 #' @inheritParams outbreak_step
+#' @inheritParams incubation_to_generation_time
+#' @inheritParams delay_opts
 #'
 #' @autoglobal
 #'
@@ -27,7 +29,7 @@
 #'   ***Note*** The `case_data` supplied to the function is modified by
 #'   references, see [data.table::set()] for more information.
 #' @keywords internal
-sample_offspring <- function(case_data, offspring) {
+sample_offspring <- function(case_data, offspring, alpha, latent_period) {
 
   # subset to cases in current generation
   new_cases <- case_data[sampled == FALSE]
@@ -50,18 +52,27 @@ sample_offspring <- function(case_data, offspring) {
 
   # get generation times for community and isolated cases
   community_exposure <- incubation_to_generation_time(
-    rep(new_cases$onset[symptomatic_idx], community), event_probs$alpha
+    symptom_onset_time = rep(new_cases$onset[symptomatic_idx], community),
+    exposure_time = rep(new_cases$exposure[symptomatic_idx], community),
+    alpha = alpha,
+    latent_period = latent_period
   )
   names(community_exposure) <- rep(new_cases$caseid[symptomatic_idx], community)
   isolated_exposure <- incubation_to_generation_time(
-    rep(new_cases$onset[symptomatic_idx], isolated), event_probs$alpha
+    symptom_onset_time = rep(new_cases$onset[symptomatic_idx], isolated),
+    exposure_time = rep(new_cases$exposure[symptomatic_idx], isolated),
+    alpha = alpha,
+    latent_period = latent_period
   )
   names(isolated_exposure) <- rep(new_cases$caseid[symptomatic_idx], isolated)
 
   # if there is any transmission from asymptomatic cases get generation time
   if (length(asymptomatic) > 0) {
     asymptomatic_exposure <- incubation_to_generation_time(
-      rep(new_cases$onset[asymptomatic_idx], asymptomatic), event_probs$alpha
+      symptom_onset_time = rep(new_cases$onset[asymptomatic_idx], asymptomatic),
+      exposure_time = rep(new_cases$exposure[asymptomatic_idx], asymptomatic),
+      alpha = alpha,
+      latent_period = latent_period
     )
     names(asymptomatic_exposure) <- rep(new_cases$caseid[asymptomatic_idx], asymptomatic)
   } else {
