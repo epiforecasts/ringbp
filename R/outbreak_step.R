@@ -77,7 +77,12 @@ outbreak_step <- function(case_data,
   checkmate::assert_class(interventions, "ringbp_intervention_opts")
 
   # case_data is modified by reference and generation times are returned
-  gt <- sample_offspring(case_data, offspring)
+  gt <- sample_offspring(
+    case_data = case_data,
+    offspring = offspring,
+    alpha = event_probs$alpha,
+    latent_period = delays$latent_period
+  )
 
   # Select cases that have generated any new cases
   new_case_data <- case_data[new_cases > 0 & !sampled]
