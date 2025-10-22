@@ -37,7 +37,9 @@ incubation_to_generation_time <- function(symptom_onset_time,
                                           latent_period = 0) {
 
   checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
-  checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(
+    exposure_time, lower = 0, finite = TRUE, len = length(symptom_onset_time)
+  )
   checkmate::assert_number(alpha, finite = TRUE)
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
