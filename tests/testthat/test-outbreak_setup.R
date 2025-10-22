@@ -1,59 +1,59 @@
-context("Test basic usage")
-
-set.seed(20200410)
-
-test_that("A basic sim setup returns the correct object", {
-  # generate initial cases
-  case_data <- outbreak_setup(
-    initial_cases = 5,
-    delays = delay_opts(
-      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-    ),
-    event_probs = event_prob_opts(
-      asymptomatic = 0,
-      presymptomatic_transmission = 0.5,
-      symptomatic_ascertained = 0
+test_that("outbreak_setup works as expected", {
+  set.seed(1)
+  expect_snapshot(
+    outbreak_setup(
+      initial_cases = 5,
+      delays = delay_opts(
+        incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+        onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+      ),
+      event_probs = event_prob_opts(
+        asymptomatic = 0.2,
+        presymptomatic_transmission = 0.5,
+        symptomatic_ascertained = 0.8
+      )
     )
   )
-
-  expect_equal(nrow(case_data), 5)
-  expect_true(all(case_data$missed))
-  expect_true(all(!case_data$asymptomatic))
 })
 
-test_that("asymptomatic arg works properly", {
-  # generate initial cases
-  # All asymptomatics
-  all_asymptomatic <- outbreak_setup(
-    initial_cases = 5,
+test_that("scenario_sim with dynamic seed and parameters runs as expected", {
+  seed <- as.integer(Sys.Date())
+  if (on_ci()) message("Seed: ", seed)
+  set.seed(seed)
+  asymptomatic <- runif(n = 1, min = 0, max = 1)
+  res <- outbreak_setup(
+    initial_cases = sample(1:50, size = 1),
     delays = delay_opts(
-      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+      incubation_period = \(n) rweibull(
+        n = n,
+        shape = runif(n = 1, min = 2, max = 4),
+        scale = runif(n = 1, min = 2, max = 6)
+      ),
+      onset_to_isolation = \(n) rweibull(
+        n = n,
+        shape = runif(n = 1, min = 2, max = 4),
+        scale = runif(n = 1, min = 2, max = 6)
+      )
     ),
     event_probs = event_prob_opts(
-      asymptomatic = 1,
-      presymptomatic_transmission = 0.5,
-      symptomatic_ascertained = 0
+      asymptomatic = asymptomatic,
+      presymptomatic_transmission = runif(n = 1, min = 0, max = 1),
+      symptomatic_ascertained = runif(n = 1, min = 0, max = 1)
     )
   )
-  expect_true(all(all_asymptomatic$asymptomatic))
-
-  # Mixed asympt dbinom(0, 10000, 0.5) = 0
-  # With 10000 cases, probability of 0 symptomatic or 0 asympt is less than
-  # machine precision
-  mix <- outbreak_setup(
-    initial_cases = 10000,
-    delays = delay_opts(
-      incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-      onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-    ),
-    event_probs = event_prob_opts(
-      asymptomatic = 0.5,
-      presymptomatic_transmission = 0.5,
-      symptomatic_ascertained = 0
-    )
+  expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
+  expect_identical(
+    vapply(res, class, FUN.VALUE = character(1)),
+    c(exposure = "numeric", asymptomatic = "logical", caseid = "integer",
+      infector = "numeric", isolated = "logical", missed = "logical",
+      onset = "numeric", new_cases = "logical", isolated_time = "numeric")
   )
-
-  expect_length(unique(mix$asymptomatic), 2)
+  expect_identical(unique(res$exposure), 0)
+  expect_identical(res$caseid, 1:nrow(res))
+  expect_identical(unique(res$infector), 0)
+  expect_identical(unique(res$isolated), FALSE)
+  expect_identical(unique(res$missed), TRUE)
+  expect_identical(unique(res$new_cases), NA)
+  # proportion of asymptomatic cases is approximately equal to input parameter
+  expect_equal(sum(res$asymptomatic) / nrow(res), asymptomatic, tolerance = 0.25)
 })

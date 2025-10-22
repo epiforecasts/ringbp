@@ -55,9 +55,10 @@ Suggests:
     knitr,
     rmarkdown,
     roxyglobals (>= 1.0.0),
-    testthat
+    testthat (>= 3.0.0)
 URL: https://epiforecasts.io/ringbp, https://github.com/epiforecasts/ringbp
 BugReports: https://github.com/epiforecasts/ringbp/issues
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
+Config/testthat/edition: 3
 VignetteBuilder: knitr

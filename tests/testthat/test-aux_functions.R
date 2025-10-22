@@ -1,48 +1,31 @@
-context("Test all aux functions")
-
 set.seed(515)
 
-test_that("incubation_to_generation_time parameters behave as expected", {
-  r1 <- incubation_to_generation_time(c(1, 4, 1), alpha = 2)
-  expect_length(r1, 3)
-
-  r2 <- incubation_to_generation_time(rep(0.01, 1e6), alpha = 2)
-  expect_length(r2, 1e6)
-  expect_true(is.numeric(r2))
-  expect_false(anyNA(r2))
-  # Function forces a minimum of 0.
-  expect_true(all(r2 >= 0))
-
-  # skew normal collapses to normal with alpha = 0
-  # SD is hard coded as 2.
-  # Upper 99% of normal with mean 0 sd 2: qnorm(0.99, 0, 2) = 4.7.
-  # Probability that normal with mean 1e6, sd 2 being less than 4.7
-  # is vanishingly small pnorm(4.7, 1e6, 2) < 1e-200.
-  # So this test should almost certainly pass if code is correct.
-  r3 <- incubation_to_generation_time(c(0, 1e6), alpha = 0)
-  expect_lt(r3[1], r3[2])
-
-  # Test the alpha parameter.
-  # positive is right skew so mean is greater than median.
-  r4 <- incubation_to_generation_time(rep(100, 1e6), alpha = 10)
-  expect_gt(mean(r4), median(r4))
-
-  # negative is left skew so mean is less than median.
-  r5 <- incubation_to_generation_time(rep(100, 1e6), alpha = -10)
-  expect_lt(mean(r5), median(r5))
+test_that("incubation_to_generation_time works as expected", {
+  symptom_onset_time <- 1:5
+  res <- incubation_to_generation_time(
+    symptom_onset_time = symptom_onset_time,
+    alpha = 2
+  )
+  expect_length(res, length(symptom_onset_time))
+  expect_type(res, type = "double")
+  expect_false(anyNA(res))
+  # default latent period (minimum generation time) is 0
+  expect_gte(min(res), 0)
 })
 
-test_that("incubation_to_generation_time works with latent period", {
-  latent_period <- 2
-  expect_gte(
-    min(incubation_to_generation_time(
-      symptom_onset_time = c(1, 2, 3, 4, 5),
-      exposure_time = rep(0.5, 5),
-      alpha = 2,
-      latent_period = latent_period
-    )),
-    latent_period
+test_that("incubation_to_generation_time works with latent_period > 0", {
+  symptom_onset_time <- 1:5
+  latent_period <- 3
+  res <- incubation_to_generation_time(
+    symptom_onset_time = symptom_onset_time,
+    alpha = 2,
+    latent_period = latent_period
   )
+  expect_length(res, length(symptom_onset_time))
+  expect_type(res, type = "double")
+  expect_false(anyNA(res))
+  # default latent period (minimum generation time) is 0
+  expect_gte(min(res), latent_period)
 })
 
 test_that("incubation_to_generation_time errors with latent period", {
@@ -53,6 +36,20 @@ test_that("incubation_to_generation_time errors with latent period", {
       latent_period = 10
     ), regexp = "(Cannot sample generation time)*(incubation)*(latent)"
   )
+})
+
+test_that("incubation_to_generation_time alpha works as expected", {
+  # positive is right skew so mean is greater than median
+  res <- incubation_to_generation_time(rep(100, 1e5), alpha = 10)
+  expect_gt(mean(res), median(res))
+
+  # negative is left skew so mean is less than median
+  res <- incubation_to_generation_time(rep(100, 1e5), alpha = -10)
+  expect_lt(mean(res), median(res))
+
+  # zero is symmetrical (normal) so mean and median are approximately equal
+  res <- incubation_to_generation_time(rep(100, 1e5), alpha = 0)
+  expect_equal(mean(res), median(res), tolerance = 0.01)
 })
 
 test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_time", {
@@ -82,6 +79,16 @@ test_that("presymptomatic_transmission_to_alpha and incubation_to_generation_tim
   )
 })
 
+test_that("presymptomatic_transmission_to_alpha errors from non-convergence", {
+  expect_error(
+    presymptomatic_transmission_to_alpha(presymptomatic_transmission = 1.1),
+    regexp = paste(
+      "(Estimating)*(alpha)*(from)*(presymptomatic_transmission)",
+      "(did not converge)",
+      sep = "*"
+    )
+  )
+})
 
 test_that("extinct_prob works as expected", {
   cap <- 100

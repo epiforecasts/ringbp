@@ -37,7 +37,9 @@ incubation_to_generation_time <- function(symptom_onset_time,
                                           latent_period = 0) {
 
   checkmate::assert_numeric(symptom_onset_time, lower = 0, finite = TRUE)
-  checkmate::assert_numeric(exposure_time, lower = 0, finite = TRUE)
+  checkmate::assert_numeric(
+    exposure_time, lower = 0, finite = TRUE, len = length(symptom_onset_time)
+  )
   checkmate::assert_number(alpha, finite = TRUE)
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
 
@@ -205,6 +207,12 @@ detect_extinct <- function(outbreak_df_week, cap_cases, week_range = 12:16) {
   ), by = sim][]
 }
 
+# The following function is copied from `testthat:::on_ci()` from the
+# {testthat} package (version 3.2.3).
+# It is licensed under the MIT license (see LICENSE.md).
+# Copyright (c) [2023] [testthat auhors]
+on_ci <- function() isTRUE(as.logical(Sys.getenv("CI", unset = "FALSE")))
+
 #' Control whether outbreak simulation continues stepping
 #'
 #' @description
@@ -229,3 +237,4 @@ outbreak_continue <- function(case_data, sim) {
       total_cases < sim$cap_cases && !extinct
   )
 }
+
