@@ -30,6 +30,7 @@ test_that("outbreak_model runs with no transmission", {
 
 test_that("outbreak_model runs to cap_max_days stopping criterion", {
   cap_max_days <- 70
+  cap_cases <- 1e5
   res <- outbreak_model(
     initial_cases = 1,
     offspring = offspring_opts(
@@ -47,11 +48,11 @@ test_that("outbreak_model runs to cap_max_days stopping criterion", {
       symptomatic_ascertained = 0.5
     ),
     interventions = intervention_opts(quarantine = FALSE),
-    sim = sim_opts(cap_max_days = cap_max_days)
+    sim = sim_opts(cap_max_days = cap_max_days, cap_cases = cap_cases)
   )
   expect_equal(res$week, 0:(cap_max_days / 7))
   # has not reached cap_cases stopping criterion
-  expect_lt(res[.N, cumulative], sim_opts()$cap_cases)
+  expect_lt(res[.N, cumulative], cap_cases)
   # monotonic cumulative cases
   expect_identical(res$cumulative, sort(res$cumulative))
   # non-extinction of outbreak
