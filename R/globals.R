@@ -26,6 +26,5 @@ utils::globalVariables(c(
   "missed", # <outbreak_step>
   "infector_isolation_time", # <outbreak_step>
   "sampled", # <sample_offspring>
-  "event_probs", # <sample_offspring>
   NULL
 ))
