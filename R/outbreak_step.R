@@ -150,14 +150,6 @@ outbreak_step <- function(case_data,
     )
   }]
 
-  # TODO: check if quarantine matters for this
-  # if symptom onset or isolation time is before infector's isolation time
-  # and the new infection is not missed then immediately isolate case
-  # prob_samples[
-  #   (onset < infector_isolation_time | isolated_time < infector_isolation_time) &
-  #     !missed, isolated := TRUE
-  # ]
-
   # Chop out unneeded sample columns
   prob_samples[, c("infector_isolation_time", "infector_asymptomatic") := NULL]
   # Set new case ids for new people
