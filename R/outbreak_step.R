@@ -104,8 +104,8 @@ outbreak_step <- function(case_data,
   # that each infector has infected
   prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from generation time based on
-    # infector's onset
-    exposure = gt,
+    # infector's onset, ordered to match order of caseid
+    exposure = gt[order(as.numeric(names(gt)))],
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated
