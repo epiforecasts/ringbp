@@ -86,20 +86,17 @@ outbreak_step <- function(case_data,
 
   # Select cases that have generated any new cases
   new_case_data <- case_data[new_cases > 0 & !sampled]
-  # The total new cases generated
-  total_new_cases <- case_data[, sum(new_cases), ]
 
   # If no new cases drawn, outbreak is over so return case_data
-  if (total_new_cases == 0) {
+  if (nrow(new_case_data) == 0) {
     # If everyone is sampled it means that either control has worked or
     # everyone has had a chance to infect but didn't
     case_data[, sampled := TRUE]
-
-    effective_r0 <- 0
-    cases_in_gen <- 0
-    out <- list(case_data, effective_r0, cases_in_gen)
-    names(out) <- c("cases", "effective_r0", "cases_in_gen")
-
+    out <- list(
+      cases = case_data,
+      effective_r0 = 0,
+      cases_in_gen = 0
+    )
     return(out)
   }
 
