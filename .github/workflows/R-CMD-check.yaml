@@ -21,7 +21,7 @@ on:
       - 'NAMESPACE'
       - 'LICENSE'
       - '.Rbuildignore'
-      - '.github/workflows/R-CMD-check.yaml'
+      - '.github/workflows/**'
   merge_group:
   pull_request:
     paths:
@@ -36,7 +36,7 @@ on:
       - 'NAMESPACE'
       - 'LICENSE'
       - '.Rbuildignore'
-      - '.github/workflows/R-CMD-check.yaml'
+      - '.github/workflows/**'
 
 name: R-CMD-check
 
