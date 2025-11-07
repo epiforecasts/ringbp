@@ -1,225 +1,215 @@
-context("Test basic usage")
+offspring <- offspring_opts(
+  community = \(n) rep(0, n),
+  isolated = \(n) rep(0, n),
+  asymptomatic = \(n) rep(0, n)
+)
+delays <- delay_opts(
+  incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
+  onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
+)
+event_probs <- event_prob_opts(
+  asymptomatic = 0,
+  presymptomatic_transmission = 0.15,
+  symptomatic_ascertained = 0
+)
+interventions <- intervention_opts(quarantine = FALSE)
 
-set.seed(1234567)
+initial_case_data <- outbreak_setup(
+  initial_cases = 1,
+  delays = delays,
+  event_probs = event_probs
+)
 
-test_that("A basic sim returns the correct object", {
-  initial_cases <- 1
-  offspring <- offspring_opts(
-    # almost guarentees to get new cases
-    community = \(n) rnbinom(n = n, mu = 500, size = 0.16),
-    isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
-    asymptomatic = \(n) rnbinom(n = n, mu = 500, size = 0.16)
-  )
-  delays <- delay_opts(
-    incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-    onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-  )
-  event_probs <- event_prob_opts(
-    asymptomatic = 0,
-    presymptomatic_transmission = 0.15,
-    symptomatic_ascertained = 0
-  )
-  interventions <- intervention_opts(quarantine = FALSE)
+test_that("outbreak_step creates new cases as expected", {
+  # guarantee new cases from community transmission
+  offspring$community <- \(n) rep(2, n)
 
-  # generate initial cases
-  case_data <- outbreak_setup(
-    initial_cases = initial_cases,
-    delays = delays,
-    event_probs = event_probs
-  )
-
-  # generate next generation of cases
-  case_data2 <- outbreak_step(
-    case_data = case_data,
+  # generate first generation of cases
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  expect_gt(nrow(case_data2$cases), 1)
-  expect_equal(
-    as.vector(table(case_data2$cases$infector)),
-    c(1, nrow(case_data2$cases) - 1)
-  )
-
-  # almost guarentees to get new cases
-  offspring$community <- \(n) rnbinom(n = n, mu = 0, size = 0.16)
-  offspring$asymptomatic <- \(n) rnbinom(n = n, mu = 0, size = 0.16)
-
-  # With R0 = 0 we should get no additional cases.
-  case_data3 <- outbreak_step(
-    case_data = case_data,
-    offspring = offspring,
-    delays = delays,
-    event_probs = event_probs,
-    interventions = interventions
-  )
-
-  expect_equal(nrow(case_data3$cases), 1)
+  # community offspring R = 2 so 3 total cases
+  expect_identical(nrow(first_gen_case_data$cases), 3L)
+  expect_identical(first_gen_case_data$cases$infector, c(0, 1, 1))
+  # initial case gets isolated after first generation
+  expect_identical(first_gen_case_data$cases$isolated, c(TRUE, FALSE, FALSE))
+  expect_identical(first_gen_case_data$effective_r0, 2)
+  expect_identical(first_gen_case_data$cases_in_gen, 2L)
 })
 
-test_that("Sim with multiple infectors makes senes", {
-  initial_cases <- 2
-  offspring <- offspring_opts(
-    # almost guarentees both index cases create infections
-    community = \(n) rnbinom(n = n, mu = 10000, size = 0.16),
-    isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
-    asymptomatic = \(n) rnbinom(n = n, mu = 10000, size = 0.16)
-  )
-  delays <- delay_opts(
-    incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-    onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-  )
-  event_probs <- event_prob_opts(
-    asymptomatic = 0,
-    presymptomatic_transmission = 0.15,
-    symptomatic_ascertained = 0
-  )
-  interventions <- intervention_opts(quarantine = FALSE)
+test_that("outbreak_step creates no new cases as expected", {
+  # guarantee to get no new cases
+  offspring$community <- \(n) rep(0, n)
 
-  # generate initial cases
-  case_data <- outbreak_setup(
-    initial_cases = initial_cases,
-    delays = delays,
-    event_probs = event_probs
-  )
-
-  # generate next generation of cases
-  case_data2 <- outbreak_step(
-    case_data = case_data,
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  expect_gt(nrow(case_data2$cases), 1)
-  expect_equal(as.vector(table(case_data2$cases$infector))[1], 2)
-  expect_true(all(as.vector(table(case_data2$cases$infector))[2:3] > 1))
+  # all offspring R = 0 so 1 total case
+  expect_identical(nrow(first_gen_case_data$cases), 1L)
+  # initial case gets isolated after first generation
+  expect_identical(first_gen_case_data$cases$isolated, TRUE)
+  expect_identical(first_gen_case_data$effective_r0, 0)
+  expect_identical(first_gen_case_data$cases_in_gen, 0)
+  # only isolation status of initial infector has changed
+  expect_identical(
+    initial_case_data[, !"isolated"],
+    first_gen_case_data$cases[, !"isolated"]
+  )
 })
 
+test_that("outbreak_step with > 1 initial infections", {
+  offspring$community <- \(n) rep(100, n)
+  offspring$asymptomatic <- \(n) rep(100, n)
 
-test_that("r0_isolated is working properly", {
-  initial_cases <- 1
-  offspring <- offspring_opts(
-    # Case is isolated so irrelevent
-    community = \(n) rnbinom(n = n, mu = 500, size = 0.16),
-    # Shoiuld get zero cases
-    isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
-    asymptomatic = \(n) rnbinom(n = n, mu = 500, size = 0.16)
-  )
-  delays <- delay_opts(
-    incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-    onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-  )
-  event_probs <- event_prob_opts(
-    asymptomatic = 0,
-    presymptomatic_transmission = 0.15,
-    symptomatic_ascertained = 0
-  )
-  interventions <- intervention_opts(quarantine = FALSE)
-
-  # generate initial cases
-  case_data <- outbreak_setup(
-    initial_cases = initial_cases,
+  initial_case_data <- outbreak_setup(
+    initial_cases = 2,
     delays = delays,
     event_probs = event_probs
   )
 
-  case_data$isolated <- TRUE
-
-  # generate next generation of cases
-  case_data2 <- outbreak_step(
-    case_data = case_data,
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  expect_equal(nrow(case_data2$cases), 1)
-
-  # Case is isolated so irrelevent
-  offspring$community <- \(n) rnbinom(n = n, mu = 0, size = 0.16)
-  # Shoiuld get lots of cases
-  offspring$isolated <- \(n) rnbinom(n = n, mu = 500, size = 1)
-  offspring$asymptomatic <- \(n) rnbinom(n = n, mu = 0, size = 0.16)
-
-  # generate next generation of cases
-  case_data3 <- outbreak_step(
-    case_data = case_data,
-    offspring = offspring,
-    delays = delays,
-    event_probs = event_probs,
-    interventions = interventions
+  # 200 case but some are removed from truncating the offspring from isolation
+  # 100 is a approximate threshold that should be exceeded
+  expect_gt(nrow(first_gen_case_data$cases), 100)
+  # initial case gets isolated after first generation
+  expect_identical(first_gen_case_data$cases$isolated[1:2], rep(TRUE, 2))
+  # all new cases are not isolated
+  expect_identical(
+    first_gen_case_data$cases$isolated[3:nrow(first_gen_case_data$cases)],
+    rep(FALSE, nrow(first_gen_case_data$cases) - 2)
   )
-
-  expect_gt(nrow(case_data3$cases), 1)
+  # first two cases have infector zero (index case)
+  expect_identical(first_gen_case_data$cases$infector[1:2], rep(0, 2))
+  # all new cases are infected by either case 1 or 2
+  expect_identical(unique(first_gen_case_data$cases$infector[-(1:2)]), c(1, 2))
+  # R should be much larger than 3
+  expect_gt(first_gen_case_data$effective_r0, 3)
+  expect_identical(
+    first_gen_case_data$cases_in_gen,
+    nrow(first_gen_case_data$cases) - 2L
+  )
 })
 
-test_that("Test a bunch of args", {
-  initial_cases <- 1
-  offspring <- offspring_opts(
-    # almost guarentees both index cases create infections
-    community = \(n) rnbinom(n = n, mu = 10000, size = 0.16),
-    isolated = \(n) rnbinom(n = n, mu = 0, size = 1),
-    asymptomatic = \(n) rnbinom(n = n, mu = 100000, size = 0.16)
-  )
-  delays <- delay_opts(
-    incubation_period = \(n) stats::rweibull(n = n, shape = 2.32, scale = 6.49),
-    onset_to_isolation = \(n) stats::rweibull(n = n, shape = 2, scale = 4)
-  )
-  event_probs <- event_prob_opts(
-    asymptomatic = 0,
-    presymptomatic_transmission = 0.15,
-    symptomatic_ascertained = 0
-  )
-  interventions <- intervention_opts(quarantine = FALSE)
+test_that("isolated cases behave as expected", {
+  # case is isolated so should not trasmit in the community
+  offspring$community <- \(n) rep(100, n)
 
-  # generate initial cases
-  case_data <- outbreak_setup(
-    initial_cases = initial_cases,
-    delays = delays,
-    event_probs = event_probs
-  )
+  initial_case_data$isolated <- TRUE
 
   # generate next generation of cases
-  case_data2 <- outbreak_step(
-    case_data = case_data,
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  expect_true(all(case_data2$cases$missed))
+  # initial case is isolated and isolated R = 0 so 1 total case
+  expect_identical(nrow(first_gen_case_data$cases), 1L)
+  expect_identical(first_gen_case_data$effective_r0, 0)
+  expect_identical(first_gen_case_data$cases_in_gen, 0)
+  expect_identical(initial_case_data, first_gen_case_data$cases)
+})
+
+test_that("isolated cases transmit as expected", {
+  offspring$community <- \(n) rep(0, n)
+  offspring$isolated <- \(n) rep(100, n)
+
+  initial_case_data$isolated <- TRUE
+
+  # generate next generation of cases
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
+    offspring = offspring,
+    delays = delays,
+    event_probs = event_probs,
+    interventions = interventions
+  )
+
+  # initial case is isolated and isolated R > 0 so multiple case
+  # 100 cases but some are removed from truncating the offspring from isolation
+  # 25 is a approximate threshold that should be exceeded
+  expect_gt(nrow(first_gen_case_data$cases), 25)
+  # Inf due to division by zero because zero cases are not isolated
+  expect_identical(first_gen_case_data$effective_r0, Inf)
+  expect_gt(first_gen_case_data$cases_in_gen, 25)
+})
+
+test_that("All cases are missed when ascertained = 0", {
+  offspring$community <- \(n) rep(100, n)
+  offspring$asymptomatic <- \(n) rep(100, n)
+
+  # generate next generation of cases
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
+    offspring = offspring,
+    delays = delays,
+    event_probs = event_probs,
+    interventions = interventions
+  )
+
+  expect_true(all(first_gen_case_data$cases$missed))
+})
+
+test_that("No cases are missed when ascertained = 1", {
+  offspring$community <- \(n) rep(100, n)
+  offspring$asymptomatic <- \(n) rep(100, n)
 
   event_probs$symptomatic_ascertained <- 1
 
-  case_data3 <- outbreak_step(
-    case_data = case_data,
+  # generate next generation of cases
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  # The index case should be missed but no others.
-  expect_equal(sum(case_data3$cases$missed), 1)
+  # only the index case is missed, all others are ascertained
+  expect_true(first_gen_case_data$cases$missed[1])
+  expect_false(any(
+    first_gen_case_data$cases$missed[2:nrow(first_gen_case_data$cases)]
+  ))
+})
 
-  # To test a mix make sure there's loads of cases.
-  offspring$community <- \(n) rnbinom(n = n, mu = 100000, size = 0.16)
+test_that("Some cases are missed when ascertained = 0.5", {
+  offspring$community <- \(n) rep(100, n)
+  offspring$asymptomatic <- \(n) rep(100, n)
+
   event_probs$symptomatic_ascertained <- 0.5
 
-  case_data4 <- outbreak_step(
-    case_data = case_data,
+  # generate next generation of cases
+  first_gen_case_data <- outbreak_step(
+    case_data = initial_case_data,
     offspring = offspring,
     delays = delays,
     event_probs = event_probs,
     interventions = interventions
   )
 
-  # After ignoring the index case we should still get both true and false.
-  expect_length(unique(case_data4$cases$missed[-1]), 2)
+  # only the index case is missed, all others are ascertained
+  missed <- table(first_gen_case_data$cases$missed)
+  expect_identical(names(missed), c("FALSE", "TRUE"))
+  # multiple missed and ascertained, 5 is an arbitrary threshold
+  expect_gt(missed[1], 5)
+  expect_gt(missed[2], 5)
 })
