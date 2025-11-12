@@ -1,0 +1,184 @@
+# *ringbp*: Simulate infectious disease transmission with contact tracing
+
+*ringbp* is an R package that provides methods to simulate infectious
+disease transmission in the presence of contact tracing. It was
+initially developed to support a paper written in early 2020 to assess
+the feasibility of controlling COVID-19; see the [companion analysis
+code](https://github.com/cmmid/ringbp) and
+[paper](https://doi.org/10.1016/S2214-109X(20)30074-7) for more details.
+
+*ringbp* is an R package that provides methods to simulate infectious
+disease transmission in the presence of contact tracing. It was
+initially developed to support a paper written in early 2020 to assess
+the [feasibility of controlling
+COVID-19](https://github.com/cmmid/ringbp). For more details on the
+methods implemented here, see the associated
+[paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
+
+## Installation
+
+The current development version of *ringbp* can be installed from
+[GitHub](https://github.com/) using the `pak` package.
+
+``` r
+if(!require("pak")) install.packages("pak")
+pak::pak("epiforecasts/ringbp")
+```
+
+## Quick start
+
+The main functionality of the package is in the
+[`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+function. Here is an example for running 10 simulations of a given
+scenario:
+
+``` r
+library("ringbp")
+library("ggplot2")
+
+res <- scenario_sim(
+  n = 10, ## 10 simulations
+  initial_cases = 1, ## one initial case in each of the simulations 
+  offspring = offspring_opts(
+    ## non-isolated individuals have R0 of 2.5 and a dispersion parameter
+    community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16), 
+    ## isolated individuals have R0 of 0.5 and a dispersion  parameter
+    isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
+    ## by default asymptomatic individuals are assumed to have the same R0 
+    ## and dispersion as non-isolated individuals
+  ), 
+  delays = delay_opts(
+    incubation_period = \(x) stats::rweibull(n = x, shape = 2.322737, scale = 6.492272), 
+    onset_to_isolation = \(x) stats::rweibull(n = x, shape = 1.651524, scale = 4.287786)
+  ),
+  event_probs = event_prob_opts(
+    ## 10% asymptomatic infections
+    asymptomatic = 0.1, 
+    ## 50% probability of onward infection time being before symptom onset
+    presymptomatic_transmission = 0.5,
+    ## 20% probability of ascertainment by contact tracing
+    symptomatic_ascertained = 0.2
+  ),
+  ## whether quarantine is in effect
+  interventions = intervention_opts(quarantine = FALSE),
+  sim = sim_opts(
+    ## don't simulate beyond 350 days
+    cap_max_days = 350, 
+    ## don't simulate beyond 4500 infections
+    cap_cases = 4500
+  )
+)
+```
+
+### Plot of weekly cases
+
+``` r
+ggplot(
+  data = res, aes(x = week, y = cumulative, col = as.factor(sim))
+) +
+  geom_line(show.legend = FALSE, alpha = 0.3) +
+  scale_y_continuous(name = "Cumulative number of cases") +
+  theme_bw()
+```
+
+![](reference/figures/README-plot-1.png)
+
+### Estimate extinction probability
+
+``` r
+extinct_prob(res, cap_cases = 4500)
+#> [1] 0.7
+```
+
+## Contributors
+
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors` package](https://github.com/ropensci/allcontributors)
+following the [all-contributors](https://allcontributors.org)
+specification. Contributions of any kind are welcome!
+
+### Code
+
+[seabbs](https://github.com/epiforecasts/ringbp/commits?author=seabbs),
+[sbfnk](https://github.com/epiforecasts/ringbp/commits?author=sbfnk),
+[jhellewell14](https://github.com/epiforecasts/ringbp/commits?author=jhellewell14),
+[timcdlucas](https://github.com/epiforecasts/ringbp/commits?author=timcdlucas),
+[amygimma](https://github.com/epiforecasts/ringbp/commits?author=amygimma),
+[joshwlambert](https://github.com/epiforecasts/ringbp/commits?author=joshwlambert),
+[Bisaloo](https://github.com/epiforecasts/ringbp/commits?author=Bisaloo),
+[actions-user](https://github.com/epiforecasts/ringbp/commits?author=actions-user)
+
+### Issue Authors
+
+[pearsonca](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Apearsonca),
+[sophiemeakin](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+author%3Asophiemeakin)
+
+### Issue Contributors
+
+[thimotei](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Athimotei),
+[adamkucharski](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Aadamkucharski),
+[dcadam](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Adcadam),
+[jamesmbaazam](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam)
+
+# Package index
+
+## Model
+
+- [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md)
+  : Run a single instance of the branching process model
+- [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
+  : Set up initial cases for branching process
+- [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md)
+  : Move forward one generation in the branching process
+
+## Helper functions
+
+### Probability distribution manipulation
+
+- [`incubation_to_generation_time()`](https://epiforecasts.io/ringbp/reference/incubation_to_generation_time.md)
+  : Convert symptom onset times to generation times
+
+### Loop wrappers for scenario modelling
+
+- [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+  : Run a specified number of simulations with identical parameters
+
+### Model parameters and control options
+
+- [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md)
+  :
+
+  Create a list of delay distributions to run the ringbp model
+
+- [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
+  :
+
+  Create a list of event probabilities to run the ringbp model
+
+- [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md)
+  :
+
+  Create a list of intervention settings to run the ringbp model
+
+- [`offspring_opts()`](https://epiforecasts.io/ringbp/reference/offspring_opts.md)
+  :
+
+  Create a list of offspring distributions to run the ringbp model
+
+- [`sim_opts()`](https://epiforecasts.io/ringbp/reference/sim_opts.md) :
+
+  Create a list of simulation control options for the ringbp model
+
+## Post-processing
+
+- [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/detect_extinct.md)
+  : Calculate whether outbreaks went extinct or not
+- [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinct_prob.md)
+  : Calculate proportion of runs that have controlled outbreak
+
+# Articles
+
+### All vignettes
+
+- [Scenario parameter
+  sweep](https://epiforecasts.io/ringbp/articles/parameter-sweep.md):
