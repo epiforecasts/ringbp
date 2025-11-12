@@ -15,8 +15,7 @@ on:
       - 'tests/**'
       - 'inst/**'
       - 'DESCRIPTION'
-      - '.github/workflows/test-coverage.yaml'
-      - '.github/workflows/upload-coverage.yaml'
+      - '.github/workflows/**'
   merge_group:
   pull_request:
     paths:
@@ -25,8 +24,7 @@ on:
       - 'tests/**'
       - 'inst/**'
       - 'DESCRIPTION'
-      - '.github/workflows/test-coverage.yaml'
-      - '.github/workflows/upload-coverage.yaml'
+      - '.github/workflows/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
