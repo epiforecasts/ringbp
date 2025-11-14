@@ -112,8 +112,11 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
-  r1 <- extinct_prob(res, cap)
+  r1 <- extinct_prob(res, extinction_week = 12:14)
   expect_true(r1 <= 1)
   expect_true(r1 >= 0)
   expect_length(r1, 1)
@@ -136,7 +139,7 @@ test_that("extinct_prob works as expected", {
   res2$weekly_cases[1:2] <- c(1, 1)
   res2$cumulative[1:2] <- c(1, 2)
 
-  r2 <- extinct_prob(res2, cap_cases = cap, week_range = 1)
+  r2 <- extinct_prob(res2, extinction_week = 1)
   expect_equal(r2, 0.5)
 
   # Run some sims with almost certain outputs
@@ -160,8 +163,11 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
-  r3 <- extinct_prob(res3, cap)
+  r3 <- extinct_prob(res3)
   expect_equal(r3, 0)
 
   # r0 of 0, should always go extinct.
@@ -184,12 +190,15 @@ test_that("extinct_prob works as expected", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
-  r3 <- extinct_prob(res3, cap)
+  r3 <- extinct_prob(res3)
   expect_equal(r3, 1)
 })
 
-test_that("extinct_prob week_range argument works", {
+test_that("extinct_prob extinction_week argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
@@ -211,6 +220,9 @@ test_that("extinct_prob week_range argument works", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
@@ -226,46 +238,46 @@ test_that("extinct_prob week_range argument works", {
   res2$weekly_cases[1:2] <- c(1, 1)
   res2$cumulative[1:2] <- c(1, 2)
 
-  r2 <- extinct_prob(res2, cap_cases = cap, week_range = 1)
+  r2 <- extinct_prob(res2, extinction_week = 1)
   expect_equal(r2, 0.5)
 
-  # Now add a week and test week_range = 1:2
+  # Now add a week and test extinction_week = 1:2
   # Simple case of cases in week 1 and 2
   res3 <- res[c(1, 2, 3), ]
   res3$weekly_cases[1:3] <- c(1, 1, 1)
   res3$cumulative[1:3] <- c(1, 2, 3)
-  r3 <- extinct_prob(res3, cap_cases = cap, week_range = 1:2)
+  r3 <- extinct_prob(res3, extinction_week = 1:2)
   expect_equal(r3, 0)
 
   # Simple case of no cases in week 1 or 2
   res4 <- res[c(1, 2, 3), ]
   res4$weekly_cases[1:3] <- c(1, 0, 0)
   res4$cumulative[1:3] <- c(1, 1, 1)
-  r4 <- extinct_prob(res4, cap_cases = cap, week_range = 1:2)
+  r4 <- extinct_prob(res4, extinction_week = 1:2)
   expect_equal(r4, 1)
 
   # Case of cases in week 1 but not 2 (by the definition used in this function
-  # this is not an extinction). Test here that week_range 1:2 says no extintion
-  # but week_range 2 says extinction.
+  # this is not an extinction). Test here that extinction_week 1:2 says no
+  # extintion but extinction_week 2 says extinction.
   res5 <- res[c(1, 2, 3), ]
   res5$weekly_cases[1:3] <- c(1, 1, 0)
   res5$cumulative[1:3] <- c(1, 2, 2)
-  r5 <- extinct_prob(res5, cap_cases = cap, week_range = 1:2)
+  r5 <- extinct_prob(res5, extinction_week = 1:2)
   expect_equal(r5, 0)
 
-  r5b <- extinct_prob(res5, cap_cases = cap, week_range = 2)
+  r5b <- extinct_prob(res5, extinction_week = 2)
   expect_equal(r5b, 1)
 
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
-  # extinction). Test here that week_range 1:2 says no extinction and neither
-  # does week_range 2.
+  # extinction). Test here that extinction_week 1:2 says no extinction and
+  # neither does extinction_week 2.
   res6 <- res[c(1, 2, 3), ]
   res6$weekly_cases[1:3] <- c(1, 0, 1)
   res6$cumulative[1:3] <- c(1, 1, 2)
-  r6 <- extinct_prob(res6, cap_cases = cap, week_range = 1:2)
+  r6 <- extinct_prob(res6, extinction_week = 1:2)
   expect_equal(r6, 0)
 
-  r6b <- extinct_prob(res6, cap_cases = cap, week_range = 2)
+  r6b <- extinct_prob(res6, extinction_week = 2)
   expect_equal(r6b, 0)
 })
 
@@ -291,6 +303,9 @@ test_that("detect_extinct works", {
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
+  # TODO: remove this step and improve tests
+  # strip extinct attribute to test extinction calculation
+  attr(res, which = "extinct") <- NULL
 
   # Manually build an output with known proportion of extinctions
   res2 <- res[c(1, 2, 1, 2), ]
@@ -304,19 +319,19 @@ test_that("detect_extinct works", {
   res2$weekly_cases[1:2] <- c(1, 1)
   res2$cumulative[1:2] <- c(1, 2)
 
-  r2 <- detect_extinct(res2, cap_cases = cap, week_range = 1)
+  r2 <- detect_extinct(res2, extinction_week = 1)
   # The types in the output is a bit random. So just force all to doubles.
   r2 <- data.table(r2)[, lapply(.SD, as.double)]
 
   expect2 <- data.table(sim = c(1.0, 2.0), extinct = c(0.0, 1.0))
   expect_equal(r2, expect2)
 
-  # Now add a week and test week_range = 1:2
+  # Now add a week and test extinction_week = 1:2
   # Simple case of cases in week 1 and 2
   res3 <- res[c(1, 2, 3), ]
   res3$weekly_cases[1:3] <- c(1, 1, 1)
   res3$cumulative[1:3] <- c(1, 2, 3)
-  r3 <- detect_extinct(res3, cap_cases = cap, week_range = 1:2)
+  r3 <- detect_extinct(res3, extinction_week = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r3 <- data.table(r3)[, lapply(.SD, as.double)]
 
@@ -327,7 +342,7 @@ test_that("detect_extinct works", {
   res4 <- res[c(1, 2, 3), ]
   res4$weekly_cases[1:3] <- c(1, 0, 0)
   res4$cumulative[1:3] <- c(1, 1, 1)
-  r4 <- detect_extinct(res4, cap_cases = cap, week_range = 1:2)
+  r4 <- detect_extinct(res4, extinction_week = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r4 <- data.table(r4)[, lapply(.SD, as.double)]
 
@@ -335,19 +350,19 @@ test_that("detect_extinct works", {
   expect_equal(r4, expect4)
 
   # Case of cases in week 1 but not 2 (by the definition used in this function
-  # this is not an extinction). Test here that week_range 1:2 says extintion by
-  # week_range 2 does not.
+  # this is not an extinction). Test here that extinction_week 1:2 says
+  # extinction by extinction_week 2 does not.
   res5 <- res[c(1, 2, 3), ]
   res5$weekly_cases[1:3] <- c(1, 1, 0)
   res5$cumulative[1:3] <- c(1, 2, 2)
-  r5 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
+  r5 <- detect_extinct(res5, extinction_week = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r5 <- data.table(r5)[, lapply(.SD, as.double)]
 
   expect5 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r5, expect5)
 
-  r5b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
+  r5b <- detect_extinct(res5, extinction_week = 2)
   # The types in the output is a bit random. So just force all to doubles.
   r5b <- data.table(r5b)[, lapply(.SD, as.double)]
 
@@ -355,19 +370,19 @@ test_that("detect_extinct works", {
   expect_equal(r5b, expect5b)
 
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
-  # extinction). Test here that week_range 1:2 says extintion and week_range 2
-  # does as well.
+  # extinction). Test here that extinction_week 1:2 says extintion and
+  # extinction_week 2 does as well.
   res6 <- res[c(1, 2, 3), ]
   res6$weekly_cases[1:3] <- c(1, 0, 1)
   res6$cumulative[1:3] <- c(1, 1, 2)
-  r6 <- detect_extinct(res5, cap_cases = cap, week_range = 1:2)
+  r6 <- detect_extinct(res5, extinction_week = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r6 <- data.table(r6)[, lapply(.SD, as.double)]
 
   expect6 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6, expect5)
 
-  r6b <- detect_extinct(res5, cap_cases = cap, week_range = 2)
+  r6b <- detect_extinct(res5, extinction_week = 2)
 
   r6b <- data.table(r6b)[, lapply(.SD, as.double)]
 
