@@ -6,7 +6,7 @@
 \alias{ringbp-package}
 \title{ringbp: Simulate and evaluate contact tracing scenarios}
 \description{
-A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
+A package to simulate transmission of an infectious disease and associated efforts to trace contacts and reduce onwards transmission.
 }
 \seealso{
 Useful links:
