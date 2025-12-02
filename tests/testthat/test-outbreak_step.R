@@ -24,6 +24,15 @@ test_that("outbreak_step creates new cases as expected", {
   # guarantee new cases from community transmission
   offspring$community <- \(n) rep(2, n)
 
+  # set onset-to-isolation to Inf to not remove new cases
+  delays$onset_to_isolation <- \(n) rep(Inf, n)
+
+  initial_case_data <- outbreak_setup(
+    initial_cases = 1,
+    delays = delays,
+    event_probs = event_probs
+  )
+
   # generate first generation of cases
   first_gen_case_data <- outbreak_step(
     case_data = initial_case_data,
