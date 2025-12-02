@@ -36,7 +36,7 @@ Authors@R: c(
            role = c("aut"),
            comment = c(ORCID = "0000-0001-5218-3046"))
            )
-Description: A package to simulate transmission of an infectious disease and associated efforts to trace conacts and reduce onwards transmission.
+Description: A package to simulate transmission of an infectious disease and associated efforts to trace contacts and reduce onwards transmission.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
