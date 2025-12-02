@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   parameter-sweep: parameter-sweep.html
-last_built: 2025-11-26T16:37Z
+last_built: 2025-12-02T15:26Z
 urls:
   reference: https://epiforecasts.io/ringbp/reference
   article: https://epiforecasts.io/ringbp/articles

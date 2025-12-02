@@ -87,7 +87,7 @@ ggplot(
 
 ``` r
 extinct_prob(res, cap_cases = 4500)
-#> [1] 0.7
+#> [1] 0.8
 ```
 
 ## Contributors
