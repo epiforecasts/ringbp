@@ -24,6 +24,15 @@ test_that("outbreak_step creates new cases as expected", {
   # guarantee new cases from community transmission
   offspring$community <- \(n) rep(2, n)
 
+  # set onset-to-isolation to Inf to not remove new cases
+  delays$onset_to_isolation <- \(n) rep(Inf, n)
+
+  initial_case_data <- outbreak_setup(
+    initial_cases = 1,
+    delays = delays,
+    event_probs = event_probs
+  )
+
   # generate first generation of cases
   first_gen_case_data <- outbreak_step(
     case_data = initial_case_data,
@@ -85,9 +94,11 @@ test_that("outbreak_step with > 1 initial infections", {
     interventions = interventions
   )
 
-  # 200 case but some are removed from truncating the offspring from isolation
-  # 100 is a approximate threshold that should be exceeded
-  expect_gt(nrow(first_gen_case_data$cases), 100)
+  # 200 new cases but some are removed from isolation truncating the offspring
+  expect_lt(first_gen_case_data$cases_in_gen, 200)
+  # 50 is a approximate threshold that should be exceeded given the incubation
+  # period and onset-to-isolation time parameters
+  expect_gt(first_gen_case_data$cases_in_gen, 50)
   # initial case gets isolated after first generation
   expect_identical(first_gen_case_data$cases$isolated[1:2], rep(TRUE, 2))
   # all new cases are not isolated
