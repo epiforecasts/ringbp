@@ -1,7 +1,7 @@
 # ringbp: Simulate and evaluate contact tracing scenarios
 
 A package to simulate transmission of an infectious disease and
-associated efforts to trace conacts and reduce onwards transmission.
+associated efforts to trace contacts and reduce onwards transmission.
 
 ## See also
 
