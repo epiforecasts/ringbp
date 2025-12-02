@@ -5,7 +5,7 @@
 #' @inheritParams outbreak_step
 #' @inheritParams outbreak_model
 #'
-#' @importFrom data.table rbindlist
+#' @importFrom data.table rbindlist setattr
 #' @return A `data.table` object returning the results for multiple simulations
 #'   using the same set of parameters. The table has columns
 #' * week: The week in the simulation.
@@ -77,6 +77,15 @@ scenario_sim <- function(n,
     simplify = FALSE
   )
 
-  # bind output together and add simulation index and return
-  data.table::rbindlist(res, idcol = "sim")[]
+  extinct <- vapply(
+    res, attr, FUN.VALUE = logical(1), which = "extinct", exact = TRUE
+  )
+
+  # bind output together and add simulation index
+  res <- data.table::rbindlist(res, idcol = "sim")
+
+  setattr(res, name = "cap_cases", value = sim$cap_cases)
+  setattr(res, name = "extinct", value = extinct)
+
+  res[]
 }
