@@ -49,7 +49,6 @@
 
 ## Post-processing
 
-- [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/detect_extinct.md)
-  : Calculate whether outbreaks went extinct or not
-- [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinct_prob.md)
-  : Calculate proportion of runs that have controlled outbreak
+- [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+  [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+  : Outbreak extinction functions
