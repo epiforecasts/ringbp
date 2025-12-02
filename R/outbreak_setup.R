@@ -58,7 +58,6 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
 
   # isolate each symptomatic case after an onset-to-isolation delay after
   # their symptom onset time, each case seeds an independent outbreak
-  # (i.e. not a cluster)
   case_data <- case_data[
     asymptomatic == FALSE,
     isolated_time := onset + delays$onset_to_isolation(.N)
