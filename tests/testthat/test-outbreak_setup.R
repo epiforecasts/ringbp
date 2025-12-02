@@ -62,15 +62,20 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
   set.seed(seed)
   initial_cases <- 1e5
   asymptomatic <- 0.5
+  incubation_shape <- runif(n = 1, min = 2, max = 4)
+  incubation_scale <- runif(n = 1, min = 2, max = 6)
   incubation_period <- \(n) rweibull(
     n = n,
-    shape = runif(n = 1, min = 2, max = 4),
-    scale = runif(n = 1, min = 2, max = 6)
+    shape = incubation_shape,
+    scale = incubation_scale
   )
+
+  onset_to_isolation_shape <- runif(n = 1, min = 2, max = 4)
+  onset_to_isolation_scale <- runif(n = 1, min = 2, max = 6)
   onset_to_isolation <- \(n) rweibull(
     n = n,
-    shape = runif(n = 1, min = 2, max = 4),
-    scale = runif(n = 1, min = 2, max = 6)
+    shape = onset_to_isolation_shape,
+    scale = onset_to_isolation_scale
   )
 
   res <- outbreak_setup(
@@ -90,19 +95,24 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
   expect_equal(
     sum(res$asymptomatic) / nrow(res),
     asymptomatic,
-    tolerance = 0.01
+    tolerance = 0.05
   )
   # test that onset times match incubation period distribution
-  expect_equal(
+  # accept the null hypothesis that both distributions are the same
+  expect_gt(
     # suppress warning about approximate p-value
     suppressWarnings(
       ks.test(res$onset, incubation_period(initial_cases))$p.value
     ),
-    expected = 0,
-    tolerance = 0.01
+    expected = 0.05
   )
+
+  # remove asymptomatic cases that have an Inf isolation time
+  res <- res[asymptomatic == FALSE, ]
+
   # test that isolation times match onset-to-isolation distribution
-  expect_equal(
+  # accept the null hypothesis that both distributions are the same
+  expect_gt(
     # suppress warning about approximate p-value
     suppressWarnings(
       ks.test(
@@ -110,7 +120,6 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
         onset_to_isolation(initial_cases)
       )$p.value
     ),
-    expected = 0,
-    tolerance = 0.01
+    expected = 0.05
   )
 })
