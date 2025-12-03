@@ -18,7 +18,7 @@
 #'   the intervention settings for the \pkg{ringbp} model, returned by
 #'   [intervention_opts()]. Contains one element: `quarantine`
 #'
-#' @importFrom data.table data.table rbindlist fcase fifelse
+#' @importFrom data.table data.table rbindlist fcase fifelse copy
 #' @importFrom stats runif
 #' @importFrom stats rnbinom
 #'
@@ -76,30 +76,31 @@ outbreak_step <- function(case_data,
   checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
   checkmate::assert_class(interventions, "ringbp_intervention_opts")
 
-  # For each case in case_data, draw new_cases from a negative binomial
-  # distribution with an R0 and dispersion dependent on if isolated = TRUE
-  case_data[, new_cases := fcase(
-    isolated, offspring$isolated(.N),
-    asymptomatic, offspring$asymptomatic(.N),
-    default = offspring$community(.N)
-  )]
+  # work with copy of case_data in outbreak_step due to
+  # sample_offspring modify by reference
+  case_data <- copy(case_data)
+
+  # case_data is modified by reference and generation times are returned
+  gt <- sample_offspring(
+    case_data = case_data,
+    offspring = offspring,
+    alpha = event_probs$alpha,
+    latent_period = delays$latent_period
+  )
 
   # Select cases that have generated any new cases
-  new_case_data <- case_data[new_cases > 0]
-  # The total new cases generated
-  total_new_cases <- case_data[, sum(new_cases), ]
+  new_case_data <- case_data[new_cases > 0 & !sampled]
 
   # If no new cases drawn, outbreak is over so return case_data
-  if (total_new_cases == 0) {
-    # If everyone is isolated it means that either control has worked or
+  if (nrow(new_case_data) == 0) {
+    # If everyone is sampled it means that either control has worked or
     # everyone has had a chance to infect but didn't
-    case_data$isolated <- TRUE
-
-    effective_r0 <- 0
-    cases_in_gen <- 0
-    out <- list(case_data, effective_r0, cases_in_gen)
-    names(out) <- c("cases", "effective_r0", "cases_in_gen")
-
+    case_data[, sampled := TRUE]
+    out <- list(
+      cases = case_data,
+      effective_r0 = 0,
+      cases_in_gen = 0
+    )
     return(out)
   }
 
@@ -107,13 +108,8 @@ outbreak_step <- function(case_data,
   # that each infector has infected
   prob_samples <- new_case_data[, list(
     # time when new cases were exposed, a draw from generation time based on
-    # infector's onset
-    exposure = incubation_to_generation_time(
-      symptom_onset_time = rep(onset, new_cases),
-      exposure_time = rep(exposure, new_cases),
-      alpha = event_probs$alpha,
-      latent_period = delays$latent_period
-    ),
+    # infector's onset, ordered to match order of caseid
+    exposure = gt[order(as.numeric(names(gt)))],
     # records the infector of each new person
     infector = rep(caseid, new_cases),
     # records when infector was isolated
@@ -123,14 +119,11 @@ outbreak_step <- function(case_data,
     # cases whose parents are asymptomatic are automatically missed;
     # will draw this for infector_asymptomatic == FALSE
     missed = TRUE,
-    isolated = FALSE,
-    new_cases = NA
+    new_cases = NA_integer_,
+    sampled = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
-  ][
-    # keep only news cases that are pre-isolation
-    exposure < infector_isolation_time
   ][,
     # onset of new case is exposure + incubation period sample
     onset := exposure + delays$incubation_period(.N)
@@ -167,11 +160,11 @@ outbreak_step <- function(case_data,
   cases_in_gen <- nrow(prob_samples)
 
   ## Estimate the effective r0
-  effective_r0 <- cases_in_gen / case_data[isolated == FALSE, .N]
+  effective_r0 <- cases_in_gen / case_data[sampled == FALSE, .N]
 
   # Everyone in case_data so far has had their chance to infect and are
   # therefore considered isolated
-  case_data$isolated <- TRUE
+  case_data[, sampled := TRUE]
 
   # bind original cases + new secondary cases
   case_data <- data.table::rbindlist(list(case_data, prob_samples),

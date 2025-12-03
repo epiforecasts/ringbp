@@ -11,9 +11,9 @@
 #' * `$infector`: `numeric`
 #' * `$missed`: `logical`
 #' * `$onset`: `numeric`
-#' * `$new_cases`: `logical`
+#' * `$new_cases`: `integer`
 #' * `$isolated_time`: `numeric`
-#' * `$isolated`: `logical`
+#' * `$sampled`: `logical`
 #' @autoglobal
 #' @export
 #' @importFrom data.table data.table
@@ -49,11 +49,11 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     asymptomatic = runif(initial_cases) < event_probs$asymptomatic,
     caseid = seq_len(initial_cases), # set case id
     infector = 0,
-    isolated = FALSE,
     missed = TRUE,
     onset = delays$incubation_period(initial_cases),
-    new_cases = NA,
-    isolated_time = Inf
+    new_cases = NA_integer_,
+    isolated_time = Inf,
+    sampled = FALSE
   )
 
   # isolate each symptomatic case after an onset-to-isolation delay after

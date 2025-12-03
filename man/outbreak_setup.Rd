@@ -29,9 +29,9 @@ event probabilities for the \pkg{ringbp} model, returned by
 \item \verb{$infector}: \code{numeric}
 \item \verb{$missed}: \code{logical}
 \item \verb{$onset}: \code{numeric}
-\item \verb{$new_cases}: \code{logical}
+\item \verb{$new_cases}: \code{integer}
 \item \verb{$isolated_time}: \code{numeric}
-\item \verb{$isolated}: \code{logical}
+\item \verb{$sampled}: \code{logical}
 }
 }
 \description{

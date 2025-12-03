@@ -299,7 +299,7 @@ outbreak_continue <- function(case_data, sim) {
 
   latest_onset <- max(case_data$onset)
   total_cases <- nrow(case_data)
-  extinct <- all(case_data$isolated)
+  extinct <- all(case_data$sampled)
 
   return(
     latest_onset < sim$cap_max_days &&
