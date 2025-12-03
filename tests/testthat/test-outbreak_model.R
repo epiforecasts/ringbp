@@ -20,10 +20,10 @@ test_that("outbreak_model runs with no transmission", {
   )
   expect_equal(res$week, 0:(sim_opts()$cap_max_days / 7))
   # one initial case
-  expect_identical(res$weekly_cases[1], 1)
+  expect_identical(res$weekly_cases[1], 1L)
   # no secondary cases
-  expect_identical(unique(res$weekly_cases[-1]), 0)
-  expect_identical(unique(res$cumulative), 1)
+  expect_identical(unique(res$weekly_cases[-1]), 0L)
+  expect_identical(unique(res$cumulative), 1L)
   expect_identical(unique(res$effective_r0), 0)
   expect_identical(unique(res$cases_per_gen), list(0))
 })
@@ -82,7 +82,7 @@ test_that("outbreak_model runs to cap_cases stopping criterion", {
   )
   expect_equal(res$week, 0:(sim_opts()$cap_max_days / 7))
   # no cases in the last 10 weeks
-  expect_identical(tail(res$weekly_cases, n = 10), rep(0, 10))
+  expect_identical(tail(res$weekly_cases, n = 10), rep(0L, 10))
   # cap_cases is soft upper bound so cumulative cases exceed cap_cases
   # cumulative cases has reached cap_cases stopping criterion
   expect_gt(res[.N, cumulative], cap_cases)
@@ -113,9 +113,9 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_max_days)", {
     ),
     regexp = "(The outbreak simulation ran for zero generations)"
   )
-  expect_identical(res$week, 0)
-  expect_identical(res$weekly_cases, 0)
-  expect_identical(res$cumulative, 0)
+  expect_identical(res$week, 0L)
+  expect_identical(res$weekly_cases, 0L)
+  expect_identical(res$cumulative, 0L)
   expect_identical(res$effective_r0, NaN)
   expect_identical(res$cases_per_gen, list(NA_real_))
 })
@@ -143,10 +143,10 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
     ),
     regexp = "(The outbreak simulation ran for zero generations)"
   )
-  expect_identical(res$week, as.double(0:50))
-  expect_identical(res$weekly_cases[1], 25)
-  expect_identical(unique(res$weekly_cases[-1]), 0)
-  expect_identical(unique(res$cumulative), 25)
+  expect_identical(res$week, 0:50)
+  expect_identical(res$weekly_cases[1], 25L)
+  expect_identical(unique(res$weekly_cases[-1]), 0L)
+  expect_identical(unique(res$cumulative), 25L)
   expect_identical(unique(res$effective_r0), NaN)
   expect_identical(unique(res$cases_per_gen), list(NA_real_))
 })
