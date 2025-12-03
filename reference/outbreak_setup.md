@@ -46,11 +46,11 @@ outbreak_setup(initial_cases, delays, event_probs)
 
 - `$onset`: `numeric`
 
-- `$new_cases`: `logical`
+- `$new_cases`: `integer`
 
 - `$isolated_time`: `numeric`
 
-- `$isolated`: `logical`
+- `$sampled`: `logical`
 
 ## Examples
 
@@ -73,18 +73,18 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector isolated missed     onset new_cases
-#>       <num>       <lgcl>  <int>    <num>   <lgcl> <lgcl>     <num>    <lgcl>
-#> 1:        0        FALSE      1        0    FALSE   TRUE  5.327302        NA
-#> 2:        0        FALSE      2        0    FALSE   TRUE 10.248073        NA
-#> 3:        0        FALSE      3        0    FALSE   TRUE  9.878893        NA
-#> 4:        0        FALSE      4        0    FALSE   TRUE  1.781222        NA
-#> 5:        0        FALSE      5        0    FALSE   TRUE  5.395534        NA
-#>    isolated_time
-#>            <num>
-#> 1:      7.479154
-#> 2:     11.923502
-#> 3:     15.219283
-#> 4:      4.397555
-#> 5:     18.466834
+#>    exposure asymptomatic caseid infector missed    onset new_cases
+#>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>
+#> 1:        0        FALSE      1        0   TRUE 5.494867        NA
+#> 2:        0        FALSE      2        0   TRUE 4.273768        NA
+#> 3:        0        FALSE      3        0   TRUE 9.144926        NA
+#> 4:        0        FALSE      4        0   TRUE 4.549269        NA
+#> 5:        0        FALSE      5        0   TRUE 5.327302        NA
+#>    isolated_time sampled
+#>            <num>  <lgcl>
+#> 1:     13.630713   FALSE
+#> 2:     12.000550   FALSE
+#> 3:      9.839796   FALSE
+#> 4:      7.850404   FALSE
+#> 5:      7.479154   FALSE
 ```

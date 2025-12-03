@@ -110,7 +110,7 @@ res <- scenario_sim(
 # calculate probability of extinction
 extinct_prob(res)
 #> Calculating extinction using the extinction status from the simulation.
-#> [1] 0.7
+#> [1] 0.9
 
 # determine if each outbreak simulation replicate has gone extinct
 detect_extinct(res)
@@ -121,21 +121,21 @@ detect_extinct(res)
 #>  2:     2       1
 #>  3:     3       1
 #>  4:     4       1
-#>  5:     5       1
-#>  6:     6       0
-#>  7:     7       0
+#>  5:     5       0
+#>  6:     6       1
+#>  7:     7       1
 #>  8:     8       1
 #>  9:     9       1
-#> 10:    10       0
+#> 10:    10       1
 
 # calculate extinction in the last 2 weeks of the simulated outbreak
 # (i.e. the penultimate and last week of the outbreak)
 extinct_prob(res, extinction_week = max(res$week) - 1)
 #> Calculating extinction as no new cases within weeks: 49 to 50 (inclusive).
-#> [1] 0.7
+#> [1] 0.9
 
 # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
 extinct_prob(res, extinction_week = 12:16)
 #> Calculating extinction as no new cases within weeks: 12 to 16 (inclusive).
-#> [1] 0.7
+#> [1] 0.9
 ```

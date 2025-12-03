@@ -82,20 +82,20 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector isolated missed     onset new_cases
-#>       <num>       <lgcl>  <int>    <num>   <lgcl> <lgcl>     <num>    <lgcl>
-#> 1:        0        FALSE      1        0    FALSE   TRUE  5.388645        NA
-#> 2:        0        FALSE      2        0    FALSE   TRUE  3.260320        NA
-#> 3:        0        FALSE      3        0    FALSE   TRUE 12.919082        NA
-#> 4:        0        FALSE      4        0    FALSE   TRUE  6.080151        NA
-#> 5:        0        FALSE      5        0    FALSE   TRUE  3.669456        NA
-#>    isolated_time
-#>            <num>
-#> 1:      8.854622
-#> 2:     11.988717
-#> 3:     21.825460
-#> 4:      6.251773
-#> 5:      5.438428
+#>    exposure asymptomatic caseid infector missed     onset new_cases
+#>       <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
+#> 1:        0        FALSE      1        0   TRUE  9.068614        NA
+#> 2:        0        FALSE      2        0   TRUE  7.134836        NA
+#> 3:        0        FALSE      3        0   TRUE  7.409368        NA
+#> 4:        0        FALSE      4        0   TRUE  3.831935        NA
+#> 5:        0        FALSE      5        0   TRUE 12.451065        NA
+#>    isolated_time sampled
+#>            <num>  <lgcl>
+#> 1:     17.360308   FALSE
+#> 2:     10.430046   FALSE
+#> 3:      9.035117   FALSE
+#> 4:     15.099694   FALSE
+#> 5:     16.355962   FALSE
 # generate next generation of cases
 out <- outbreak_step(
   case_data = case_data,
@@ -106,22 +106,60 @@ out <- outbreak_step(
 )
 case_data <- out[[1]]
 case_data
-#>     exposure asymptomatic caseid infector isolated missed     onset new_cases
-#>        <num>       <lgcl>  <int>    <num>   <lgcl> <lgcl>     <num>     <num>
-#> 1:  0.000000        FALSE      1        0     TRUE   TRUE  5.388645         0
-#> 2:  0.000000        FALSE      2        0     TRUE   TRUE  3.260320         0
-#> 3:  0.000000        FALSE      3        0     TRUE   TRUE 12.919082         1
-#> 4:  0.000000        FALSE      4        0     TRUE   TRUE  6.080151         0
-#> 5:  0.000000        FALSE      5        0     TRUE   TRUE  3.669456         1
-#> 6: 12.554511        FALSE      6        3    FALSE   TRUE 18.124106        NA
-#> 7:  4.489831        FALSE      7        5    FALSE   TRUE  7.724711        NA
-#>    isolated_time
-#>            <num>
-#> 1:      8.854622
-#> 2:     11.988717
-#> 3:     21.825460
-#> 4:      6.251773
-#> 5:      5.438428
-#> 6:     23.208225
-#> 7:      8.588712
+#>      exposure asymptomatic caseid infector missed     onset new_cases
+#>         <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
+#>  1:  0.000000        FALSE      1        0   TRUE  9.068614         6
+#>  2:  0.000000        FALSE      2        0   TRUE  7.134836         0
+#>  3:  0.000000        FALSE      3        0   TRUE  7.409368         0
+#>  4:  0.000000        FALSE      4        0   TRUE  3.831935         0
+#>  5:  0.000000        FALSE      5        0   TRUE 12.451065        14
+#>  6: 10.684477        FALSE      6        1   TRUE 18.416225        NA
+#>  7: 11.385832        FALSE      7        1   TRUE 15.003998        NA
+#>  8: 10.176903        FALSE      8        1   TRUE 15.028419        NA
+#>  9:  9.312653        FALSE      9        1   TRUE 14.598350        NA
+#> 10: 10.239543        FALSE     10        1   TRUE 14.286632        NA
+#> 11:  9.170390        FALSE     11        1   TRUE 18.738731        NA
+#> 12: 12.990119        FALSE     12        5   TRUE 19.830682        NA
+#> 13: 14.255198        FALSE     13        5   TRUE 18.637028        NA
+#> 14: 12.961801        FALSE     14        5   TRUE 17.212470        NA
+#> 15: 12.874304        FALSE     15        5   TRUE 15.957546        NA
+#> 16: 13.131607        FALSE     16        5   TRUE 16.887905        NA
+#> 17: 12.940163        FALSE     17        5   TRUE 20.887224        NA
+#> 18: 14.945229        FALSE     18        5   TRUE 22.751088        NA
+#> 19: 16.080431        FALSE     19        5   TRUE 21.357583        NA
+#> 20: 16.174508        FALSE     20        5   TRUE 20.972771        NA
+#> 21: 11.815477        FALSE     21        5   TRUE 16.492315        NA
+#> 22: 13.589812        FALSE     22        5   TRUE 17.914329        NA
+#> 23: 13.819688        FALSE     23        5   TRUE 23.393422        NA
+#> 24: 13.327341        FALSE     24        5   TRUE 16.501959        NA
+#> 25: 13.200103        FALSE     25        5   TRUE 18.777442        NA
+#>      exposure asymptomatic caseid infector missed     onset new_cases
+#>     isolated_time sampled
+#>             <num>  <lgcl>
+#>  1:     17.360308    TRUE
+#>  2:     10.430046    TRUE
+#>  3:      9.035117    TRUE
+#>  4:     15.099694    TRUE
+#>  5:     16.355962    TRUE
+#>  6:     28.608812   FALSE
+#>  7:     15.177175   FALSE
+#>  8:     21.919639   FALSE
+#>  9:     16.201172   FALSE
+#> 10:     17.935170   FALSE
+#> 11:     25.011139   FALSE
+#> 12:     25.008372   FALSE
+#> 13:     23.594261   FALSE
+#> 14:     22.801945   FALSE
+#> 15:     26.596407   FALSE
+#> 16:     23.809008   FALSE
+#> 17:     27.978250   FALSE
+#> 18:     31.509749   FALSE
+#> 19:     24.464735   FALSE
+#> 20:     23.710582   FALSE
+#> 21:     21.213359   FALSE
+#> 22:     22.097602   FALSE
+#> 23:     25.188005   FALSE
+#> 24:     22.806482   FALSE
+#> 25:     19.811604   FALSE
+#>     isolated_time sampled
 ```

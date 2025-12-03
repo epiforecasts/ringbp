@@ -133,7 +133,7 @@ from subsetting the <code>data.table</code>).</p>
 <span class="r-in"><span><span class="co"># calculate probability of extinction</span></span></span>
 <span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction using the extinction status from the simulation.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># determine if each outbreak simulation replicate has gone extinct</span></span></span>
 <span class="r-in"><span><span class="fu">detect_extinct</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
@@ -144,23 +144,23 @@ from subsetting the <code>data.table</code>).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:     2       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:     3       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:     4       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     5       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     6       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     7       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     5       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     6       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     7       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  9:     9       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    10       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    10       1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate extinction in the last 2 weeks of the simulated outbreak</span></span></span>
 <span class="r-in"><span><span class="co"># (i.e. the penultimate and last week of the outbreak)</span></span></span>
 <span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">week</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 49 to 50 (inclusive).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate extinction as no new cases between weeks 12 and 16 of the outbreak</span></span></span>
 <span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 12 to 16 (inclusive).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
