@@ -114,7 +114,7 @@ outbreak_model <- function(initial_cases,
   missing_weeks <- (0:max_week)[!(0:max_week %in% weekly_cases$week)]
 
   # add in missing weeks if any are missing
-  if (length(missing_weeks > 0)) {
+  if (length(missing_weeks) > 0) {
     weekly_cases <- data.table::rbindlist(list(weekly_cases,
                                                data.table(week = missing_weeks,
                                                           weekly_cases = 0)))
