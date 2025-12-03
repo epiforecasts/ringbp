@@ -11,6 +11,7 @@ utils::globalVariables(c(
   "onset", # <outbreak_model>
   "i.onset", # <outbreak_model>
   "week", # <outbreak_model>
+  "i.weekly_cases", # <outbreak_model>
   "cumulative", # <outbreak_model>
   "asymptomatic", # <outbreak_setup>
   "isolated_time", # <outbreak_setup>
