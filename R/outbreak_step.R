@@ -18,7 +18,7 @@
 #'   the intervention settings for the \pkg{ringbp} model, returned by
 #'   [intervention_opts()]. Contains one element: `quarantine`
 #'
-#' @importFrom data.table data.table rbindlist fcase fifelse
+#' @importFrom data.table data.table rbindlist fcase fifelse copy
 #' @importFrom stats runif
 #' @importFrom stats rnbinom
 #'
@@ -75,6 +75,10 @@ outbreak_step <- function(case_data,
   checkmate::assert_class(delays, "ringbp_delay_opts")
   checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
   checkmate::assert_class(interventions, "ringbp_intervention_opts")
+
+  # work with copy of case_data in outbreak_step due to
+  # sample_offspring modify by reference
+  case_data <- copy(case_data)
 
   # case_data is modified by reference and generation times are returned
   gt <- sample_offspring(
