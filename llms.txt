@@ -86,8 +86,9 @@ ggplot(
 ### Estimate extinction probability
 
 ``` r
-extinct_prob(res, cap_cases = 4500)
-#> [1] 0.8
+extinct_prob(res)
+#> Calculating extinction using the extinction status from the simulation.
+#> [1] 0.9
 ```
 
 ## Contributors
