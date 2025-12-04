@@ -24,6 +24,15 @@ test_that("outbreak_step creates new cases as expected", {
   # guarantee new cases from community transmission
   offspring$community <- \(n) rep(2, n)
 
+  # set onset-to-isolation to Inf to not remove new cases
+  delays$onset_to_isolation <- \(n) rep(Inf, n)
+
+  initial_case_data <- outbreak_setup(
+    initial_cases = 1,
+    delays = delays,
+    event_probs = event_probs
+  )
+
   # generate first generation of cases
   first_gen_case_data <- outbreak_step(
     case_data = initial_case_data,
@@ -36,10 +45,10 @@ test_that("outbreak_step creates new cases as expected", {
   # community offspring R = 2 so 3 total cases
   expect_identical(nrow(first_gen_case_data$cases), 3L)
   expect_identical(first_gen_case_data$cases$infector, c(0, 1, 1))
-  # initial case gets isolated after first generation
-  expect_identical(first_gen_case_data$cases$isolated, c(TRUE, FALSE, FALSE))
   expect_identical(first_gen_case_data$effective_r0, 2)
   expect_identical(first_gen_case_data$cases_in_gen, 2L)
+  # initial case gets sampled after first generation
+  expect_identical(first_gen_case_data$cases$sampled, c(TRUE, FALSE, FALSE))
 })
 
 test_that("outbreak_step creates no new cases as expected", {
@@ -56,14 +65,19 @@ test_that("outbreak_step creates no new cases as expected", {
 
   # all offspring R = 0 so 1 total case
   expect_identical(nrow(first_gen_case_data$cases), 1L)
-  # initial case gets isolated after first generation
-  expect_identical(first_gen_case_data$cases$isolated, TRUE)
   expect_identical(first_gen_case_data$effective_r0, 0)
   expect_identical(first_gen_case_data$cases_in_gen, 0)
+  # new_cases goes from NA_integer_ to numeric integer after first generation
+  expect_true(
+    !is.na(first_gen_case_data$cases$new_cases) &&
+      is.integer(first_gen_case_data$cases$new_cases)
+  )
+  # initial case gets sampled after first generation
+  expect_identical(first_gen_case_data$cases$sampled, TRUE)
   # only isolation status of initial infector has changed
   expect_identical(
-    initial_case_data[, !"isolated"],
-    first_gen_case_data$cases[, !"isolated"]
+    initial_case_data[, !c("new_cases", "sampled")],
+    first_gen_case_data$cases[, !c("new_cases", "sampled")]
   )
 })
 
@@ -85,20 +99,22 @@ test_that("outbreak_step with > 1 initial infections", {
     interventions = interventions
   )
 
-  # 200 case but some are removed from truncating the offspring from isolation
-  # 100 is a approximate threshold that should be exceeded
-  expect_gt(nrow(first_gen_case_data$cases), 100)
-  # initial case gets isolated after first generation
-  expect_identical(first_gen_case_data$cases$isolated[1:2], rep(TRUE, 2))
-  # all new cases are not isolated
-  expect_identical(
-    first_gen_case_data$cases$isolated[3:nrow(first_gen_case_data$cases)],
-    rep(FALSE, nrow(first_gen_case_data$cases) - 2)
-  )
+  # 200 new cases but some are removed from isolation truncating the offspring
+  expect_lt(first_gen_case_data$cases_in_gen, 200)
+  # 50 is a approximate threshold that should be exceeded given the incubation
+  # period and onset-to-isolation time parameters
+  expect_gt(first_gen_case_data$cases_in_gen, 50)
   # first two cases have infector zero (index case)
   expect_identical(first_gen_case_data$cases$infector[1:2], rep(0, 2))
   # all new cases are infected by either case 1 or 2
   expect_identical(unique(first_gen_case_data$cases$infector[-(1:2)]), c(1, 2))
+  # initial case gets sampled after first generation
+  expect_identical(first_gen_case_data$cases$sampled[1:2], rep(TRUE, 2))
+  # all new cases are not sampled
+  expect_identical(
+    first_gen_case_data$cases$sampled[3:nrow(first_gen_case_data$cases)],
+    rep(FALSE, nrow(first_gen_case_data$cases) - 2)
+  )
   # R should be much larger than 3
   expect_gt(first_gen_case_data$effective_r0, 3)
   expect_identical(
@@ -107,11 +123,11 @@ test_that("outbreak_step with > 1 initial infections", {
   )
 })
 
-test_that("isolated cases behave as expected", {
-  # case is isolated so should not trasmit in the community
+test_that("sampled cases behave as expected", {
+  # case is sampled so should not trasmit in the community
   offspring$community <- \(n) rep(100, n)
 
-  initial_case_data$isolated <- TRUE
+  initial_case_data$sampled <- TRUE
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(
@@ -133,7 +149,15 @@ test_that("isolated cases transmit as expected", {
   offspring$community <- \(n) rep(0, n)
   offspring$isolated <- \(n) rep(100, n)
 
-  initial_case_data$isolated <- TRUE
+  # set short onset-to-isolation so cases isolate quickly and most transmission
+  # in isolation is kept
+  delays$onset_to_isolation <- \(n) rep(0.5, n)
+
+  initial_case_data <- outbreak_setup(
+    initial_cases = 1,
+    delays = delays,
+    event_probs = event_probs
+  )
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(
@@ -148,8 +172,8 @@ test_that("isolated cases transmit as expected", {
   # 100 cases but some are removed from truncating the offspring from isolation
   # 25 is a approximate threshold that should be exceeded
   expect_gt(nrow(first_gen_case_data$cases), 25)
-  # Inf due to division by zero because zero cases are not isolated
-  expect_identical(first_gen_case_data$effective_r0, Inf)
+  # R >> 0, 25 is an approximate threshold that should be exceeded
+  expect_gt(first_gen_case_data$effective_r0, 25)
   expect_gt(first_gen_case_data$cases_in_gen, 25)
 })
 

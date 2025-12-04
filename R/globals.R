@@ -16,14 +16,15 @@ utils::globalVariables(c(
   "isolated_time", # <outbreak_setup>
   "onset", # <outbreak_setup>
   "new_cases", # <outbreak_step>
-  "isolated", # <outbreak_step>
+  "sampled", # <outbreak_step>
+  "caseid", # <outbreak_step>
+  "isolated_time", # <outbreak_step>
   "asymptomatic", # <outbreak_step>
   "onset", # <outbreak_step>
   "exposure", # <outbreak_step>
-  "caseid", # <outbreak_step>
-  "isolated_time", # <outbreak_step>
-  "infector_isolation_time", # <outbreak_step>
   "infector_asymptomatic", # <outbreak_step>
   "missed", # <outbreak_step>
+  "infector_isolation_time", # <outbreak_step>
+  "sampled", # <sample_offspring>
   NULL
 ))
