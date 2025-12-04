@@ -9,34 +9,8 @@
 on:
   push:
     branches: [main, master]
-    paths:
-      - 'data/**'
-      - 'R/**'
-      - 'inst/**'
-      - 'man/**'
-      - 'src/**'
-      - 'tests/**'
-      - 'vignettes/**'
-      - 'DESCRIPTION'
-      - 'NAMESPACE'
-      - 'LICENSE'
-      - '.Rbuildignore'
-      - '.github/workflows/**'
   merge_group:
   pull_request:
-    paths:
-      - 'data/**'
-      - 'R/**'
-      - 'inst/**'
-      - 'man/**'
-      - 'src/**'
-      - 'tests/**'
-      - 'vignettes/**'
-      - 'DESCRIPTION'
-      - 'NAMESPACE'
-      - 'LICENSE'
-      - '.Rbuildignore'
-      - '.github/workflows/**'
 
 name: R-CMD-check
 
