@@ -38,6 +38,8 @@ concurrency:
 jobs:
   render-readme:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Generate token
         id: generate_token
