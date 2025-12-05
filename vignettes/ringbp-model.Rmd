@@ -85,8 +85,8 @@ The table below includes the parameters mentioned in this vignette that can be s
 
 | Epidemiological Parameter | {ringbp} Model Parameterisation |
 | --- | ----------- |
-| Incubation period distribution | `delay_opts(incubation_period = \(n) rgamma(n = n shape = 2, scale = 2))` |
-| Onset-to-isolation delay distribution | `delay_opts(onset_to_isolation = \(n) rgamma(n = n shape = 2, scale = 2))` |
+| Incubation period distribution | `delay_opts(incubation_period = \(n) rgamma(n = n, shape = 2, scale = 2))` |
+| Onset-to-isolation delay distribution | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
 | Proportion of asymptomatic cases | `event_prob_opts(asymptomatic = 0.5)` |
 | Proportion of presymptomatic transmission | `event_prob_opts(presymptomatic_transmission = 0.5)` |
 | Contact tracing case ascertainment | `event_prob_opts(symptomatic_ascertained = 0.5)` |
