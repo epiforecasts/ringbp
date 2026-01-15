@@ -23,7 +23,7 @@ This schematic of the model shows an index case (Person A) and two individuals i
 
 The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are cases averted.
 
-In essence the {ringbp} outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
+The {ringbp} outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
 
 ***Isolation***: Any case that becomes symptomatic gets tested, and will isolate after a symptom onset-to-isolation delay.
 
@@ -31,21 +31,21 @@ In essence the {ringbp} outbreak model is an individual-level branching process 
 
 ***Quarantine***: If quarantine is activated in the model then an infectee can be isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
 
-In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at the earliest of the either the infectors isolation time or an onset-to-isolation delay after their symptom onset time. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees isolate before their infector.
+In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees isolate before their infector.
 
 ## Transmission scenarios with interventions
 
-The next figure enumerates through each of the disease transmission scenarios with the interventions available in the {ringbp} model. The first two scenarios represent an index case that does not infect anyone. All other scenarios illustrate infection from a primary case (Person A) to a secondary case (Person B).
+Different combinations of transmission timing and intervention effectiveness produce distinct outcomes. The scenarios below illustrate how isolation and contact tracing interact with disease transmission in the model. The first two scenarios represent an index case that does not infect anyone. All other scenarios illustrate infection from a primary case (Person A) to a secondary case (Person B).
 
 ![ringbp model schematic scenarios where transmission occurs after symptom onset.](../man/figures/model_schematic_scenario_postsym.svg){width=800px}\
 
-Scenarios (1) and (2) show when an index case is symptomatic or asymptomatic. Asymptomatic cases are assumed to remain subclinical throughout the course of their infection.
+Scenarios (1) and (2) show situations where an index case is symptomatic or asymptomatic, respectively. Asymptomatic cases are assumed to remain subclinical throughout the course of their infection.
 
-Scenarios (3a) and (3b) shows when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is, in (3a) there is a short time delay between the infectee showing symptoms and then going into isolation when the infector isolates, whereas in (3b) the infectee goes into isolation as soon as they develop symptoms because the infector isolates at the same time or before the infectee's symptom onset.
+Scenarios (3a) and (3b) show what happense when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then going into isolation when the infector isolates in (3a), whereas in (3b) the infectee goes into isolation as soon as they develop symptoms because the infector isolates at the same time or before the infectee's symptom onset.
 
 Scenario (4) is the only scenario where quarantine is active. This scenario shows an example of an infectee being quarantined when the infector goes into isolation before the infectee's symptoms develop.
 
-Scenario (5) is where contact tracing is either not active (e.g. proportion of contacts ascertained = 0%) or contact tracing is active but the tracing missed this individual (the probability of a contact being missed is 1 - the proportion of contacts ascertained). In this scenario the infectee goes into isolation after an onset-to-isolation delay from becoming symptomatic and also after the infector goes into isolation. The reason the infectee goes into isolation after the infector is because the contact tracing system does not notify the contact due to them being missed.
+Scenario (5) is where contact tracing is either not active (e.g. proportion of contacts ascertained = 0%) or contact tracing is active but the tracing missed this individual (the probability of a contact being missed is (1 - the proportion of contacts ascertained)). In this scenario the infectee goes into isolation after an onset-to-isolation delay from becoming symptomatic and also after the infector goes into isolation. The reason the infectee goes into isolation after the infector is because the contact tracing system does not notify the contact due to them being missed.
 
 Scenario (6) shows what happens when an asymptomatic case transmits. The symptomatic infectee isolates after a delay from becoming symptomatic. The infectee cannot be traced as the infector is unknown to the contact tracing (or quarantine) system due to never showing symptoms.
 
@@ -63,13 +63,13 @@ Scenario (3c) and (3d) show the same contact tracing scenario as (3a) and (3b) i
 
 Scenario (4b) shows the same active quarantine scenario as scenario (4). Scenario (4b) is the only presymptomatic transmission scenario that assumes quarantine is active.
 
-Scenario (5b) is equivalent to scenario (5), illustrating what happens if a infectee is not traced because contact tracing ascertainment is not 100%, but for (5b) the transmission is presymptomatic.
+Scenario (5b) is equivalent to scenario (5), illustrating what happens if an infectee is not traced because contact tracing ascertainment is not 100%, but for (5b) the transmission is presymptomatic.
 
 Scenario (7b) corresponds to scenario (7) where the infectee isolates before the infector due to the shorter onset-to-isolation delay.
 
 ## Transmission in isolation
 
-In the first model schematic in this vignette it was assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated cases. Below we show the same schematic, but this time isolation is assumed to be imperfect (or leaky) and the reproduction number in isolation is positive ($R_0^{iso} > 0$). Person A and Person B transmit to Person D and Person E, respectively, from isolation.
+So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated cases. Below we show the same schematic, but this time isolation is assumed to be imperfect (or leaky) and the reproduction number in isolation is positive ($R_0^{iso} > 0$). Person A and Person B transmit to Person D and Person E, respectively, from isolation.
 
 ![ringbp model schematic. This schematic assumes cases in isolation can transmit.](../man/figures/model_schematic_iso_infect.svg){width=800px}\
 
@@ -77,7 +77,7 @@ Infectees that are infected by someone isolating are not isolated until an onset
 
 ![ringbp model schematic scenarios where transmission occurs after isolation.](../man/figures/model_schematic_scenario_postiso.svg){width=800px}\
 
-Scenario (8) shows the case where Person A infects Person B after Person A enters isolation, and Person B isolates a delay after becoming symptomatic.
+Scenario (8) shows the case where Person A infects Person B after Person A enters isolation, and Person B isolates after a delay following symptom onset.
 
 ## Model parameters
 
