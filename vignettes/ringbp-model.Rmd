@@ -18,11 +18,6 @@ This vignette describes the epidemiological model implemented in the {ringbp} R 
 
 ## Model Overview
 
-![ringbp model schematic. This schematic assumes cases in isolation cannot transmit.](../man/figures/model_schematic_iso_prevent.svg){width=800px}\
-This schematic of the model shows an index case (Person A) and two individuals infected by Person A (Persons B and C). Each case in the 3-person outbreak shown has a time of infection (or exposure, shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
-
-The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are cases averted.
-
 The {ringbp} outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
 
 ***Isolation***: Any case that becomes symptomatic gets tested, and will isolate after a symptom onset-to-isolation delay.
@@ -51,6 +46,11 @@ Scenario (6) shows what happens when an asymptomatic case transmits. The symptom
 
 Scenario (7) demonstrates where an infectee can be isolated before their infector isolates because of variability in the onset-to-isolation delay. (This scenario is only possible when onset-to-isolation delays are drawn from a distribution, and cannot occur if all onset-to-isolation delays in the population are constant).
 
+![ringbp model schematic. This schematic assumes cases in isolation cannot transmit.](../man/figures/model_schematic_iso_prevent.svg){width=800px}\
+This schematic of the model shows an index case (Person A) and two individuals infected by Person A (Persons B and C). Each case in the 3-person outbreak shown has a time of infection (or exposure, shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
+
+The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are cases averted.
+
 ## Presymptomatic transmission scenarios with interventions
 
 All of the scenarios in the figure above assume that transmission occurs after the infector is symptomatic. The {ringbp} model can also model presymptomatic transmission. Below is another figure enumerating scenarios, but this time assuming that the infector infects the infectee before becoming symptomatic.
@@ -69,15 +69,17 @@ Scenario (7b) corresponds to scenario (7) where the infectee isolates before the
 
 ## Transmission in isolation
 
-So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated cases. Below we show the same schematic, but this time isolation is assumed to be imperfect (or leaky) and the reproduction number in isolation is positive ($R_0^{iso} > 0$). Person A and Person B transmit to Person D and Person E, respectively, from isolation.
-
-![ringbp model schematic. This schematic assumes cases in isolation can transmit.](../man/figures/model_schematic_iso_infect.svg){width=800px}\
+So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated cases. 
 
 Infectees that are infected by someone isolating are not isolated until an onset-to-isolation delay after they become symptomatic.
 
 ![ringbp model schematic scenarios where transmission occurs after isolation.](../man/figures/model_schematic_scenario_postiso.svg){width=800px}\
 
 Scenario (8) shows the case where Person A infects Person B after Person A enters isolation, and Person B isolates after a delay following symptom onset.
+
+Below we show the same 3-person outbreak schematic as above, but this time isolation is assumed to be imperfect (or leaky) and the reproduction number in isolation is positive ($R_0^\mathrm{iso} > 0$). Person A and Person B transmit to Person D and Person E, respectively, from isolation.
+
+![ringbp model schematic. This schematic assumes cases in isolation can transmit.](../man/figures/model_schematic_iso_infect.svg){width=800px}\
 
 ## Model parameters
 
