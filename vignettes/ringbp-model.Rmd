@@ -20,13 +20,13 @@ This vignette describes the epidemiological model implemented in the {ringbp} R 
 
 The {ringbp} outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
 
-***Isolation***: Any case that becomes symptomatic gets tested, and will isolate after a symptom onset-to-isolation delay.
+***Isolation***: Any infected individual that becomes symptomatic gets tested, and is isolated after a symptom onset-to-isolation delay.
 
-***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the {ringbp} model is adjusted by the proportion of contacts ascertained, which varies between 0% (i.e. nobody is contact traced) and 100% (i.e. every case has all their contacts traced).
+***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the {ringbp} model is adjusted by the proportion of contacts ascertained, which varies between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
 
-***Quarantine***: If quarantine is activated in the model then an infectee can be isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
+***Quarantine***: If quarantine is activated in the model then an infectee can be quarantined/isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
 
-In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees isolate before their infector.
+In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees are isolated before their infector.
 
 ## Transmission scenarios with interventions
 
@@ -34,22 +34,22 @@ Different combinations of transmission timing and intervention effectiveness pro
 
 ![ringbp model schematic scenarios where transmission occurs after symptom onset.](../man/figures/model_schematic_scenario_postsym.svg){width=800px}\
 
-Scenarios (1) and (2) show situations where an index case is symptomatic or asymptomatic, respectively. Asymptomatic cases are assumed to remain subclinical throughout the course of their infection.
+Scenarios (1) and (2) show situations where an index infector is symptomatic or asymptomatic, respectively. Asymptomatic individuals are assumed to remain subclinical throughout the course of their infection.
 
-Scenarios (3a) and (3b) show what happense when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then going into isolation when the infector isolates in (3a), whereas in (3b) the infectee goes into isolation as soon as they develop symptoms because the infector isolates at the same time or before the infectee's symptom onset.
+Scenarios (3a) and (3b) show what happense when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then being isolated when the infector is isolated in (3a), whereas in (3b) the infectee is isolated as soon as they develop symptoms because the infector is isolated at the same time or before the infectee's symptom onset.
 
-Scenario (4) is the only scenario where quarantine is active. This scenario shows an example of an infectee being quarantined when the infector goes into isolation before the infectee's symptoms develop.
+Scenario (4) is the only scenario where quarantine is active. This scenario shows an example of an infectee being quarantined when the infector is isolated before the infectee's symptoms develop.
 
-Scenario (5) is where contact tracing is either not active (e.g. proportion of contacts ascertained = 0%) or contact tracing is active but the tracing missed this individual (the probability of a contact being missed is (1 - the proportion of contacts ascertained)). In this scenario the infectee goes into isolation after an onset-to-isolation delay from becoming symptomatic and also after the infector goes into isolation. The reason the infectee goes into isolation after the infector is because the contact tracing system does not notify the contact due to them being missed.
+Scenario (5) is where contact tracing is either not active (e.g. proportion of contacts ascertained = 0%) or contact tracing is active but the tracing missed this individual (the probability of a contact being missed is (1 - the proportion of contacts ascertained)). In this scenario the infectee is isolated after an onset-to-isolation delay from becoming symptomatic and also after the infector is isolated. The reason the infectee goes into isolation after the infector is because the contact tracing system does not notify the contact due to them being missed.
 
-Scenario (6) shows what happens when an asymptomatic case transmits. The symptomatic infectee isolates after a delay from becoming symptomatic. The infectee cannot be traced as the infector is unknown to the contact tracing (or quarantine) system due to never showing symptoms.
+Scenario (6) shows what happens when an asymptomatic infector transmits. The symptomatic infectee is isolated after a delay from becoming symptomatic. The infectee cannot be traced as the infector is unknown to the contact tracing (or quarantine) system due to never showing symptoms.
 
-Scenario (7) demonstrates where an infectee can be isolated before their infector isolates because of variability in the onset-to-isolation delay. (This scenario is only possible when onset-to-isolation delays are drawn from a distribution, and cannot occur if all onset-to-isolation delays in the population are constant).
+Scenario (7) demonstrates where an infectee can be isolated before their infector is isolated because of variability in the onset-to-isolation delay. (This scenario is only possible when onset-to-isolation delays are drawn from a distribution, and cannot occur if all onset-to-isolation delays in the population are constant).
 
 ![ringbp model schematic. This schematic assumes cases in isolation cannot transmit.](../man/figures/model_schematic_iso_prevent.svg){width=800px}\
-This schematic of the model shows an index case (Person A) and two individuals infected by Person A (Persons B and C). Each case in the 3-person outbreak shown has a time of infection (or exposure, shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
+This schematic of the model shows an index infector (Person A) and two individuals infected by Person A (Persons B and C). Each individual in the 3-person outbreak shown has a time of infection (or exposure, shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
 
-The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are cases averted.
+The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are infections averted.
 
 ## Presymptomatic transmission scenarios with interventions
 
@@ -65,17 +65,17 @@ Scenario (4b) shows the same active quarantine scenario as scenario (4). Scenari
 
 Scenario (5b) is equivalent to scenario (5), illustrating what happens if an infectee is not traced because contact tracing ascertainment is not 100%, but for (5b) the transmission is presymptomatic.
 
-Scenario (7b) corresponds to scenario (7) where the infectee isolates before the infector due to the shorter onset-to-isolation delay.
+Scenario (7b) corresponds to scenario (7) where the infectee is isolated before the infector due to the shorter onset-to-isolation delay.
 
 ## Transmission in isolation
 
-So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated cases. 
+So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated individuals. 
 
 Infectees that are infected by someone isolating are not isolated until an onset-to-isolation delay after they become symptomatic.
 
 ![ringbp model schematic scenarios where transmission occurs after isolation.](../man/figures/model_schematic_scenario_postiso.svg){width=800px}\
 
-Scenario (8) shows the case where Person A infects Person B after Person A enters isolation, and Person B isolates after a delay following symptom onset.
+Scenario (8) shows the case where Person A infects Person B after Person A enters isolation, and Person B is isolated after a delay following symptom onset.
 
 Below we show the same 3-person outbreak schematic as above, but this time isolation is assumed to be imperfect (or leaky) and the reproduction number in isolation is positive ($R_0^\mathrm{iso} > 0$). Person A and Person B transmit to Person D and Person E, respectively, from isolation.
 
