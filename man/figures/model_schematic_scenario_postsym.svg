@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
-   sodipodi:docname="model_schematic_v2_postsym.svg"
+   sodipodi:docname="model_schematic_scenario_postsym.svg"
    inkscape:export-filename="model_schematic_v2_postsym.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.27623761"
-     inkscape:cx="1404.5879"
-     inkscape:cy="1111.3621"
+     inkscape:zoom="0.19532949"
+     inkscape:cx="1054.6283"
+     inkscape:cy="1269.6496"
      inkscape:window-width="1512"
      inkscape:window-height="752"
-     inkscape:window-x="19"
-     inkscape:window-y="83"
+     inkscape:window-x="2101"
+     inkscape:window-y="167"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      showguides="false" />
@@ -43,6 +43,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke-width:0.682001"
+       id="rect7790"
+       width="769.38373"
+       height="541.81952"
+       x="13.545489"
+       y="17.609137" />
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
        d="m 643.65867,174.62148 v 39.64195"

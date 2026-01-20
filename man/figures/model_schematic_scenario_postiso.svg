@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
-   sodipodi:docname="model_schematic_v2_postiso.svg"
+   sodipodi:docname="model_schematic_scenario_postiso.svg"
    inkscape:export-filename="model_schematic_v2_postsym.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.51519676"
-     inkscape:cx="1007.3821"
-     inkscape:cy="395.96522"
+     inkscape:zoom="0.51519675"
+     inkscape:cx="1015.1462"
+     inkscape:cy="430.90334"
      inkscape:window-width="1512"
      inkscape:window-height="752"
-     inkscape:window-x="0"
-     inkscape:window-y="55"
+     inkscape:window-x="2443"
+     inkscape:window-y="352"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      showguides="false" />
@@ -43,6 +43,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke-width:0.682001"
+       id="rect6145"
+       width="365.13962"
+       height="162.79784"
+       x="16.947409"
+       y="14.379619" />
     <text
        xml:space="preserve"
        style="font-size:8.46667px;font-family:'.SF NS Mono';-inkscape-font-specification:'.SF NS Mono';fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.183"
@@ -184,13 +191,6 @@
        id="path12345-9-6-7"
        cx="243.75633"
        cy="132.83308"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6"
-       cx="243.75633"
-       cy="82.833099"
        rx="3.999999"
        ry="3.9999993" />
     <ellipse
@@ -361,5 +361,13 @@
          x="300.53439"
          y="119.42875"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
+    <rect
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:0.68200055;stroke-dasharray:none;stroke-opacity:1"
+       id="rect49623-1"
+       width="5.6832519"
+       height="5.6829386"
+       x="226.15283"
+       y="-120.54119"
+       transform="matrix(0.69556531,0.71846287,-0.7172102,0.69685689,0,0)" />
   </g>
 </svg>

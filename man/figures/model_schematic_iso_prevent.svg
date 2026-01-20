@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
-   sodipodi:docname="model_schematic_v1.svg"
+   sodipodi:docname="model_schematic_iso_prevent.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,12 +25,12 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.70939647"
-     inkscape:cx="1117.1468"
-     inkscape:cy="520.16047"
-     inkscape:window-width="1309"
-     inkscape:window-height="430"
-     inkscape:window-x="0"
-     inkscape:window-y="34"
+     inkscape:cx="1124.195"
+     inkscape:cy="304.48418"
+     inkscape:window-width="2153"
+     inkscape:window-height="924"
+     inkscape:window-x="1939"
+     inkscape:window-y="136"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      showguides="false" />
@@ -40,6 +40,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke-width:0.682001"
+       id="rect4763"
+       width="365.51022"
+       height="167.09039"
+       x="13.426907"
+       y="10.44315" />
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.398314;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-8-2"
