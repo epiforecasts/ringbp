@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
-   sodipodi:docname="model_schematic_Riso.svg"
+   sodipodi:docname="model_schematic_iso_infect.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,13 +25,13 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.72760417"
-     inkscape:cx="755.90551"
-     inkscape:cy="377.95276"
-     inkscape:window-width="1512"
-     inkscape:window-height="834"
-     inkscape:window-x="0"
-     inkscape:window-y="34"
-     inkscape:window-maximized="1"
+     inkscape:cx="697.49463"
+     inkscape:cy="388.94774"
+     inkscape:window-width="2036"
+     inkscape:window-height="922"
+     inkscape:window-x="2045"
+     inkscape:window-y="243"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      showguides="false" />
   <defs
@@ -40,6 +40,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.682001;fill-opacity:1"
+       id="rect1445"
+       width="359.27274"
+       height="169.0909"
+       x="18.181818"
+       y="9.818182" />
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.398314;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-8-2"
