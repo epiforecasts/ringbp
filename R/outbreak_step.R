@@ -19,8 +19,7 @@
 #'   [intervention_opts()]. Contains one element: `quarantine`
 #'
 #' @importFrom data.table data.table rbindlist fcase fifelse copy
-#' @importFrom stats runif
-#' @importFrom stats rnbinom
+#' @importFrom stats runif rnbinom rbinom
 #'
 #' @return A `list` with three elements:
 #'   1. `$cases`: a `data.table` with case data
@@ -120,7 +119,10 @@ outbreak_step <- function(case_data,
     # will draw this for infector_asymptomatic == FALSE
     missed = TRUE,
     new_cases = NA_integer_,
-    sampled = FALSE
+    sampled = FALSE,
+    # all cases (including asymptomatic) have negative test result (FALSE)
+    # by default; will draw test result for symptomatic cases below
+    test_positive = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
@@ -129,10 +131,15 @@ outbreak_step <- function(case_data,
     onset := exposure + delays$incubation_period(.N)
   ]
 
-  # draw a sample for missing
+  # draw a sample for missing and test result
   prob_samples[
     infector_asymptomatic == FALSE,
     missed := runif(.N) > event_probs$symptomatic_ascertained
+  ][
+    asymptomatic == FALSE,
+    test_positive := as.logical(
+      rbinom(n = .N, size = 1, prob = interventions$test_sensitivity)
+    )
   ]
 
   prob_samples[, isolated_time := {
@@ -140,6 +147,8 @@ outbreak_step <- function(case_data,
     fcase(
       # If asymptomatic, never isolated: time is Inf
       asymptomatic == TRUE, Inf,
+      # if false negative on the test then never isolated: time is Inf
+      test_positive == FALSE, Inf,
       # If not asymptomatic, but are missed, isolated at your symptom onset
       missed == TRUE, ref_time,
       # if quarantine is in effect, isolated at the earlier of infector's or
@@ -152,7 +161,10 @@ outbreak_step <- function(case_data,
   }]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("infector_isolation_time", "infector_asymptomatic") := NULL]
+  prob_samples[
+    , c("infector_isolation_time", "infector_asymptomatic",
+        "test_positive") := NULL
+  ]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 
