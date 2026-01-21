@@ -30,13 +30,13 @@ Source:
 [`DESCRIPTION`](https://github.com/epiforecasts/ringbp/blob/main/DESCRIPTION)
 
 Hellewell J, Abbott S, Gimma A, Lucas T, Funk S, Kucharski A, Lambert J
-(2025). *ringbp: Simulate and evaluate contact tracing scenarios*. R
+(2026). *ringbp: Simulate and evaluate contact tracing scenarios*. R
 package version 0.1.2.9999, <https://epiforecasts.io/ringbp>.
 
     @Manual{,
       title = {ringbp: Simulate and evaluate contact tracing scenarios},
       author = {Joel Hellewell and Sam Abbott and Amy Gimma and Tim Lucas and Sebastian Funk and Adam Kucharski and Joshua W. Lambert},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.1.2.9999},
       url = {https://epiforecasts.io/ringbp},
     }

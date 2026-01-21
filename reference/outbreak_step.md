@@ -134,6 +134,7 @@ case_data
 #> 24: 13.327341        FALSE     24        5   TRUE 16.501959        NA
 #> 25: 13.200103        FALSE     25        5   TRUE 18.777442        NA
 #>      exposure asymptomatic caseid infector missed     onset new_cases
+#>         <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
 #>     isolated_time sampled
 #>             <num>  <lgcl>
 #>  1:     17.360308    TRUE
@@ -162,4 +163,5 @@ case_data
 #> 24:     22.806482   FALSE
 #> 25:     19.811604   FALSE
 #>     isolated_time sampled
+#>             <num>  <lgcl>
 ```

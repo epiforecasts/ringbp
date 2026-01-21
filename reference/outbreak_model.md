@@ -154,4 +154,5 @@ out
 #> 50:    49            0          1            0             0
 #> 51:    50            0          1            0             0
 #>      week weekly_cases cumulative effective_r0 cases_per_gen
+#>     <num>        <num>      <num>        <num>        <list>
 ```
