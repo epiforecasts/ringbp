@@ -98,35 +98,34 @@ In the {ringbp} model the generation time is not parameterised, instead it is th
 
 Defined mathematically, for individual $i = 1, \dots, n$, let
 \begin{align}
-S_i &\ge 0 && \text{absolute symptom onset time}, \\
+S_i &\ge 0 && \text{symptom onset time}, \\
 E_i &\ge 0 && \text{exposure time}, \\
 L &\ge 0 && \text{latent period}, \\
 \alpha &\in \mathbb{R} && \text{shape (or slant) parameter}, \\
 \omega &= 2 && \text{scale parameter}.
 \end{align}
 
-Define the relative symptom onset time as
+Define the incubation period as
 \begin{equation}
 \xi_i = S_i - E_i .
 \end{equation}
 
 \paragraph{Generation time model}
-Let
+Let $X_i$ be a random variable
 \begin{equation}
 X_i \sim \operatorname{SN}(\xi_i, \omega, \alpha),
 \end{equation}
 where $\operatorname{SN}(\xi, \omega, \alpha)$ denotes the skew-normal
 distribution with location $\xi$, scale $\omega$, and skewness $\alpha$.
 
-The relative generation time $G_i^{\mathrm{rel}}$ is defined as the truncated
-skew-normal random variable
+The generation time $G^i$ is defined as being distributed like $X_i$, truncated to be at least $L$.
 \begin{equation}
-G_i^{\mathrm{rel}} \sim X_i \mid X_i \ge L .
+G_i \sim X_i \mid X_i \ge L .
 \end{equation}
 
 Equivalently, its probability density function is
 \begin{equation}
-f_{G_i^{\mathrm{rel}}}(g) =
+f_{G_i^}(g) =
 \begin{cases}
 \dfrac{f_{\mathrm{SN}}(g \mid \xi_i, \omega, \alpha)}
 {1 - F_{\mathrm{SN}}(L \mid \xi_i, \omega, \alpha)},
@@ -138,9 +137,9 @@ where $f_{\mathrm{SN}}$ and $F_{\mathrm{SN}}$ denote the PDF and CDF of the
 skew-normal distribution, respectively.
 
 \paragraph{Absolute generation time}
-The absolute generation time returned by the model is
+For any infectee $j$ of $i$ we draw from $G_i$ and set their exposure time to
 \begin{equation}
-G_i = G_i^{\mathrm{rel}} + E_i
+E_j = G_i + E_i
 \end{equation}
 
 For the purposes of illustration, the scenarios presented in this vignette include the fewest transmission events possible. The transmissibility of symptomatic or asymptomatic cases in the community, or cases in isolation in the simulation model can be set by specifying the offspring distribution using the `offspring_opts()` function.
