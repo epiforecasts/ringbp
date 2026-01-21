@@ -120,8 +120,8 @@ outbreak_step <- function(case_data,
     missed = TRUE,
     new_cases = NA_integer_,
     sampled = FALSE,
-    # all cases (including asymptomatic) have negative test result (FALSE)
-    # by default; will draw test result for symptomatic cases below
+    # assign negative test result (FALSE) as placeholder;
+    # will draw test result for symptomatic cases below
     test_positive = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
