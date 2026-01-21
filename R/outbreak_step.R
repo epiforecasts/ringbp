@@ -139,9 +139,9 @@ outbreak_step <- function(case_data,
     ref_time <- onset + delays$onset_to_isolation(.N)
     fcase(
       # If asymptomatic, never isolated: time is Inf
-      asymptomatic == TRUE, Inf,
+      asymptomatic, Inf,
       # If not asymptomatic, but are missed, isolated at your symptom onset
-      missed == TRUE, ref_time,
+      missed, ref_time,
       # if quarantine is in effect, isolated at the earlier of infector's or
       # infectee's isolation time
       rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
