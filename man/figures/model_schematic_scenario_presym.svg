@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.23613223"
-     inkscape:cx="830.0434"
-     inkscape:cy="1160.3668"
+     inkscape:zoom="0.3339414"
+     inkscape:cx="1533.2031"
+     inkscape:cy="1140.9187"
      inkscape:window-width="1512"
      inkscape:window-height="752"
-     inkscape:window-x="1806"
-     inkscape:window-y="145"
+     inkscape:window-x="0"
+     inkscape:window-y="113"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      showguides="false" />
@@ -72,7 +72,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
          y="332.62585"
-         id="tspan11654-9-0">(7b) Presymptomatic case infects individual, who isolates before</tspan><tspan
+         id="tspan11654-9-0">(7b) Presymptomatic infector infects individual, who isolates before</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
@@ -398,37 +398,25 @@
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-       x="41.358677"
-       y="38.260414"
-       id="text8025-6-5-3"
-       transform="scale(0.96714894,1.0339669)"><tspan
-         sodipodi:role="line"
-         id="tspan8023-2-2-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-         x="41.358677"
-         y="38.260414">(3c) Presymptomatic case infects individual, who is traced and</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-         x="41.358677"
-         y="54.274818"
-         id="tspan14897-4">        isolated once symptomatic</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="446.93872"
-       y="38.260414"
+       y="23.753181"
        id="text8025-6-5-9-8"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          id="tspan8023-2-2-7-9"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="446.93872"
-         y="38.260414">(3d) Presymptomatic case infects individual, who is traced and</tspan><tspan
+         y="23.753181">(3d) Presymptomatic infector infects individual, who is traced and</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="446.93872"
-         y="54.274818"
-         id="tspan14899-5">        isolated once symptomatic</tspan></text>
+         y="39.767586"
+         id="tspan14899-5">        isolated once infector is isolated and once infectee is</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+         x="446.93872"
+         y="55.781994"
+         id="tspan8337">        symptomatic</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-8-7-0-2"
@@ -1028,7 +1016,7 @@
          id="tspan8023-2-2-7-3-7"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
-         y="183.49519">(4b) Presymptomatic case infects individual, who is quarantined</tspan><tspan
+         y="183.49519">(4b) Presymptomatic infector infects individual, who is quarantined</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
@@ -1045,7 +1033,7 @@
          id="tspan8023-2-2-7-3-5-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47656"
-         y="183.49519">(5b) Presymptomatic case infects individual, who is missed by</tspan><tspan
+         y="183.49519">(5b) Presymptomatic infector infects individual, who is missed by</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47656"
@@ -1664,5 +1652,26 @@
          id="tspan12291-9"
          x="488.36661"
          y="301.7204">Not traced (1 - p)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;fill:#ffffff;stroke-width:0.682001"
+       x="40"
+       y="24.245947"
+       id="text7644"><tspan
+         sodipodi:role="line"
+         id="tspan7642"
+         style="font-size:12.7px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke-width:0.682"
+         x="40"
+         y="24.245947">(3c) Presymptomatic infector infects individual, who is traced </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:12.7px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke-width:0.682"
+         x="40"
+         y="40.120945"
+         id="tspan7646">       and isolated once infector is isolated and once infectee is</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:12.7px;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke-width:0.682"
+         x="40"
+         y="55.995945"
+         id="tspan7648">       symptomatic</tspan></text>
   </g>
 </svg>
