@@ -4,12 +4,17 @@
 \alias{intervention_opts}
 \title{Create a list of intervention settings to run the \pkg{ringbp} model}
 \usage{
-intervention_opts(quarantine = FALSE)
+intervention_opts(quarantine = FALSE, test_sensitivity = 1)
 }
 \arguments{
 \item{quarantine}{a \code{logical} scalar: whether quarantine is in effect, if
 \code{TRUE} then traced contacts are isolated before symptom onset; defaults to
 \code{FALSE}}
+
+\item{test_sensitivity}{a \code{numeric} scalar probability (between 0
+and 1 inclusive): the test sensitivity (i.e. probability of a true
+positive result). Individuals that are tested and get a false negative
+are not isolated and their contacts are not traced.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_intervention_opts>}.
