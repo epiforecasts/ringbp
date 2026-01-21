@@ -27,7 +27,9 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
     The title of your PR should briefly describe the change.
     The body of your PR should contain `Fixes #issue-number`.
 
-*  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
+*  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). The style we follow for entries to `NEWS.md` is:
+
+> [Information on the change]. Addresses #[issue number] by @[GitHub username] in #[PR number] and reviewed by @[GitHub username]. See the [`NEWS.md`](../NEWS.md) file for examples to follow.
 
 ### Code style
 
