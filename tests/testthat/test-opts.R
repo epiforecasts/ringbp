@@ -55,7 +55,7 @@ test_that("intervention_opts works as expected", {
   expect_s3_class(interventions, "ringbp_intervention_opts")
   expect_identical(
     vapply(interventions, class, FUN.VALUE = character(1)),
-    c(quarantine = "logical")
+    c(quarantine = "logical", test_sensitivity = "numeric")
   )
 })
 

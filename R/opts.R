@@ -158,15 +158,20 @@ event_prob_opts <- function(asymptomatic,
 #' @param quarantine a `logical` scalar: whether quarantine is in effect, if
 #'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
 #'   `FALSE`
+#' @param test_sensitivity a `numeric` scalar probability (between 0
+#'   and 1 inclusive): the test sensitivity (i.e. probability of a true
+#'   positive result). Individuals that are tested and get a false negative
+#'   are not isolated and their contacts are not traced.
 #'
 #' @return A `list` with class `<ringbp_intervention_opts>`.
 #' @export
 #'
 #' @examples
 #' intervention_opts(quarantine = FALSE)
-intervention_opts <- function(quarantine = FALSE) {
+intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
   checkmate::assert_logical(quarantine, any.missing = FALSE, len = 1)
-  opts <- list(quarantine = quarantine)
+  checkmate::assert_number(test_sensitivity, lower = 0, upper = 1)
+  opts <- list(quarantine = quarantine, test_sensitivity = test_sensitivity)
   class(opts) <- "ringbp_intervention_opts"
   opts
 }
