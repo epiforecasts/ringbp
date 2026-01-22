@@ -29,7 +29,26 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 *  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). The style we follow for entries to `NEWS.md` is:
 
-> [Information on the change]. Addresses #[issue number] by @[GitHub username] in #[PR number] and reviewed by @[GitHub username]. See the [`NEWS.md`](../NEWS.md) file for examples to follow.
+> [Information on the change]. Addresses #[issue number] by @[GitHub username] in #[PR number] and reviewed by @[GitHub username]. 
+
+See the [`NEWS.md`](../NEWS.md) file for examples to follow.
+
+#### What happens after submitting a PR?
+
+* PRs are reviewed by the team before they are merged. The review process only begins after the continuous integration checks, which have to be manually triggered by a maintainer for first-time contributors, have passed.
+
+* Usually, all the review conversations occur under the PR. The reviewer merges the PR when every issue has been resolved. Please use the "Resolve conversation" functionality in the GitHub web interface to indicate when a specific issue has been addressed, responding with a commit pointing to the change made where applicable.
+
+* When a PR is ready to be merged, you may be asked to [rebase](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) on the `main` branch. You can do this by checking out your branch and running `git rebase main`. If it is successful, your commits will be placed on top of the commit history of `main` in preparation for a merge. A rebase might result in some merge conflicts. Make sure that they are resolved, then push your changes to your branch again (using the `--force` option, that is, `git push -f`, if required).
+
+*   A number of issues can cause the Github checks to fail. It can be helpful to safeguard against them by doing the following:
+  *   Check that there are no linting issues by running `lintr::lint_package()`.
+  *   Run `devtoools::check()` to check for wider package issues like mismatching documentation, etc. (this currently requires a fair bit of time/computation).
+  *   (Optional) Turn on continuous integration with Github Actions on your forked repository.
+
+* On a case-by-case basis, you may be asked to increment the package version both in the `NEWS.md` and
+`DESCRIPTION` files. Please do not do this unless you're asked to. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically
+make the changes for you interactively.
 
 ### Code style
 
@@ -44,7 +63,4 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 ## Code of Conduct
 
 Please note that the ringbp project is released with a
-[Contributor Code of Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md)
-
-. By contributing to this
-project you agree to abide by its terms.
+[Contributor Code of Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md). By contributing to this project you agree to abide by its terms.
