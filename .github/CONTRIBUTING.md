@@ -31,7 +31,7 @@ The body of your PR should contain `Fixes #issue-number`.
 
 > [Information on the change]. Addresses #[issue number] by @[GitHub username] in #[PR number] and reviewed by @[GitHub username]. 
 
-See the [`NEWS.md`](../NEWS.md) file for examples to follow.
+See the [`NEWS.md`](../NEWS.md) file for examples to follow. The `NEWS.md` entry can be added once the PR is ready to be merged (i.e. reviewer has approved the PR and all comments are resolved). That way the PR number and reviewers will be known.
 
 ### What happens after submitting a PR?
 
