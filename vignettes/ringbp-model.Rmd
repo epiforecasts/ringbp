@@ -22,11 +22,11 @@ The {ringbp} outbreak model is an individual-level branching process model to si
 
 ***Isolation***: Any infected individual that becomes symptomatic gets tested, and is isolated after a symptom onset-to-isolation delay.
 
-***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the {ringbp} model is adjusted by the proportion of contacts ascertained, which varies between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
+***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the {ringbp} model is a user-controlled parameter. Users can adjust the proportion of contacts ascertained between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
 
-***Quarantine***: If quarantine is activated in the model then an infectee can be quarantined/isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
+***Quarantine***: Users can turn on quarantine in the model. If quarantine is activated in the model then an infectee can be quarantined/isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
 
-In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees are isolated before their infector.
+In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees are isolated before their infector. The infectee's outcome cannot influence infector's isolation, unlike infector's isolation affecting infectees.
 
 ## Transmission scenarios with interventions
 
@@ -47,7 +47,7 @@ Scenario (6) shows what happens when an asymptomatic infector transmits. The sym
 Scenario (7) demonstrates where an infectee can be isolated before their infector is isolated because of variability in the onset-to-isolation delay. (This scenario is only possible when onset-to-isolation delays are drawn from a distribution, and cannot occur if all onset-to-isolation delays in the population are constant).
 
 ![ringbp model schematic. This schematic assumes cases in isolation cannot transmit.](../man/figures/model_schematic_iso_prevent.svg){width=800px}\
-This schematic of the model shows an index infector (Person A) and two individuals infected by Person A (Persons B and C). Each individual in the 3-person outbreak shown has a time of infection (or exposure, shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
+This schematic of the model shows an index infector (Person A) and two individuals infected by Person A (Persons B and C). Each individual in the 3-person outbreak shown has a time of infection (shown by the red dot), a time of symptom onset (blue dot), the time they infect others (orange dot) and the isolation time (green dot). Some of the time delays between events are also illustrated. The time between exposure and symptom onset is the incubation period for the individual, the time between symptom onset and isolation is the onset-to-isolation delay, and the time between an individual being infected and infecting a secondary case is the generation time.
 
 The schematic also shows a scenario in which isolation completely prevents disease transmission. These are shown by diamonds for infection events that would have happened if the case had not gone into isolation. In other words, these are infections averted.
 
@@ -83,7 +83,7 @@ Below we show the same 3-person outbreak schematic as above, but this time isola
 
 ## Model parameters
 
-The table below includes the parameters mentioned in this vignette that can be specified by the user, and how it can be parameterised in the {ringbp} model.
+The table below includes the {ringbp} parameters mentioned in this vignette that users can specify. Parameter values are given as examples and do not represent the default values.
 
 | Epidemiological Parameter | {ringbp} Model Parameterisation |
 | --- | ----------- |
