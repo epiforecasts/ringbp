@@ -50,7 +50,6 @@ At its core, {ringbp} simulates outbreaks using a branching process framework. E
 Simulations are constructed by combining a set of options that describe these components and then running one or more stochastic outbreak realisations.
 
 For a more detailed exposition of the {ringbp} epidemiological model and and non-pharmaceutical interventions influence disease transmission see the [`ringbp-model.Rmd` vignette](ringbp-model.html).
-##
 
 ## Specifying model components
 
@@ -169,6 +168,7 @@ outbreak <- scenario_sim(
 ```
 
 The returned object is a `data.table` containing the simulated outbreak trajectories. The columns are:
+
 * `sim`: simulation replicate ID
 * `week`: outbreak week, zero indexed
 * `weekly_cases`: number of new cases that week
@@ -222,7 +222,7 @@ By default, extinction is defined as all infectious individuals have had the opp
 
 ## Simplified COVID-19 contact tracing effectiveness analysis
 
-Next we demonstrate how to use ringbp to reproduce a simplified version of the outbreak control analysis from @Hellewell2020. This study, published in the first months of the COVID-19 pandemic modelled the probability that an introduced COVID-19 outbreak is contained by isolation and contact tracing. Containment was defined as no disease transmission between weeks 12-16 of the outbreak and the outbreak not reaching 5,000 total cases.
+Next we demonstrate how to use {ringbp} to reproduce a simplified version of the outbreak control analysis from @Hellewell2020. This study, published in the first months of the COVID-19 pandemic, modelled the probability that an introduced COVID-19 outbreak is contained by isolation and contact tracing. Containment was defined as no disease transmission between weeks 12-16 of the outbreak and the outbreak not reaching 5,000 total cases.
 
 Using the functions described above we define several parameter sets to analyse how varying the basic reproduction number in the community, the proportion of contacts successfully traced, and the number of initial infectors that seed independent outbreaks influence the likelihood of outbreak control. 
 
@@ -245,7 +245,7 @@ scenarios <- scenarios[, list(data = list(.SD)), by = scenario]
 ## Run the simulation
 
 ```{r}
-n <- 3
+n <- 10
 
 scenarios[, sims := lapply(data, \(x, n) {
   scenario_sim(
@@ -272,15 +272,20 @@ scenarios[, sims := lapply(data, \(x, n) {
 )]
 ```
 
-For a more detailed example of running ringbp across multiple parameter sets see the [`parameter-sweep.Rmd` vignette](parameter-sweep.html), which also includes information on how to parallelise the simulation.
+For a more detailed example of running {ringbp} across multiple parameter sets see the [`parameter-sweep.Rmd` vignette](parameter-sweep.html), which also includes information on how to parallelise the simulation.
 
-```{r, eval=FALSE}
+```{r}
 
-res[, `:=`(scenario = results$scenario, pext = results$pext)]
-extinct_prob()
+scenarios[, 
+  pext := extinct_prob(sims[[1]], extinction_week = 12:16), 
+  by = scenario
+]
+
+# probability of extinction for each scenario
+scenarios$pext
 ```
 
-@Hellewell2020 used ringbp to show that:
+@Hellewell2020 used {ringbp} to show that:
 
 * Outbreaks are controllable if contact tracing is fast and covers a high proportion of contacts
 * Delays in isolating cases or many undetected asymptomatic cases make control unlikely
