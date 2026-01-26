@@ -48,7 +48,8 @@ Depends:
 Imports: 
     checkmate,
     data.table,
-    sn
+    sn,
+    tinyplot
 Suggests:
     future,
     future.apply,
