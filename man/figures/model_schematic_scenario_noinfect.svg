@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="800mm"
+   height="200mm"
+   viewBox="0 0 800 200"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="model_schematic_scenario_noinfect.svg"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview173"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.29435284"
+     inkscape:cx="856.1154"
+     inkscape:cy="93.425292"
+     inkscape:window-width="1684"
+     inkscape:window-height="863"
+     inkscape:window-x="1997"
+     inkscape:window-y="226"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     id="layer1">
+    <rect
+       style="fill:#ffffff;stroke-width:0.321266"
+       id="rect7790"
+       width="769.38373"
+       height="120.23054"
+       x="14.527649"
+       y="30.122648" />
+    <rect
+       style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
+       id="rect59819"
+       width="310"
+       height="10"
+       x="72.56311"
+       y="84.060524"
+       ry="5" />
+    <rect
+       style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
+       id="rect59819-6"
+       width="30"
+       height="10"
+       x="87.06311"
+       y="94.560524"
+       ry="5" />
+    <rect
+       style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
+       id="rect131"
+       width="34.820023"
+       height="14.820025"
+       x="42.653091"
+       y="82.150513">
+      <title
+         id="title2478">helow</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+       x="47.073212"
+       y="91.60598"
+       id="text6928"><tspan
+         id="tspan9210"
+         x="47.073212"
+         y="91.60598">Person A</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
+       d="M 77.563855,88.879298 377.56223,88.860158"
+       id="path9310" />
+    <ellipse
+       style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       id="path12345"
+       cx="87.06311"
+       cy="89.060524"
+       rx="3.999999"
+       ry="3.9999993" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="91.102493"
+       y="101.09588"
+       id="text70964"><tspan
+         id="tspan70962"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
+         x="91.102493"
+         y="101.09588">Incubation</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="78.102493"
+       y="75.656174"
+       id="text83196"><tspan
+         id="tspan84858"
+         x="78.102493"
+         y="75.656174"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="104.84125"
+       y="75.656174"
+       id="text83196-3"><tspan
+         id="tspan84887"
+         x="104.84125"
+         y="75.656174"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="243.10252"
+       y="75.595879"
+       id="text83196-3-9"><tspan
+         id="tspan13679"
+         x="243.10252"
+         y="75.595879">Isolated</tspan></text>
+    <rect
+       style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
+       id="rect59819-01"
+       width="134.5"
+       height="10"
+       x="117.06312"
+       y="94.560524"
+       ry="5" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="157.1821"
+       y="101.15617"
+       id="text70964-0"><tspan
+         id="tspan76200"
+         x="157.1821"
+         y="101.15617">Delay from onset to isolation</tspan></text>
+    <rect
+       style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
+       id="rect59819-32"
+       width="310"
+       height="10"
+       x="465.56323"
+       y="83.992134"
+       ry="5" />
+    <rect
+       style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
+       id="rect59819-6-7"
+       width="292.16888"
+       height="9.4899731"
+       x="480.31824"
+       y="94.747147"
+       ry="4.7449865" />
+    <rect
+       style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
+       id="rect131-3"
+       width="34.820023"
+       height="14.820025"
+       x="435.65323"
+       y="82.082115">
+      <title
+         id="title2478-9">helow</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+       x="440.07333"
+       y="91.537598"
+       id="text6928-7"><tspan
+         id="tspan9210-7"
+         x="440.07333"
+         y="91.537598">Person A</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
+       d="m 470.564,88.810904 299.99838,-0.0191"
+       id="path9310-9" />
+    <ellipse
+       style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       id="path12345-53"
+       cx="480.06323"
+       cy="88.992134"
+       rx="3.999999"
+       ry="3.9999993" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="484.10263"
+       y="101.02749"
+       id="text70964-8"><tspan
+         id="tspan70962-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
+         x="484.10263"
+         y="101.02749">Incubation</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="471.10263"
+       y="75.587784"
+       id="text83196-8"><tspan
+         id="tspan84858-9"
+         x="471.10263"
+         y="75.587784"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+       x="40.138008"
+       y="62.915104"
+       id="text8025"
+       transform="scale(0.96714894,1.0339669)"><tspan
+         id="tspan8023"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+         x="40.138008"
+         y="62.915104">(1) Index individual is symptomatic and isolates after testing positive</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+       x="446.487"
+       y="62.915104"
+       id="text8025-6"
+       transform="scale(0.96714894,1.0339669)"><tspan
+         id="tspan8023-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+         x="446.487"
+         y="62.915104">(2) Index individual is asymptomatic</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02524277"
+       inkscape:transform-center-y="-1.2303086"
+       transform="matrix(0.77190299,0,0,0.86030573,209.75111,-29.996076)" />
+  </g>
+  <rect
+     style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+     id="rect5688"
+     width="8.0298986"
+     height="8.0298996"
+     x="112.98505"
+     y="84.985054" />
+</svg>
