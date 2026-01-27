@@ -10,14 +10,14 @@ You can find the `.R` file that generates the `.Rd` by reading the comment in th
 
 ## Bigger changes
 
-If you want to make a bigger change, it's a good idea to first file an issue and make sure someone from the team agrees that it’s needed. 
+If you want to make a bigger change, you should generally create an issue first to describe the problem (e.g. bug, key missing feature) and potential solutions. Once the core team and community have weighed in, you will have a clearer understanding of how to proceed with addressing the problem. 
 If you’ve found a bug, please file an issue that illustrates the bug with a minimal 
 [reprex](https://www.tidyverse.org/help/#reprex) (this will also help you write a unit test, if needed).
 See our guide on [how to create a great issue](https://code-review.tidyverse.org/issues/) for more advice.
 
 ### Pull request process
 
-* Fork the package and clone onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("epiforecasts/ringbp", fork = TRUE)`.
+* Fork the package and clone that fork onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("epiforecasts/ringbp", fork = TRUE)`.
 
 * Install all development dependencies with `devtools::install_dev_deps()`, and then make sure the package passes R CMD check by running `devtools::check()`. 
 If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing. 
@@ -47,7 +47,7 @@ See the [`NEWS.md`](../NEWS.md) file for examples to follow. The `NEWS.md` entry
 * (Optional) Turn on continuous integration with Github Actions on your forked repository.
 
 * On a case-by-case basis, you may be asked to increment the package version both in the `NEWS.md` and
-`DESCRIPTION` files. Please do not do this unless you're asked to. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically
+`DESCRIPTION` files. Please do not do this unless requested by the core team. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically
 make the changes for you interactively.
 
 ### Code style
