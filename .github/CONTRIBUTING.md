@@ -41,10 +41,10 @@ See the [`NEWS.md`](../NEWS.md) file for examples to follow. The `NEWS.md` entry
 
 * When a PR is ready to be merged, you may be asked to [rebase](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) on the `main` branch. You can do this by checking out your branch and running `git rebase main`. If it is successful, your commits will be placed on top of the commit history of `main` in preparation for a merge. A rebase might result in some merge conflicts. Make sure that they are resolved, then push your changes to your branch again (using the `--force` option, that is, `git push -f`, if required).
 
-* A number of issues can cause the Github checks to fail. It can be helpful to safeguard against them by doing the following:
+* A number of issues can cause the GitHub checks to fail. It can be helpful to safeguard against them by doing the following:
 * Check that there are no linting issues by running `lintr::lint_package()`.
-* Run `devtoools::check()` to check for wider package issues like mismatching documentation, etc. (this currently requires a fair bit of time/computation).
-* (Optional) Turn on continuous integration with Github Actions on your forked repository.
+* Run `devtools::check()` to check for wider package issues like mismatching documentation, etc. (this currently requires a fair bit of time/computation).
+* (Optional) Turn on continuous integration with GitHub Actions on your forked repository.
 
 * On a case-by-case basis, you may be asked to increment the package version both in the `NEWS.md` and
 `DESCRIPTION` files. Please do not do this unless you're asked to. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically
@@ -65,7 +65,7 @@ Contributions with test cases included are easier to accept.
 We are always interested in hearing about how ringbp is being applied. 
 This helps inform future development priorities by identifying which features are the most used, 
 and which parts of the project lack clarity or need improvement. If you have a use case which 
-you would like to share with us, please do let us know. You can reach out through [email](joshua.lambert@lshtm.ac.uk). We're grateful for any way that you can spread the word. Whether that's citing the ringbp package in your papers or telling your colleagues about a feature you found useful.
+you would like to share with us, please do let us know. You can reach out through [email](mailto:joshua.lambert@lshtm.ac.uk). We're grateful for any way that you can spread the word. Whether that's citing the ringbp package in your papers or telling your colleagues about a feature you found useful.
 
 ## Code of Conduct
 
