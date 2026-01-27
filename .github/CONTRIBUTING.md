@@ -47,8 +47,7 @@ See the [`NEWS.md`](../NEWS.md) file for examples to follow. The `NEWS.md` entry
   - (Optional) Turn on continuous integration with GitHub Actions on your forked repository.
 
 * On a case-by-case basis, you may be asked to increment the package version both in the `NEWS.md` and
-`DESCRIPTION` files. Please do not do this unless requested by the core team. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically
-make the changes for you interactively.
+`DESCRIPTION` files. Please do not do this unless requested by the core team. We follow the [Tidyverse package versioning guide](https://r-pkgs.org/lifecycle.html). You can run `usethis::use_version()` to automatically make the changes.
 
 ### Code style
 
