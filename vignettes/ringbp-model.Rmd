@@ -28,13 +28,17 @@ The {ringbp} outbreak model is an individual-level branching process model to si
 
 In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees are isolated before their infector. The infectee's outcome cannot influence infector's isolation, unlike infector's isolation affecting infectees.
 
+## Disease natural history scenarios
+
+![ringbp model schematic scenarios with no transmission.](../man/figures/model_schematic_scenario_noinfect.svg){width=800px}\
+
+Scenarios (1) and (2) show situations where an index infector is symptomatic or asymptomatic, respectively. Asymptomatic individuals are assumed to remain subclinical throughout the course of their infection.
+
 ## Transmission scenarios with interventions
 
 Different combinations of transmission timing and intervention effectiveness produce distinct outcomes. The scenarios below illustrate how isolation and contact tracing interact with disease transmission in the model. The first two scenarios represent an index case that does not infect anyone. All other scenarios illustrate infection from a primary case (Person A) to a secondary case (Person B).
 
 ![ringbp model schematic scenarios where transmission occurs after symptom onset.](../man/figures/model_schematic_scenario_postsym.svg){width=800px}\
-
-Scenarios (1) and (2) show situations where an index infector is symptomatic or asymptomatic, respectively. Asymptomatic individuals are assumed to remain subclinical throughout the course of their infection.
 
 Scenarios (3a) and (3b) show what happense when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then being isolated when the infector is isolated in (3a), whereas in (3b) the infectee is isolated as soon as they develop symptoms because the infector is isolated at the same time or before the infectee's symptom onset.
 
