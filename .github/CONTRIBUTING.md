@@ -1,6 +1,6 @@
 # Contributing to ringbp
 
-This outlines how to propose a change to ringbp. All contributions are welcomed.
+This outlines how to propose a change to ringbp. All contributions are welcome.
 
 ## Fixing typos
 
@@ -37,7 +37,7 @@ See the [`NEWS.md`](../NEWS.md) file for examples to follow. The `NEWS.md` entry
 
 * PRs are reviewed by the team before they are merged. The review process only begins after the continuous integration checks have passed. We do not expect contributors to familiarise themselves with all the automated checks in our GitHub actions, and are happy to support on this once a PR is made. 
 
-* Usually, all the review conversations occur under the PR. The reviewer merges the PR when every issue has been resolved. Please use the "Resolve conversation" functionality in the GitHub web interface to indicate when a specific issue has been addressed, responding with a commit pointing to the change made where applicable.
+* Usually, all the review conversations occur under the PR. The reviewer merges the PR when every issue has been resolved. A member of the core team will use the "Resolve conversation" functionality in the GitHub web interface to indicate when a specific issue has been addressed. Where applicable it is good practice for the contributor authoring the PR to add a comment in the conversation with a link to the commit SHA (which can be copied from GitHub commit history) to let those involved in the conversation know where the changes were applied.
 
 * When a PR is ready to be merged, you may be asked to [rebase](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) on the `main` branch. You can do this by checking out your branch and running `git rebase main`. If it is successful, your commits will be placed on top of the commit history of `main` in preparation for a merge. A rebase might result in some merge conflicts. Make sure that they are resolved, then push your changes to your branch again (using the `--force` option, that is, `git push -f`, if required).
 
