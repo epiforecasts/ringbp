@@ -3,8 +3,8 @@
 
 <svg
    width="800mm"
-   height="600mm"
-   viewBox="0 0 800 600"
+   height="500mm"
+   viewBox="0 0 800 500"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
@@ -27,14 +27,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.39065898"
-     inkscape:cx="1584.5022"
-     inkscape:cy="750.01476"
+     inkscape:zoom="0.78131796"
+     inkscape:cx="2123.3353"
+     inkscape:cy="1547.3854"
      inkscape:window-width="1512"
-     inkscape:window-height="752"
+     inkscape:window-height="832"
      inkscape:window-x="0"
-     inkscape:window-y="88"
-     inkscape:window-maximized="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showguides="false" />
   <defs
@@ -44,46 +44,20 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ffffff;stroke-width:0.682001"
+       style="fill:#ffffff;stroke-width:0.626713"
        id="rect7790"
        width="769.38373"
-       height="541.81952"
-       x="13.545489"
-       y="17.609137" />
+       height="457.53217"
+       x="12.108773"
+       y="7.0732193" />
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 643.65867,174.62148 v 39.64195"
+       d="M 643.159,91.121461 V 130.76341"
        id="path3154-5-3-0-3" />
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 254.04137,172.6529 v 39.64195"
+       d="M 254.04137,89.152881 V 128.79483"
        id="path3154-5-3-0" />
-    <rect
-       style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
-       id="rect59819"
-       width="310"
-       height="10"
-       x="73.743683"
-       y="73.56839"
-       ry="5" />
-    <rect
-       style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
-       id="rect59819-6"
-       width="30"
-       height="10"
-       x="88.243683"
-       y="84.06839"
-       ry="5" />
-    <rect
-       style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
-       id="rect131"
-       width="34.820023"
-       height="14.820025"
-       x="43.833672"
-       y="71.658379">
-      <title
-         id="title2478">helow</title>
-    </rect>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;font-family:'.SF NS Mono';-inkscape-font-specification:'.SF NS Mono';fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.183"
@@ -97,270 +71,81 @@
          y="34.608051" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-       x="48.253792"
-       y="81.113846"
-       id="text6928"><tspan
-         sodipodi:role="line"
-         id="tspan9210"
-         x="48.253792"
-         y="81.113846">Person A</tspan></text>
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 78.74443,78.387162 299.99838,-0.01914"
-       id="path9310" />
-    <ellipse
-       style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345"
-       cx="88.243683"
-       cy="78.56839"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5"
-       cx="118.24368"
-       cy="78.56839"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68"
-       cx="253.2437"
-       cy="78.56839"
-       rx="3.999999"
-       ry="3.9999993" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="92.283073"
-       y="90.603745"
-       id="text70964"><tspan
-         sodipodi:role="line"
-         id="tspan70962"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
-         x="92.283073"
-         y="90.603745">Incubation</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="79.283073"
-       y="65.16404"
-       id="text83196"><tspan
-         sodipodi:role="line"
-         id="tspan84858"
-         x="79.283073"
-         y="65.16404"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="106.02182"
-       y="65.16404"
-       id="text83196-3"><tspan
-         sodipodi:role="line"
-         id="tspan84887"
-         x="106.02182"
-         y="65.16404"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="244.2831"
-       y="65.103745"
-       id="text83196-3-9"><tspan
-         sodipodi:role="line"
-         id="tspan13679"
-         x="244.2831"
-         y="65.103745">Isolated</tspan></text>
-    <rect
-       style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
-       id="rect59819-01"
-       width="134.5"
-       height="10"
-       x="118.24368"
-       y="84.06839"
-       ry="5" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="158.36267"
-       y="90.664032"
-       id="text70964-0"><tspan
-         sodipodi:role="line"
-         id="tspan76200"
-         x="158.36267"
-         y="90.664032">Delay from onset to isolation</tspan></text>
-    <rect
-       style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
-       id="rect59819-32"
-       width="310"
-       height="10"
-       x="466.7438"
-       y="73.5"
-       ry="5" />
-    <rect
-       style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
-       id="rect59819-6-7"
-       width="292.16888"
-       height="9.4899731"
-       x="481.49881"
-       y="84.255013"
-       ry="4.7449865" />
-    <rect
-       style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
-       id="rect131-3"
-       width="34.820023"
-       height="14.820025"
-       x="436.8338"
-       y="71.589981">
-      <title
-         id="title2478-9">helow</title>
-    </rect>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-       x="441.25391"
-       y="81.045464"
-       id="text6928-7"><tspan
-         sodipodi:role="line"
-         id="tspan9210-7"
-         x="441.25391"
-         y="81.045464">Person A</tspan></text>
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 471.74458,78.318768 299.99838,-0.0191"
-       id="path9310-9" />
-    <ellipse
-       style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-53"
-       cx="481.2438"
-       cy="78.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="485.2832"
-       y="90.535347"
-       id="text70964-8"><tspan
-         sodipodi:role="line"
-         id="tspan70962-5"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
-         x="485.2832"
-         y="90.535347">Incubation</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       x="472.2832"
-       y="65.09565"
-       id="text83196-8"><tspan
-         sodipodi:role="line"
-         id="tspan84858-9"
-         x="472.2832"
-         y="65.09565"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-       x="41.358677"
-       y="52.767651"
-       id="text8025"
-       transform="scale(0.96714894,1.0339669)"><tspan
-         sodipodi:role="line"
-         id="tspan8023"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-         x="41.358677"
-         y="52.767651">(1) Index individual is symptomatic and isolates after testing positive</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-       x="447.70767"
-       y="52.767651"
-       id="text8025-6"
-       transform="scale(0.96714894,1.0339669)"><tspan
-         sodipodi:role="line"
-         id="tspan8023-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
-         x="447.70767"
-         y="52.767651">(2) Index individual is asymptomatic</tspan></text>
-    <text
-       xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="42.127949"
-       y="109.39422"
+       y="23.801521"
        id="text8025-6-5"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          id="tspan8023-2-2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="42.127949"
-         y="109.39422">(3a) Symptomatic infector infects individual, who is traced </tspan><tspan
+         y="23.801521">(3a) Symptomatic infector infects individual, who is traced </tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="42.127949"
-         y="125.40862"
+         y="39.815926"
          id="tspan14897">        and isolated once infector is isolated and once infectee is</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="42.127949"
-         y="141.42303"
+         y="55.830334"
          id="tspan9745">        symptomatic</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="448.47693"
-       y="109.34586"
+       y="23.753181"
        id="text8025-6-5-9"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47693"
-         y="109.34586"
+         y="23.753181"
          id="tspan14899">(3b) Symptomatic infector infects individual, who is traced </tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47693"
-         y="125.36027"
+         y="39.767586"
          id="tspan9776">        and isolated once infector is isolated and once infectee is</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47693"
-         y="141.37468"
+         y="55.781994"
          id="tspan9778">        symptomatic</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="41.358677"
-       y="251.03319"
+       y="170.27626"
        id="text8025-6-5-9-2"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          id="tspan8023-2-2-7-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
-         y="251.03319">(4) Symptomatic infector infects individual, who is quarantined</tspan><tspan
+         y="170.27626">(4) Symptomatic infector infects individual, who is quarantined</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="41.358677"
-         y="267.04761"
+         y="186.29066"
          id="tspan14901">      once infector tests positive</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="448.47662"
-       y="251.03319"
+       y="170.27626"
        id="text8025-6-5-9-2-5"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          id="tspan8023-2-2-7-3-5"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47662"
-         y="251.03319">(5) Symptomatic infector infects individual, who is missed by</tspan><tspan
+         y="170.27626">(5) Symptomatic infector infects individual, who is missed by</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="448.47662"
-         y="267.04761"
+         y="186.29066"
          id="tspan11654">      contact tracing and isolates a delay after symptom onset</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
@@ -368,7 +153,7 @@
        width="255"
        height="10"
        x="129.48737"
-       y="212.83308"
+       y="129.33301"
        ry="5" />
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
@@ -376,7 +161,7 @@
        width="310"
        height="10"
        x="74.487373"
-       y="162.83311"
+       y="79.333038"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -384,7 +169,7 @@
        width="30"
        height="10"
        x="88.987373"
-       y="173.3331"
+       y="89.833023"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.460633;stroke-dasharray:none;stroke-opacity:1"
@@ -392,7 +177,7 @@
        width="104.03937"
        height="9.7893667"
        x="149.2177"
-       y="223.56339"
+       y="140.06331"
        ry="4.8946834" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -400,7 +185,7 @@
        width="34.820023"
        height="14.820025"
        x="44.577358"
-       y="160.92311">
+       y="77.423042">
       <title
          id="title2478-0-9">helow</title>
     </rect>
@@ -410,7 +195,7 @@
        width="34.820026"
        height="14.820025"
        x="99.577354"
-       y="210.92308">
+       y="127.423">
       <title
          id="title2478-6-6-6">helow</title>
     </rect>
@@ -418,163 +203,128 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="48.997494"
-       y="170.37857"
+       y="86.878487"
        id="text6928-2-8"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2"
          x="48.997494"
-         y="170.37857">Person A</tspan></text>
+         y="86.878487">Person A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="103.99748"
-       y="220.37856"
+       y="136.87848"
        id="text6928-1-9-9"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9"
          x="103.99748"
-         y="220.37856">Person B</tspan></text>
+         y="136.87848">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 79.488122,167.65189 299.998368,-0.0191"
+       d="m 79.488122,84.151871 299.998368,-0.0191"
        id="path9310-7-8" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 134.4843,218.07449 244.99958,-0.0389"
+       d="m 134.4843,134.57447 244.99958,-0.0389"
        id="path9310-4-8-3" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="106.37161"
-       y="234.42871"
+       y="150.92863"
        id="text12262-3-7"><tspan
          sodipodi:role="line"
          id="tspan12260-8-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0;stroke-dasharray:none"
          x="106.37161"
-         y="234.42871">Traced (p)</tspan></text>
+         y="150.92863">Traced (p)</tspan></text>
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2"
        cx="88.987373"
-       cy="167.8331"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6"
-       cx="118.98736"
-       cy="167.8331"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1"
-       cx="253.9874"
-       cy="217.83308"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-8"
-       cx="216.98738"
-       cy="217.83311"
+       cy="84.333023"
        rx="3.999999"
        ry="3.9999993" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7"
        cx="148.98738"
-       cy="217.83308"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6"
-       cx="148.98738"
-       cy="167.8331"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68-5-0"
-       cx="253.9874"
-       cy="167.8331"
+       cy="134.33301"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="93.026764"
-       y="179.86847"
+       y="96.368393"
        id="text70964-5-2"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="93.026764"
-         y="179.86847">Incubation</tspan></text>
+         y="96.368393">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="189.02679"
-       y="229.86844"
+       y="146.36836"
        id="text70964-9-7-7"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="189.02679"
-         y="229.86844">Incubation</tspan></text>
+         y="146.36836">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="80.026764"
-       y="154.42876"
+       y="70.928688"
        id="text83196-4-4"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1"
          x="80.026764"
-         y="154.42876"
+         y="70.928688"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="106.7655"
-       y="154.42876"
+       y="70.928688"
        id="text83196-3-7-8"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2"
          x="106.7655"
-         y="154.42876"
+         y="70.928688"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="245.02679"
-       y="154.36848"
+       y="70.868423"
        id="text83196-3-9-8-6"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0"
          x="245.02679"
-         y="154.36848">Isolated</tspan></text>
+         y="70.868423">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="149.04562"
-       y="151.92876"
+       y="68.428688"
        id="text83196-5-0-9"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0"
          x="149.04562"
-         y="151.92876"
+         y="68.428688"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0"
          x="149.04562"
-         y="158.10237"
+         y="74.602303"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 149.00855,172.60959 v 39.64195"
+       d="M 149.00855,89.109571 V 128.75152"
        id="path3154-5-3" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -582,7 +332,7 @@
        width="34.86058"
        height="6.3244362"
        x="132.2075"
-       y="195.38597">
+       y="111.88589">
       <title
          id="title2478-8-1-1">helow</title>
     </rect>
@@ -592,7 +342,7 @@
        width="34.86058"
        height="6.3244362"
        x="235.43298"
-       y="199.65918">
+       y="116.1591">
       <title
          id="title2478-8-1-1-7">helow</title>
     </rect>
@@ -600,55 +350,55 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="140.02676"
-       y="200.32924"
+       y="116.82916"
        id="text6928-9-1-2"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6"
          x="140.02676"
-         y="200.32924">Infected</tspan></text>
+         y="116.82916">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9"
        width="134.5"
        height="10"
        x="118.98736"
-       y="173.3331"
+       y="89.833023"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="159.10632"
-       y="179.92876"
+       y="96.42868"
        id="text70964-0-0-1"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9"
          x="159.10632"
-         y="179.92876">Delay from onset to isolation</tspan></text>
+         y="96.42868">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0"
        width="60"
        height="10"
        x="89.112373"
-       y="184.45811"
+       y="100.95804"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="93.224518"
-       y="190.92876"
+       y="107.42868"
        id="text70964-8-6-6"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1"
          x="93.224518"
-         y="190.92876">Generation time</tspan></text>
+         y="107.42868">Generation time</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-8-7-0-8"
        width="255"
        height="10"
        x="518.74371"
-       y="214.49998"
+       y="130.99991"
        ry="5" />
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
@@ -656,7 +406,7 @@
        width="310"
        height="10"
        x="463.74371"
-       y="164.50003"
+       y="80.999947"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -664,7 +414,7 @@
        width="30"
        height="10"
        x="478.24371"
-       y="175.00002"
+       y="91.499939"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.460633;stroke-dasharray:none;stroke-opacity:1"
@@ -672,7 +422,7 @@
        width="104.03937"
        height="9.7893667"
        x="538.47406"
-       y="225.2303"
+       y="141.73022"
        ry="4.8946834" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -680,7 +430,7 @@
        width="34.820023"
        height="14.820025"
        x="433.83371"
-       y="162.59">
+       y="79.08992">
       <title
          id="title2478-0-9-6">helow</title>
     </rect>
@@ -690,7 +440,7 @@
        width="34.820026"
        height="14.820025"
        x="488.83371"
-       y="212.58998">
+       y="129.0899">
       <title
          id="title2478-6-6-6-1">helow</title>
     </rect>
@@ -698,144 +448,116 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="438.25385"
-       y="172.04547"
+       y="88.545387"
        id="text6928-2-8-5"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2-8"
          x="438.25385"
-         y="172.04547">Person A</tspan></text>
+         y="88.545387">Person A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="493.25381"
-       y="222.04546"
+       y="138.54538"
        id="text6928-1-9-9-0"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9-9"
          x="493.25381"
-         y="222.04546">Person B</tspan></text>
+         y="138.54538">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 468.74445,169.31881 299.99838,-0.0191"
+       d="m 468.74445,85.818791 299.99838,-0.0191"
        id="path9310-7-8-2" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 523.74063,219.74141 244.99959,-0.0389"
+       d="m 523.74063,136.24139 244.99959,-0.0389"
        id="path9310-4-8-3-4" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="495.62796"
-       y="236.09563"
+       y="152.59555"
        id="text12262-3-7-3"><tspan
          sodipodi:role="line"
          id="tspan12260-8-1-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0;stroke-dasharray:none"
          x="495.62796"
-         y="236.09563">Traced (p)</tspan></text>
+         y="152.59555">Traced (p)</tspan></text>
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2-9"
        cx="478.24371"
-       cy="169.50002"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0"
-       cx="508.24371"
-       cy="169.50002"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-5"
-       cx="643.24371"
-       cy="219.49998"
+       cy="85.999939"
        rx="3.999999"
        ry="3.9999993" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7-5"
        cx="538.24371"
-       cy="219.49998"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6-4"
-       cx="538.24371"
-       cy="169.50002"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68-5-0-4"
-       cx="643.24371"
-       cy="169.50002"
+       cy="135.99991"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="482.28311"
-       y="181.53537"
+       y="98.035294"
        id="text70964-5-2-3"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3-8"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="482.28311"
-         y="181.53537">Incubation</tspan></text>
+         y="98.035294">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="578.28314"
-       y="231.53535"
+       y="148.03528"
        id="text70964-9-7-7-2"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2-2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="578.28314"
-         y="231.53535">Incubation</tspan></text>
+         y="148.03528">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="469.28311"
-       y="156.09566"
+       y="72.595589"
        id="text83196-4-4-6"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1-4"
          x="469.28311"
-         y="156.09566"
+         y="72.595589"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="496.02185"
-       y="156.09566"
+       y="72.595589"
        id="text83196-3-7-8-0"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0"
          x="496.02185"
-         y="156.09566"
+         y="72.595589"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="634.28314"
-       y="156.0354"
+       y="72.535332"
        id="text83196-3-9-8-6-0"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0-8"
          x="634.28314"
-         y="156.0354">Isolated</tspan></text>
+         y="72.535332">Isolated</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.187521"
        id="rect131-3-2-1-9-1"
        width="34.86058"
        height="16.070139"
        x="626.85504"
-       y="193.68684">
+       y="110.18677">
       <title
          id="title2478-8-1-1-7-5">helow</title>
     </rect>
@@ -843,35 +565,35 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="643.63507"
-       y="200.34709"
+       y="116.84702"
        id="text83196-3-9-0-4-3-1"><tspan
          sodipodi:role="line"
          id="tspan22495-9-9-7"
          x="643.63507"
-         y="200.34709">Symptoms +</tspan><tspan
+         y="116.84702">Symptoms +</tspan><tspan
          sodipodi:role="line"
          id="tspan22497-1-4-6"
          x="643.63507"
-         y="206.52071">isolated</tspan></text>
+         y="123.02064">isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="538.302"
-       y="153.59566"
+       y="70.095589"
        id="text83196-5-0-9-7"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0-1"
          x="538.302"
-         y="153.59566"
+         y="70.095589"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0-4"
          x="538.302"
-         y="159.76927"
+         y="76.269203"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 538.26489,174.27651 v 39.64195"
+       d="M 538.26489,90.776491 V 130.41844"
        id="path3154-5-3-8" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -879,7 +601,7 @@
        width="34.86058"
        height="6.3244362"
        x="521.46387"
-       y="197.05287">
+       y="113.5528">
       <title
          id="title2478-8-1-1-8">helow</title>
     </rect>
@@ -887,72 +609,72 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="529.28314"
-       y="201.99614"
+       y="118.49606"
        id="text6928-9-1-2-5"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6-3"
          x="529.28314"
-         y="201.99614">Infected</tspan></text>
+         y="118.49606">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9-1"
        width="134.5"
        height="10"
        x="508.24371"
-       y="175.00002"
+       y="91.499939"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="548.36267"
-       y="181.59564"
+       y="98.095573"
        id="text70964-0-0-1-9"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3"
          x="548.36267"
-         y="181.59564">Delay from onset to isolation</tspan></text>
+         y="98.095573">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0-9"
        width="60"
        height="10"
        x="478.36871"
-       y="186.125"
+       y="102.62492"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="482.48087"
-       y="192.59566"
+       y="109.09558"
        id="text70964-8-6-6-1"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1-0"
          x="482.48087"
-         y="192.59566">Generation time</tspan></text>
+         y="109.09558">Generation time</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="245.02678"
-       y="204.36847"
+       y="120.86839"
        id="text83196-3-9-8-6-7"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0-0"
          x="245.02678"
-         y="204.36847">Isolated</tspan></text>
+         y="120.86839">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="205.76552"
-       y="204.42876"
+       y="120.92868"
        id="text83196-3-7-8-7"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-6"
          x="205.76552"
-         y="204.42876"
+         y="120.92868"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 250.65867,314.62146 v 39.64195"
+       d="m 250.159,231.12144 v 39.64195"
        id="path3154-5-3-0-3-9" />
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
@@ -960,7 +682,7 @@
        width="255"
        height="10"
        x="125.74369"
-       y="354.49997"
+       y="270.99985"
        ry="5" />
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
@@ -968,7 +690,7 @@
        width="310"
        height="10"
        x="70.743706"
-       y="304.5"
+       y="220.99988"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -976,7 +698,7 @@
        width="30"
        height="10"
        x="85.243706"
-       y="315"
+       y="231.49988"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -984,7 +706,7 @@
        width="144.95853"
        height="9.7085257"
        x="145.51447"
-       y="365.27069"
+       y="281.77057"
        ry="4.8542628" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -992,7 +714,7 @@
        width="34.820023"
        height="14.820025"
        x="40.833672"
-       y="302.59">
+       y="219.08987">
       <title
          id="title2478-0-9-6-7">helow</title>
     </rect>
@@ -1002,7 +724,7 @@
        width="34.820026"
        height="14.820025"
        x="95.833687"
-       y="352.58997">
+       y="269.08984">
       <title
          id="title2478-6-6-6-1-1">helow</title>
     </rect>
@@ -1010,155 +732,127 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="45.253822"
-       y="312.04547"
+       y="228.54535"
        id="text6928-2-8-5-2"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2-8-1"
          x="45.253822"
-         y="312.04547">Person A</tspan></text>
+         y="228.54535">Person A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="100.25381"
-       y="362.04544"
+       y="278.54532"
        id="text6928-1-9-9-0-3"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9-9-6"
          x="100.25381"
-         y="362.04544">Person B</tspan></text>
+         y="278.54532">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 75.744449,309.31879 299.998381,-0.0191"
+       d="m 75.744449,225.81877 299.998381,-0.0191"
        id="path9310-7-8-2-5" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 130.74063,359.74139 244.99959,-0.0389"
+       d="m 130.74063,276.24137 244.99959,-0.0389"
        id="path9310-4-8-3-4-7" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="102.62795"
-       y="376.09561"
+       y="292.59549"
        id="text12262-3-7-3-3"><tspan
          sodipodi:role="line"
          id="tspan12260-8-1-3-6"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0;stroke-dasharray:none"
          x="102.62795"
-         y="376.09561">Traced (p)</tspan></text>
+         y="292.59549">Traced (p)</tspan></text>
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2-9-3"
        cx="85.243706"
-       cy="309.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2"
-       cx="115.24369"
-       cy="309.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-5-5"
-       cx="250.24371"
-       cy="359.49997"
+       cy="225.99988"
        rx="3.999999"
        ry="3.9999993" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7-5-0"
        cx="145.24371"
-       cy="359.49997"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6-4-3"
-       cx="145.24371"
-       cy="309.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68-5-0-4-7"
-       cx="250.24371"
-       cy="309.5"
+       cy="275.99985"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="89.283096"
-       y="321.53537"
+       y="238.03525"
        id="text70964-5-2-3-3"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3-8-5"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="89.283096"
-         y="321.53537">Incubation</tspan></text>
+         y="238.03525">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="206.40448"
-       y="371.53534"
+       y="288.03522"
        id="text70964-9-7-7-2-9"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2-2-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="206.40448"
-         y="371.53534">Incubation</tspan></text>
+         y="288.03522">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="76.283096"
-       y="296.09564"
+       y="212.59552"
        id="text83196-4-4-6-8"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1-4-4"
          x="76.283096"
-         y="296.09564"
+         y="212.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="103.02184"
-       y="296.09564"
+       y="212.59552"
        id="text83196-3-7-8-0-0"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8"
          x="103.02184"
-         y="296.09564"
+         y="212.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="279.02182"
-       y="346.09564"
+       y="262.59552"
        id="text83196-3-7-8-0-0-2"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-5"
          x="279.02182"
-         y="346.09564"
+         y="262.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="241.28311"
-       y="296.03537"
+       y="212.53525"
        id="text83196-3-9-8-6-0-9"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0-8-5"
          x="241.28311"
-         y="296.03537">Isolated</tspan></text>
+         y="212.53525">Isolated</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.141946"
        id="rect131-3-2-1-9-1-8"
        width="34.86058"
        height="9.2080011"
        x="233.85503"
-       y="339.17654">
+       y="255.67642">
       <title
          id="title2478-8-1-1-7-5-2">helow</title>
     </rect>
@@ -1166,31 +860,31 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="250.43217"
-       y="345.28781"
+       y="261.78769"
        id="text83196-3-9-0-4-3-1-3"><tspan
          sodipodi:role="line"
          id="tspan22497-1-4-6-6"
          x="250.43217"
-         y="345.28781">Isolated</tspan></text>
+         y="261.78769">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="145.30196"
-       y="293.59564"
+       y="210.09552"
        id="text83196-5-0-9-7-6"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0-1-6"
          x="145.30196"
-         y="293.59564"
+         y="210.09552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0-4-3"
          x="145.30196"
-         y="299.76926"
+         y="216.26913"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 145.26489,314.27649 v 39.64195"
+       d="m 145.26489,230.77647 v 39.64195"
        id="path3154-5-3-8-4" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -1198,7 +892,7 @@
        width="34.86058"
        height="6.3244362"
        x="128.46384"
-       y="337.05286">
+       y="253.55273">
       <title
          id="title2478-8-1-1-8-2">helow</title>
     </rect>
@@ -1206,62 +900,55 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="136.2831"
-       y="341.99612"
+       y="258.496"
        id="text6928-9-1-2-5-9"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6-3-2"
          x="136.2831"
-         y="341.99612">Infected</tspan></text>
+         y="258.496">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9-1-8"
        width="134.5"
        height="10"
        x="115.24369"
-       y="315"
+       y="231.49988"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="155.36267"
-       y="321.59564"
+       y="238.09552"
        id="text70964-0-0-1-9-9"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2"
          x="155.36267"
-         y="321.59564">Delay from onset to isolation</tspan></text>
+         y="238.09552">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0-9-5"
        width="60"
        height="10"
        x="85.368706"
-       y="326.125"
+       y="242.62488"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="89.48085"
-       y="332.59564"
+       y="249.09552"
        id="text70964-8-6-6-1-6"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1-0-7"
          x="89.48085"
-         y="332.59564">Generation time</tspan></text>
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-9"
-       cx="290.24368"
-       cy="359.5"
-       rx="3.999999"
-       ry="3.9999993" />
+         y="249.09552">Generation time</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-3-9-5-0-3"
        width="310"
        height="10"
        x="464.4874"
-       y="299.5"
+       y="215.99988"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -1269,7 +956,7 @@
        width="30"
        height="10"
        x="478.9874"
-       y="310"
+       y="226.49988"
        ry="5" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -1277,7 +964,7 @@
        width="34.820023"
        height="14.820025"
        x="434.57736"
-       y="297.59003">
+       y="214.0899">
       <title
          id="title2478-0-9-6-7-7">helow</title>
     </rect>
@@ -1285,106 +972,85 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="438.9975"
-       y="307.04547"
+       y="223.54535"
        id="text6928-2-8-5-2-1"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2-8-1-7"
          x="438.9975"
-         y="307.04547">Person A</tspan></text>
+         y="223.54535">Person A</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 469.48815,304.31883 299.99838,-0.0191"
+       d="m 469.48815,220.81881 299.99838,-0.0191"
        id="path9310-7-8-2-5-6" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2-9-3-3"
        cx="478.9874"
-       cy="304.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-6"
-       cx="508.98737"
-       cy="304.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6-4-3-4"
-       cx="538.98743"
-       cy="304.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68-5-0-4-7-2"
-       cx="643.98749"
-       cy="304.5"
+       cy="220.99988"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="483.02679"
-       y="316.5354"
+       y="233.03528"
        id="text70964-5-2-3-3-3"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3-8-5-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="483.02679"
-         y="316.5354">Incubation</tspan></text>
+         y="233.03528">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="470.02676"
-       y="291.09564"
+       y="207.59552"
        id="text83196-4-4-6-8-2"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1-4-4-5"
          x="470.02676"
-         y="291.09564"
+         y="207.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="496.76553"
-       y="291.09564"
+       y="207.59552"
        id="text83196-3-7-8-0-0-6"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-4"
          x="496.76553"
-         y="291.09564"
+         y="207.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="635.02686"
-       y="291.0354"
+       y="207.53528"
        id="text83196-3-9-8-6-0-9-1"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0-8-5-0"
          x="635.02686"
-         y="291.0354">Isolated</tspan></text>
+         y="207.53528">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="539.04565"
-       y="288.59564"
+       y="205.09552"
        id="text83196-5-0-9-7-6-7"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0-1-6-9"
          x="539.04565"
-         y="288.59564"
+         y="205.09552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0-4-3-5"
          x="539.04565"
-         y="294.76926"
+         y="211.26913"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 539.00859,309.27653 v 39.64195"
+       d="m 539.00859,225.77651 v 39.64195"
        id="path3154-5-3-8-4-9" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -1392,7 +1058,7 @@
        width="34.86058"
        height="6.3244362"
        x="522.20752"
-       y="332.05286">
+       y="248.55273">
       <title
          id="title2478-8-1-1-8-2-0">helow</title>
     </rect>
@@ -1402,52 +1068,52 @@
        width="134.5"
        height="10"
        x="508.98737"
-       y="310"
+       y="226.49988"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="549.10638"
-       y="316.59564"
+       y="233.09552"
        id="text70964-0-0-1-9-9-7"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2-9"
          x="549.10638"
-         y="316.59564">Delay from onset to isolation</tspan></text>
+         y="233.09552">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0-9-5-6"
        width="60"
        height="10"
        x="479.1124"
-       y="321.125"
+       y="237.62488"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="483.22455"
-       y="327.59564"
+       y="244.09552"
        id="text70964-8-6-6-1-6-9"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1-0-7-0"
          x="483.22455"
-         y="327.59564">Generation time</tspan></text>
+         y="244.09552">Generation time</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="42.127621"
-       y="406.57217"
+       y="325.8154"
        id="text8025-6-5-9-2-5-8"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="42.127621"
-         y="406.57217"
+         y="325.8154"
          id="tspan11654-3">(6) Asymptomatic infector infects individual, who isolates a delay</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="42.127621"
-         y="422.58658"
+         y="341.8298"
          id="tspan14907">     after symptom onset</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
@@ -1455,7 +1121,7 @@
        width="255"
        height="10"
        x="125.74369"
-       y="514.5"
+       y="431.00012"
        ry="5" />
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
@@ -1463,7 +1129,7 @@
        width="310"
        height="10"
        x="70.743698"
-       y="464.5"
+       y="380.99988"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -1471,7 +1137,7 @@
        width="296.00659"
        height="9.4851904"
        x="85.501114"
-       y="475.25739"
+       y="391.75726"
        ry="4.7425952" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.248944;stroke-dasharray:none;stroke-opacity:1"
@@ -1479,7 +1145,7 @@
        width="74.751053"
        height="9.7786446"
        x="145.23003"
-       y="525.2356"
+       y="441.73593"
        ry="4.8893223" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -1487,7 +1153,7 @@
        width="34.820023"
        height="14.820025"
        x="40.833672"
-       y="462.59003">
+       y="379.0899">
       <title
          id="title2478-0-9-6-7-7-7">helow</title>
     </rect>
@@ -1497,7 +1163,7 @@
        width="34.820026"
        height="14.820025"
        x="95.833687"
-       y="512.58997">
+       y="429.09">
       <title
          id="title2478-6-6-6-1-1-3-1">helow</title>
     </rect>
@@ -1505,142 +1171,128 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="45.253822"
-       y="472.04547"
+       y="388.54535"
        id="text6928-2-8-5-2-1-6"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2-8-1-7-1"
          x="45.253822"
-         y="472.04547">Person A</tspan></text>
+         y="388.54535">Person A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="100.25381"
-       y="522.04547"
+       y="438.54581"
        id="text6928-1-9-9-0-3-4-3"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9-9-6-9-4"
          x="100.25381"
-         y="522.04547">Person B</tspan></text>
+         y="438.54581">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 75.744451,469.31882 299.998379,-0.0191"
+       d="M 75.744451,385.8188 375.74283,385.7997"
        id="path9310-7-8-2-5-6-3" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 130.74063,519.74142 244.99959,-0.0389"
+       d="m 130.74063,436.2414 244.99959,-0.0389"
        id="path9310-4-8-3-4-7-9-2" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="102.62795"
-       y="536.09564"
+       y="452.59598"
        id="text12262-3-7-3-3-8-2"><tspan
          sodipodi:role="line"
          id="tspan12260-8-1-3-6-0-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0;stroke-dasharray:none"
          x="102.62795"
-         y="536.09564">Not Traced</tspan></text>
+         y="452.59598">Not Traced</tspan></text>
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2-9-3-3-1"
        cx="85.243706"
-       cy="469.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-5-5-6-2"
-       cx="288"
-       cy="519.5"
+       cy="385.99988"
        rx="3.999999"
        ry="3.9999993" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7-5-0-5-3"
        cx="145.24373"
-       cy="519.5"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6-4-3-4-3"
-       cx="145.24373"
-       cy="469.5"
+       cy="436.00034"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="206.28217"
-       y="481.90802"
+       y="398.4079"
        id="text70964-5-2-3-3-3-0"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3-8-5-1-4"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="206.28217"
-         y="481.90802">Incubation</tspan></text>
+         y="398.4079">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="173.29201"
-       y="531.53534"
+       y="448.03568"
        id="text70964-9-7-7-2-9-2-5"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2-2-1-1-7"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="173.29201"
-         y="531.53534">Incubation</tspan></text>
+         y="448.03568">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="76.283089"
-       y="456.09564"
+       y="372.59552"
        id="text83196-4-4-6-8-2-0"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1-4-4-5-1"
          x="76.283089"
-         y="456.09564"
+         y="372.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="209.02184"
-       y="506.09564"
+       y="422.59552"
        id="text83196-3-7-8-0-0-2-8-3"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-5-0-0"
          x="209.02184"
-         y="506.09564"
+         y="422.59552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="288.18848"
-       y="505.28784"
+       y="421.78772"
        id="text83196-3-9-0-4-3-1-3-2-2"><tspan
          sodipodi:role="line"
          id="tspan22497-1-4-6-6-6-8"
          x="288.18848"
-         y="505.28784">Isolated</tspan></text>
+         y="421.78772">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="145.30196"
-       y="453.59564"
+       y="370.09552"
        id="text83196-5-0-9-7-6-7-4"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0-1-6-9-6"
          x="145.30196"
-         y="453.59564"
+         y="370.09552"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0-4-3-5-6"
          x="145.30196"
-         y="459.76926"
+         y="376.26913"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 145.26489,474.27652 v 39.64195"
+       d="m 145.065,390.7765 v 39.64195"
        id="path3154-5-3-8-4-9-2" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -1648,7 +1300,7 @@
        width="34.86058"
        height="6.3244362"
        x="128.46384"
-       y="497.05286">
+       y="413.55273">
       <title
          id="title2478-8-1-1-8-2-0-1">helow</title>
     </rect>
@@ -1656,71 +1308,64 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="136.2831"
-       y="501.99615"
+       y="418.49603"
        id="text6928-9-1-2-5-9-8-7"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6-3-2-9-1"
          x="136.2831"
-         y="501.99615">Infected</tspan></text>
+         y="418.49603">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.177357;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9-1-8-9-2-4"
        width="67.322639"
        height="10.072645"
        x="220.08875"
-       y="525.08856"
+       y="441.5889"
        ry="5.0363226" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="222.11897"
-       y="531.59564"
+       y="448.09598"
        id="text70964-0-0-1-9-9-7-2-7"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2-9-6-1"
          x="222.11897"
-         y="531.59564">Delay from onset to isolation</tspan></text>
+         y="448.09598">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0-9-5-6-2"
        width="60"
        height="10"
        x="85.368706"
-       y="486.125"
+       y="402.62488"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="89.48085"
-       y="492.59564"
+       y="409.09552"
        id="text70964-8-6-6-1-6-9-2"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1-0-7-0-7"
          x="89.48085"
-         y="492.59564">Generation time</tspan></text>
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-9-5-4"
-       cx="220.2437"
-       cy="519.5"
-       rx="3.999999"
-       ry="3.9999993" />
+         y="409.09552">Generation time</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;font-family:'Courier New';-inkscape-font-specification:'Courier New';fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="447.7077"
-       y="405.77701"
+       y="325.02023"
        id="text8025-6-5-9-2-5-3"
        transform="scale(0.96714894,1.0339669)"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="447.7077"
-         y="405.77701"
+         y="325.02023"
          id="tspan11654-9">(7) Symptomatic infector infects individual, who isolates before</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:#000000;stroke-width:0;stroke-dasharray:none"
          x="447.7077"
-         y="421.79141"
+         y="341.03464"
          id="tspan19225">      the infector</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.40887;stroke-dasharray:none;stroke-opacity:1"
@@ -1728,7 +1373,7 @@
        width="310"
        height="10"
        x="463.74371"
-       y="459.50003"
+       y="375.99991"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
@@ -1736,7 +1381,7 @@
        width="30"
        height="10"
        x="478.24371"
-       y="470.00003"
+       y="386.49991"
        ry="5" />
     <rect
        style="fill:#b8e7ff;fill-opacity:1;stroke:#000000;stroke-width:0.179975"
@@ -1744,7 +1389,7 @@
        width="34.820023"
        height="14.820025"
        x="433.83368"
-       y="457.59006">
+       y="374.08994">
       <title
          id="title2478-0-9-6-7-7-8">helow</title>
     </rect>
@@ -1752,106 +1397,85 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="438.25385"
-       y="467.0455"
+       y="383.54538"
        id="text6928-2-8-5-2-1-2"><tspan
          sodipodi:role="line"
          id="tspan9210-6-2-8-1-7-3"
          x="438.25385"
-         y="467.0455">Person A</tspan></text>
+         y="383.54538">Person A</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.599269;stroke-dasharray:none"
-       d="m 468.74446,464.31882 299.99838,-0.0191"
+       d="m 468.74446,380.8188 299.99838,-0.0191"
        id="path9310-7-8-2-5-6-0" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-3-2-9-3-3-3"
        cx="478.24371"
-       cy="464.50003"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-6-9"
-       cx="508.24371"
-       cy="464.50003"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-54-6-4-3-4-1"
-       cx="538.24371"
-       cy="464.50003"
-       rx="3.999999"
-       ry="3.9999993" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-5-68-5-0-4-7-2-1"
-       cx="689.39392"
-       cy="464.50003"
+       cy="380.99991"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="482.28308"
-       y="476.53543"
+       y="393.03531"
        id="text70964-5-2-3-3-3-07"><tspan
          sodipodi:role="line"
          id="tspan70962-2-3-8-5-1-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="482.28308"
-         y="476.53543">Incubation</tspan></text>
+         y="393.03531">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="469.28308"
-       y="451.09567"
+       y="367.59555"
        id="text83196-4-4-6-8-2-1"><tspan
          sodipodi:role="line"
          id="tspan84858-1-1-4-4-5-4"
          x="469.28308"
-         y="451.09567"
+         y="367.59555"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Infected</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="496.02185"
-       y="451.09567"
+       y="367.59555"
        id="text83196-3-7-8-0-0-6-2"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-4-4"
          x="496.02185"
-         y="451.09567"
+         y="367.59555"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="681.43329"
-       y="451.03543"
+       y="367.53531"
        id="text83196-3-9-8-6-0-9-1-7"><tspan
          sodipodi:role="line"
          id="tspan13679-7-0-8-5-0-1"
          x="681.43329"
-         y="451.03543">Isolated</tspan></text>
+         y="367.53531">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="538.30194"
-       y="448.59567"
+       y="365.09555"
        id="text83196-5-0-9-7-6-7-1"><tspan
          sodipodi:role="line"
          id="tspan84913-7-0-1-6-9-5"
          x="538.30194"
-         y="448.59567"
+         y="365.09555"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Infects </tspan><tspan
          sodipodi:role="line"
          id="tspan84915-4-0-4-3-5-0"
          x="538.30194"
-         y="454.76929"
+         y="371.26917"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">person B</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:1;stroke-dasharray:3, 1;stroke-dashoffset:0"
-       d="m 538.2649,469.27652 v 39.64195"
+       d="m 538.2649,385.7765 v 39.64195"
        id="path3154-5-3-8-4-9-0" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
@@ -1859,7 +1483,7 @@
        width="34.86058"
        height="6.3244362"
        x="521.46381"
-       y="492.05289">
+       y="408.55276">
       <title
          id="title2478-8-1-1-8-2-0-4">helow</title>
     </rect>
@@ -1869,43 +1493,43 @@
        width="181.7327"
        height="9.9599819"
        x="508.26373"
-       y="470.02005"
+       y="386.51993"
        ry="4.979991" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="569.51288"
-       y="476.59567"
+       y="393.09555"
        id="text70964-0-0-1-9-9-7-3"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2-9-5"
          x="569.51288"
-         y="476.59567">Delay from onset to isolation</tspan></text>
+         y="393.09555">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#ffc864;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-5-5-0-9-5-6-24"
        width="60"
        height="10"
        x="478.36871"
-       y="481.12503"
+       y="397.62491"
        ry="5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="482.48083"
-       y="487.59567"
+       y="404.09555"
        id="text70964-8-6-6-1-6-9-29"><tspan
          sodipodi:role="line"
          id="tspan82828-2-1-0-7-0-9"
          x="482.48083"
-         y="487.59567">Generation time</tspan></text>
+         y="404.09555">Generation time</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-8-7-0-8-8-8-0-7"
        width="255"
        height="10"
        x="518"
-       y="510.44714"
+       y="426.94702"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.248944;stroke-dasharray:none;stroke-opacity:1"
@@ -1913,7 +1537,7 @@
        width="74.751053"
        height="9.7786446"
        x="537.48633"
-       y="521.18274"
+       y="437.68307"
        ry="4.8893223" />
     <rect
        style="fill:#f2f3ef;fill-opacity:1;stroke:#000000;stroke-width:0.179974"
@@ -1921,7 +1545,7 @@
        width="34.820026"
        height="14.820025"
        x="488.09"
-       y="508.53711">
+       y="425.03699">
       <title
          id="title2478-6-6-6-1-1-3-17-7">helow</title>
     </rect>
@@ -1929,80 +1553,73 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="492.5101"
-       y="517.99261"
+       y="434.49295"
        id="text6928-1-9-9-0-3-4-0-3"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9-9-6-9-6-0"
          x="492.5101"
-         y="517.99261">Person B</tspan></text>
+         y="434.49295">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 522.99694,515.68859 244.99961,-0.0389"
+       d="m 522.99694,432.18857 244.99961,-0.0389"
        id="path9310-4-8-3-4-7-9-4-0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="494.88425"
-       y="532.04279"
+       y="448.54312"
        id="text12262-3-7-3-3-8-8-2"><tspan
          sodipodi:role="line"
          id="tspan12260-8-1-3-6-0-0-1"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0;stroke-dasharray:none"
          x="494.88425"
-         y="532.04279">Traced (p)</tspan></text>
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-5-5-6-4-0"
-       cx="679.25635"
-       cy="515.44714"
-       rx="3.999999"
-       ry="3.9999993" />
+         y="448.54312">Traced (p)</tspan></text>
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7-5-0-5-5-9"
        cx="537.5"
-       cy="515.44714"
+       cy="431.94727"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="565.54828"
-       y="527.48248"
+       y="443.98282"
        id="text70964-9-7-7-2-9-2-4-9"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2-2-1-1-5-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="565.54828"
-         y="527.48248">Incubation</tspan></text>
+         y="443.98282">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="601.27814"
-       y="502.04279"
+       y="418.54266"
        id="text83196-3-7-8-0-0-2-8-0-6"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-5-0-6-1"
          x="601.27814"
-         y="502.04279"
+         y="418.54266"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="680.4447"
-       y="501.23499"
+       y="417.73486"
        id="text83196-3-9-0-4-3-1-3-2-5-0"><tspan
          sodipodi:role="line"
          id="tspan22497-1-4-6-6-6-9-1"
          x="680.4447"
-         y="501.23499">Isolated</tspan></text>
+         y="417.73486">Isolated</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.117639"
        id="rect131-3-2-1-1-4-1-59-6"
        width="34.86058"
        height="6.3244362"
        x="520.72009"
-       y="493">
+       y="409.49988">
       <title
          id="title2478-8-1-1-8-2-0-4-6">helow</title>
     </rect>
@@ -2010,44 +1627,37 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="528.53937"
-       y="497.9433"
+       y="414.44318"
        id="text6928-9-1-2-5-9-8-3-8"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6-3-2-9-4-6"
          x="528.53937"
-         y="497.9433">Infected</tspan></text>
+         y="414.44318">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.1827;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9-1-8-9-2-44-2"
        width="67.317299"
        height="10.074384"
        x="612.34766"
-       y="520.67432"
+       y="437.17465"
        ry="5.0371928" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="614.37518"
-       y="527.17871"
+       y="443.67905"
        id="text70964-0-0-1-9-9-7-2-77-9"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2-9-6-7-7"
          x="614.37518"
-         y="527.17871">Delay from onset to isolation</tspan></text>
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-9-5-3-1"
-       cx="612.50006"
-       cy="515.44714"
-       rx="3.999999"
-       ry="3.9999993" />
+         y="443.67905">Delay from onset to isolation</tspan></text>
     <rect
        style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.2778;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-8-7-0-8-8-8-3"
        width="255"
        height="10"
        x="518.74457"
-       y="349.09949"
+       y="265.59937"
        ry="5" />
     <rect
        style="fill:#78c8ff;fill-opacity:1;stroke:#000000;stroke-width:0.248944;stroke-dasharray:none;stroke-opacity:1"
@@ -2055,7 +1665,7 @@
        width="74.751053"
        height="9.7786446"
        x="538.2309"
-       y="359.83508"
+       y="276.33496"
        ry="4.8893223" />
     <rect
        style="fill:#f2f3ef;fill-opacity:1;stroke:#000000;stroke-width:0.179974"
@@ -2063,7 +1673,7 @@
        width="34.820026"
        height="14.820025"
        x="488.8345"
-       y="347.18945">
+       y="263.68933">
       <title
          id="title2478-6-6-6-1-1-3-7">helow</title>
     </rect>
@@ -2071,106 +1681,468 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="493.25467"
-       y="356.64496"
+       y="273.14484"
        id="text6928-1-9-9-0-3-4-5"><tspan
          sodipodi:role="line"
          id="tspan9250-4-9-9-6-9-5"
          x="493.25467"
-         y="356.64496">Person B</tspan></text>
+         y="273.14484">Person B</tspan></text>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.602916;stroke-dasharray:none"
-       d="m 523.74152,354.34092 244.9996,-0.0389"
+       d="m 523.74152,270.8409 244.9996,-0.0389"
        id="path9310-4-8-3-4-7-9-41" />
-    <ellipse
-       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-9-3-1-5-5-6-0"
-       cx="692.2572"
-       cy="354.09949"
-       rx="3.999999"
-       ry="3.9999993" />
     <ellipse
        style="fill:#c71f21;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        id="path12345-9-6-7-5-0-5-32"
        cx="538.24457"
-       cy="354.09949"
+       cy="270.59937"
        rx="3.999999"
        ry="3.9999993" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="566.29285"
-       y="366.13483"
+       y="282.6347"
        id="text70964-9-7-7-2-9-2-42"><tspan
          sodipodi:role="line"
          id="tspan70962-6-8-2-2-1-1-74"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:1"
          x="566.29285"
-         y="366.13483">Incubation</tspan></text>
+         y="282.6347">Incubation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="602.02271"
-       y="340.69513"
+       y="257.19501"
        id="text83196-3-7-8-0-0-2-8-8"><tspan
          sodipodi:role="line"
          id="tspan84887-1-2-0-8-5-0-8"
          x="602.02271"
-         y="340.69513"
+         y="257.19501"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Symptoms</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="692.44568"
-       y="339.88733"
+       y="256.38721"
        id="text83196-3-9-0-4-3-1-3-2-52"><tspan
          sodipodi:role="line"
          id="tspan22497-1-4-6-6-6-6"
          x="692.44568"
-         y="339.88733">Isolated</tspan></text>
+         y="256.38721">Isolated</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="529.284"
-       y="336.59564"
+       y="253.09552"
        id="text6928-9-1-2-5-9-8-0"><tspan
          sodipodi:role="line"
          id="tspan3911-8-6-3-2-9-40"
          x="529.284"
-         y="336.59564">Infected</tspan></text>
+         y="253.09552">Infected</tspan></text>
     <rect
        style="fill:#a0e6d2;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect59819-01-0-9-1-8-9-2-5"
        width="79.806877"
        height="10.056879"
        x="613.35376"
-       y="359.52811"
+       y="276.02798"
        ry="5.0284395" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="623.87616"
-       y="366.02716"
+       y="282.52704"
        id="text70964-0-0-1-9-9-7-2-5"><tspan
          sodipodi:role="line"
          id="tspan76200-9-9-3-2-9-6-6"
          x="623.87616"
-         y="366.02716">Delay from onset to isolation</tspan></text>
-    <ellipse
-       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-       id="path12345-5-54-6-0-2-9-5-0"
-       cx="613.24451"
-       cy="354.09949"
-       rx="3.999999"
-       ry="3.9999993" />
+         y="282.52704">Delay from onset to isolation</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none"
        x="487.62381"
-       y="371.15192"
+       y="287.65179"
        id="text12262-4-4"><tspan
          sodipodi:role="line"
          id="tspan12291-9"
          x="487.62381"
-         y="371.15192">Not traced (1 - p)</tspan></text>
+         y="287.65179">Not traced (1 - p)</tspan></text>
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688"
+       width="8.0033112"
+       height="8.0033112"
+       x="114.99834"
+       y="80.298347" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-3"
+       width="8.0033112"
+       height="8.0033112"
+       x="111.19834"
+       y="221.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-3-0"
+       width="8.0033112"
+       height="8.0033112"
+       x="286.19833"
+       y="271.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-3-0-3"
+       width="8.0033112"
+       height="8.0033112"
+       x="216.19835"
+       y="431.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0"
+       width="8.0033112"
+       height="8.0033112"
+       x="212.99835"
+       y="130.29834" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0-8"
+       width="8.0033112"
+       height="8.0033112"
+       x="504.19833"
+       y="81.998344" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0-8-8"
+       width="8.0033112"
+       height="8.0033112"
+       x="504.99835"
+       y="216.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0-8-8-4"
+       width="8.0033112"
+       height="8.0033112"
+       x="504.19833"
+       y="376.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0-8-8-4-2"
+       width="8.0033112"
+       height="8.0033112"
+       x="608.49835"
+       y="427.99835" />
+    <rect
+       style="fill:#37a5f0;fill-opacity:1;stroke:#000000;stroke-width:0.996689;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5688-0-8-8-7"
+       width="8.0033112"
+       height="8.0033112"
+       x="609.19836"
+       y="266.49835" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,187.26626,202.05092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5-7"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,576.46626,203.75092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5-7-1"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,577.26626,338.75092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5-7-1-6"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,576.46626,498.75092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5-9"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,183.46626,343.75092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#faa51e;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-5-9-0"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.018236875"
+       inkscape:transform-center-y="1.2233758"
+       transform="matrix(-0.73356818,-0.01343367,0.0144769,-0.84555111,183.46626,503.75092)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,213.60372,-32.286243)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,602.80372,-30.586243)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2-4"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,603.60372,104.41376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2-4-0"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,649.10372,264.41376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2-4-0-8"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,639.10372,315.41376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2-4-5"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,651.80372,153.91376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-2-1"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,602.80372,19.413757)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-9"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,213.60372,17.713757)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-9-5"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,209.80372,109.41376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-9-9"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,209.80372,159.41376)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7dd2aa;fill-opacity:1;stroke:#000000;stroke-width:1.22713;stroke-dasharray:none;stroke-opacity:1"
+       id="path7248-9-9-0"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="54.978813"
+       sodipodi:cy="140.14832"
+       sodipodi:r1="5.8339701"
+       sodipodi:r2="2.9169853"
+       sodipodi:arg1="0.51238946"
+       sodipodi:arg2="1.559587"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 60.063559,143.00848 -10.104098,0.11327 4.953959,-8.80704 z"
+       inkscape:transform-center-x="-0.02400358"
+       inkscape:transform-center-y="-1.2044151"
+       transform="matrix(0.73402005,0,0,0.84219862,247.60372,319.41376)" />
   </g>
 </svg>
