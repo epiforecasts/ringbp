@@ -28,8 +28,8 @@ test_that("scenario_sim runs as expected", {
   expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
   expect_identical(
     vapply(res, class, FUN.VALUE = character(1)),
-    c(sim = "integer", week = "numeric", weekly_cases = "numeric",
-      cumulative = "numeric", effective_r0 = "numeric", cases_per_gen = "list")
+    c(sim = "integer", week = "integer", weekly_cases = "integer",
+      cumulative = "integer", effective_r0 = "numeric", cases_per_gen = "list")
   )
   expect_identical(unique(res$sim), 1:n_sim)
 })
@@ -87,8 +87,8 @@ test_that("scenario_sim with dynamic seed and parameters runs as expected", {
   expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
   expect_identical(
     vapply(res, class, FUN.VALUE = character(1)),
-    c(sim = "integer", week = "numeric", weekly_cases = "numeric",
-      cumulative = "numeric", effective_r0 = "numeric", cases_per_gen = "list")
+    c(sim = "integer", week = "integer", weekly_cases = "integer",
+      cumulative = "integer", effective_r0 = "numeric", cases_per_gen = "list")
   )
   expect_identical(unique(res$sim), 1:n_sim)
 })
