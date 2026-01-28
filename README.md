@@ -94,7 +94,7 @@ ggplot(
   theme_bw()
 ```
 
-<img src="man/figures/README-plot-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" alt="" width="100%" />
 
 ### Estimate extinction probability
 
@@ -103,6 +103,12 @@ extinct_prob(res)
 #> Calculating extinction using the extinction status from the simulation.
 #> [1] 0.9
 ```
+
+## Contribute
+
+Contributions to *ringbp* are welcomed. Please follow the [package
+contributing
+guide](https://github.com/epiforecasts/ringbp/blob/main/.github/CONTRIBUTING.md).
 
 ## Contributors
 
@@ -141,3 +147,10 @@ specification. Contributions of any kind are welcome!
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## Code of Conduct
+
+Please note that the *ringbp* project is released with a [Contributor
+Code of
+Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
