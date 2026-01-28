@@ -54,7 +54,7 @@ exposure/infection times.
 
 ***Note*** The `case_data` supplied to the function is modified by
 references, see
-[`data.table::set()`](https://rdatatable.gitlab.io/data.table/reference/assign.html)
+[`data.table::set()`](https://rdrr.io/pkg/data.table/man/assign.html)
 for more information.
 
 ## Details
