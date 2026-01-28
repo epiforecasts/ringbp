@@ -10,7 +10,7 @@ You can find the `.R` file that generates the `.Rd` by reading the comment in th
 
 ## Bigger changes
 
-If you want to make a bigger change, you should generally create an issue first to describe the problem (e.g. bug, key missing feature) and potential solutions. Once the core team and community have weighed in, you will have a clearer understanding of how to proceed with addressing the problem. 
+If you want to make a bigger change, you should generally create an issue first to describe the problem (e.g. bug, key missing feature) and potential solutions. Once the [core team](https://github.com/epiforecasts/ringbp/blob/main/DESCRIPTION#L5-L38) and community have weighed in, you will have a clearer understanding of how to proceed with addressing the problem. 
 If you’ve found a bug, please file an issue that illustrates the bug with a minimal 
 [reprex](https://www.tidyverse.org/help/#reprex) (this will also help you write a unit test, if needed).
 See our guide on [how to create a great issue](https://code-review.tidyverse.org/issues/) for more advice.
