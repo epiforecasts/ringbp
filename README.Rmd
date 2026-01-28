@@ -102,6 +102,10 @@ ggplot(
 extinct_prob(res)
 ```
 
+## Contribute 
+
+Contributions to _{{ packagename }}_ are welcomed. Please follow the [package contributing guide](https://github.com/epiforecasts/ringbp/blob/main/.github/CONTRIBUTING.md).
+
 ## Contributors
 
 
@@ -146,3 +150,8 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+## Code of Conduct
+
+Please note that the _{{ packagename }}_ project is released with a 
+[Contributor Code of Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
