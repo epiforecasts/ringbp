@@ -177,7 +177,7 @@ like we show the first 3 scenarios (there are 160 in total). See
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0 cases_per_gen</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;        &lt;list&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;        &lt;list&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0            5          5            0             0</span></span>
 <span><span class="co">#&gt;   2:     1     1            0          5            0             0</span></span>
 <span><span class="co">#&gt;   3:     1     2            0          5            0             0</span></span>
@@ -192,7 +192,7 @@ like we show the first 3 scenarios (there are 160 in total). See
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0            5          5     1.394015</span></span>
 <span><span class="co">#&gt;   2:     1     1           20         25     1.394015</span></span>
 <span><span class="co">#&gt;   3:     1     2           45         70     1.394015</span></span>
@@ -220,7 +220,7 @@ like we show the first 3 scenarios (there are 160 in total). See
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0           13         13     1.409416</span></span>
 <span><span class="co">#&gt;   2:     1     1           27         40     1.409416</span></span>
 <span><span class="co">#&gt;   3:     1     2           75        115     1.409416</span></span>
@@ -334,7 +334,7 @@ column.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scenario_sims</span><span class="op">$</span><span class="va">sims</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0 cases_per_gen</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;        &lt;list&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;        &lt;list&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0            5          5          0.2           2,0</span></span>
 <span><span class="co">#&gt;   2:     1     1            2          7          0.2           2,0</span></span>
 <span><span class="co">#&gt;   3:     1     2            0          7          0.2           2,0</span></span>
@@ -349,7 +349,7 @@ column.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0            5          5     0.100000</span></span>
 <span><span class="co">#&gt;   2:     1     1            1          6     0.100000</span></span>
 <span><span class="co">#&gt;   3:     1     2            0          6     0.100000</span></span>
@@ -377,7 +377,7 @@ column.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt;        sim  week weekly_cases cumulative effective_r0             cases_per_gen</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;num&gt;        &lt;num&gt;      &lt;num&gt;        &lt;num&gt;                    &lt;list&gt;</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;                    &lt;list&gt;</span></span>
 <span><span class="co">#&gt;   1:     1     0            5          5     0.000000                         0</span></span>
 <span><span class="co">#&gt;   2:     1     1            0          5     0.000000                         0</span></span>
 <span><span class="co">#&gt;   3:     1     2            0          5     0.000000                         0</span></span>

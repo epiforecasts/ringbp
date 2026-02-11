@@ -133,7 +133,7 @@ for more information on the contents of these `data.table`s.
 head(res, 3)
 #> [[1]]
 #>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <num>        <num>      <num>        <num>        <list>
+#>      <int> <int>        <int>      <int>        <num>        <list>
 #>   1:     1     0            5          5            0             0
 #>   2:     1     1            0          5            0             0
 #>   3:     1     2            0          5            0             0
@@ -148,7 +148,7 @@ head(res, 3)
 #> 
 #> [[2]]
 #>        sim  week weekly_cases cumulative effective_r0
-#>      <int> <num>        <num>      <num>        <num>
+#>      <int> <int>        <int>      <int>        <num>
 #>   1:     1     0            5          5     1.394015
 #>   2:     1     1           20         25     1.394015
 #>   3:     1     2           45         70     1.394015
@@ -176,7 +176,7 @@ head(res, 3)
 #> 
 #> [[3]]
 #>        sim  week weekly_cases cumulative effective_r0
-#>      <int> <num>        <num>      <num>        <num>
+#>      <int> <int>        <int>      <int>        <num>
 #>   1:     1     0           13         13     1.409416
 #>   2:     1     1           27         40     1.409416
 #>   3:     1     2           75        115     1.409416
@@ -291,7 +291,7 @@ head(scenario_sims$data, 3)
 head(scenario_sims$sims, 3)
 #> [[1]]
 #>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <num>        <num>      <num>        <num>        <list>
+#>      <int> <int>        <int>      <int>        <num>        <list>
 #>   1:     1     0            5          5          0.2           2,0
 #>   2:     1     1            2          7          0.2           2,0
 #>   3:     1     2            0          7          0.2           2,0
@@ -306,7 +306,7 @@ head(scenario_sims$sims, 3)
 #> 
 #> [[2]]
 #>        sim  week weekly_cases cumulative effective_r0
-#>      <int> <num>        <num>      <num>        <num>
+#>      <int> <int>        <int>      <int>        <num>
 #>   1:     1     0            5          5     0.100000
 #>   2:     1     1            1          6     0.100000
 #>   3:     1     2            0          6     0.100000
@@ -334,7 +334,7 @@ head(scenario_sims$sims, 3)
 #> 
 #> [[3]]
 #>        sim  week weekly_cases cumulative effective_r0             cases_per_gen
-#>      <int> <num>        <num>      <num>        <num>                    <list>
+#>      <int> <int>        <int>      <int>        <num>                    <list>
 #>   1:     1     0            5          5     0.000000                         0
 #>   2:     1     1            0          5     0.000000                         0
 #>   3:     1     2            0          5     0.000000                         0

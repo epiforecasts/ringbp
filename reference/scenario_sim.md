@@ -113,7 +113,7 @@ res <- scenario_sim(
 )
 res
 #>        sim  week weekly_cases cumulative effective_r0
-#>      <int> <num>        <num>      <num>        <num>
+#>      <int> <int>        <int>      <int>        <num>
 #>   1:     1     0            5          5     2.967094
 #>   2:     1     1           17         22     2.967094
 #>   3:     1     2           96        118     2.967094

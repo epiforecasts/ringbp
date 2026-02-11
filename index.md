@@ -91,6 +91,12 @@ extinct_prob(res)
 #> [1] 0.9
 ```
 
+## Contribute
+
+Contributions to *ringbp* are welcomed. Please follow the [package
+contributing
+guide](https://github.com/epiforecasts/ringbp/blob/main/.github/CONTRIBUTING.md).
+
 ## Contributors
 
 All contributions to this project are gratefully acknowledged using the
@@ -120,3 +126,10 @@ specification. Contributions of any kind are welcome!
 [adamkucharski](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Aadamkucharski),
 [dcadam](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Adcadam),
 [jamesmbaazam](https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam)
+
+## Code of Conduct
+
+Please note that the *ringbp* project is released with a [Contributor
+Code of
+Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.

@@ -101,7 +101,7 @@ out <- outbreak_model(
 )
 out
 #>      week weekly_cases cumulative effective_r0 cases_per_gen
-#>     <num>        <num>      <num>        <num>        <list>
+#>     <int>        <int>      <int>        <num>        <list>
 #>  1:     0            1          1            0             0
 #>  2:     1            0          1            0             0
 #>  3:     2            0          1            0             0
@@ -154,5 +154,5 @@ out
 #> 50:    49            0          1            0             0
 #> 51:    50            0          1            0             0
 #>      week weekly_cases cumulative effective_r0 cases_per_gen
-#>     <num>        <num>      <num>        <num>        <list>
+#>     <int>        <int>      <int>        <num>        <list>
 ```
