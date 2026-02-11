@@ -105,20 +105,16 @@ outbreak_model <- function(initial_cases,
   }
 
   # Prepare output, group into weeks
-  weekly_cases <- case_data[, week := floor(onset / 7)
+  weekly_cases_outbreak <- case_data[, week := floor(onset / 7)
                             ][, list(weekly_cases = .N), by = week
                               ]
   # maximum outbreak week
   max_week <- floor(sim$cap_max_days / 7)
-  # weeks with 0 cases in 0:max_week
-  missing_weeks <- (0:max_week)[!(0:max_week %in% weekly_cases$week)]
+  # null data.table for zero cases from week zero to max week
+  weekly_cases <- data.table::data.table(week = 0:max_week, weekly_cases = 0L)
+  # splice in/replace with outbreak data for weeks with cases
+  weekly_cases[weekly_cases_outbreak, on = "week", weekly_cases := i.weekly_cases]
 
-  # add in missing weeks if any are missing
-  if (length(missing_weeks > 0)) {
-    weekly_cases <- data.table::rbindlist(list(weekly_cases,
-                                               data.table(week = missing_weeks,
-                                                          weekly_cases = 0)))
-  }
   # order and sum up
   weekly_cases <- weekly_cases[order(week)
                                ][, cumulative := cumsum(weekly_cases)]
