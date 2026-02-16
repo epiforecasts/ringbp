@@ -137,9 +137,7 @@ outbreak_step <- function(case_data,
     missed := runif(.N) > event_probs$symptomatic_ascertained
   ][
     asymptomatic == FALSE,
-    test_positive := as.logical(
-      rbinom(n = .N, size = 1, prob = interventions$test_sensitivity)
-    )
+    test_positive := runif(.N) <= interventions$test_sensitivity
   ]
 
   prob_samples[, isolated_time := {
