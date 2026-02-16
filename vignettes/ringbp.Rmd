@@ -94,6 +94,8 @@ In the {ringbp} model, _isolated_ individuals have their own transmission dynami
 
 :::
 
+The arguments to both `offspring_opts()` and `delay_opts()` are functions of `n`: they take an integer `n` and return a vector of `n` random samples from a given distribution. This lets you sample offspring or delay values for multiple individuals in a single step of the simulation.
+
 ### Event probabilities
 
 Probabilities governing infection and detection events are set using `event_prob_opts()`. The probability that an infector is asymptomatic ([`asymptomatic`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-asymptomatic)), the proportion of disease transmission that occurs before symptom onset ([`presymptomatic_transmission`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-presymptomatic-transmission)), and the proportion of symptomatic individuals that are ascertained by contact tracing ([`symptomatic_ascertained`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-ascertained)).
