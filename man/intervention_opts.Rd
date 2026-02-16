@@ -12,9 +12,11 @@ intervention_opts(quarantine = FALSE, test_sensitivity = 1)
 \code{FALSE}}
 
 \item{test_sensitivity}{a \code{numeric} scalar probability (between 0
-and 1 inclusive): the test sensitivity (i.e. probability of a true
-positive result). Individuals that are tested and get a false negative
-are not isolated and their contacts are not traced.}
+and 1 inclusive): the test sensitivity (i.e. probability that a true positive
+tests positive). Individuals that are tested and get a false negative
+are not isolated and their contacts are not traced. Only symptomatic
+individuals are tested. Default is 1, which assumes all symptomatic
+individuals tested get a positive test result.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_intervention_opts>}.

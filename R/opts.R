@@ -161,7 +161,9 @@ event_prob_opts <- function(asymptomatic,
 #' @param test_sensitivity a `numeric` scalar probability (between 0
 #'   and 1 inclusive): the test sensitivity (i.e. probability that a true positive
 #'   tests positive). Individuals that are tested and get a false negative
-#'   are not isolated and their contacts are not traced.
+#'   are not isolated and their contacts are not traced. Only symptomatic
+#'   individuals are tested. Default is 1, which assumes all symptomatic
+#'   individuals tested get a positive test result.
 #'
 #' @return A `list` with class `<ringbp_intervention_opts>`.
 #' @export
