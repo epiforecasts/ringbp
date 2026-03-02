@@ -57,7 +57,7 @@ res <- scenario_sim(
     ## 50% probability of onward infection time being before symptom onset
     presymptomatic_transmission = 0.5,
     ## 20% probability of ascertainment by contact tracing
-    symptomatic_ascertained = 0.2
+    symptomatic_traced = 0.2
   ),
   ## whether quarantine is in effect
   interventions = intervention_opts(quarantine = FALSE),
