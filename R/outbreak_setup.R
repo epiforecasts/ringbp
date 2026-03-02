@@ -28,7 +28,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.15,
-#'   symptomatic_ascertained = 0
+#'   symptomatic_traced = 0
 #' )
 #'
 #' # generate initial cases

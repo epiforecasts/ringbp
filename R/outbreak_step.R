@@ -13,7 +13,7 @@
 #' @param event_probs a `list` with class `<ringbp_event_prob_opts>`: the
 #'   event probabilities for the \pkg{ringbp} model, returned by
 #'   [event_prob_opts()]. Contains three elements: `asymptomatic`,
-#'   `presymptomatic_transmission` and `symptomatic_ascertained`
+#'   `presymptomatic_transmission` and `symptomatic_traced`
 #' @param interventions a `list` with class `<ringbp_intervention_opts>`:
 #'   the intervention settings for the \pkg{ringbp} model, returned by
 #'   [intervention_opts()]. Contains one element: `quarantine`
@@ -42,7 +42,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.15,
-#'   symptomatic_ascertained = 0
+#'   symptomatic_traced = 0
 #' )
 #' interventions <- intervention_opts(quarantine = FALSE)
 #'
@@ -134,7 +134,7 @@ outbreak_step <- function(case_data,
   # draw a sample for missing and test result
   prob_samples[
     infector_asymptomatic == FALSE,
-    traced := runif(.N) < event_probs$symptomatic_ascertained
+    traced := runif(.N) < event_probs$symptomatic_traced
   ][
     asymptomatic == FALSE,
     test_positive := runif(.N) <= interventions$test_sensitivity

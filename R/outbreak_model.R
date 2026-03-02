@@ -31,7 +31,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.5,
-#'   symptomatic_ascertained = 0.2
+#'   symptomatic_traced = 0.2
 #' )
 #' interventions <- intervention_opts(quarantine = FALSE)
 #' out <- outbreak_model(

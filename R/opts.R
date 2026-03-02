@@ -116,7 +116,7 @@ delay_opts <- function(incubation_period,
 #'   inclusive): proportion of cases that are completely asymptomatic
 #'   (subclinical)
 #' @inheritParams presymptomatic_transmission_to_alpha
-#' @param symptomatic_ascertained a `numeric` scalar probability (between 0
+#' @param symptomatic_traced a `numeric` scalar probability (between 0
 #'   and 1 inclusive): proportion of infectious contacts ascertained by contact
 #'   tracing
 #'
@@ -127,15 +127,15 @@ delay_opts <- function(incubation_period,
 #' event_prob_opts(
 #'   asymptomatic = 0.1,
 #'   presymptomatic_transmission = 0.5,
-#'   symptomatic_ascertained = 0.2
+#'   symptomatic_traced = 0.2
 #' )
 event_prob_opts <- function(asymptomatic,
                             presymptomatic_transmission,
-                            symptomatic_ascertained) {
+                            symptomatic_traced) {
 
   checkmate::assert_number(asymptomatic, lower = 0, upper = 1)
   checkmate::assert_number(presymptomatic_transmission, lower = 0, upper = 1)
-  checkmate::assert_number(symptomatic_ascertained, lower = 0, upper = 1)
+  checkmate::assert_number(symptomatic_traced, lower = 0, upper = 1)
 
   # calculate alpha parameter from presymptomatic_transmission
   alpha <- presymptomatic_transmission_to_alpha(
@@ -146,7 +146,7 @@ event_prob_opts <- function(asymptomatic,
     asymptomatic = asymptomatic,
     presymptomatic_transmission = presymptomatic_transmission,
     alpha = alpha,
-    symptomatic_ascertained = symptomatic_ascertained
+    symptomatic_traced = symptomatic_traced
   )
 
   class(opts) <- "ringbp_event_prob_opts"

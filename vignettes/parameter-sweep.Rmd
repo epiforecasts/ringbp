@@ -102,7 +102,7 @@ res <- lapply(scenario_sims$data, \(x, n) {
     event_probs = event_prob_opts(
       asymptomatic = x$prop_asymptomatic,
       presymptomatic_transmission = x$prop_presymptomatic,
-      symptomatic_ascertained = x$prop_ascertain
+      symptomatic_traced = x$prop_ascertain
     ),
     interventions = intervention_opts(quarantine = x$quarantine),
     sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
@@ -140,7 +140,7 @@ scenario_sims[, sims := lapply(data, \(x, n) {
     event_probs = event_prob_opts(
       asymptomatic = x$prop_asymptomatic,
       presymptomatic_transmission = x$prop_presymptomatic,
-      symptomatic_ascertained = x$prop_ascertain
+      symptomatic_traced = x$prop_ascertain
     ),
     interventions = intervention_opts(quarantine = x$quarantine),
     sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)
@@ -188,7 +188,7 @@ scenario_sims[, sims := future_lapply(data, \(x, n) {
     event_probs = event_prob_opts(
       asymptomatic = x$prop_asymptomatic,
       presymptomatic_transmission = x$prop_presymptomatic,
-      symptomatic_ascertained = x$prop_ascertain
+      symptomatic_traced = x$prop_ascertain
     ),
     interventions = intervention_opts(quarantine = x$quarantine),
     sim = sim_opts(cap_max_days = x$cap_max_days, cap_cases = x$cap_cases)

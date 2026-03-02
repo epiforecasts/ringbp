@@ -4,8 +4,7 @@
       outbreak_setup(initial_cases = 5, delays = delay_opts(incubation_period = function(
         n) stats::rweibull(n = n, shape = 2.32, scale = 6.49), onset_to_isolation = function(
         n) stats::rweibull(n = n, shape = 2, scale = 4)), event_probs = event_prob_opts(
-        asymptomatic = 0.2, presymptomatic_transmission = 0.5,
-        symptomatic_ascertained = 0.8))
+        asymptomatic = 0.2, presymptomatic_transmission = 0.5, symptomatic_traced = 0.8))
     Output
       Index: <asymptomatic>
          exposure asymptomatic caseid infector traced    onset new_cases

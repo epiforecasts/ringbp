@@ -10,7 +10,7 @@ test_that("outbreak_setup works as expected", {
       event_probs = event_prob_opts(
         asymptomatic = 0.2,
         presymptomatic_transmission = 0.5,
-        symptomatic_ascertained = 0.8
+        symptomatic_traced = 0.8
       )
     )
   )
@@ -38,7 +38,7 @@ test_that("outbreak_setup with dynamic seed and parameters runs as expected", {
     event_probs = event_prob_opts(
       asymptomatic = asymptomatic,
       presymptomatic_transmission = runif(n = 1, min = 0, max = 1),
-      symptomatic_ascertained = runif(n = 1, min = 0, max = 1)
+      symptomatic_traced = runif(n = 1, min = 0, max = 1)
     )
   )
   expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
@@ -87,7 +87,7 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
     event_probs = event_prob_opts(
       asymptomatic = asymptomatic,
       presymptomatic_transmission = 0,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     )
   )
 
