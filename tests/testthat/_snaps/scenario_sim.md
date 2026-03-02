@@ -4,7 +4,7 @@
       print(res, topn = 100)
     Output
              sim  week weekly_cases cumulative effective_r0
-           <int> <num>        <num>      <num>        <num>
+           <int> <int>        <int>      <int>        <num>
         1:     1     0            3          3     0.100000
         2:     1     1            3          6     0.100000
         3:     1     2            0          6     0.100000
