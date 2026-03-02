@@ -40,13 +40,13 @@ test_that("event_prob_opts works as expected", {
   event_probs <- event_prob_opts(
     asymptomatic = 0.5,
     presymptomatic_transmission = 0.5,
-    symptomatic_ascertained = 0.5
+    symptomatic_traced = 0.5
   )
   expect_s3_class(event_probs, "ringbp_event_prob_opts")
   expect_identical(
     vapply(event_probs, class, FUN.VALUE = character(1)),
     c(asymptomatic = "numeric", presymptomatic_transmission = "numeric",
-      alpha = "numeric", symptomatic_ascertained = "numeric")
+      alpha = "numeric", symptomatic_traced = "numeric")
   )
 })
 
@@ -55,7 +55,7 @@ test_that("intervention_opts works as expected", {
   expect_s3_class(interventions, "ringbp_intervention_opts")
   expect_identical(
     vapply(interventions, class, FUN.VALUE = character(1)),
-    c(quarantine = "logical")
+    c(quarantine = "logical", test_sensitivity = "numeric")
   )
 })
 

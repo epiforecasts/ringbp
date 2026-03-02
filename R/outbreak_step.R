@@ -13,14 +13,13 @@
 #' @param event_probs a `list` with class `<ringbp_event_prob_opts>`: the
 #'   event probabilities for the \pkg{ringbp} model, returned by
 #'   [event_prob_opts()]. Contains three elements: `asymptomatic`,
-#'   `presymptomatic_transmission` and `symptomatic_ascertained`
+#'   `presymptomatic_transmission` and `symptomatic_traced`
 #' @param interventions a `list` with class `<ringbp_intervention_opts>`:
 #'   the intervention settings for the \pkg{ringbp} model, returned by
 #'   [intervention_opts()]. Contains one element: `quarantine`
 #'
 #' @importFrom data.table data.table rbindlist fcase fifelse copy
-#' @importFrom stats runif
-#' @importFrom stats rnbinom
+#' @importFrom stats runif rnbinom rbinom
 #'
 #' @return A `list` with three elements:
 #'   1. `$cases`: a `data.table` with case data
@@ -43,7 +42,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.15,
-#'   symptomatic_ascertained = 0
+#'   symptomatic_traced = 0
 #' )
 #' interventions <- intervention_opts(quarantine = FALSE)
 #'
@@ -116,11 +115,14 @@ outbreak_step <- function(case_data,
     infector_isolation_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
     infector_asymptomatic = rep(asymptomatic, new_cases),
-    # cases whose parents are asymptomatic are automatically missed;
+    # cases whose parents are asymptomatic are automatically missed by tracing;
     # will draw this for infector_asymptomatic == FALSE
-    missed = TRUE,
+    traced = FALSE,
     new_cases = NA_integer_,
-    sampled = FALSE
+    sampled = FALSE,
+    # assign negative test result (FALSE) as placeholder;
+    # will draw test result for symptomatic cases below
+    test_positive = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
@@ -129,30 +131,38 @@ outbreak_step <- function(case_data,
     onset := exposure + delays$incubation_period(.N)
   ]
 
-  # draw a sample for missing
+  # draw a sample for missing and test result
   prob_samples[
     infector_asymptomatic == FALSE,
-    missed := runif(.N) > event_probs$symptomatic_ascertained
+    traced := runif(.N) < event_probs$symptomatic_traced
+  ][
+    asymptomatic == FALSE,
+    test_positive := runif(.N) <= interventions$test_sensitivity
   ]
 
   prob_samples[, isolated_time := {
     ref_time <- onset + delays$onset_to_isolation(.N)
     fcase(
-      # If asymptomatic, never isolated: time is Inf
+      # asymptomatic: never isolated
       asymptomatic, Inf,
-      # If not asymptomatic, but are missed, isolated at your symptom onset
-      missed, ref_time,
-      # if quarantine is in effect, isolated at the earlier of infector's or
-      # infectee's isolation time
+      # symptomatic, false-negative test: never isolated
+      !test_positive, Inf,
+      # symptomatic, test-positive, not traced: isolated at symptom onset + delay
+      !traced, ref_time,
+      # symptomatic, test-positive, traced, quarantine:
+      # earliest of infector / infectee isolation time
       rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
-      # isolated at symptom onset time if after infector isolation time,
-      # otherwise at the earlier of infector and infectee isolation times
+      # symptomatic, test-positive, traced, no quarantine:
+      # earliest of symptom onset + delay / infector isolation time
       default = pmin(ref_time, pmax(onset, infector_isolation_time))
     )
   }]
 
   # Chop out unneeded sample columns
-  prob_samples[, c("infector_isolation_time", "infector_asymptomatic") := NULL]
+  prob_samples[
+    , c("infector_isolation_time", "infector_asymptomatic",
+        "test_positive") := NULL
+  ]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]
 

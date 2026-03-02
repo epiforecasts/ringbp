@@ -13,7 +13,7 @@ test_that("outbreak_model runs with no transmission", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.1,
-      symptomatic_ascertained = 1
+      symptomatic_traced = 1
     ),
     interventions = intervention_opts(quarantine = TRUE),
     sim = sim_opts()
@@ -45,7 +45,7 @@ test_that("outbreak_model runs to cap_max_days stopping criterion", {
     event_probs = event_prob_opts(
       asymptomatic = 0.1,
       presymptomatic_transmission = 0.1,
-      symptomatic_ascertained = 0.5
+      symptomatic_traced = 0.5
     ),
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_max_days = cap_max_days, cap_cases = cap_cases)
@@ -75,7 +75,7 @@ test_that("outbreak_model runs to cap_cases stopping criterion", {
     event_probs = event_prob_opts(
       asymptomatic = 0.1,
       presymptomatic_transmission = 0.1,
-      symptomatic_ascertained = 0.5
+      symptomatic_traced = 0.5
     ),
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_cases = cap_cases)
@@ -106,7 +106,7 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_max_days)", {
       event_probs = event_prob_opts(
         asymptomatic = 0,
         presymptomatic_transmission = 0.1,
-        symptomatic_ascertained = 1
+        symptomatic_traced = 1
       ),
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts(cap_max_days = 5)
@@ -136,7 +136,7 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
       event_probs = event_prob_opts(
         asymptomatic = 0,
         presymptomatic_transmission = 0.1,
-        symptomatic_ascertained = 1
+        symptomatic_traced = 1
       ),
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts(cap_cases = 10)
@@ -170,7 +170,7 @@ test_that("outbreak_model warns if latent period is positive & cases > 1", {
       event_probs = event_prob_opts(
         asymptomatic = 0,
         presymptomatic_transmission = 0.1,
-        symptomatic_ascertained = 1
+        symptomatic_traced = 1
       ),
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts()

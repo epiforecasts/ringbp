@@ -107,7 +107,7 @@ test_that("extinct_prob works as expected", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
@@ -158,7 +158,7 @@ test_that("extinct_prob works as expected", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
@@ -185,7 +185,7 @@ test_that("extinct_prob works as expected", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
@@ -215,7 +215,7 @@ test_that("extinct_prob extinction_week argument works", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
@@ -298,7 +298,7 @@ test_that("detect_extinct works", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)

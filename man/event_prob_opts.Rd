@@ -4,11 +4,7 @@
 \alias{event_prob_opts}
 \title{Create a list of event probabilities to run the \pkg{ringbp} model}
 \usage{
-event_prob_opts(
-  asymptomatic,
-  presymptomatic_transmission,
-  symptomatic_ascertained
-)
+event_prob_opts(asymptomatic, presymptomatic_transmission, symptomatic_traced)
 }
 \arguments{
 \item{asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
@@ -19,7 +15,7 @@ inclusive): proportion of cases that are completely asymptomatic
 (between 0 and 1 inclusive): proportion of transmission that occurs
 before symptom onset.}
 
-\item{symptomatic_ascertained}{a \code{numeric} scalar probability (between 0
+\item{symptomatic_traced}{a \code{numeric} scalar probability (between 0
 and 1 inclusive): proportion of infectious contacts ascertained by contact
 tracing}
 }
@@ -33,6 +29,6 @@ Create a list of event probabilities to run the \pkg{ringbp} model
 event_prob_opts(
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.5,
-  symptomatic_ascertained = 0.2
+  symptomatic_traced = 0.2
 )
 }

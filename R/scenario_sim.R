@@ -31,7 +31,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.3,
-#'   symptomatic_ascertained = 0
+#'   symptomatic_traced = 0
 #' )
 #' interventions <- intervention_opts(quarantine = TRUE)
 #' sim <- sim_opts(

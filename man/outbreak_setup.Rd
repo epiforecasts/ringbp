@@ -8,7 +8,8 @@ outbreak_setup(initial_cases, delays, event_probs)
 }
 \arguments{
 \item{initial_cases}{a non-negative \code{integer} scalar: number of initial
-or starting cases which are all assumed to be missed.}
+or starting cases which are all assumed to be missed by contact tracing
+(i.e. tracing ascertainment = 0).}
 
 \item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
 delay distribution \code{function}s for the \pkg{ringbp} model, returned
@@ -18,7 +19,7 @@ by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubat
 \item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
 event probabilities for the \pkg{ringbp} model, returned by
 \code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
+\code{presymptomatic_transmission} and \code{symptomatic_traced}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -27,7 +28,7 @@ event probabilities for the \pkg{ringbp} model, returned by
 \item \verb{$asymptomatic}: \code{logical}
 \item \verb{$caseid}: \code{integer}
 \item \verb{$infector}: \code{numeric}
-\item \verb{$missed}: \code{logical}
+\item \verb{$traced}: \code{logical}
 \item \verb{$onset}: \code{numeric}
 \item \verb{$new_cases}: \code{integer}
 \item \verb{$isolated_time}: \code{numeric}
@@ -45,7 +46,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.15,
-  symptomatic_ascertained = 0
+  symptomatic_traced = 0
 )
 
 # generate initial cases

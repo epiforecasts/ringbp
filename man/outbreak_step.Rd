@@ -23,7 +23,7 @@ by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubat
 \item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
 event probabilities for the \pkg{ringbp} model, returned by
 \code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_ascertained}}
+\code{presymptomatic_transmission} and \code{symptomatic_traced}}
 
 \item{interventions}{a \code{list} with class \verb{<ringbp_intervention_opts>}:
 the intervention settings for the \pkg{ringbp} model, returned by
@@ -54,7 +54,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.15,
-  symptomatic_ascertained = 0
+  symptomatic_traced = 0
 )
 interventions <- intervention_opts(quarantine = FALSE)
 

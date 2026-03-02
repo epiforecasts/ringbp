@@ -10,7 +10,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.15,
-  symptomatic_ascertained = 0
+  symptomatic_traced = 0
 )
 interventions <- intervention_opts(quarantine = FALSE)
 
@@ -177,7 +177,7 @@ test_that("isolated cases transmit as expected", {
   expect_gt(first_gen_case_data$cases_in_gen, 25)
 })
 
-test_that("All cases are missed when ascertained = 0", {
+test_that("All cases are missed when tracing ascertainment = 0", {
   offspring$community <- \(n) rep(100, n)
   offspring$asymptomatic <- \(n) rep(100, n)
 
@@ -190,14 +190,14 @@ test_that("All cases are missed when ascertained = 0", {
     interventions = interventions
   )
 
-  expect_true(all(first_gen_case_data$cases$missed))
+  expect_false(any(first_gen_case_data$cases$traced))
 })
 
-test_that("No cases are missed when ascertained = 1", {
+test_that("No cases are missed when tracing ascertainment = 1", {
   offspring$community <- \(n) rep(100, n)
   offspring$asymptomatic <- \(n) rep(100, n)
 
-  event_probs$symptomatic_ascertained <- 1
+  event_probs$symptomatic_traced <- 1
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(
@@ -208,18 +208,18 @@ test_that("No cases are missed when ascertained = 1", {
     interventions = interventions
   )
 
-  # only the index case is missed, all others are ascertained
-  expect_true(first_gen_case_data$cases$missed[1])
-  expect_false(any(
-    first_gen_case_data$cases$missed[2:nrow(first_gen_case_data$cases)]
+  # only the index case is missed, all others are ascertained by tracing
+  expect_false(first_gen_case_data$cases$traced[1])
+  expect_true(all(
+    first_gen_case_data$cases$traced[2:nrow(first_gen_case_data$cases)]
   ))
 })
 
-test_that("Some cases are missed when ascertained = 0.5", {
+test_that("Some cases are missed when tracing ascertainment = 0.5", {
   offspring$community <- \(n) rep(100, n)
   offspring$asymptomatic <- \(n) rep(100, n)
 
-  event_probs$symptomatic_ascertained <- 0.5
+  event_probs$symptomatic_traced <- 0.5
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(
@@ -230,10 +230,10 @@ test_that("Some cases are missed when ascertained = 0.5", {
     interventions = interventions
   )
 
-  # only the index case is missed, all others are ascertained
-  missed <- table(first_gen_case_data$cases$missed)
-  expect_identical(names(missed), c("FALSE", "TRUE"))
-  # multiple missed and ascertained, 5 is an arbitrary threshold
-  expect_gt(missed[1], 5)
-  expect_gt(missed[2], 5)
+  # only the index case is missed, all others are ascertained by tracing
+  traced <- table(first_gen_case_data$cases$traced)
+  expect_identical(names(traced), c("FALSE", "TRUE"))
+  # multiple missed and traced, 5 is an arbitrary threshold
+  expect_gt(traced[1], 5)
+  expect_gt(traced[2], 5)
 })

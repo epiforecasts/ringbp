@@ -1,7 +1,8 @@
 #' Set up initial cases for branching process
 #'
 #' @param initial_cases a non-negative `integer` scalar: number of initial
-#'   or starting cases which are all assumed to be missed.
+#'   or starting cases which are all assumed to be missed by contact tracing
+#'   (i.e. tracing ascertainment = 0).
 #' @inheritParams outbreak_step
 #'
 #' @return `data.table` of cases in outbreak so far. `data.table` columns are:
@@ -9,7 +10,7 @@
 #' * `$asymptomatic`: `logical`
 #' * `$caseid`: `integer`
 #' * `$infector`: `numeric`
-#' * `$missed`: `logical`
+#' * `$traced`: `logical`
 #' * `$onset`: `numeric`
 #' * `$new_cases`: `integer`
 #' * `$isolated_time`: `numeric`
@@ -27,7 +28,7 @@
 #' event_probs <- event_prob_opts(
 #'   asymptomatic = 0,
 #'   presymptomatic_transmission = 0.15,
-#'   symptomatic_ascertained = 0
+#'   symptomatic_traced = 0
 #' )
 #'
 #' # generate initial cases
@@ -49,7 +50,7 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     asymptomatic = runif(initial_cases) < event_probs$asymptomatic,
     caseid = seq_len(initial_cases), # set case id
     infector = 0,
-    missed = TRUE,
+    traced = FALSE,
     onset = delays$incubation_period(initial_cases),
     new_cases = NA_integer_,
     isolated_time = Inf,

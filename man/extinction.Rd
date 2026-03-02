@@ -83,7 +83,7 @@ res <- scenario_sim(
   event_probs = event_prob_opts(
     asymptomatic = 0,
     presymptomatic_transmission = 0.5,
-    symptomatic_ascertained = 0.2
+    symptomatic_traced = 0.2
   ),
   interventions = intervention_opts(quarantine = FALSE),
   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)

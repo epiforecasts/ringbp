@@ -16,7 +16,7 @@ test_that("scenario_sim runs as expected", {
     event_probs = event_prob_opts(
       asymptomatic = 0,
       presymptomatic_transmission = 0.3,
-      symptomatic_ascertained = 0
+      symptomatic_traced = 0
     ),
     interventions = intervention_opts(quarantine = TRUE),
     sim = sim_opts(
@@ -74,7 +74,7 @@ test_that("scenario_sim with dynamic seed and parameters runs as expected", {
     event_probs = event_prob_opts(
       asymptomatic = runif(n = 1, min = 0, max = 1),
       presymptomatic_transmission = runif(n = 1, min = 0, max = 1),
-      symptomatic_ascertained = runif(n = 1, min = 0, max = 1)
+      symptomatic_traced = runif(n = 1, min = 0, max = 1)
     ),
     interventions = intervention_opts(
       quarantine = sample(c(TRUE, FALSE), size = 1)
