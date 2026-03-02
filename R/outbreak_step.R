@@ -145,15 +145,15 @@ outbreak_step <- function(case_data,
     fcase(
       # asymptomatic: never isolated
       asymptomatic, Inf,
-      # symptomatic cases with a false negative test: never isolated
+      # symptomatic, false-negative test: never isolated
       !test_positive, Inf,
-      # test-positive, when tested: if traced, .... vs if untraced ...
+      # symptomatic, test-positive, not traced: isolated at symptom onset + delay
       !traced, ref_time,
-      # test-positive, ascertained, quarantine:
+      # symptomatic, test-positive, traced, quarantine:
       # earliest of infector / infectee isolation time
       rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
-      # test-positive, ascertained, no quarantine:
-      # earliest of symptom onset / infector isolation time
+      # symptomatic, test-positive, traced, no quarantine:
+      # earliest of symptom onset + delay / infector isolation time
       default = pmin(ref_time, pmax(onset, infector_isolation_time))
     )
   }]
