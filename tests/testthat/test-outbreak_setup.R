@@ -45,13 +45,13 @@ test_that("outbreak_setup with dynamic seed and parameters runs as expected", {
   expect_identical(
     vapply(res, class, FUN.VALUE = character(1)),
     c(exposure = "numeric", asymptomatic = "logical", caseid = "integer",
-      infector = "numeric", missed = "logical", onset = "numeric",
+      infector = "numeric", traced = "logical", onset = "numeric",
       new_cases = "integer", isolated_time = "numeric", sampled = "logical")
   )
   expect_identical(unique(res$exposure), 0)
   expect_identical(res$caseid, 1:nrow(res))
   expect_identical(unique(res$infector), 0)
-  expect_identical(unique(res$missed), TRUE)
+  expect_identical(unique(res$traced), FALSE)
   expect_identical(unique(res$new_cases), NA_integer_)
   expect_identical(unique(res$sampled), FALSE)
 })

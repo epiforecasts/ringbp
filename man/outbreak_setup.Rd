@@ -8,7 +8,8 @@ outbreak_setup(initial_cases, delays, event_probs)
 }
 \arguments{
 \item{initial_cases}{a non-negative \code{integer} scalar: number of initial
-or starting cases which are all assumed to be missed.}
+or starting cases which are all assumed to be missed by contact tracing
+(i.e. tracing ascertainment = 0).}
 
 \item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
 delay distribution \code{function}s for the \pkg{ringbp} model, returned
@@ -27,7 +28,7 @@ event probabilities for the \pkg{ringbp} model, returned by
 \item \verb{$asymptomatic}: \code{logical}
 \item \verb{$caseid}: \code{integer}
 \item \verb{$infector}: \code{numeric}
-\item \verb{$missed}: \code{logical}
+\item \verb{$traced}: \code{logical}
 \item \verb{$onset}: \code{numeric}
 \item \verb{$new_cases}: \code{integer}
 \item \verb{$isolated_time}: \code{numeric}

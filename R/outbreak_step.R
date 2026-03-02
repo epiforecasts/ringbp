@@ -115,9 +115,9 @@ outbreak_step <- function(case_data,
     infector_isolation_time = rep(isolated_time, new_cases),
     # records if infector asymptomatic
     infector_asymptomatic = rep(asymptomatic, new_cases),
-    # cases whose parents are asymptomatic are automatically missed;
+    # cases whose parents are asymptomatic are automatically missed by tracing;
     # will draw this for infector_asymptomatic == FALSE
-    missed = TRUE,
+    traced = FALSE,
     new_cases = NA_integer_,
     sampled = FALSE,
     # assign negative test result (FALSE) as placeholder;
@@ -134,7 +134,7 @@ outbreak_step <- function(case_data,
   # draw a sample for missing and test result
   prob_samples[
     infector_asymptomatic == FALSE,
-    missed := runif(.N) > event_probs$symptomatic_ascertained
+    traced := runif(.N) < event_probs$symptomatic_ascertained
   ][
     asymptomatic == FALSE,
     test_positive := runif(.N) <= interventions$test_sensitivity
@@ -148,7 +148,7 @@ outbreak_step <- function(case_data,
       # symptomatic cases with a false negative test: never isolated
       !test_positive, Inf,
       # test-positive, when tested: if traced, .... vs if untraced ...
-      missed, ref_time,
+      !traced, ref_time,
       # test-positive, ascertained, quarantine:
       # earliest of infector / infectee isolation time
       rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),

@@ -190,7 +190,7 @@ test_that("All cases are missed when ascertained = 0", {
     interventions = interventions
   )
 
-  expect_true(all(first_gen_case_data$cases$missed))
+  expect_false(any(first_gen_case_data$cases$traced))
 })
 
 test_that("No cases are missed when ascertained = 1", {
@@ -209,9 +209,9 @@ test_that("No cases are missed when ascertained = 1", {
   )
 
   # only the index case is missed, all others are ascertained
-  expect_true(first_gen_case_data$cases$missed[1])
-  expect_false(any(
-    first_gen_case_data$cases$missed[2:nrow(first_gen_case_data$cases)]
+  expect_false(first_gen_case_data$cases$traced[1])
+  expect_true(all(
+    first_gen_case_data$cases$traced[2:nrow(first_gen_case_data$cases)]
   ))
 })
 
@@ -231,9 +231,9 @@ test_that("Some cases are missed when ascertained = 0.5", {
   )
 
   # only the index case is missed, all others are ascertained
-  missed <- table(first_gen_case_data$cases$missed)
-  expect_identical(names(missed), c("FALSE", "TRUE"))
+  traced <- table(first_gen_case_data$cases$traced)
+  expect_identical(names(traced), c("FALSE", "TRUE"))
   # multiple missed and ascertained, 5 is an arbitrary threshold
-  expect_gt(missed[1], 5)
-  expect_gt(missed[2], 5)
+  expect_gt(traced[1], 5)
+  expect_gt(traced[2], 5)
 })

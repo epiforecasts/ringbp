@@ -15,7 +15,8 @@ outbreak_model(
 }
 \arguments{
 \item{initial_cases}{a non-negative \code{integer} scalar: number of initial
-or starting cases which are all assumed to be missed.}
+or starting cases which are all assumed to be missed by contact tracing
+(i.e. tracing ascertainment = 0).}
 
 \item{offspring}{a \code{list} with class \verb{<ringbp_offspring_opts>}: the
 offspring distribution \code{function}s for the \pkg{ringbp} model, returned
