@@ -187,12 +187,12 @@ asymptomatic (<a href="https://epiforecasts.io/ringbp/reference/event_prob_opts.
 the proportion of disease transmission that occurs before symptom onset
 (<a href="https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-presymptomatic-transmission"><code>presymptomatic_transmission</code></a>),
 and the proportion of symptomatic individuals that are ascertained by
-contact tracing (<a href="https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-ascertained"><code>symptomatic_ascertained</code></a>).</p>
+contact tracing (<a href="https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-traced"><code>symptomatic_traced</code></a>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">event_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_prob_opts.html">event_prob_opts</a></span><span class="op">(</span></span>
 <span>  asymptomatic <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  presymptomatic_transmission <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  symptomatic_ascertained <span class="op">=</span> <span class="fl">0.2</span></span>
+<span>  symptomatic_traced <span class="op">=</span> <span class="fl">0.2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="alert alert-info">
 <p><em>Contact tracing</em> is the process of identifying and isolating
@@ -320,7 +320,7 @@ calculated using <code><a href="../reference/extinction.html">extinct_prob()</a>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extinction.html">extinct_prob</a></span><span class="op">(</span><span class="va">outbreak</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Calculating extinction using the extinction status from the simulation.</span></span>
-<span><span class="co">#&gt; [1] 0.8</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.85</span></span></code></pre></div>
 <p>By default, extinction is defined as all infectious individuals have
 had the opportunity to transmit but no new infections are generated. The
 <code>extinction_week</code> argument in <code><a href="../reference/extinction.html">extinct_prob()</a></code> can
@@ -357,7 +357,7 @@ analysis scripts</a>.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
 <span>    initial_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">20</span><span class="op">)</span>,</span>
 <span>    r0_community <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">2.5</span><span class="op">)</span>,</span>
-<span>    symptomatic_ascertained <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>    symptomatic_traced <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">scenarios</span><span class="op">[</span>, <span class="va">scenario</span> <span class="op">:=</span>  <span class="fl">1</span><span class="op">:</span><span class="va">.N</span><span class="op">]</span></span>
@@ -384,7 +384,7 @@ analysis scripts</a>.</p>
 <span>    event_probs <span class="op">=</span> <span class="fu"><a href="../reference/event_prob_opts.html">event_prob_opts</a></span><span class="op">(</span></span>
 <span>       asymptomatic <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>       presymptomatic_transmission <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span>       symptomatic_ascertained <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">symptomatic_ascertained</span></span>
+<span>       symptomatic_traced <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">symptomatic_traced</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    interventions <span class="op">=</span> <span class="fu"><a href="../reference/intervention_opts.html">intervention_opts</a></span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>    sim <span class="op">=</span> <span class="fu"><a href="../reference/sim_opts.html">sim_opts</a></span><span class="op">(</span>cap_max_days <span class="op">=</span> <span class="fl">365</span>, cap_cases <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span>
@@ -417,7 +417,7 @@ simulation.</p>
 <span></span>
 <span><span class="co"># probability of extinction for each scenario</span></span>
 <span><span class="va">scenarios</span><span class="op">$</span><span class="va">pext</span></span>
-<span><span class="co">#&gt;  [1] 0.9 0.5 0.5 0.2 1.0 1.0 0.9 0.5 1.0 1.0 1.0 0.9</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 1.0 0.7 0.3 0.1 1.0 1.0 0.9 0.2 1.0 1.0 1.0 1.0</span></span></code></pre></div>
 <p><span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span> used {ringbp} to show
 that:</p>
 <ul>

@@ -75,7 +75,7 @@ by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains two element
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_event_prob_opts&gt;</code>: the
 event probabilities for the <span class="pkg">ringbp</span> model, returned by
 <code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains three elements: <code>asymptomatic</code>,
-<code>presymptomatic_transmission</code> and <code>symptomatic_ascertained</code></p></dd>
+<code>presymptomatic_transmission</code> and <code>symptomatic_traced</code></p></dd>
 
 
 <dt id="arg-interventions">interventions<a class="anchor" aria-label="anchor" href="#arg-interventions"></a></dt>
@@ -106,7 +106,7 @@ generation</p></li>
 <span class="r-in"><span><span class="va">event_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="event_prob_opts.html">event_prob_opts</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  asymptomatic <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  presymptomatic_transmission <span class="op">=</span> <span class="fl">0.15</span>,</span></span>
-<span class="r-in"><span>  symptomatic_ascertained <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  symptomatic_traced <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">interventions</span> <span class="op">&lt;-</span> <span class="fu"><a href="intervention_opts.html">intervention_opts</a></span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -118,13 +118,13 @@ generation</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Index: &lt;asymptomatic&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure asymptomatic caseid infector missed     onset new_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure asymptomatic caseid infector traced     onset new_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;       &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;     &lt;num&gt;     &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0        FALSE      1        0   TRUE  9.068614        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        0        FALSE      2        0   TRUE  7.134836        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0        FALSE      3        0   TRUE  7.409368        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0        FALSE      4        0   TRUE  3.831935        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0        FALSE      5        0   TRUE 12.451065        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0        FALSE      1        0  FALSE  9.068614        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        0        FALSE      2        0  FALSE  7.134836        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0        FALSE      3        0  FALSE  7.409368        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0        FALSE      4        0  FALSE  3.831935        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0        FALSE      5        0  FALSE 12.451065        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    isolated_time sampled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;  &lt;lgcl&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:     17.360308   FALSE</span>
@@ -142,34 +142,34 @@ generation</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      exposure asymptomatic caseid infector missed     onset new_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      exposure asymptomatic caseid infector traced     onset new_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;       &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;     &lt;num&gt;     &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.000000        FALSE      1        0   TRUE  9.068614         6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.000000        FALSE      2        0   TRUE  7.134836         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.000000        FALSE      3        0   TRUE  7.409368         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.000000        FALSE      4        0   TRUE  3.831935         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  0.000000        FALSE      5        0   TRUE 12.451065        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 10.684477        FALSE      6        1   TRUE 18.416225        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 11.385832        FALSE      7        1   TRUE 15.003998        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 10.176903        FALSE      8        1   TRUE 15.028419        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  9.312653        FALSE      9        1   TRUE 14.598350        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 10.239543        FALSE     10        1   TRUE 14.286632        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  9.170390        FALSE     11        1   TRUE 18.738731        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 12.990119        FALSE     12        5   TRUE 19.830682        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 14.255198        FALSE     13        5   TRUE 18.637028        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 12.961801        FALSE     14        5   TRUE 17.212470        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 12.874304        FALSE     15        5   TRUE 15.957546        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 13.131607        FALSE     16        5   TRUE 16.887905        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 12.940163        FALSE     17        5   TRUE 20.887224        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 14.945229        FALSE     18        5   TRUE 22.751088        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 16.080431        FALSE     19        5   TRUE 21.357583        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 16.174508        FALSE     20        5   TRUE 20.972771        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 11.815477        FALSE     21        5   TRUE 16.492315        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 13.589812        FALSE     22        5   TRUE 17.914329        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 13.819688        FALSE     23        5   TRUE 23.393422        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 13.327341        FALSE     24        5   TRUE 16.501959        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 13.200103        FALSE     25        5   TRUE 18.777442        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      exposure asymptomatic caseid infector missed     onset new_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.000000        FALSE      1        0  FALSE  9.068614         6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.000000        FALSE      2        0  FALSE  7.134836         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.000000        FALSE      3        0  FALSE  7.409368         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.000000        FALSE      4        0  FALSE  3.831935         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  0.000000        FALSE      5        0  FALSE 12.451065        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 10.684477        FALSE      6        1  FALSE 18.416225        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 11.385832        FALSE      7        1  FALSE 15.003998        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 10.176903        FALSE      8        1  FALSE 15.028419        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  9.312653        FALSE      9        1  FALSE 14.598350        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 10.239543        FALSE     10        1  FALSE 14.286632        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  9.170390        FALSE     11        1  FALSE 18.738731        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 12.990119        FALSE     12        5  FALSE 19.830682        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 14.255198        FALSE     13        5  FALSE 18.637028        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 12.961801        FALSE     14        5  FALSE 17.212470        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 12.874304        FALSE     15        5  FALSE 15.957546        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 13.131607        FALSE     16        5  FALSE 16.887905        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 12.940163        FALSE     17        5  FALSE 20.887224        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 14.945229        FALSE     18        5  FALSE 22.751088        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 16.080431        FALSE     19        5  FALSE 21.357583        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 16.174508        FALSE     20        5  FALSE 20.972771        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 11.815477        FALSE     21        5  FALSE 16.492315        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 13.589812        FALSE     22        5  FALSE 17.914329        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 13.819688        FALSE     23        5  FALSE 23.393422        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 13.327341        FALSE     24        5  FALSE 16.501959        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 13.200103        FALSE     25        5  FALSE 18.777442        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      exposure asymptomatic caseid infector traced     onset new_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;       &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;     &lt;num&gt;     &lt;int&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     isolated_time sampled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;  &lt;lgcl&gt;</span>
@@ -178,26 +178,26 @@ generation</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:      9.035117    TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:     15.099694    TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  5:     16.355962    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     28.608812   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     15.177175   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     21.919639   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     16.201172   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     17.935170   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     25.011139   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     25.008372   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     23.594261   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     22.801945   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     26.596407   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:     23.809008   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     27.978250   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     31.509749   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:     24.464735   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:     23.710582   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:     21.213359   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:     22.097602   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:     25.188005   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:     22.806482   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:     19.811604   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     28.556178   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     17.060636   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     16.828956   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     17.496067   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     15.093567   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     19.700004   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     23.311967   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     19.374708   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     21.566833   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     20.703180   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:     18.116295   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     27.919306   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     26.830659   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:     24.046193   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:     24.443160   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:     21.049371   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:     25.547293   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:     35.288396   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:     19.650941   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:     21.420606   FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     isolated_time sampled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;  &lt;lgcl&gt;</span>
 </code></pre></div>

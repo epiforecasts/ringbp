@@ -5,11 +5,7 @@ Create a list of event probabilities to run the ringbp model
 ## Usage
 
 ``` r
-event_prob_opts(
-  asymptomatic,
-  presymptomatic_transmission,
-  symptomatic_ascertained
-)
+event_prob_opts(asymptomatic, presymptomatic_transmission, symptomatic_traced)
 ```
 
 ## Arguments
@@ -24,7 +20,7 @@ event_prob_opts(
   a `numeric` scalar probability (between 0 and 1 inclusive): proportion
   of transmission that occurs before symptom onset.
 
-- symptomatic_ascertained:
+- symptomatic_traced:
 
   a `numeric` scalar probability (between 0 and 1 inclusive): proportion
   of infectious contacts ascertained by contact tracing
@@ -39,7 +35,7 @@ A `list` with class `<ringbp_event_prob_opts>`.
 event_prob_opts(
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.5,
-  symptomatic_ascertained = 0.2
+  symptomatic_traced = 0.2
 )
 #> $asymptomatic
 #> [1] 0.1
@@ -50,7 +46,7 @@ event_prob_opts(
 #> $alpha
 #> [1] 1.968077e-08
 #> 
-#> $symptomatic_ascertained
+#> $symptomatic_traced
 #> [1] 0.2
 #> 
 #> attr(,"class")

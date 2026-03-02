@@ -20,7 +20,8 @@ outbreak_model(
 - initial_cases:
 
   a non-negative `integer` scalar: number of initial or starting cases
-  which are all assumed to be missed.
+  which are all assumed to be missed by contact tracing (i.e. tracing
+  ascertainment = 0).
 
 - offspring:
 
@@ -42,7 +43,7 @@ outbreak_model(
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
   Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_ascertained`
+  and `symptomatic_traced`
 
 - interventions:
 
@@ -88,7 +89,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.5,
-  symptomatic_ascertained = 0.2
+  symptomatic_traced = 0.2
 )
 interventions <- intervention_opts(quarantine = FALSE)
 out <- outbreak_model(

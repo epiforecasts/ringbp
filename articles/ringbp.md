@@ -136,13 +136,13 @@ the proportion of disease transmission that occurs before symptom onset
 ([`presymptomatic_transmission`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-presymptomatic-transmission)),
 and the proportion of symptomatic individuals that are ascertained by
 contact tracing
-([`symptomatic_ascertained`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-ascertained)).
+([`symptomatic_traced`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-traced)).
 
 ``` r
 event_probs <- event_prob_opts(
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.5,
-  symptomatic_ascertained = 0.2
+  symptomatic_traced = 0.2
 )
 ```
 
@@ -275,7 +275,7 @@ calculated using
 ``` r
 extinct_prob(outbreak)
 #> Calculating extinction using the extinction status from the simulation.
-#> [1] 0.8
+#> [1] 0.85
 ```
 
 By default, extinction is defined as all infectious individuals have had
@@ -315,7 +315,7 @@ scenarios <- data.table(
   expand.grid(
     initial_cases = c(5, 20),
     r0_community = c(1.5, 2.5),
-    symptomatic_ascertained = c(0, 0.5, 1)
+    symptomatic_traced = c(0, 0.5, 1)
   )
 )
 scenarios[, scenario :=  1:.N]
@@ -342,7 +342,7 @@ scenarios[, sims := lapply(data, \(x, n) {
     event_probs = event_prob_opts(
        asymptomatic = 0.1,
        presymptomatic_transmission = 0.1,
-       symptomatic_ascertained = x$symptomatic_ascertained
+       symptomatic_traced = x$symptomatic_traced
     ),
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_max_days = 365, cap_cases = 5000)
@@ -378,7 +378,7 @@ scenarios[,
 
 # probability of extinction for each scenario
 scenarios$pext
-#>  [1] 0.9 0.5 0.5 0.2 1.0 1.0 0.9 0.5 1.0 1.0 1.0 0.9
+#>  [1] 1.0 0.7 0.3 0.1 1.0 1.0 0.9 0.2 1.0 1.0 1.0 1.0
 ```
 
 Hellewell et al. ([2020](#ref-Hellewell2020)) used {ringbp} to show

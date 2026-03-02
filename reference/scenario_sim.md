@@ -25,7 +25,8 @@ scenario_sim(
 - initial_cases:
 
   a non-negative `integer` scalar: number of initial or starting cases
-  which are all assumed to be missed.
+  which are all assumed to be missed by contact tracing (i.e. tracing
+  ascertainment = 0).
 
 - offspring:
 
@@ -47,7 +48,7 @@ scenario_sim(
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
   Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_ascertained`
+  and `symptomatic_traced`
 
 - interventions:
 
@@ -95,7 +96,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.3,
-  symptomatic_ascertained = 0
+  symptomatic_traced = 0
 )
 interventions <- intervention_opts(quarantine = TRUE)
 sim <- sim_opts(
@@ -114,28 +115,28 @@ res <- scenario_sim(
 res
 #>        sim  week weekly_cases cumulative effective_r0
 #>      <int> <int>        <int>      <int>        <num>
-#>   1:     1     0            5          5     2.967094
-#>   2:     1     1           17         22     2.967094
-#>   3:     1     2           96        118     2.967094
-#>   4:     1     3          329        447     2.967094
-#>   5:     1     4          641       1088     2.967094
+#>   1:     1     0            6          6     2.444768
+#>   2:     1     1           38         44     2.444768
+#>   3:     1     2           74        118     2.444768
+#>   4:     1     3          108        226     2.444768
+#>   5:     1     4          205        431     2.444768
 #>  ---                                                 
-#> 261:     5    48            0       2689     3.119669
-#> 262:     5    49            0       2689     3.119669
-#> 263:     5    50            0       2689     3.119669
-#> 264:     5    51            0       2689     3.119669
-#> 265:     5    52            0       2689     3.119669
-#>                      cases_per_gen
-#>                             <list>
-#>   1:   12,  16, 106, 316, 739,1570
-#>   2:   12,  16, 106, 316, 739,1570
-#>   3:   12,  16, 106, 316, 739,1570
-#>   4:   12,  16, 106, 316, 739,1570
-#>   5:   12,  16, 106, 316, 739,1570
-#>  ---                              
-#> 261:   43,  64, 162, 377, 698,1340
-#> 262:   43,  64, 162, 377, 698,1340
-#> 263:   43,  64, 162, 377, 698,1340
-#> 264:   43,  64, 162, 377, 698,1340
-#> 265:   43,  64, 162, 377, 698,1340
+#> 261:     5    48            0       3953     2.895456
+#> 262:     5    49            0       3953     2.895456
+#> 263:     5    50            0       3953     2.895456
+#> 264:     5    51            0       3953     2.895456
+#> 265:     5    52            0       3953     2.895456
+#>                             cases_per_gen
+#>                                    <list>
+#>   1:   17,  46, 101, 255, 538,1020,...[7]
+#>   2:   17,  46, 101, 255, 538,1020,...[7]
+#>   3:   17,  46, 101, 255, 538,1020,...[7]
+#>   4:   17,  46, 101, 255, 538,1020,...[7]
+#>   5:   17,  46, 101, 255, 538,1020,...[7]
+#>  ---                                     
+#> 261:          12,  57, 126, 351,1094,2308
+#> 262:          12,  57, 126, 351,1094,2308
+#> 263:          12,  57, 126, 351,1094,2308
+#> 264:          12,  57, 126, 351,1094,2308
+#> 265:          12,  57, 126, 351,1094,2308
 ```

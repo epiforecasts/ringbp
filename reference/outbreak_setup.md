@@ -13,7 +13,8 @@ outbreak_setup(initial_cases, delays, event_probs)
 - initial_cases:
 
   a non-negative `integer` scalar: number of initial or starting cases
-  which are all assumed to be missed.
+  which are all assumed to be missed by contact tracing (i.e. tracing
+  ascertainment = 0).
 
 - delays:
 
@@ -28,7 +29,7 @@ outbreak_setup(initial_cases, delays, event_probs)
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
   Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_ascertained`
+  and `symptomatic_traced`
 
 ## Value
 
@@ -42,7 +43,7 @@ outbreak_setup(initial_cases, delays, event_probs)
 
 - `$infector`: `numeric`
 
-- `$missed`: `logical`
+- `$traced`: `logical`
 
 - `$onset`: `numeric`
 
@@ -62,7 +63,7 @@ delays <- delay_opts(
 event_probs <- event_prob_opts(
   asymptomatic = 0,
   presymptomatic_transmission = 0.15,
-  symptomatic_ascertained = 0
+  symptomatic_traced = 0
 )
 
 # generate initial cases
@@ -73,13 +74,13 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector missed    onset new_cases
+#>    exposure asymptomatic caseid infector traced    onset new_cases
 #>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>
-#> 1:        0        FALSE      1        0   TRUE 5.494867        NA
-#> 2:        0        FALSE      2        0   TRUE 4.273768        NA
-#> 3:        0        FALSE      3        0   TRUE 9.144926        NA
-#> 4:        0        FALSE      4        0   TRUE 4.549269        NA
-#> 5:        0        FALSE      5        0   TRUE 5.327302        NA
+#> 1:        0        FALSE      1        0  FALSE 5.494867        NA
+#> 2:        0        FALSE      2        0  FALSE 4.273768        NA
+#> 3:        0        FALSE      3        0  FALSE 9.144926        NA
+#> 4:        0        FALSE      4        0  FALSE 4.549269        NA
+#> 5:        0        FALSE      5        0  FALSE 5.327302        NA
 #>    isolated_time sampled
 #>            <num>  <lgcl>
 #> 1:     13.630713   FALSE

@@ -15,8 +15,8 @@ tested, and is isolated after a symptom onset-to-isolation delay.
 ***Contact tracing***: If contact tracing is in operation the infectee
 can also be isolated as soon as they develop symptoms if the infector is
 isolating. Contact tracing in the {ringbp} model is a user-controlled
-parameter. Users can adjust the proportion of contacts ascertained
-between 0% (i.e. nobody is contact traced) and 100% (i.e. every
+parameter. Users can adjust the proportion of contacts ascertained by
+tracing between 0% (i.e. nobody is contact traced) and 100% (i.e. every
 symptomatic infector has all their contacts traced).
 
 ***Quarantine***: Users can turn on quarantine in the model. If
@@ -177,7 +177,7 @@ and do not represent the default values.
 | Onset-to-isolation delay distribution     | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
 | Proportion of asymptomatic cases          | `event_prob_opts(asymptomatic = 0.5)`                                       |
 | Proportion of presymptomatic transmission | `event_prob_opts(presymptomatic_transmission = 0.5)`                        |
-| Contact tracing case ascertainment        | `event_prob_opts(symptomatic_ascertained = 0.5)`                            |
+| Contact tracing case ascertainment        | `event_prob_opts(symptomatic_traced = 0.5)`                                 |
 | Quarantine                                | `intervention_opts(quarantine = TRUE)`                                      |
 
 In the {ringbp} model the generation time is not parameterised, instead

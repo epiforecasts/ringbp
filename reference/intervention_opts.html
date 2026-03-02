@@ -45,7 +45,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span>, test_sensitivity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -56,6 +56,15 @@
 <dd><p>a <code>logical</code> scalar: whether quarantine is in effect, if
 <code>TRUE</code> then traced contacts are isolated before symptom onset; defaults to
 <code>FALSE</code></p></dd>
+
+
+<dt id="arg-test-sensitivity">test_sensitivity<a class="anchor" aria-label="anchor" href="#arg-test-sensitivity"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0
+and 1 inclusive): the test sensitivity (i.e. probability that a true positive
+tests positive). Individuals that are tested and get a false negative
+are not isolated and their contacts are not traced. Only symptomatic
+individuals are tested. Default is 1, which assumes all symptomatic
+individuals tested get a positive test result.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -68,6 +77,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $quarantine</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $test_sensitivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_intervention_opts"</span>
