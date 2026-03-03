@@ -46,7 +46,8 @@ test_that("event_prob_opts works as expected", {
   expect_identical(
     vapply(event_probs, class, FUN.VALUE = character(1)),
     c(asymptomatic = "numeric", presymptomatic_transmission = "numeric",
-      alpha = "numeric", symptomatic_traced = "numeric")
+      alpha = "numeric", symptomatic_traced = "numeric",
+      symptomatic_self_isolate = "numeric")
   )
 })
 
