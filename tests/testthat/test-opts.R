@@ -32,7 +32,7 @@ test_that("delay_opts works as expected", {
   expect_identical(
     vapply(delays, class, FUN.VALUE = character(1)),
     c(incubation_period = "function", onset_to_isolation = "function",
-      latent_period = "numeric")
+      latent_period = "numeric", onset_to_self_isolation = "NULL")
   )
 })
 

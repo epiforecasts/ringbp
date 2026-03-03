@@ -73,6 +73,19 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   presymptomatic transmission, depending on the `incubation_period`
 #'   distribution and `presymptomatic_transmission` (in [event_prob_opts()]).
 #'
+#' @param onset_to_self_isolation a `function`: a random number generating
+#'   `function` that samples from the onset-to-self-isolation distribution,
+#'   the `function` accepts a single `integer` argument specifying the length
+#'   of the `function` output.
+#'
+#'   By default `onset_to_self_isolation` is `NULL`. An onset-to-self-isolation
+#'   `function` only needs to be specified if a non-zero value is specified to
+#'   `symptomatic_self_isolate` in [event_prob_opts()] (which by default is 0).
+#'   If `onset_to_self_isolation` is specified but `symptomatic_self_isolate`
+#'   is zero, a warning will be thrown and the `onset_to_self_isolation`
+#'   will be ignored; if `symptomatic_self_isolate` is non-zero and
+#'   `onset_to_self_isolation` is `NULL`, [scenario_sim()] will error.
+#'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
 #'
@@ -83,11 +96,18 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #' )
 delay_opts <- function(incubation_period,
                        onset_to_isolation,
-                       latent_period = 0) {
+                       latent_period = 0,
+                       onset_to_self_isolation = NULL) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
+  if (!is.null(onset_to_self_isolation)) {
+    check_dist_func(
+      onset_to_self_isolation,
+      dist_name = "onset_to_self_isolation"
+    )
+  }
 
   if (latent_period > 0) {
     warning(
@@ -103,7 +123,8 @@ delay_opts <- function(incubation_period,
   opts <- list(
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    latent_period = latent_period
+    latent_period = latent_period,
+    onset_to_self_isolation = onset_to_self_isolation
   )
 
   class(opts) <- "ringbp_delay_opts"
