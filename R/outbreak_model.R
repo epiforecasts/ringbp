@@ -56,6 +56,7 @@ outbreak_model <- function(initial_cases,
   checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
   checkmate::assert_class(interventions, "ringbp_intervention_opts")
   checkmate::assert_class(sim, "ringbp_sim_opts")
+  cross_check_opts(delays, event_probs)
 
   # Initial setup
   case_data <- outbreak_setup(
