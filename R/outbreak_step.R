@@ -8,15 +8,17 @@
 #'   and `asymptomatic`
 #' @param delays a `list` with class `<ringbp_delay_opts>`: the
 #'   delay distribution `function`s for the \pkg{ringbp} model, returned
-#'   by [delay_opts()]. Contains two elements: `incubation_period` and
-#'   `onset_to_isolation`
+#'   by [delay_opts()]. Contains 4 elements: `incubation_period`,
+#'   `onset_to_isolation`, `latent_period` and `onset_to_self_isolation`
 #' @param event_probs a `list` with class `<ringbp_event_prob_opts>`: the
 #'   event probabilities for the \pkg{ringbp} model, returned by
-#'   [event_prob_opts()]. Contains three elements: `asymptomatic`,
-#'   `presymptomatic_transmission` and `symptomatic_traced`
+#'   [event_prob_opts()]. Contains 5 elements: `asymptomatic`,
+#'   `presymptomatic_transmission`, `alpha`, `symptomatic_traced` and
+#'   `symptomatic_self_isolate`
 #' @param interventions a `list` with class `<ringbp_intervention_opts>`:
 #'   the intervention settings for the \pkg{ringbp} model, returned by
-#'   [intervention_opts()]. Contains one element: `quarantine`
+#'   [intervention_opts()]. Contains 2 elements: `quarantine` and
+#'   `test_sensitivity`
 #'
 #' @importFrom data.table data.table rbindlist fcase fifelse copy
 #' @importFrom stats runif rnbinom rbinom

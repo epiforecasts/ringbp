@@ -9,13 +9,14 @@ cross_check_opts(delays, event_probs)
 \arguments{
 \item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
 delay distribution \code{function}s for the \pkg{ringbp} model, returned
-by \code{\link[=delay_opts]{delay_opts()}}. Contains ??? elements: \code{incubation_period} and
-\code{onset_to_isolation}}
+by \code{\link[=delay_opts]{delay_opts()}}. Contains 4 elements: \code{incubation_period},
+\code{onset_to_isolation}, \code{latent_period} and \code{onset_to_self_isolation}}
 
 \item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
 event probabilities for the \pkg{ringbp} model, returned by
-\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains ??? elements: \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_traced}}
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains 5 elements: \code{asymptomatic},
+\code{presymptomatic_transmission}, \code{alpha}, \code{symptomatic_traced} and
+\code{symptomatic_self_isolate}}
 }
 \value{
 \code{TRUE} if all the checks pass or an error or warning is thrown if
