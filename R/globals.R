@@ -23,6 +23,7 @@ utils::globalVariables(c(
   "asymptomatic", # <outbreak_step>
   "onset", # <outbreak_step>
   "exposure", # <outbreak_step>
+  "self_isolate", # <outbreak_step>
   "infector_asymptomatic", # <outbreak_step>
   "traced", # <outbreak_step>
   "test_positive", # <outbreak_step>

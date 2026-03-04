@@ -73,6 +73,19 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   presymptomatic transmission, depending on the `incubation_period`
 #'   distribution and `presymptomatic_transmission` (in [event_prob_opts()]).
 #'
+#' @param onset_to_self_isolation a `function`: a random number generating
+#'   `function` that samples from the onset-to-self-isolation distribution,
+#'   the `function` accepts a single `integer` argument specifying the length
+#'   of the `function` output.
+#'
+#'   By default `onset_to_self_isolation` is `NULL`. An onset-to-self-isolation
+#'   `function` only needs to be specified if a non-zero value is specified to
+#'   `symptomatic_self_isolate` in [event_prob_opts()] (which by default is 0).
+#'   If `onset_to_self_isolation` is specified but `symptomatic_self_isolate`
+#'   is zero, a warning will be thrown and the `onset_to_self_isolation`
+#'   will be ignored; if `symptomatic_self_isolate` is non-zero and
+#'   `onset_to_self_isolation` is `NULL`, [scenario_sim()] will error.
+#'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
 #'
@@ -83,11 +96,18 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #' )
 delay_opts <- function(incubation_period,
                        onset_to_isolation,
-                       latent_period = 0) {
+                       latent_period = 0,
+                       onset_to_self_isolation = NULL) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
+  if (!is.null(onset_to_self_isolation)) {
+    check_dist_func(
+      onset_to_self_isolation,
+      dist_name = "onset_to_self_isolation"
+    )
+  }
 
   if (latent_period > 0) {
     warning(
@@ -103,7 +123,8 @@ delay_opts <- function(incubation_period,
   opts <- list(
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    latent_period = latent_period
+    latent_period = latent_period,
+    onset_to_self_isolation = onset_to_self_isolation
   )
 
   class(opts) <- "ringbp_delay_opts"
@@ -119,6 +140,15 @@ delay_opts <- function(incubation_period,
 #' @param symptomatic_traced a `numeric` scalar probability (between 0
 #'   and 1 inclusive): proportion of infectious contacts ascertained by contact
 #'   tracing
+#' @param symptomatic_self_isolate a `numeric` scalar probability (between 0
+#'   and 1 inclusive): proportion of cases that self-isolate when they become
+#'   symptomatic. These individuals do not get tested and do not require a
+#'   positive test result to enter isolation. Default is 0 (i.e. no infectious
+#'   individuals self-isolate).
+#'
+#'   If `symptomatic_self_isolate` is non-zero a random number generating
+#'   `function` needs to be specified in the `onset_to_self_isolation` argument
+#'   in the [delay_opts()] function, otherwise the [scenario_sim()] will error.
 #'
 #' @return A `list` with class `<ringbp_event_prob_opts>`.
 #' @export
@@ -131,11 +161,13 @@ delay_opts <- function(incubation_period,
 #' )
 event_prob_opts <- function(asymptomatic,
                             presymptomatic_transmission,
-                            symptomatic_traced) {
+                            symptomatic_traced,
+                            symptomatic_self_isolate = 0) {
 
   checkmate::assert_number(asymptomatic, lower = 0, upper = 1)
   checkmate::assert_number(presymptomatic_transmission, lower = 0, upper = 1)
   checkmate::assert_number(symptomatic_traced, lower = 0, upper = 1)
+  checkmate::assert_number(symptomatic_self_isolate, lower = 0, upper = 1)
 
   # calculate alpha parameter from presymptomatic_transmission
   alpha <- presymptomatic_transmission_to_alpha(
@@ -146,7 +178,8 @@ event_prob_opts <- function(asymptomatic,
     asymptomatic = asymptomatic,
     presymptomatic_transmission = presymptomatic_transmission,
     alpha = alpha,
-    symptomatic_traced = symptomatic_traced
+    symptomatic_traced = symptomatic_traced,
+    symptomatic_self_isolate = symptomatic_self_isolate
   )
 
   class(opts) <- "ringbp_event_prob_opts"

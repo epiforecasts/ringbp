@@ -4,7 +4,12 @@
 \alias{event_prob_opts}
 \title{Create a list of event probabilities to run the \pkg{ringbp} model}
 \usage{
-event_prob_opts(asymptomatic, presymptomatic_transmission, symptomatic_traced)
+event_prob_opts(
+  asymptomatic,
+  presymptomatic_transmission,
+  symptomatic_traced,
+  symptomatic_self_isolate = 0
+)
 }
 \arguments{
 \item{asymptomatic}{a \code{numeric} scalar probability (between 0 and 1
@@ -18,6 +23,16 @@ before symptom onset.}
 \item{symptomatic_traced}{a \code{numeric} scalar probability (between 0
 and 1 inclusive): proportion of infectious contacts ascertained by contact
 tracing}
+
+\item{symptomatic_self_isolate}{a \code{numeric} scalar probability (between 0
+and 1 inclusive): proportion of cases that self-isolate when they become
+symptomatic. These individuals do not get tested and do not require a
+positive test result to enter isolation. Default is 0 (i.e. no infectious
+individuals self-isolate).
+
+If \code{symptomatic_self_isolate} is non-zero a random number generating
+\code{function} needs to be specified in the \code{onset_to_self_isolation} argument
+in the \code{\link[=delay_opts]{delay_opts()}} function, otherwise the \code{\link[=scenario_sim]{scenario_sim()}} will error.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_event_prob_opts>}.

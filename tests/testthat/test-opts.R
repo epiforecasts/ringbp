@@ -32,7 +32,7 @@ test_that("delay_opts works as expected", {
   expect_identical(
     vapply(delays, class, FUN.VALUE = character(1)),
     c(incubation_period = "function", onset_to_isolation = "function",
-      latent_period = "numeric")
+      latent_period = "numeric", onset_to_self_isolation = "NULL")
   )
 })
 
@@ -46,7 +46,8 @@ test_that("event_prob_opts works as expected", {
   expect_identical(
     vapply(event_probs, class, FUN.VALUE = character(1)),
     c(asymptomatic = "numeric", presymptomatic_transmission = "numeric",
-      alpha = "numeric", symptomatic_traced = "numeric")
+      alpha = "numeric", symptomatic_traced = "numeric",
+      symptomatic_self_isolate = "numeric")
   )
 })
 
