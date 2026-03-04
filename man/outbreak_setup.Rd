@@ -32,6 +32,7 @@ event probabilities for the \pkg{ringbp} model, returned by
 \item \verb{$traced}: \code{logical}
 \item \verb{$onset}: \code{numeric}
 \item \verb{$new_cases}: \code{integer}
+\item \verb{$self_isolate}: \code{logical}
 \item \verb{$isolated_time}: \code{numeric}
 \item \verb{$sampled}: \code{logical}
 }
