@@ -124,13 +124,20 @@ outbreak_step <- function(case_data,
     sampled = FALSE,
     # assign negative test result (FALSE) as placeholder;
     # will draw test result for symptomatic cases below
-    test_positive = FALSE
+    test_positive = FALSE,
+    # assign no isolation as placeholder; symptomatic, test-positive,
+    # traced or quarantined isolation time sampled below
+    isolated_time = Inf
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
   ][,
     # onset of new case is exposure + incubation period sample
     onset := exposure + delays$incubation_period(.N)
+  ][
+    # draw a sample to see if each person self-isolates if symptomatic
+    asymptomatic == FALSE,
+    self_isolate := runif(.N) < event_probs$symptomatic_self_isolate
   ]
 
   # draw a sample for missing and test result
@@ -138,27 +145,35 @@ outbreak_step <- function(case_data,
     infector_asymptomatic == FALSE,
     traced := runif(.N) < event_probs$symptomatic_traced
   ][
-    asymptomatic == FALSE,
+    asymptomatic == FALSE & self_isolate == FALSE,
     test_positive := runif(.N) <= interventions$test_sensitivity
   ]
 
-  prob_samples[, isolated_time := {
-    ref_time <- onset + delays$onset_to_isolation(.N)
-    fcase(
-      # asymptomatic: never isolated
-      asymptomatic, Inf,
-      # symptomatic, false-negative test: never isolated
-      !test_positive, Inf,
-      # symptomatic, test-positive, not traced: isolated at symptom onset + delay
-      !traced, ref_time,
-      # symptomatic, test-positive, traced, quarantine:
-      # earliest of infector / infectee isolation time
-      rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
-      # symptomatic, test-positive, traced, no quarantine:
-      # earliest of symptom onset + delay / infector isolation time
-      default = pmin(ref_time, pmax(onset, infector_isolation_time))
-    )
-  }]
+  # symptomatic, self-isolate, not tested:
+  # isolated at symptom onset + self-isolation delay
+  prob_samples[
+    self_isolate == TRUE,
+    isolated_time := onset + delays$onset_to_self_isolation(.N)
+  ]
+
+  # asymptomatic and symptomatic with false-negative test:
+  # never isolated remain Inf
+  prob_samples[
+    !self_isolate & !asymptomatic & test_positive,
+    isolated_time := {
+      ref_time <- onset + delays$onset_to_isolation(.N)
+      fcase(
+        # symptomatic, test-positive, not traced: isolated at symptom onset + delay
+        !traced, ref_time,
+        # symptomatic, test-positive, traced, quarantine:
+        # earliest of infector / infectee isolation time
+        rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
+        # symptomatic, test-positive, traced, no quarantine:
+        # earliest of symptom onset + delay / infector isolation time
+        default = pmin(ref_time, pmax(onset, infector_isolation_time))
+      )
+    }
+  ]
 
   # Chop out unneeded sample columns
   prob_samples[
