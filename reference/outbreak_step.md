@@ -82,20 +82,20 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector traced     onset new_cases
-#>       <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
-#> 1:        0        FALSE      1        0  FALSE  9.068614        NA
-#> 2:        0        FALSE      2        0  FALSE  7.134836        NA
-#> 3:        0        FALSE      3        0  FALSE  7.409368        NA
-#> 4:        0        FALSE      4        0  FALSE  3.831935        NA
-#> 5:        0        FALSE      5        0  FALSE 12.451065        NA
+#>    exposure asymptomatic caseid infector traced    onset new_cases
+#>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>
+#> 1:        0        FALSE      1        0  FALSE 2.581700        NA
+#> 2:        0        FALSE      2        0  FALSE 4.811051        NA
+#> 3:        0        FALSE      3        0  FALSE 7.008587        NA
+#> 4:        0        FALSE      4        0  FALSE 9.262499        NA
+#> 5:        0        FALSE      5        0  FALSE 5.827982        NA
 #>    isolated_time sampled
 #>            <num>  <lgcl>
-#> 1:     17.360308   FALSE
-#> 2:     10.430046   FALSE
-#> 3:      9.035117   FALSE
-#> 4:     15.099694   FALSE
-#> 5:     16.355962   FALSE
+#> 1:      3.641819   FALSE
+#> 2:     11.661816   FALSE
+#> 3:     11.898353   FALSE
+#> 4:     14.418862   FALSE
+#> 5:      7.868309   FALSE
 # generate next generation of cases
 out <- outbreak_step(
   case_data = case_data,
@@ -108,60 +108,34 @@ case_data <- out[[1]]
 case_data
 #>      exposure asymptomatic caseid infector traced     onset new_cases
 #>         <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
-#>  1:  0.000000        FALSE      1        0  FALSE  9.068614         6
-#>  2:  0.000000        FALSE      2        0  FALSE  7.134836         0
-#>  3:  0.000000        FALSE      3        0  FALSE  7.409368         0
-#>  4:  0.000000        FALSE      4        0  FALSE  3.831935         0
-#>  5:  0.000000        FALSE      5        0  FALSE 12.451065        14
-#>  6: 10.684477        FALSE      6        1  FALSE 18.416225        NA
-#>  7: 11.385832        FALSE      7        1  FALSE 15.003998        NA
-#>  8: 10.176903        FALSE      8        1  FALSE 15.028419        NA
-#>  9:  9.312653        FALSE      9        1  FALSE 14.598350        NA
-#> 10: 10.239543        FALSE     10        1  FALSE 14.286632        NA
-#> 11:  9.170390        FALSE     11        1  FALSE 18.738731        NA
-#> 12: 12.990119        FALSE     12        5  FALSE 19.830682        NA
-#> 13: 14.255198        FALSE     13        5  FALSE 18.637028        NA
-#> 14: 12.961801        FALSE     14        5  FALSE 17.212470        NA
-#> 15: 12.874304        FALSE     15        5  FALSE 15.957546        NA
-#> 16: 13.131607        FALSE     16        5  FALSE 16.887905        NA
-#> 17: 12.940163        FALSE     17        5  FALSE 20.887224        NA
-#> 18: 14.945229        FALSE     18        5  FALSE 22.751088        NA
-#> 19: 16.080431        FALSE     19        5  FALSE 21.357583        NA
-#> 20: 16.174508        FALSE     20        5  FALSE 20.972771        NA
-#> 21: 11.815477        FALSE     21        5  FALSE 16.492315        NA
-#> 22: 13.589812        FALSE     22        5  FALSE 17.914329        NA
-#> 23: 13.819688        FALSE     23        5  FALSE 23.393422        NA
-#> 24: 13.327341        FALSE     24        5  FALSE 16.501959        NA
-#> 25: 13.200103        FALSE     25        5  FALSE 18.777442        NA
-#>      exposure asymptomatic caseid infector traced     onset new_cases
-#>         <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
+#>  1:  0.000000        FALSE      1        0  FALSE  2.581700         0
+#>  2:  0.000000        FALSE      2        0  FALSE  4.811051         6
+#>  3:  0.000000        FALSE      3        0  FALSE  7.008587         0
+#>  4:  0.000000        FALSE      4        0  FALSE  9.262499         3
+#>  5:  0.000000        FALSE      5        0  FALSE  5.827982         0
+#>  6:  8.778479        FALSE      6        2  FALSE 14.348074        NA
+#>  7:  7.955102        FALSE      7        2  FALSE 11.189982        NA
+#>  8:  8.702365        FALSE      8        2  FALSE 13.061108        NA
+#>  9:  7.119254        FALSE      9        2  FALSE  8.336304        NA
+#> 10:  5.532936        FALSE     10        2  FALSE 12.868323        NA
+#> 11:  5.232672        FALSE     11        2  FALSE  7.312398        NA
+#> 12:  9.630210        FALSE     12        4  FALSE 16.542692        NA
+#> 13: 11.769312        FALSE     13        4  FALSE 19.913290        NA
+#> 14: 10.156739        FALSE     14        4  FALSE 14.509729        NA
 #>     isolated_time sampled
 #>             <num>  <lgcl>
-#>  1:     17.360308    TRUE
-#>  2:     10.430046    TRUE
-#>  3:      9.035117    TRUE
-#>  4:     15.099694    TRUE
-#>  5:     16.355962    TRUE
-#>  6:     28.556178   FALSE
-#>  7:     17.060636   FALSE
-#>  8:     16.828956   FALSE
-#>  9:     17.496067   FALSE
-#> 10:     15.093567   FALSE
-#> 11:     19.700004   FALSE
-#> 12:     23.311967   FALSE
-#> 13:     19.374708   FALSE
-#> 14:     21.566833   FALSE
-#> 15:     20.703180   FALSE
-#> 16:     18.116295   FALSE
-#> 17:     27.919306   FALSE
-#> 18:     26.830659   FALSE
-#> 19:     24.046193   FALSE
-#> 20:     24.443160   FALSE
-#> 21:     21.049371   FALSE
-#> 22:     25.547293   FALSE
-#> 23:     35.288396   FALSE
-#> 24:     19.650941   FALSE
-#> 25:     21.420606   FALSE
-#>     isolated_time sampled
-#>             <num>  <lgcl>
+#>  1:      3.641819    TRUE
+#>  2:     11.661816    TRUE
+#>  3:     11.898353    TRUE
+#>  4:     14.418862    TRUE
+#>  5:      7.868309    TRUE
+#>  6:     16.319629   FALSE
+#>  7:     12.835367   FALSE
+#>  8:     15.083510   FALSE
+#>  9:     13.040281   FALSE
+#> 10:     18.433117   FALSE
+#> 11:     13.036644   FALSE
+#> 12:     21.622686   FALSE
+#> 13:     23.716574   FALSE
+#> 14:     17.977972   FALSE
 ```

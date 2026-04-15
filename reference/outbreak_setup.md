@@ -74,18 +74,18 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector traced    onset new_cases
-#>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>
-#> 1:        0        FALSE      1        0  FALSE 5.494867        NA
-#> 2:        0        FALSE      2        0  FALSE 4.273768        NA
-#> 3:        0        FALSE      3        0  FALSE 9.144926        NA
-#> 4:        0        FALSE      4        0  FALSE 4.549269        NA
-#> 5:        0        FALSE      5        0  FALSE 5.327302        NA
+#>    exposure asymptomatic caseid infector traced     onset new_cases
+#>       <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
+#> 1:        0        FALSE      1        0  FALSE  6.615255        NA
+#> 2:        0        FALSE      2        0  FALSE 10.912476        NA
+#> 3:        0        FALSE      3        0  FALSE  5.494867        NA
+#> 4:        0        FALSE      4        0  FALSE  4.273768        NA
+#> 5:        0        FALSE      5        0  FALSE  9.144926        NA
 #>    isolated_time sampled
 #>            <num>  <lgcl>
-#> 1:     13.630713   FALSE
-#> 2:     12.000550   FALSE
-#> 3:      9.839796   FALSE
-#> 4:      7.850404   FALSE
-#> 5:      7.479154   FALSE
+#> 1:      9.212328   FALSE
+#> 2:     14.155064   FALSE
+#> 3:     13.630713   FALSE
+#> 4:     12.000550   FALSE
+#> 5:      9.839796   FALSE
 ```
