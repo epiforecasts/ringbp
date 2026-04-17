@@ -48,3 +48,38 @@ check_dist_func <- function(func,
 
   TRUE
 }
+
+#' Cross-check `*_opts()` lists to run the \pkg{ringbp} model
+#'
+#' @details Currently the only cross-checking is between
+#'   `onset_to_self_isolation` from [delay_opts()] and
+#'   `symptomatic_self_isolate` from [event_prob_opts()].
+#'
+#' @inheritParams outbreak_step
+#'
+#' @return `TRUE` if all the checks pass or an error or warning is thrown if
+#'   the simulation options are incompatible.
+#' @keywords internal
+cross_check_opts <- function(delays, event_probs) {
+  if (is.null(delays$onset_to_self_isolation) &&
+      event_probs$symptomatic_self_isolate > 0) {
+    stop(
+      "A non-zero `symptomatic_self_isolate` has been specified in ",
+      "`event_prob_opts()`, but `onset_to_self_isolation` is `NULL`.\n",
+      "Please specify an `onset_to_self_isolation` function for a proportion ",
+      "of symptomatic infections to self-isolate.",
+      call. = FALSE)
+  }
+  if (is.function(delays$onset_to_self_isolation) &&
+      event_probs$symptomatic_self_isolate == 0) {
+    warning(
+      "An `onset_to_self_isolation` delay has been specified in ",
+      "`delay_opts()`, but the `symptomatic_self_isolate` in ",
+      "`event_prob_opts()` is zero.\nIgnoring `onset_to_self_isolation`.\n",
+      "Please specify a non-zero value to `symptomatic_self_isolate` for a ",
+      "proportion of symptomatic infections to self-isolate.",
+      call. = FALSE
+    )
+  }
+  TRUE
+}

@@ -38,3 +38,59 @@ test_that("check_dist_func errors when output length does not equal input arg", 
     regexp = dist_func_error
   )
 })
+
+test_that("cross_check_opts works as expected", {
+  delays <- delay_opts(
+    incubation_period = \(n) rweibull(n = n, shape = 1, scale = 1),
+    onset_to_isolation = \(n) rweibull(n = n, shape = 1, scale = 1)
+  )
+  event_probs <- event_prob_opts(
+    asymptomatic = 0.1,
+    presymptomatic_transmission = 0.5,
+    symptomatic_traced = 0.2
+  )
+  expect_true(cross_check_opts(delays = delays, event_probs = event_probs))
+})
+
+test_that("cross_check_opts errors when delay is NULL and event is non-zero", {
+  delays <- delay_opts(
+    incubation_period = \(n) rweibull(n = n, shape = 1, scale = 1),
+    onset_to_isolation = \(n) rweibull(n = n, shape = 1, scale = 1)
+  )
+  event_probs <- event_prob_opts(
+    asymptomatic = 0.1,
+    presymptomatic_transmission = 0.5,
+    symptomatic_traced = 0.2,
+    symptomatic_self_isolate = 0.1
+  )
+  expect_error(
+    cross_check_opts(delays = delays, event_probs = event_probs),
+    regexp = paste(
+      "(A non-zero `symptomatic_self_isolate` has been specified)",
+      "(but `onset_to_self_isolation` is `NULL`)",
+      sep = "*"
+    )
+  )
+})
+
+test_that("cross_check_opts warns when delay is function and event is zero", {
+  delays <- delay_opts(
+    incubation_period = \(n) rweibull(n = n, shape = 1, scale = 1),
+    onset_to_isolation = \(n) rweibull(n = n, shape = 1, scale = 1),
+    onset_to_self_isolation = \(n) rweibull(n = n, shape = 1, scale = 1)
+  )
+  event_probs <- event_prob_opts(
+    asymptomatic = 0.1,
+    presymptomatic_transmission = 0.5,
+    symptomatic_traced = 0.2
+  )
+  expect_warning(
+    cross_check_opts(delays = delays, event_probs = event_probs),
+    regexp = paste(
+      "(An `onset_to_self_isolation` delay has been specified)",
+      "(but the `symptomatic_self_isolate` in `event_prob_opts()` is zero.)",
+      "(Ignoring `onset_to_self_isolation`.)",
+      sep = "*"
+    )
+  )
+})

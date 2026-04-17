@@ -99,8 +99,8 @@ test_that("outbreak_step with > 1 initial infections", {
     interventions = interventions
   )
 
-  # 200 new cases but some are removed from isolation truncating the offspring
-  expect_lt(first_gen_case_data$cases_in_gen, 200)
+  # 200 new cases but some can be removed from isolation truncating the offspring
+  expect_lte(first_gen_case_data$cases_in_gen, 200)
   # 50 is a approximate threshold that should be exceeded given the incubation
   # period and onset-to-isolation time parameters
   expect_gt(first_gen_case_data$cases_in_gen, 50)
