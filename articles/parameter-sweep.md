@@ -10,8 +10,14 @@ allow users the flexibility and control to run scenarios in whichever
 way they choose.
 
 ``` r
+
 library(ringbp)
 library(data.table)
+#> 
+#> Attaching package: 'data.table'
+#> The following object is masked from 'package:base':
+#> 
+#>     %notin%
 ```
 
 The
@@ -34,6 +40,7 @@ sure they are coupled and combinations of these parameters are not
 mixed. See `delay_group` below for an example of this.
 
 ``` r
+
 # Put parameters that are grouped by disease into this data.table
 scenarios <- data.table(
   expand.grid(
@@ -63,6 +70,7 @@ To unnest the `data.table` in order to sweep across the scenarios, a few
 data manipulation steps are required:
 
 ``` r
+
 list_cols <- grep("_group", colnames(scenarios), value = TRUE)
 non_list_cols <- setdiff(colnames(scenarios), list_cols)
 scenarios <- scenarios[, rbindlist(delay_group), by = c(non_list_cols)]
@@ -73,6 +81,7 @@ Lastly in setting up the parameter grid we add a column called
 add the incubation period to the parameter grid.
 
 ``` r
+
 scenarios[, scenario :=  1:.N]
 incub <- \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
 scenarios[, incubation_period := rep(list(incub), .N)]
@@ -87,6 +96,7 @@ makes it easy to loop over the resulting list using R functions like
 [`lapply()`](https://rdrr.io/r/base/lapply.html).
 
 ``` r
+
 scenario_sims <- scenarios[, list(data = list(.SD)), by = scenario]
 ```
 
@@ -97,6 +107,7 @@ scientifically robust analysis, the number of replicates should be much
 higher (e.g. 100-1000).
 
 ``` r
+
 n <- 3
 res <- lapply(scenario_sims$data, \(x, n) {
   scenario_sim(
@@ -130,6 +141,7 @@ give an idea of what the output looks like we show the first 3 scenarios
 for more information on the contents of these `data.table`s.
 
 ``` r
+
 head(res, 3)
 #> [[1]]
 #>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
@@ -205,6 +217,7 @@ simulation results to the `scenario_sims` `data.table` and assign them
 to the `sims` column.
 
 ``` r
+
 scenario_sims[, sims := lapply(data, \(x, n) {
   scenario_sim(
     n = n,
@@ -329,6 +342,7 @@ parallel using the [{future} framework](https://www.futureverse.org/).
 We load the {future} and {future.apply} R packages for this.
 
 ``` r
+
 library(future)
 library(future.apply)
 ```
@@ -344,12 +358,14 @@ Here we show how to run the analysis on 2 separate R sessions running in
 the background.
 
 ``` r
+
 future::plan("multisession", workers = 2)
 ```
 
 Now we re-run the parameter sweep with parallelisation.
 
 ``` r
+
 scenario_sims[, sims := future_lapply(data, \(x, n) {
   scenario_sim(
     n = n,

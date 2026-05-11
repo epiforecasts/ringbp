@@ -21,6 +21,7 @@ The current development version of *ringbp* can be installed from
 [GitHub](https://github.com/) using the `pak` package.
 
 ``` r
+
 if(!require("pak")) install.packages("pak")
 pak::pak("epiforecasts/ringbp")
 ```
@@ -33,6 +34,7 @@ function. Here is an example for running 10 simulations of a given
 scenario:
 
 ``` r
+
 library("ringbp")
 library("ggplot2")
 
@@ -73,6 +75,7 @@ res <- scenario_sim(
 ### Plot of weekly cases
 
 ``` r
+
 ggplot(
   data = res, aes(x = week, y = cumulative, col = as.factor(sim))
 ) +
@@ -86,6 +89,7 @@ ggplot(
 ### Estimate extinction probability
 
 ``` r
+
 extinct_prob(res)
 #> Calculating extinction using the extinction status from the simulation.
 #> [1] 0.9

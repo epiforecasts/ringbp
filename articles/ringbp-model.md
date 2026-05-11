@@ -158,9 +158,9 @@ symptom onset.
 
 Below we show the same 3-person outbreak schematic as above, but this
 time isolation is assumed to be imperfect (or leaky) and the
-reproduction number in isolation is positive ($R_{0}^{iso} > 0$). Person
-A and Person B transmit to Person D and Person E, respectively, from
-isolation.
+reproduction number in isolation is positive ($`R_0^\mathrm{iso} > 0`$).
+Person A and Person B transmit to Person D and Person E, respectively,
+from isolation.
 
 ![ringbp model schematic. This schematic assumes cases in isolation can
 transmit.](../reference/figures/model_schematic_iso_infect.svg)  
@@ -171,14 +171,14 @@ The table below includes the {ringbp} parameters mentioned in this
 vignette that users can specify. Parameter values are given as examples
 and do not represent the default values.
 
-| Epidemiological Parameter                 | {ringbp} Model Parameterisation                                             |
-|-------------------------------------------|-----------------------------------------------------------------------------|
-| Incubation period distribution            | `delay_opts(incubation_period = \(n) rgamma(n = n, shape = 2, scale = 2))`  |
-| Onset-to-isolation delay distribution     | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
-| Proportion of asymptomatic cases          | `event_prob_opts(asymptomatic = 0.5)`                                       |
-| Proportion of presymptomatic transmission | `event_prob_opts(presymptomatic_transmission = 0.5)`                        |
-| Contact tracing case ascertainment        | `event_prob_opts(symptomatic_traced = 0.5)`                                 |
-| Quarantine                                | `intervention_opts(quarantine = TRUE)`                                      |
+| Epidemiological Parameter | {ringbp} Model Parameterisation |
+|----|----|
+| Incubation period distribution | `delay_opts(incubation_period = \(n) rgamma(n = n, shape = 2, scale = 2))` |
+| Onset-to-isolation delay distribution | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
+| Proportion of asymptomatic cases | `event_prob_opts(asymptomatic = 0.5)` |
+| Proportion of presymptomatic transmission | `event_prob_opts(presymptomatic_transmission = 0.5)` |
+| Contact tracing case ascertainment | `event_prob_opts(symptomatic_traced = 0.5)` |
+| Quarantine | `intervention_opts(quarantine = TRUE)` |
 
 In the {ringbp} model the generation time is not parameterised, instead
 it is the result of the incubation period distribution and the
@@ -188,35 +188,64 @@ generation time can be set by specifying a `latent_period` in the
 function, however, a non-zero latent period may alter the proportion of
 presymptomatic transmission from what was set by the user.
 
-Defined mathematically, for individual $i = 1,\ldots,n$, let
-$$\begin{aligned}
-S_{i} & {\geq 0} & & {\text{symptom onset time},} \\
-E_{i} & {\geq 0} & & {\text{exposure time},} \\
-L & {\geq 0} & & {\text{latent period},} \\
-\alpha & {\in {\mathbb{R}}} & & {\text{shape (or slant) parameter},} \\
-\omega & {= 2} & & {\text{scale parameter}.}
-\end{aligned}$$
+Defined mathematically, for individual $`i = 1, \dots, n`$, let
+``` math
+\begin{align}
+S_i &\ge 0 && \text{symptom onset time}, \\
+E_i &\ge 0 && \text{exposure time}, \\
+L &\ge 0 && \text{latent period}, \\
+\alpha &\in \mathbb{R} && \text{shape (or slant) parameter}, \\
+\omega &= 2 && \text{scale parameter}.
+\end{align}
+```
 
-Define the incubation period as $$\xi_{i} = S_{i} - E_{i}.$$
+Define the incubation period as
+``` math
+\begin{equation}
+\xi_i = S_i - E_i .
+\end{equation}
+```
 
-Let $X_{i}$ be a random variable
-$$X_{i} \sim \operatorname{SN}\left( \xi_{i},\omega,\alpha \right),$$
-where $\operatorname{SN}(\xi,\omega,\alpha)$ denotes the skew-normal
-distribution with location $\xi$, scale $\omega$, and skewness $\alpha$.
+Let $`X_i`$ be a random variable
+``` math
+\begin{equation}
+X_i \sim \operatorname{SN}(\xi_i, \omega, \alpha),
+\end{equation}
+```
+where $`\operatorname{SN}(\xi, \omega, \alpha)`$ denotes the skew-normal
+distribution with location $`\xi`$, scale $`\omega`$, and skewness
+$`\alpha`$.
 
-The generation time $G_{i}$ is defined as being distributed like
-$X_{i}$, truncated to be at least $L$.
-$$G_{i} \sim X_{i} \mid X_{i} \geq L.$$
+The generation time $`G_i`$ is defined as being distributed like
+$`X_i`$, truncated to be at least $`L`$.
+``` math
+\begin{equation}
+G_i \sim X_i \mid X_i \ge L .
+\end{equation}
+```
 
 Equivalently, its probability density function is
-$$f_{G_{i}}(g) = \begin{cases}
-{\frac{f_{SN}\left( g \mid \xi_{i},\omega,\alpha \right)}{1 - F_{SN}\left( L \mid \xi_{i},\omega,\alpha \right)},} & {g \geq L,} \\
-{0,} & {g < L,}
-\end{cases}$$ where $f_{SN}$ and $F_{SN}$ denote the PDF and CDF of the
-skew-normal distribution, respectively.
+``` math
+\begin{equation}
+f_{G_i}(g) =
+\begin{cases}
+\dfrac{f_{\mathrm{SN}}(g \mid \xi_i, \omega, \alpha)}
+{1 - F_{\mathrm{SN}}(L \mid \xi_i, \omega, \alpha)},
+& g \ge L, \\[1em]
+0, & g < L,
+\end{cases}
+\end{equation}
+```
+where $`f_{\mathrm{SN}}`$ and $`F_{\mathrm{SN}}`$ denote the PDF and CDF
+of the skew-normal distribution, respectively.
 
-For any infectee $j$ of $i$ we draw from $G_{i}$ and set their exposure
-time to $$E_{j} = G_{i} + E_{i}$$
+For any infectee $`j`$ of $`i`$ we draw from $`G_i`$ and set their
+exposure time to
+``` math
+\begin{equation}
+E_j = G_i + E_i
+\end{equation}
+```
 
 For the purposes of illustration, the scenarios presented in this
 vignette include the fewest transmission events possible. The

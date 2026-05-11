@@ -26,8 +26,14 @@ Firstly, we load the {ringbp} package, as well as the {data.table} and
 {tinyplot} packages which are used in this vignette.
 
 ``` r
+
 library(ringbp)
 library(data.table)
+#> 
+#> Attaching package: 'data.table'
+#> The following object is masked from 'package:base':
+#> 
+#>     %notin%
 library(tinyplot)
 ```
 
@@ -60,7 +66,7 @@ describes the random number of secondary infections
 their entire infectious period.
 
 The mean of the offspring distribution is the basic reproduction number
-($R_{0}$), which is defined as the average number of secondary cases
+($`R_0`$), which is defined as the average number of secondary cases
 caused by one infected individual in a fully susceptible population. The
 model assumes that an infinite supply of susceptibles is always
 available to infect, making it suitable for modelling of early outbreaks
@@ -77,6 +83,7 @@ and infected individuals that are asymptomatic (or paucisymptomatic)
 ([`asymptomatic`](https://epiforecasts.io/ringbp/reference/offspring_opts.html#arg-asymptomatic)).
 
 ``` r
+
 offspring <- offspring_opts(
   community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
   isolated = \(n) rgeom(n = n, prob = 0.8), 
@@ -101,6 +108,7 @@ are specified using
 [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md).
 
 ``` r
+
 delays <- delay_opts(
   incubation_period = \(n) rlnorm(n, meanlog = 0.9, sdlog = 0.5),
   onset_to_isolation = \(n) rgamma(n, shape = 3, scale = 2)
@@ -139,6 +147,7 @@ contact tracing
 ([`symptomatic_traced`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-traced)).
 
 ``` r
+
 event_probs <- event_prob_opts(
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.5,
@@ -164,6 +173,7 @@ is implemented, can be turned on or off via
 [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md).
 
 ``` r
+
 interventions <- intervention_opts(quarantine = FALSE)
 ```
 
@@ -180,6 +190,7 @@ are specified using
 [`sim_opts()`](https://epiforecasts.io/ringbp/reference/sim_opts.md).
 
 ``` r
+
 sim <- sim_opts(
   cap_max_days = 350,
   cap_cases = 4500
@@ -201,10 +212,12 @@ is rendered. When using {ringbp}, setting the seed is not required
 unless you need to simulate the same outbreak multiple times.
 
 ``` r
+
 set.seed(1)
 ```
 
 ``` r
+
 outbreak <- scenario_sim(
   n = 100,
   initial_cases = 1,
@@ -232,6 +245,7 @@ trajectories. The columns are:
 A simple way to explore results is to plot cumulative cases over time.
 
 ``` r
+
 tinyplot(
   cumulative ~ week | as.factor(sim), 
   data = outbreak, 
@@ -251,6 +265,7 @@ number of cases in the simulation is set to 4,500, so the decline in
 cases to zero is due to reaching that upper bound.
 
 ``` r
+
 tinyplot(
   weekly_cases ~ week | as.factor(sim), 
   data = outbreak, 
@@ -273,6 +288,7 @@ calculated using
 [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md).
 
 ``` r
+
 extinct_prob(outbreak)
 #> Calculating extinction using the extinction status from the simulation.
 #> [1] 0.85
@@ -311,6 +327,7 @@ repository with the analysis scripts](https://github.com/cmmid/ringbp).
 ## Define epidemiological parameters
 
 ``` r
+
 scenarios <- data.table(
   expand.grid(
     initial_cases = c(5, 20),
@@ -325,6 +342,7 @@ scenarios <- scenarios[, list(data = list(.SD)), by = scenario]
 ## Run the simulation
 
 ``` r
+
 n <- 10
 
 scenarios[, sims := lapply(data, \(x, n) {
@@ -358,6 +376,7 @@ vignette](https://epiforecasts.io/ringbp/articles/parameter-sweep.md),
 which also includes information on how to parallelise the simulation.
 
 ``` r
+
 
 scenarios[, 
   pext := extinct_prob(sims[[1]], extinction_week = 12:16), 
@@ -396,7 +415,7 @@ This vignette has focused on the high-level workflow for running
 simulations with {ringbp}. Further uses of the package include, but are
 not limited to:
 
-- Simulate outbreaks under different assumptions about $R_{0}$,
+- Simulate outbreaks under different assumptions about $`R_0`$,
   incubation period, and proportion of asymptomatic infections.
 - Explore the impact of delays in isolation and the effectiveness of
   contact tracing.
@@ -405,8 +424,7 @@ not limited to:
 
 ## References
 
-Hellewell, Joel, Sam Abbott, Amy Gimma, Nikos I Bosse, Christopher I
-Jarvis, Timothy W Russell, James D Munday, et al. 2020. “Feasibility of
+Hellewell, Joel, Sam Abbott, Amy Gimma, et al. 2020. “Feasibility of
 Controlling COVID-19 Outbreaks by Isolation of Cases and Contacts.” *The
 Lancet Global Health* 8 (4): e488–96.
 <https://doi.org/10.1016/s2214-109x(20)30074-7>.
