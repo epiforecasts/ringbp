@@ -1,10 +1,10 @@
 # ringbp 0.1.2.9999
 
-* The package test suite has been improved, adding several new unit tests, and increasing the test coverage to 100%. The {testthat} edition is incremented to use the 3rd edition. Snapshot (regression) tests are added for `outbreak_setup()` and `scenario_sim()`. Addresses #100 by @joshwlambert in #160 and reviewed by @pearsonca.
+* The package test suite has been improved, adding several new unit tests, and increasing the test coverage to 100%. The `{testthat}` edition is incremented to use the 3rd edition. Snapshot (regression) tests are added for `outbreak_setup()` and `scenario_sim()`. Addresses #100 by @joshwlambert in #160 and reviewed by @pearsonca.
 
 * The lower bound for the generation time returned by `incubation_to_generation_time()` is now greater or equal to the latent period (default 0) instead of 1. A `latent_period` argument has been added to `delay_opts()`. `incubation_to_generation_time()` gains two new arguments: `exposure_time` and `latent_period` to prevent a bug where an infectee's exposure precedes an infector's exposure time. When `latent_period > 0`, generation times are left‑truncated at `latent_period`; this can reduce the realised presymptomatic transmission proportion, for which a warning is issued and the realised value is reported after simulation. Addresses #124 by @joshwlambert in #142 and reviewed by @sbfnk and @pearsonca.
 
-* The outbreak simulation functions (`scenario_sim()`, `outbreak_model()`, `outbreak_setup()` and `outbreak_step()`) have been refactored to provide a more modular and functional interface. New `delay_opts()`, `event_prob_opts()`, `intervention_opts()`, `offspring_opts()`, and `sim_opts()` helper functions are added. `check_dist_func()` is added and `check_outbreak_input()` removed. The `parameter_sweep()` function is removed and converted into a vignette ({purrr} is removed as a package dependency). `prop_presymptomatic_to_alpha()` is renamed to `presymptomatic_transmission_to_alpha()`. Addresses #65, #91 by @joshwlambert in #127 and reviewed by @pearsonca and @sbfnk.
+* The outbreak simulation functions (`scenario_sim()`, `outbreak_model()`, `outbreak_setup()` and `outbreak_step()`) have been refactored to provide a more modular and functional interface. New `delay_opts()`, `event_prob_opts()`, `intervention_opts()`, `offspring_opts()`, and `sim_opts()` helper functions are added. `check_dist_func()` is added and `check_outbreak_input()` removed. The `parameter_sweep()` function is removed and converted into a vignette (`{purrr}` is removed as a package dependency). `prop_presymptomatic_to_alpha()` is renamed to `presymptomatic_transmission_to_alpha()`. Addresses #65, #91 by @joshwlambert in #127 and reviewed by @pearsonca and @sbfnk.
 
 * The `inf_fn()` function has been renamed to `incubation_to_generation_time()` and the `k` function argument (`scenario_sim()`, `outbreak_model()`, `outbreak_step()`) has been renamed `prop_presymptomatic` (in `scenario_sim()` and `outbreak_model()`) or `alpha` (in `outbreak_step()`). The internal `prop_presymptomatic_to_alpha()` function has been added to do the conversion from `prop_presymptomatic` to `alpha`. Addresses #119, #120 by @joshwlambert in #123 and reviewed by @pearsonca and @sbfnk.
 
@@ -16,13 +16,13 @@
 
 * Changed internal sampling to vector draws in several locations; in some cases, this was an optimization, but in others it was a bug fix correcting the use of single draw where there should have been many. Also incorporates other vectorization changes to improve performance. Because of the bug fix, users should expect results to change. Addresses issues #90, #92, #94, in #98 by @pearsonca (now added as a contributor) with review by @sbfnk and @joshwlambert.
 
-* The minimum R version required by the {ringbp} package is now `>= 4.4.0`. This is due to the dependency on {Matrix}. A GitHub actions workflow for R CMD check has been added to check the package is valid on the minimum required R version. Addressed in #85 by @joshwlambert with review by @sbfnk.
+* The minimum R version required by the `{ringbp}` package is now `>= 4.4.0`. This is due to the dependency on `{Matrix}`. A GitHub actions workflow for R CMD check has been added to check the package is valid on the minimum required R version. Addressed in #85 by @joshwlambert with review by @sbfnk.
 
 * Parameterisation of delay distributions accepted by the model have been generalised in `scenario_sim()` and `outbreak_model()`. `delay_shape` and `delay_scale` arguments have been replaced by the `onset_to_isolation` argument, and an `incubation_period` argument is added. Addresses issues #59 and #63 in #84 by @joshwlambert with review by @sbfnk and @pearsonca.
 
 * Function examples are added and updated, and `\dontrun{}` is removed. Addresses issue #27 in #83 by @joshwlambert with review by @pearsonca.
 
-* Use {roxyglobals} to manage global variables. Addresses issue #66 in #81 by @joshwlambert with review by @sbfnk.
+* Use `{roxyglobals}` to manage global variables. Addresses issue #66 in #81 by @joshwlambert with review by @sbfnk.
 
 * Remove silent printing of returned `data.table`s from `outbreak_model()` and `scenario_sim()` by adding `[]` to `return()`. Addresses issue #64 in #80 by @joshwlambert with review from @sbfnk. 
 

@@ -20,18 +20,18 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Understanding how an infectious disease might spread, and under what conditions it can be controlled, is crucial for public health planning. The {ringbp} R package provides tools for simulating infectious disease transmission using a branching process model with explicit representation of case detection, isolation, and contact tracing. The package was developed in the early phase of the COVID-19 pandemic to support epidemiological analyses of outbreak dynamics and control feasibility.
+Understanding how an infectious disease might spread, and under what conditions it can be controlled, is crucial for public health planning. The `{ringbp}` R package provides tools for simulating infectious disease transmission using a branching process model with explicit representation of case detection, isolation, and contact tracing. The package was developed in the early phase of the COVID-19 pandemic to support epidemiological analyses of outbreak dynamics and control feasibility.
 
 This vignette provides a brief introduction to the package and demonstrates how to:
 
-* load ringbp
+* load `{ringbp}`
 * specify epidemiological parameters
 * run outbreak simulations
 * plot and summarise simulation results
 
 It concludes with a simplified version of the analysis of COVID-19 control feasibility from @Hellewell2020.
 
-Firstly, we load the {ringbp} package, as well as the {data.table} and {tinyplot} packages which are used in this vignette.
+Firstly, we load the `{ringbp}` package, as well as the `{data.table}` and `{tinyplot}` packages which are used in this vignette.
 
 ```{r setup}
 library(ringbp)
@@ -41,7 +41,7 @@ library(tinyplot)
 
 ## Model overview
 
-At its core, {ringbp} simulates outbreaks using a branching process model. Each infected individual generates secondary infections according to an offspring distribution, with modifications arising from:
+At its core, `{ringbp}` simulates outbreaks using a branching process model. Each infected individual generates secondary infections according to an offspring distribution, with modifications arising from:
 
 * delays between infection, symptom onset, and isolation
 * probabilities governing asymptomatic infection and case detection
@@ -49,7 +49,7 @@ At its core, {ringbp} simulates outbreaks using a branching process model. Each 
 
 Simulations are constructed by combining a set of options that describe these components and then running one or more stochastic outbreak realisations.
 
-For a more detailed exposition of the {ringbp} epidemiological model and how non-pharmaceutical interventions influence disease transmission see the [`ringbp-model.Rmd` vignette](ringbp-model.html).
+For a more detailed exposition of the `{ringbp}` epidemiological model and how non-pharmaceutical interventions influence disease transmission see the [`ringbp-model.Rmd` vignette](ringbp-model.html).
 
 ## Specifying model components
 
@@ -90,7 +90,7 @@ delays <- delay_opts(
 
 _Isolation_ is the separation of infectious individuals from others, with the aim to prevent further transmission.
 
-In the {ringbp} model, _isolated_ individuals have their own transmission dynamics (see `offspring_opts()` above). {ringbp} allows infected individuals in isolation to transmit (i.e. non-zero reproduction number), and can even have higher transmissibility than infectors in the community.
+In the `{ringbp}` model, _isolated_ individuals have their own transmission dynamics (see `offspring_opts()` above). `{ringbp}` allows infected individuals in isolation to transmit (i.e. non-zero reproduction number), and can even have higher transmissibility than infectors in the community.
 
 :::
 
@@ -118,7 +118,7 @@ _Contact tracing_ is the process of identifying and isolating people who have be
 
 ::: {.alert .alert-info}
 
-Quarantine in the {ringbp} model is defined as the isolation of individuals independent of their infection status. Contacts can be isolated before they are symptomatic once the infecting individual is confirmed to be infected and goes into isolation. It differs from isolation in the model, which requires the infectee to be symptomatic.
+Quarantine in the `{ringbp}` model is defined as the isolation of individuals independent of their infection status. Contacts can be isolated before they are symptomatic once the infecting individual is confirmed to be infected and goes into isolation. It differs from isolation in the model, which requires the infectee to be symptomatic.
 
 :::
 
@@ -147,11 +147,11 @@ With all components defined, simulations can be run using `scenario_sim()`. The 
 
 ::: {.alert .alert-info}
 
-_Stochastic epidemic model_: the {ringbp} model uses random simulations to reflect the inherent uncertainty in real‑world outbreaks.
+_Stochastic epidemic model_: the `{ringbp}` model uses random simulations to reflect the inherent uncertainty in real‑world outbreaks.
 
 :::
 
-We set the seed to ensure we have the same output each time the vignette is rendered. When using {ringbp}, setting the seed is not required unless you need to simulate the same outbreak multiple times.
+We set the seed to ensure we have the same output each time the vignette is rendered. When using `{ringbp}`, setting the seed is not required unless you need to simulate the same outbreak multiple times.
 
 ```{r}
 set.seed(1)
@@ -224,7 +224,7 @@ By default, extinction is defined as all infectious individuals have had the opp
 
 ## Simplified COVID-19 contact tracing effectiveness analysis
 
-Next we demonstrate how to use {ringbp} to reproduce a simplified version of the outbreak control analysis from @Hellewell2020. This study, published in the first months of the COVID-19 pandemic, modelled the probability that an introduced COVID-19 outbreak is contained by isolation and contact tracing. Containment was defined as no disease transmission between weeks 12-16 of the outbreak and the outbreak not reaching 5,000 total cases.
+Next we demonstrate how to use `{ringbp}` to reproduce a simplified version of the outbreak control analysis from @Hellewell2020. This study, published in the first months of the COVID-19 pandemic, modelled the probability that an introduced COVID-19 outbreak is contained by isolation and contact tracing. Containment was defined as no disease transmission between weeks 12-16 of the outbreak and the outbreak not reaching 5,000 total cases.
 
 Using the functions described above we define several parameter sets to analyse how varying the basic reproduction number in the community, the proportion of contacts successfully traced, and the number of initial infectors that seed independent outbreaks influence the likelihood of outbreak control. 
 
@@ -274,7 +274,7 @@ scenarios[, sims := lapply(data, \(x, n) {
 )]
 ```
 
-For a more detailed example of running {ringbp} across multiple parameter sets see the [`parameter-sweep.Rmd` vignette](parameter-sweep.html), which also includes information on how to parallelise the simulation.
+For a more detailed example of running `{ringbp}` across multiple parameter sets see the [`parameter-sweep.Rmd` vignette](parameter-sweep.html), which also includes information on how to parallelise the simulation.
 
 ```{r}
 
@@ -287,15 +287,15 @@ scenarios[,
 scenarios$pext
 ```
 
-@Hellewell2020 used {ringbp} to show that:
+@Hellewell2020 used `{ringbp}` to show that:
 
 * Outbreaks are controllable if contact tracing is fast and covers a high proportion of contacts
 * Delays in isolating cases or many undetected asymptomatic cases make control unlikely
 * Small initial clusters are easier to contain than larger ones
 
-## {ringbp} Use Cases
+## `{ringbp}` Use Cases
 
-This vignette has focused on the high-level workflow for running simulations with {ringbp}. Further uses of the package include, but are not limited to:
+This vignette has focused on the high-level workflow for running simulations with `{ringbp}`. Further uses of the package include, but are not limited to:
 
 * Simulate outbreaks under different assumptions about $R_0$, incubation period, and proportion of asymptomatic infections.
 * Explore the impact of delays in isolation and the effectiveness of contact tracing.
