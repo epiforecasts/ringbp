@@ -1,5 +1,7 @@
 # ringbp 0.1.2.9999
 
+* Updated package maintainer to @joshwlambert. By @joshwlambert in #223 and reviewed by @pearsonca and @sbfnk.
+
 * Added vignettes on:
 
   - Getting started vignette (`ringbp.Rmd`), containing an overview of the `{ringbp}` model and how to parameterise it, with an explanation of the model parameters, as well as how to plot the outbreak, and summarise the results (e.g. `extinct_prob()`). There is also a simplified version of the Hellewell et al. analysis. Addresses #139 by @joshwlambert in #201 and reviewed by @sbfnk and @pearsonca.
