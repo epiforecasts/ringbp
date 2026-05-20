@@ -2,6 +2,13 @@
 
 ## ringbp 0.1.2.9999
 
+- Updated package maintainer to
+  [@joshwlambert](https://github.com/joshwlambert). By
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#223](https://github.com/epiforecasts/ringbp/issues/223) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
 - Added vignettes on:
 
   - Getting started vignette (`ringbp.Rmd`), containing an overview of

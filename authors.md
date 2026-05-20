@@ -2,8 +2,7 @@
 
 ## Authors
 
-- **Joel Hellewell**. Author, maintainer.
-  [](https://orcid.org/0000-0003-2683-0849)
+- **Joel Hellewell**. Author. [](https://orcid.org/0000-0003-2683-0849)
 
 - **Sam Abbott**. Author. [](https://orcid.org/0000-0001-8057-8037)
 
@@ -21,7 +20,7 @@
 - **Carl A. B. Pearson**. Contributor, reviewer.
   [](https://orcid.org/0000-0003-0701-7860)
 
-- **Joshua W. Lambert**. Author.
+- **Joshua W. Lambert**. Author, maintainer.
   [](https://orcid.org/0000-0001-5218-3046)
 
 ## Citation

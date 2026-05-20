@@ -15,10 +15,13 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Joel Hellewell <Joel.Hellewell@lshtm.ac.uk>
-([ORCID](https://orcid.org/0000-0003-2683-0849))
+**Maintainer**: Joshua W. Lambert <joshua.lambert@lshtm.ac.uk>
+([ORCID](https://orcid.org/0000-0001-5218-3046))
 
 Authors:
+
+- Joel Hellewell <Joel.Hellewell@lshtm.ac.uk>
+  ([ORCID](https://orcid.org/0000-0003-2683-0849))
 
 - Sam Abbott <contact@samabbott.co.uk>
   ([ORCID](https://orcid.org/0000-0001-8057-8037))
@@ -30,9 +33,6 @@ Authors:
 - Sebastian Funk <sebastian.funk@lshtm.ac.uk>
 
 - Adam Kucharski <adam.kucharski@lshtm.ac.uk>
-
-- Joshua W. Lambert <joshua.lambert@lshtm.ac.uk>
-  ([ORCID](https://orcid.org/0000-0001-5218-3046))
 
 Other contributors:
 
