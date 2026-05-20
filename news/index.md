@@ -2,6 +2,66 @@
 
 ## ringbp 0.1.2.9999
 
+- Added vignettes on:
+
+  - Getting started vignette (`ringbp.Rmd`), containing an overview of
+    the [ringbp](https://epiforecasts.io/ringbp) model and how to
+    parameterise it, with an explanation of the model parameters, as
+    well as how to plot the outbreak, and summarise the results
+    (e.g. [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)).
+    There is also a simplified version of the Hellewell et al. analysis.
+    Addresses [\#139](https://github.com/epiforecasts/ringbp/issues/139)
+    by [@joshwlambert](https://github.com/joshwlambert) in
+    [\#201](https://github.com/epiforecasts/ringbp/issues/201) and
+    reviewed by [@sbfnk](https://github.com/sbfnk) and
+    [@pearsonca](https://github.com/pearsonca).
+  - Epidemic model description vignette (`ringbp-model.Rmd`), containing
+    model schematic figures which describe and illustrate how disease
+    transmission and interventions (isolation, contact tracing and
+    quarantine) are structured in the
+    [ringbp](https://epiforecasts.io/ringbp) model. The vignette also
+    links the epidemiological parameters that control the interventions,
+    disease transmissibility and delay distributions with the R code for
+    parameterising a [ringbp](https://epiforecasts.io/ringbp)
+    simulation. Addresses
+    [\#140](https://github.com/epiforecasts/ringbp/issues/140) by
+    [@joshwlambert](https://github.com/joshwlambert) in
+    [\#188](https://github.com/epiforecasts/ringbp/issues/188) and
+    reviewed by [@sbfnk](https://github.com/sbfnk) and
+    [@pearsonca](https://github.com/pearsonca).
+  - A vignette running [ringbp](https://epiforecasts.io/ringbp) across a
+    parameter set (`parameter-sweep.Rmd`) replaces the
+    `parameter_sweep()` function. Addresses
+    [\#86](https://github.com/epiforecasts/ringbp/issues/86),
+    [\#125](https://github.com/epiforecasts/ringbp/issues/125) by
+    [@joshwlambert](https://github.com/joshwlambert) in
+    [\#127](https://github.com/epiforecasts/ringbp/issues/127) and
+    reviewed by [@pearsonca](https://github.com/pearsonca) and
+    [@sbfnk](https://github.com/sbfnk).
+
+- Added `CONTRIBUTING.md`. Addresses
+  [\#109](https://github.com/epiforecasts/ringbp/issues/109) and
+  [\#203](https://github.com/epiforecasts/ringbp/issues/203) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#199](https://github.com/epiforecasts/ringbp/issues/199) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
+- Improved weekly aggregation in
+  [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md).
+  Addresses [\#168](https://github.com/epiforecasts/ringbp/issues/168)
+  by [@joshwlambert](https://github.com/joshwlambert) in
+  [\#197](https://github.com/epiforecasts/ringbp/issues/197) and
+  reviewed by [@sbfnk](https://github.com/sbfnk).
+
+- Added test sensitivity to outbreak model
+  ([\#176](https://github.com/epiforecasts/ringbp/issues/176)) and
+  renamed `symptomatic_ascertained` to `symptomatic_traced`
+  ([\#208](https://github.com/epiforecasts/ringbp/issues/208)) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#196](https://github.com/epiforecasts/ringbp/issues/196) and
+  reviewed by [@sbfnk](https://github.com/sbfnk) and
+  [@pearsonca](https://github.com/pearsonca).
+
 - The package test suite has been improved, adding several new unit
   tests, and increasing the test coverage to 100%. The
   [testthat](https://testthat.r-lib.org) edition is incremented to use
@@ -9,10 +69,89 @@
   [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
   and
   [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md).
-  Addresses [\#100](https://github.com/epiforecasts/ringbp/issues/100)
-  by [@joshwlambert](https://github.com/joshwlambert) in
+  Addresses [\#100](https://github.com/epiforecasts/ringbp/issues/100),
+  [\#178](https://github.com/epiforecasts/ringbp/issues/178),
+  [\#181](https://github.com/epiforecasts/ringbp/issues/181) by
+  [@joshwlambert](https://github.com/joshwlambert) in
   [\#160](https://github.com/epiforecasts/ringbp/issues/160) and
+  [\#182](https://github.com/epiforecasts/ringbp/issues/182) and
+  reviewed by [@pearsonca](https://github.com/pearsonca)
+  ([\#160](https://github.com/epiforecasts/ringbp/issues/160)) and
+  [@sbfnk](https://github.com/sbfnk)
+  ([\#182](https://github.com/epiforecasts/ringbp/issues/182)).
+
+- Fixed per-generation offspring distribution sampling. Previously,
+  offspring counts were redrawn for every infector at every call to
+  [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md),
+  so the same infector could generate offspring across multiple
+  generations. Offspring are now drawn once per infector via a new
+  internal
+  [`sample_offspring()`](https://epiforecasts.io/ringbp/reference/sample_offspring.md)
+  function, and the `isolated` column in `case_data` is renamed to
+  `sampled` to reflect that the infector has had their chance to infect.
+  `new_cases` is now an integer. Because of the bug fix, users should
+  expect simulation results to change. Addresses
+  [\#148](https://github.com/epiforecasts/ringbp/issues/148) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#169](https://github.com/epiforecasts/ringbp/issues/169) and
+  reviewed by [@sbfnk](https://github.com/sbfnk).
+
+- Enhanced interaction between simulation and extinction functionality:
+
+  - [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md)
+    and
+    [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+    return the extinction status as an attribute (`extinct`) of the
+    `data.table`. This removes the need to calculate extinction from
+    weekly case data in
+    [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    and
+    [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md).
+    Extinction calculation code still exists in
+    [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    and
+    [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    for backwards compatibility and if the attribute is dropped.
+  - Additionally,
+    [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+    returns a `cap_cases` attribute with the `data.table` and the
+    `cap_cases` argument is removed from
+    [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    and
+    [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md).
+  - The `outbreak_df_week` argument in
+    [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    and
+    [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    is renamed to `scenario` and the `week_range` argument is renamed to
+    `extinction_week`. The `extinction_week` argument can now accept: 1)
+    an integer scalar, 2) an integer vector of length 2 with the lower
+    and upper bounds of the extinction window, and 3) an integer vector
+    of length *n*. The integer scalar is used as a cutoff for
+    determining if extinction has occurred by the cutoff. The integer
+    vectors are used as extinction windows, if users want to examine if
+    extinction has occurred before a time that is not until the end of
+    the outbreak. The new default for `extinction_week` argument is
+    `max(scenario$week) - 1` which means the last 2 weeks of the
+    outbreak are used as the extinction window.
+  - A check is added to
+    [`detect_extinct()`](https://epiforecasts.io/ringbp/reference/extinction.md)
+    to ensure the `extinction_week` is within the simulated outbreak.
+
+  Addresses [\#132](https://github.com/epiforecasts/ringbp/issues/132)
+  by [@joshwlambert](https://github.com/joshwlambert) in
+  [\#161](https://github.com/epiforecasts/ringbp/issues/161) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
+- Upgraded the pkgdown website to Bootstrap v5. Addresses
+  [\#131](https://github.com/epiforecasts/ringbp/issues/131) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#143](https://github.com/epiforecasts/ringbp/issues/143) and
   reviewed by [@pearsonca](https://github.com/pearsonca).
+
+- Added dependabot by [@sbfnk](https://github.com/sbfnk) in
+  [\#154](https://github.com/epiforecasts/ringbp/issues/154).
 
 - The lower bound for the generation time returned by
   [`incubation_to_generation_time()`](https://epiforecasts.io/ringbp/reference/incubation_to_generation_time.md)
@@ -32,6 +171,15 @@
   reviewed by [@sbfnk](https://github.com/sbfnk) and
   [@pearsonca](https://github.com/pearsonca).
 
+- The
+  [`outbreak_continue()`](https://epiforecasts.io/ringbp/reference/outbreak_continue.md)
+  function is added to house the simulation loop logic. Addresses
+  [\#133](https://github.com/epiforecasts/ringbp/issues/133) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#150](https://github.com/epiforecasts/ringbp/issues/150) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
 - The outbreak simulation functions
   ([`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md),
   [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md),
@@ -48,10 +196,9 @@
   [`sim_opts()`](https://epiforecasts.io/ringbp/reference/sim_opts.md)
   helper functions are added.
   [`check_dist_func()`](https://epiforecasts.io/ringbp/reference/check_dist_func.md)
-  is added and `check_outbreak_input()` removed. The `parameter_sweep()`
-  function is removed and converted into a vignette
-  ([purrr](https://purrr.tidyverse.org/) is removed as a package
-  dependency). `prop_presymptomatic_to_alpha()` is renamed to
+  is added. The `parameter_sweep()` function is removed and converted
+  into a vignette ([purrr](https://purrr.tidyverse.org/) is removed as a
+  package dependency). `prop_presymptomatic_to_alpha()` is renamed to
   [`presymptomatic_transmission_to_alpha()`](https://epiforecasts.io/ringbp/reference/presymptomatic_transmission_to_alpha.md).
   Addresses [\#65](https://github.com/epiforecasts/ringbp/issues/65),
   [\#91](https://github.com/epiforecasts/ringbp/issues/91) by
@@ -81,10 +228,9 @@
   reviewed by [@pearsonca](https://github.com/pearsonca) and
   [@sbfnk](https://github.com/sbfnk).
 
-- Added input checking, including new `check_outbreak_input()` function,
-  removed unused argument defaults, consistently ordered arguments in
-  functions, and moved function argument documentation to functions that
-  use the argument. Addresses
+- Added input checking, removed unused argument defaults, consistently
+  ordered arguments in functions, and moved function argument
+  documentation to functions that use the argument. Addresses
   [\#89](https://github.com/epiforecasts/ringbp/issues/89),
   [\#91](https://github.com/epiforecasts/ringbp/issues/91),
   [\#93](https://github.com/epiforecasts/ringbp/issues/93),

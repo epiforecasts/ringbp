@@ -1,23 +1,24 @@
-# *ringbp*: Simulate infectious disease transmission with contact tracing
+# `{ringbp}`: Simulate infectious disease transmission with contact tracing
 
-*ringbp* is an R package that provides methods to simulate infectious
-disease transmission in the presence of contact tracing. It was
-initially developed to support a paper written in early 2020 to assess
-the feasibility of controlling COVID-19; see the [companion analysis
-code](https://github.com/cmmid/ringbp) and
+[ringbp](https://epiforecasts.io/ringbp) is an R package that provides
+methods to simulate infectious disease transmission in the presence of
+contact tracing. It was initially developed to support a paper written
+in early 2020 to assess the feasibility of controlling COVID-19; see the
+[companion analysis code](https://github.com/cmmid/ringbp) and
 [paper](https://doi.org/10.1016/S2214-109X(20)30074-7) for more details.
 
-*ringbp* is an R package that provides methods to simulate infectious
-disease transmission in the presence of contact tracing. It was
-initially developed to support a paper written in early 2020 to assess
-the [feasibility of controlling
+[ringbp](https://epiforecasts.io/ringbp) is an R package that provides
+methods to simulate infectious disease transmission in the presence of
+contact tracing. It was initially developed to support a paper written
+in early 2020 to assess the [feasibility of controlling
 COVID-19](https://github.com/cmmid/ringbp). For more details on the
 methods implemented here, see the associated
 [paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
 
 ## Installation
 
-The current development version of *ringbp* can be installed from
+The current development version of
+[ringbp](https://epiforecasts.io/ringbp) can be installed from
 [GitHub](https://github.com/) using the `pak` package.
 
 ``` r
@@ -97,8 +98,8 @@ extinct_prob(res)
 
 ## Contribute
 
-Contributions to *ringbp* are welcomed. Please follow the [package
-contributing
+Contributions to [ringbp](https://epiforecasts.io/ringbp) are welcomed.
+Please follow the [package contributing
 guide](https://github.com/epiforecasts/ringbp/blob/main/.github/CONTRIBUTING.md).
 
 ## Contributors
@@ -133,7 +134,7 @@ specification. Contributions of any kind are welcome!
 
 ## Code of Conduct
 
-Please note that the *ringbp* project is released with a [Contributor
-Code of
+Please note that the [ringbp](https://epiforecasts.io/ringbp) project is
+released with a [Contributor Code of
 Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
