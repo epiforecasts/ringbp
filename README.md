@@ -1,5 +1,5 @@
 
-# *ringbp*: Simulate infectious disease transmission with contact tracing
+# `{ringbp}`: Simulate infectious disease transmission with contact tracing
 
 <!-- badges: start -->
 
@@ -14,14 +14,14 @@ contributors](https://img.shields.io/github/contributors/epiforecasts/ringbp)
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-*ringbp* is an R package that provides methods to simulate infectious
+`{ringbp}` is an R package that provides methods to simulate infectious
 disease transmission in the presence of contact tracing. It was
 initially developed to support a paper written in early 2020 to assess
 the feasibility of controlling COVID-19; see the [companion analysis
 code](https://github.com/cmmid/ringbp) and
 [paper](https://doi.org/10.1016/S2214-109X(20)30074-7) for more details.
 
-*ringbp* is an R package that provides methods to simulate infectious
+`{ringbp}` is an R package that provides methods to simulate infectious
 disease transmission in the presence of contact tracing. It was
 initially developed to support a paper written in early 2020 to assess
 the [feasibility of controlling
@@ -31,7 +31,7 @@ methods implemented here, see the associated
 
 ## Installation
 
-The current development version of *ringbp* can be installed from
+The current development version of `{ringbp}` can be installed from
 [GitHub](https://github.com/) using the `pak` package.
 
 ``` r
@@ -106,14 +106,16 @@ extinct_prob(res)
 
 ## Contribute
 
-Contributions to *ringbp* are welcomed. Please follow the [package
+Contributions to `{ringbp}` are welcomed. Please follow the [package
 contributing
 guide](https://github.com/epiforecasts/ringbp/blob/main/.github/CONTRIBUTING.md).
 
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
 
 All contributions to this project are gratefully acknowledged using the
@@ -145,12 +147,14 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/epiforecasts/ringbp/issues?q=is%3Aissue+commenter%3Ajamesmbaazam">jamesmbaazam</a>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Code of Conduct
 
-Please note that the *ringbp* project is released with a [Contributor
+Please note that the `{ringbp}` project is released with a [Contributor
 Code of
 Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
