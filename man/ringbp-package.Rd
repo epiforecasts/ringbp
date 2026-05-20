@@ -18,16 +18,16 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Joel Hellewell \email{Joel.Hellewell@lshtm.ac.uk} (\href{https://orcid.org/0000-0003-2683-0849}{ORCID})
+\strong{Maintainer}: Joshua W. Lambert \email{joshua.lambert@lshtm.ac.uk} (\href{https://orcid.org/0000-0001-5218-3046}{ORCID})
 
 Authors:
 \itemize{
+  \item Joel Hellewell \email{Joel.Hellewell@lshtm.ac.uk} (\href{https://orcid.org/0000-0003-2683-0849}{ORCID})
   \item Sam Abbott \email{contact@samabbott.co.uk} (\href{https://orcid.org/0000-0001-8057-8037}{ORCID})
   \item Amy Gimma \email{amy.gimma@lshtm.ac.uk}
   \item Tim Lucas \email{tim.lucas@leicester.ac.uk}
   \item Sebastian Funk \email{sebastian.funk@lshtm.ac.uk}
   \item Adam Kucharski \email{adam.kucharski@lshtm.ac.uk}
-  \item Joshua W. Lambert \email{joshua.lambert@lshtm.ac.uk} (\href{https://orcid.org/0000-0001-5218-3046}{ORCID})
 }
 
 Other contributors:
