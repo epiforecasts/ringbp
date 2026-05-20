@@ -3,9 +3,9 @@
 ## ringbp 0.1.2.9999
 
 - The package test suite has been improved, adding several new unit
-  tests, and increasing the test coverage to 100%. The {testthat}
-  edition is incremented to use the 3rd edition. Snapshot (regression)
-  tests are added for
+  tests, and increasing the test coverage to 100%. The
+  [testthat](https://testthat.r-lib.org) edition is incremented to use
+  the 3rd edition. Snapshot (regression) tests are added for
   [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
   and
   [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md).
@@ -49,9 +49,9 @@
   helper functions are added.
   [`check_dist_func()`](https://epiforecasts.io/ringbp/reference/check_dist_func.md)
   is added and `check_outbreak_input()` removed. The `parameter_sweep()`
-  function is removed and converted into a vignette ({purrr} is removed
-  as a package dependency). `prop_presymptomatic_to_alpha()` is renamed
-  to
+  function is removed and converted into a vignette
+  ([purrr](https://purrr.tidyverse.org/) is removed as a package
+  dependency). `prop_presymptomatic_to_alpha()` is renamed to
   [`presymptomatic_transmission_to_alpha()`](https://epiforecasts.io/ringbp/reference/presymptomatic_transmission_to_alpha.md).
   Addresses [\#65](https://github.com/epiforecasts/ringbp/issues/65),
   [\#91](https://github.com/epiforecasts/ringbp/issues/91) by
@@ -124,10 +124,12 @@
   contributor) with review by [@sbfnk](https://github.com/sbfnk) and
   [@joshwlambert](https://github.com/joshwlambert).
 
-- The minimum R version required by the {ringbp} package is now
-  `>= 4.4.0`. This is due to the dependency on {Matrix}. A GitHub
-  actions workflow for R CMD check has been added to check the package
-  is valid on the minimum required R version. Addressed in
+- The minimum R version required by the
+  [ringbp](https://epiforecasts.io/ringbp) package is now `>= 4.4.0`.
+  This is due to the dependency on
+  [Matrix](https://Matrix.R-forge.R-project.org). A GitHub actions
+  workflow for R CMD check has been added to check the package is valid
+  on the minimum required R version. Addressed in
   [\#85](https://github.com/epiforecasts/ringbp/issues/85) by
   [@joshwlambert](https://github.com/joshwlambert) with review by
   [@sbfnk](https://github.com/sbfnk).
@@ -154,7 +156,8 @@
   [@joshwlambert](https://github.com/joshwlambert) with review by
   [@pearsonca](https://github.com/pearsonca).
 
-- Use {roxyglobals} to manage global variables. Addresses issue
+- Use [roxyglobals](https://github.com/anthonynorth/roxyglobals) to
+  manage global variables. Addresses issue
   [\#66](https://github.com/epiforecasts/ringbp/issues/66) in
   [\#81](https://github.com/epiforecasts/ringbp/issues/81) by
   [@joshwlambert](https://github.com/joshwlambert) with review by

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Getting started with {ringbp} • ringbp</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with {ringbp}">
 </head>
@@ -72,24 +72,26 @@
 </h2>
 <p>Understanding how an infectious disease might spread, and under what
 conditions it can be controlled, is crucial for public health planning.
-The {ringbp} R package provides tools for simulating infectious disease
-transmission using a branching process model with explicit
-representation of case detection, isolation, and contact tracing. The
-package was developed in the early phase of the COVID-19 pandemic to
-support epidemiological analyses of outbreak dynamics and control
-feasibility.</p>
+The <a href="https://epiforecasts.io/ringbp">ringbp</a> R package provides tools for simulating
+infectious disease transmission using a branching process model with
+explicit representation of case detection, isolation, and contact
+tracing. The package was developed in the early phase of the COVID-19
+pandemic to support epidemiological analyses of outbreak dynamics and
+control feasibility.</p>
 <p>This vignette provides a brief introduction to the package and
 demonstrates how to:</p>
 <ul>
-<li>load ringbp</li>
+<li>load <a href="https://epiforecasts.io/ringbp">ringbp</a>
+</li>
 <li>specify epidemiological parameters</li>
 <li>run outbreak simulations</li>
 <li>plot and summarise simulation results</li>
 </ul>
 <p>It concludes with a simplified version of the analysis of COVID-19
 control feasibility from <span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span>.</p>
-<p>Firstly, we load the {ringbp} package, as well as the {data.table}
-and {tinyplot} packages which are used in this vignette.</p>
+<p>Firstly, we load the <a href="https://epiforecasts.io/ringbp">ringbp</a> package, as well as the
+<a href="https://r-datatable.com" class="external-link">data.table</a> and <a href="https://grantmcdermott.com/tinyplot/" class="external-link">tinyplot</a> packages which are
+used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/ringbp">ringbp</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
@@ -103,9 +105,10 @@ and {tinyplot} packages which are used in this vignette.</p>
 <div class="section level2">
 <h2 id="model-overview">Model overview<a class="anchor" aria-label="anchor" href="#model-overview"></a>
 </h2>
-<p>At its core, {ringbp} simulates outbreaks using a branching process
-model. Each infected individual generates secondary infections according
-to an offspring distribution, with modifications arising from:</p>
+<p>At its core, <a href="https://epiforecasts.io/ringbp">ringbp</a> simulates outbreaks using a
+branching process model. Each infected individual generates secondary
+infections according to an offspring distribution, with modifications
+arising from:</p>
 <ul>
 <li>delays between infection, symptom onset, and isolation</li>
 <li>probabilities governing asymptomatic infection and case
@@ -115,10 +118,9 @@ detection</li>
 <p>Simulations are constructed by combining a set of options that
 describe these components and then running one or more stochastic
 outbreak realisations.</p>
-<p>For a more detailed exposition of the {ringbp} epidemiological model
-and how non-pharmaceutical interventions influence disease transmission
-see the <a href="ringbp-model.html"><code>ringbp-model.Rmd</code>
-vignette</a>.</p>
+<p>For a more detailed exposition of the <a href="https://epiforecasts.io/ringbp">ringbp</a>
+epidemiological model and how non-pharmaceutical interventions influence
+disease transmission see the <a href="ringbp-model.html"><code>ringbp-model.Rmd</code> vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="specifying-model-components">Specifying model components<a class="anchor" aria-label="anchor" href="#specifying-model-components"></a>
@@ -170,11 +172,11 @@ are specified using <code><a href="../reference/delay_opts.html">delay_opts()</a
 <div class="alert alert-info">
 <p><em>Isolation</em> is the separation of infectious individuals from
 others, with the aim to prevent further transmission.</p>
-<p>In the {ringbp} model, <em>isolated</em> individuals have their own
-transmission dynamics (see <code><a href="../reference/offspring_opts.html">offspring_opts()</a></code> above).
-{ringbp} allows infected individuals in isolation to transmit
-(i.e. non-zero reproduction number), and can even have higher
-transmissibility than infectors in the community.</p>
+<p>In the <a href="https://epiforecasts.io/ringbp">ringbp</a> model, <em>isolated</em> individuals
+have their own transmission dynamics (see <code><a href="../reference/offspring_opts.html">offspring_opts()</a></code>
+above). <a href="https://epiforecasts.io/ringbp">ringbp</a> allows infected individuals in isolation
+to transmit (i.e. non-zero reproduction number), and can even have
+higher transmissibility than infectors in the community.</p>
 </div>
 <p>The arguments to both <code><a href="../reference/offspring_opts.html">offspring_opts()</a></code> and
 <code><a href="../reference/delay_opts.html">delay_opts()</a></code> are functions of <code>n</code>: they take an
@@ -209,11 +211,11 @@ positive for the infection.</p>
 <h3 id="intervention-options">Intervention options<a class="anchor" aria-label="anchor" href="#intervention-options"></a>
 </h3>
 <div class="alert alert-info">
-<p>Quarantine in the {ringbp} model is defined as the isolation of
-individuals independent of their infection status. Contacts can be
-isolated before they are symptomatic once the infecting individual is
-confirmed to be infected and goes into isolation. It differs from
-isolation in the model, which requires the infectee to be
+<p>Quarantine in the <a href="https://epiforecasts.io/ringbp">ringbp</a> model is defined as the
+isolation of individuals independent of their infection status. Contacts
+can be isolated before they are symptomatic once the infecting
+individual is confirmed to be infected and goes into isolation. It
+differs from isolation in the model, which requires the infectee to be
 symptomatic.</p>
 </div>
 <p>Interventions, thus far only quarantine (<a href="https://epiforecasts.io/ringbp/reference/intervention_opts.html#arg-quarantine"><code>quarantine</code></a>)
@@ -244,13 +246,13 @@ are specified using <code><a href="../reference/sim_opts.html">sim_opts()</a></c
 <code><a href="../reference/scenario_sim.html">scenario_sim()</a></code>. The example below runs 100 independent
 outbreak simulations starting from a single initial case.</p>
 <div class="alert alert-info">
-<p><em>Stochastic epidemic model</em>: the {ringbp} model uses random
-simulations to reflect the inherent uncertainty in real‑world
-outbreaks.</p>
+<p><em>Stochastic epidemic model</em>: the <a href="https://epiforecasts.io/ringbp">ringbp</a> model
+uses random simulations to reflect the inherent uncertainty in
+real‑world outbreaks.</p>
 </div>
 <p>We set the seed to ensure we have the same output each time the
-vignette is rendered. When using {ringbp}, setting the seed is not
-required unless you need to simulate the same outbreak multiple
+vignette is rendered. When using <a href="https://epiforecasts.io/ringbp">ringbp</a>, setting the seed
+is not required unless you need to simulate the same outbreak multiple
 times.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -338,8 +340,8 @@ extinction.</p>
 <div class="section level2">
 <h2 id="simplified-covid-19-contact-tracing-effectiveness-analysis">Simplified COVID-19 contact tracing effectiveness analysis<a class="anchor" aria-label="anchor" href="#simplified-covid-19-contact-tracing-effectiveness-analysis"></a>
 </h2>
-<p>Next we demonstrate how to use {ringbp} to reproduce a simplified
-version of the outbreak control analysis from <span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span>. This study, published in the
+<p>Next we demonstrate how to use <a href="https://epiforecasts.io/ringbp">ringbp</a> to reproduce a
+simplified version of the outbreak control analysis from <span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span>. This study, published in the
 first months of the COVID-19 pandemic, modelled the probability that an
 introduced COVID-19 outbreak is contained by isolation and contact
 tracing. Containment was defined as no disease transmission between
@@ -397,8 +399,8 @@ analysis scripts</a>.</p>
 <span>  <span class="op">}</span>,</span>
 <span>  n <span class="op">=</span> <span class="va">n</span></span>
 <span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<p>For a more detailed example of running {ringbp} across multiple
-parameter sets see the <a href="parameter-sweep.html"><code>parameter-sweep.Rmd</code>
+<p>For a more detailed example of running <a href="https://epiforecasts.io/ringbp">ringbp</a> across
+multiple parameter sets see the <a href="parameter-sweep.html"><code>parameter-sweep.Rmd</code>
 vignette</a>, which also includes information on how to parallelise the
 simulation.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -423,8 +425,8 @@ simulation.</p>
 <span><span class="co"># probability of extinction for each scenario</span></span>
 <span><span class="va">scenarios</span><span class="op">$</span><span class="va">pext</span></span>
 <span><span class="co">#&gt;  [1] 1.0 0.7 0.3 0.1 1.0 1.0 0.9 0.2 1.0 1.0 1.0 1.0</span></span></code></pre></div>
-<p><span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span> used {ringbp} to show
-that:</p>
+<p><span class="citation">Hellewell et al. (<a href="#ref-Hellewell2020">2020</a>)</span> used <a href="https://epiforecasts.io/ringbp">ringbp</a> to
+show that:</p>
 <ul>
 <li>Outbreaks are controllable if contact tracing is fast and covers a
 high proportion of contacts</li>
@@ -434,11 +436,12 @@ control unlikely</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="ringbp-use-cases">{ringbp} Use Cases<a class="anchor" aria-label="anchor" href="#ringbp-use-cases"></a>
+<h2 id="ringbp-use-cases">
+<code>{ringbp}</code> Use Cases<a class="anchor" aria-label="anchor" href="#ringbp-use-cases"></a>
 </h2>
 <p>This vignette has focused on the high-level workflow for running
-simulations with {ringbp}. Further uses of the package include, but are
-not limited to:</p>
+simulations with <a href="https://epiforecasts.io/ringbp">ringbp</a>. Further uses of the package
+include, but are not limited to:</p>
 <ul>
 <li>Simulate outbreaks under different assumptions about
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mn>0</mn></msub><annotation encoding="application/x-tex">R_0</annotation></semantics></math>,

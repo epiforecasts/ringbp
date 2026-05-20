@@ -1,7 +1,7 @@
-# Contributing to ringbp
+# Contributing to {ringbp}
 
-This outlines how to propose a change to ringbp. All contributions are
-welcome.
+This outlines how to propose a change to
+[ringbp](https://epiforecasts.io/ringbp). All contributions are welcome.
 
 ## Fixing typos
 
@@ -123,19 +123,20 @@ resolved). That way the PR number and reviewers will be known.
 
 ### Use cases
 
-We are always interested in hearing about how ringbp is being applied.
-This helps inform future development priorities by identifying which
-features are the most used, and which parts of the project lack clarity
-or need improvement. If you have a use case which you would like to
-share with us, please do let us know. You can reach out through
+We are always interested in hearing about how
+[ringbp](https://epiforecasts.io/ringbp) is being applied. This helps
+inform future development priorities by identifying which features are
+the most used, and which parts of the project lack clarity or need
+improvement. If you have a use case which you would like to share with
+us, please do let us know. You can reach out through
 [email](mailto:joshua.lambert@lshtm.ac.uk). We’re grateful for any way
-that you can spread the word. Whether that’s citing the ringbp package
-in your papers or telling your colleagues about a feature you found
-useful.
+that you can spread the word. Whether that’s citing the
+[ringbp](https://epiforecasts.io/ringbp) package in your papers or
+telling your colleagues about a feature you found useful.
 
 ## Code of Conduct
 
-Please note that the ringbp project is released with a [Contributor Code
-of
+Please note that the [ringbp](https://epiforecasts.io/ringbp) project is
+released with a [Contributor Code of
 Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
 By contributing to this project you agree to abide by its terms.

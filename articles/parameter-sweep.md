@@ -1,13 +1,14 @@
 # Scenario parameter sweep
 
-This vignette demonstrates how to run an analysis using the {ringbp}
-simulation across multiple scenarios.
+This vignette demonstrates how to run an analysis using the
+[ringbp](https://epiforecasts.io/ringbp) simulation across multiple
+scenarios.
 
 The functionality included in this vignette was previously in the
-`parameter_sweep()` function in {ringbp} \<= v0.1.2. This function has
-been removed as it is preferred to demonstrate the functionality but
-allow users the flexibility and control to run scenarios in whichever
-way they choose.
+`parameter_sweep()` function in [ringbp](https://epiforecasts.io/ringbp)
+\<= v0.1.2. This function has been removed as it is preferred to
+demonstrate the functionality but allow users the flexibility and
+control to run scenarios in whichever way they choose.
 
 ``` r
 
@@ -23,7 +24,7 @@ library(data.table)
 The
 [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
 function is the core function to run outbreak simulations using
-{ringbp}, because it allows running the
+[ringbp](https://epiforecasts.io/ringbp), because it allows running the
 [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md)
 over multiple replicates.
 
@@ -338,8 +339,10 @@ head(scenario_sims$sims, 3)
 ## Running scenarios in parallel
 
 Finally, we demonstrate how the above example can be easily run in
-parallel using the [{future} framework](https://www.futureverse.org/).
-We load the {future} and {future.apply} R packages for this.
+parallel using the [`{future}` framework](https://www.futureverse.org/).
+We load the [future](https://future.futureverse.org) and
+[future.apply](https://future.apply.futureverse.org) R packages for
+this.
 
 ``` r
 
