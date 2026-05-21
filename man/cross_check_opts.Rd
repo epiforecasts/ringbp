@@ -29,5 +29,15 @@ Cross-check \verb{*_opts()} lists to run the \pkg{ringbp} model
 Currently the only cross-checking is between
 \code{onset_to_self_isolation} from \code{\link[=delay_opts]{delay_opts()}} and
 \code{symptomatic_self_isolate} from \code{\link[=event_prob_opts]{event_prob_opts()}}.
+
+If \code{delays$onset_to_self_isolation} carries a \code{cross_checked} attribute
+set to \code{TRUE}, the checks are skipped and \code{TRUE} is returned immediately.
+This lets \code{\link[=scenario_sim]{scenario_sim()}} cross-check the options once and then tag
+\code{delays} so that the per-replicate \code{\link[=outbreak_model]{outbreak_model()}} calls do not
+repeat the check (and re-emit its warning) for every simulation replicate.
+The attribute is set on a local copy of \code{delays} (a single
+\code{\link[=scenario_sim]{scenario_sim()}} or \code{\link[=outbreak_model]{outbreak_model()}}) call), and does not persist, so
+the warning will be repeated in separate \code{\link[=scenario_sim]{scenario_sim()}} or
+\code{\link[=outbreak_model]{outbreak_model()}}) calls.
 }
 \keyword{internal}

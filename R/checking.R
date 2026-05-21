@@ -58,12 +58,29 @@ check_dist_func <- function(func,
 #'   `onset_to_self_isolation` from [delay_opts()] and
 #'   `symptomatic_self_isolate` from [event_prob_opts()].
 #'
+#'   If `delays$onset_to_self_isolation` carries a `cross_checked` attribute
+#'   set to `TRUE`, the checks are skipped and `TRUE` is returned immediately.
+#'   This lets [scenario_sim()] cross-check the options once and then tag
+#'   `delays` so that the per-replicate [outbreak_model()] calls do not
+#'   repeat the check (and re-emit its warning) for every simulation replicate.
+#'   The attribute is set on a local copy of `delays` (a single
+#'   [scenario_sim()] or [outbreak_model()]) call), and does not persist, so
+#'   the warning will be repeated in separate [scenario_sim()] or
+#'   [outbreak_model()]) calls.
+#'
 #' @inheritParams outbreak_step
 #'
 #' @return `TRUE` if all the checks pass or an error or warning is thrown if
 #'   the simulation options are incompatible.
 #' @keywords internal
 cross_check_opts <- function(delays, event_probs) {
+  cross_checked <- isTRUE(attr(
+    x = delays$onset_to_self_isolation,
+    which = "cross_checked"
+  ))
+  if (cross_checked) {
+    return(TRUE)
+  }
   no_self_isolation <- all(is.infinite(delays$onset_to_self_isolation(1e5)))
   if (no_self_isolation && event_probs$symptomatic_self_isolate > 0) {
     stop(
