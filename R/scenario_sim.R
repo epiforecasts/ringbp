@@ -65,6 +65,9 @@ scenario_sim <- function(n,
   checkmate::assert_class(sim, "ringbp_sim_opts")
   cross_check_opts(delays, event_probs)
 
+  # cross-check once per scenario not per replicate
+  attr(x = delays$onset_to_self_isolation, which = "cross_checked") <- TRUE
+
   # Run n number of model runs and put them all together in a big data.frame
   res <- replicate(
     n, outbreak_model(
