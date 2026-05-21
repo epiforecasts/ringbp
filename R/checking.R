@@ -9,6 +9,8 @@
 #'   output by the `func` argument (i.e. the minimum of the acceptable value in
 #'   the function's codomain). The default is `0` so `func` must return
 #'   non-negative values.
+#' @param finite Check for only finite values in distribution output, passed
+#'   to [checkmate::test_numeric()]. Default is `TRUE`.
 #'
 #' @return `TRUE` if all the checks pass or an error is thrown if the
 #'   distribution function is invalid.
@@ -16,7 +18,8 @@
 check_dist_func <- function(func,
                             dist_name,
                             n_req_args = 1,
-                            func_eval_min = 0) {
+                            func_eval_min = 0,
+                            finite = TRUE) {
 
   checkmate::assert_function(func)
   checkmate::assert_count(n_req_args, positive = TRUE)
@@ -33,7 +36,7 @@ check_dist_func <- function(func,
     checkmate::test_numeric(
       func(1e5),
       lower = func_eval_min,
-      finite = TRUE,
+      finite = finite,
       any.missing = FALSE,
       len = 1e5
     )

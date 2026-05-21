@@ -5,7 +5,13 @@
 \title{Check a distribution function returns valid output and has the correct number
 of arguments}
 \usage{
-check_dist_func(func, dist_name, n_req_args = 1, func_eval_min = 0)
+check_dist_func(
+  func,
+  dist_name,
+  n_req_args = 1,
+  func_eval_min = 0,
+  finite = TRUE
+)
 }
 \arguments{
 \item{func}{a \link{function}.}
@@ -19,6 +25,9 @@ being passed (e.g. \code{"incubation_period"})}
 output by the \code{func} argument (i.e. the minimum of the acceptable value in
 the function's codomain). The default is \code{0} so \code{func} must return
 non-negative values.}
+
+\item{finite}{Check for only finite values in distribution output, passed
+to \code{\link[checkmate:checkNumeric]{checkmate::test_numeric()}}. Default is \code{TRUE}.}
 }
 \value{
 \code{TRUE} if all the checks pass or an error is thrown if the
