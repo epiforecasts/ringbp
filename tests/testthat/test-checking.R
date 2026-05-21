@@ -108,3 +108,36 @@ test_that("cross_check_opts warns when delay is function and event is zero", {
     )
   )
 })
+
+test_that("cross_check_opts skips checks when delays tagged as cross_checked", {
+  # cross-checking is skipped and error is not thrown
+  delays <- delay_opts(
+    incubation_period = \(n) rep(1, n),
+    onset_to_isolation = \(n) rep(1, n)
+  )
+  event_probs <- event_prob_opts(
+    asymptomatic = 0.1,
+    presymptomatic_transmission = 0.5,
+    symptomatic_traced = 0.2,
+    symptomatic_self_isolate = 0.1
+  )
+  attr(delays$onset_to_self_isolation, "cross_checked") <- TRUE
+  expect_true(cross_check_opts(delays = delays, event_probs = event_probs))
+
+  # cross-checking is skipped and warning is not thrown
+  delays <- delay_opts(
+    incubation_period = \(n) rep(1, n),
+    onset_to_isolation = \(n) rep(1, n),
+    onset_to_self_isolation = \(n) rep(1, n)
+  )
+  event_probs <- event_prob_opts(
+    asymptomatic = 0.1,
+    presymptomatic_transmission = 0.5,
+    symptomatic_traced = 0.2
+  )
+  # tagging onset_to_self_isolation short-circuits the checks before the warning
+  attr(delays$onset_to_self_isolation, "cross_checked") <- TRUE
+  expect_no_warning(
+    cross_check_opts(delays = delays, event_probs = event_probs)
+  )
+})
