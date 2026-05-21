@@ -5,13 +5,13 @@ test_that("check_dist_func works as expected", {
 test_that("check_dist_func errors when not a function", {
   expect_error(
     check_dist_func(func = "function"),
-    regexp = "(func)*(failed)*(Must be a function)"
+    regexp = "func.*failed.*Must be a function"
   )
 })
 
-dist_func_error <- paste0(
-  "(generator must be a function with 1 argument(s) that returns a vector)*",
-  "(of non-negative numbers with length equal to the input argument.)"
+dist_func_error <- paste(
+  "generator must be a function with 1 argument\\(s\\) that returns a vector",
+  "of non-negative numbers with length equal to the input argument"
 )
 
 test_that("check_dist_func works and errors as expected with finite", {
@@ -80,8 +80,8 @@ test_that("cross_check_opts errors when delay is Inf and event is non-zero", {
   expect_error(
     cross_check_opts(delays = delays, event_probs = event_probs),
     regexp = paste(
-      "(A non-zero `symptomatic_self_isolate` has been specified)",
-      "(but `onset_to_self_isolation` is generating `Inf`)",
+      "A non-zero `symptomatic_self_isolate` has been specified",
+      "but `onset_to_self_isolation` is generating `Inf`",
       sep = ".*"
     )
   )
@@ -101,10 +101,10 @@ test_that("cross_check_opts warns when delay is function and event is zero", {
   expect_warning(
     cross_check_opts(delays = delays, event_probs = event_probs),
     regexp = paste(
-      "(An `onset_to_self_isolation` delay has been specified)",
-      "(but the `symptomatic_self_isolate` in `event_prob_opts()` is zero.)",
-      "(Ignoring `onset_to_self_isolation`.)",
-      sep = "*"
+      "An `onset_to_self_isolation` delay has been specified",
+      "but the `symptomatic_self_isolate` in `event_prob_opts\\(\\)` is zero",
+      "Ignoring `onset_to_self_isolation`",
+      sep = ".*"
     )
   )
 })
