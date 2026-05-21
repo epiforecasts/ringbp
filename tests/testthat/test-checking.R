@@ -82,7 +82,7 @@ test_that("cross_check_opts errors when delay is Inf and event is non-zero", {
     regexp = paste(
       "(A non-zero `symptomatic_self_isolate` has been specified)",
       "(but `onset_to_self_isolation` is generating `Inf`)",
-      sep = "*"
+      sep = ".*"
     )
   )
 })
