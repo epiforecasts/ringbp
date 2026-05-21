@@ -14,6 +14,20 @@ dist_func_error <- paste0(
   "(of non-negative numbers with length equal to the input argument.)"
 )
 
+test_that("check_dist_func works and errors as expected with finite", {
+  expect_true(
+    check_dist_func(
+      func = \(n) rep(Inf, n),
+      dist_name = "generator",
+      finite = FALSE
+    )
+  )
+  expect_error(
+    check_dist_func(func = \(n) rep(Inf, n), dist_name = "generator"),
+    regexp = dist_func_error
+  )
+})
+
 test_that("check_dist_func errors with non-negative non-numeric evaluation", {
   expect_error(
     check_dist_func(func = \(n) rep("i", n), dist_name = "generator"),
