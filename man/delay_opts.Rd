@@ -8,7 +8,7 @@ delay_opts(
   incubation_period,
   onset_to_isolation,
   latent_period = 0,
-  onset_to_self_isolation = NULL
+  onset_to_self_isolation = function(n) rep(Inf, n)
 )
 }
 \arguments{
@@ -39,13 +39,15 @@ distribution and \code{presymptomatic_transmission} (in \code{\link[=event_prob_
 the \code{function} accepts a single \code{integer} argument specifying the length
 of the \code{function} output.
 
-By default \code{onset_to_self_isolation} is \code{NULL}. An onset-to-self-isolation
+By default \code{onset_to_self_isolation} is a function that generates \code{Inf}
+(i.e. individuals never self-isolate). A different onset-to-self-isolation
 \code{function} only needs to be specified if a non-zero value is specified to
 \code{symptomatic_self_isolate} in \code{\link[=event_prob_opts]{event_prob_opts()}} (which by default is 0).
 If \code{onset_to_self_isolation} is specified but \code{symptomatic_self_isolate}
 is zero, a warning will be thrown and the \code{onset_to_self_isolation}
 will be ignored; if \code{symptomatic_self_isolate} is non-zero and
-\code{onset_to_self_isolation} is \code{NULL}, \code{\link[=scenario_sim]{scenario_sim()}} will error.}
+\code{onset_to_self_isolation} is an \code{Inf} generating function,
+\code{\link[=scenario_sim]{scenario_sim()}} will error.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_delay_opts>}.

@@ -78,13 +78,15 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   the `function` accepts a single `integer` argument specifying the length
 #'   of the `function` output.
 #'
-#'   By default `onset_to_self_isolation` is `NULL`. An onset-to-self-isolation
+#'   By default `onset_to_self_isolation` is a function that generates `Inf`
+#'   (i.e. individuals never self-isolate). A different onset-to-self-isolation
 #'   `function` only needs to be specified if a non-zero value is specified to
 #'   `symptomatic_self_isolate` in [event_prob_opts()] (which by default is 0).
 #'   If `onset_to_self_isolation` is specified but `symptomatic_self_isolate`
 #'   is zero, a warning will be thrown and the `onset_to_self_isolation`
 #'   will be ignored; if `symptomatic_self_isolate` is non-zero and
-#'   `onset_to_self_isolation` is `NULL`, [scenario_sim()] will error.
+#'   `onset_to_self_isolation` is an `Inf` generating function,
+#'   [scenario_sim()] will error.
 #'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
@@ -97,17 +99,16 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 delay_opts <- function(incubation_period,
                        onset_to_isolation,
                        latent_period = 0,
-                       onset_to_self_isolation = NULL) {
+                       onset_to_self_isolation = \(n) rep(Inf, n)) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
-  if (!is.null(onset_to_self_isolation)) {
-    check_dist_func(
-      onset_to_self_isolation,
-      dist_name = "onset_to_self_isolation"
-    )
-  }
+  check_dist_func(
+    onset_to_self_isolation,
+    dist_name = "onset_to_self_isolation",
+    finite = FALSE
+  )
 
   if (latent_period > 0) {
     warning(
