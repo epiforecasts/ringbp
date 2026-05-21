@@ -64,17 +64,17 @@ check_dist_func <- function(func,
 #'   the simulation options are incompatible.
 #' @keywords internal
 cross_check_opts <- function(delays, event_probs) {
-  if (is.null(delays$onset_to_self_isolation) &&
-      event_probs$symptomatic_self_isolate > 0) {
+  no_self_isolation <- all(is.infinite(delays$onset_to_self_isolation(1e5)))
+  if (no_self_isolation && event_probs$symptomatic_self_isolate > 0) {
     stop(
       "A non-zero `symptomatic_self_isolate` has been specified in ",
-      "`event_prob_opts()`, but `onset_to_self_isolation` is `NULL`.\n",
-      "Please specify an `onset_to_self_isolation` function for a proportion ",
-      "of symptomatic infections to self-isolate.",
-      call. = FALSE)
+      "`event_prob_opts()`,\n but `onset_to_self_isolation` is generating ",
+      "`Inf`.\nPlease specify an `onset_to_self_isolation` function for a ",
+      "proportion of symptomatic infections\n to self-isolate.",
+      call. = FALSE
+    )
   }
-  if (is.function(delays$onset_to_self_isolation) &&
-      event_probs$symptomatic_self_isolate == 0) {
+  if (!no_self_isolation && event_probs$symptomatic_self_isolate == 0) {
     warning(
       "An `onset_to_self_isolation` delay has been specified in ",
       "`delay_opts()`, but the `symptomatic_self_isolate` in ",
