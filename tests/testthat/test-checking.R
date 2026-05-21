@@ -66,7 +66,7 @@ test_that("cross_check_opts works as expected", {
   expect_true(cross_check_opts(delays = delays, event_probs = event_probs))
 })
 
-test_that("cross_check_opts errors when delay is NULL and event is non-zero", {
+test_that("cross_check_opts errors when delay is Inf and event is non-zero", {
   delays <- delay_opts(
     incubation_period = \(n) rweibull(n = n, shape = 1, scale = 1),
     onset_to_isolation = \(n) rweibull(n = n, shape = 1, scale = 1)
@@ -81,7 +81,7 @@ test_that("cross_check_opts errors when delay is NULL and event is non-zero", {
     cross_check_opts(delays = delays, event_probs = event_probs),
     regexp = paste(
       "(A non-zero `symptomatic_self_isolate` has been specified)",
-      "(but `onset_to_self_isolation` is `NULL`)",
+      "(but `onset_to_self_isolation` is generating `Inf`)",
       sep = "*"
     )
   )
