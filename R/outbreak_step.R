@@ -127,7 +127,10 @@ outbreak_step <- function(case_data,
     test_positive = FALSE,
     # assign no isolation as placeholder; symptomatic, test-positive,
     # traced or quarantined isolation time sampled below
-    isolated_time = Inf
+    isolated_time = Inf,
+    # assign no self-isolation (FALSE) as placeholder;
+    # will draw self-isolation for symptomatic cases below
+    self_isolate = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
