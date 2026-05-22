@@ -125,10 +125,8 @@ outbreak_model <- function(initial_cases,
   if (length(effective_r0_vect) == 0) {
     warning(
       "The outbreak simulation ran for zero generations (i.e. no ",
-      "transmission from initial cases) because either:\n 1) the number of ",
-      "initial cases exceeded the `cap_cases`, or \n 2) the initial case(s) ",
-      "had a symptom onset time greater than the `cap_max_days`.\n See ",
-      "`?sim_opts()` for help.",
+      "transmission from initial cases) because `initial_cases` is ",
+      "greater than or equal to `cap_cases`.\nSee `?sim_opts()` for help.",
       call. = FALSE
     )
     effective_r0_vect <- NA_real_
