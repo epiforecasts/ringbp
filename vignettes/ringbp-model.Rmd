@@ -14,17 +14,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette describes the epidemiological model implemented in the {ringbp} R package. 
+This vignette describes the epidemiological model implemented in the `{ringbp}` R package. 
 
 ## Model Overview
 
-The {ringbp} outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
+The `{ringbp}` outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
 
 ***Isolation***: Any infected individual that becomes symptomatic gets tested, and is isolated after a symptom onset-to-isolation delay.
 
-***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the {ringbp} model is a user-controlled parameter. Users can adjust the proportion of contacts ascertained by tracing between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
+***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the `{ringbp}` model is a user-controlled parameter. Users can adjust the proportion of contacts ascertained by tracing between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
 
-***Quarantine***: Users can turn on quarantine in the model. If quarantine is activated in the model then an infectee can be quarantined/isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the {ringbp} model and affects the whole population.
+***Quarantine***: Users can turn on quarantine in the model. If quarantine is activated in the model then an infectee can be quarantined/isolated as soon as their infector goes into isolation, independent of whether they are symptomatic. Quarantine can be turned on or off in the `{ringbp}` model and affects the whole population.
 
 In the scenarios that contacts are being traced in the model (i.e. the proportion of contacts ascertained > 0%), or quarantine is active, then the infectee is isolated at either the infector's isolation time or an onset-to-isolation delay after their symptom onset time, whichever happens earlier. This means that in scenarios where contact tracing and quarantine are active it is possible that infectees are isolated before their infector. The infectee's outcome cannot influence infector's isolation, unlike infector's isolation affecting infectees.
 
@@ -57,7 +57,7 @@ The schematic also shows a scenario in which isolation completely prevents disea
 
 ## Presymptomatic transmission scenarios with interventions
 
-All of the scenarios in the figure above assume that transmission occurs after the infector is symptomatic. The {ringbp} model can also model presymptomatic transmission. Below is another figure enumerating scenarios, but this time assuming that the infector infects the infectee before becoming symptomatic.
+All of the scenarios in the figure above assume that transmission occurs after the infector is symptomatic. The `{ringbp}` model can also model presymptomatic transmission. Below is another figure enumerating scenarios, but this time assuming that the infector infects the infectee before becoming symptomatic.
 
 ![ringbp model schematic scenarios where transmission occurs before symptom onset.](../man/figures/model_schematic_scenario_presym.svg){width=800px}\
 
@@ -73,7 +73,7 @@ Scenario (7b) corresponds to scenario (7) where the infectee is isolated before 
 
 ## Transmission in isolation
 
-So far we have assumed that once cases are isolated they cannot transmit. However, the {ringbp} epidemic model allows the user to specify any offspring distribution for isolated individuals. 
+So far we have assumed that once cases are isolated they cannot transmit. However, the `{ringbp}` epidemic model allows the user to specify any offspring distribution for isolated individuals. 
 
 Infectees that are infected by someone isolating are not isolated until an onset-to-isolation delay after they become symptomatic.
 
@@ -87,9 +87,9 @@ Below we show the same 3-person outbreak schematic as above, but this time isola
 
 ## Model parameters
 
-The table below includes the {ringbp} parameters mentioned in this vignette that users can specify. Parameter values are given as examples and do not represent the default values.
+The table below includes the `{ringbp}` parameters mentioned in this vignette that users can specify. Parameter values are given as examples and do not represent the default values.
 
-| Epidemiological Parameter | {ringbp} Model Parameterisation |
+| Epidemiological Parameter | `{ringbp}` Model Parameterisation |
 | --- | ----------- |
 | Incubation period distribution | `delay_opts(incubation_period = \(n) rgamma(n = n, shape = 2, scale = 2))` |
 | Onset-to-isolation delay distribution | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
@@ -98,7 +98,7 @@ The table below includes the {ringbp} parameters mentioned in this vignette that
 | Contact tracing case ascertainment | `event_prob_opts(symptomatic_traced = 0.5)` |
 | Quarantine | `intervention_opts(quarantine = TRUE)` |
 
-In the {ringbp} model the generation time is not parameterised, instead it is the result of the incubation period distribution and the proportion of transmission that occurs presymptomatically. The minimum generation time can be set by specifying a `latent_period` in the `delay_opts()` function, however, a non-zero latent period may alter the proportion of presymptomatic transmission from what was set by the user.
+In the `{ringbp}` model the generation time is not parameterised, instead it is the result of the incubation period distribution and the proportion of transmission that occurs presymptomatically. The minimum generation time can be set by specifying a `latent_period` in the `delay_opts()` function, however, a non-zero latent period may alter the proportion of presymptomatic transmission from what was set by the user.
 
 Defined mathematically, for individual $i = 1, \dots, n$, let
 \begin{align}
@@ -148,7 +148,7 @@ E_j = G_i + E_i
 
 For the purposes of illustration, the scenarios presented in this vignette include the fewest transmission events possible. The transmissibility of symptomatic or asymptomatic cases in the community, or cases in isolation in the simulation model can be set by specifying the offspring distribution using the `offspring_opts()` function.
 
-The `scenario_sim()` function runs the {ringbp} model for a specified number of replicates.
+The `scenario_sim()` function runs the `{ringbp}` model for a specified number of replicates.
 
 ## Further information
 
