@@ -27,6 +27,9 @@ utils::globalVariables(c(
   "infector_asymptomatic", # <outbreak_step>
   "traced", # <outbreak_step>
   "test_positive", # <outbreak_step>
+  "self_isolation_time", # <outbreak_step>
+  "test_isolation_time", # <outbreak_step>
+  "traced_isolation_time", # <outbreak_step>
   "infector_isolation_time", # <outbreak_step>
   "sampled", # <sample_offspring>
   NULL
