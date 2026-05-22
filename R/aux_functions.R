@@ -297,12 +297,13 @@ on_ci <- function() isTRUE(as.logical(Sys.getenv("CI", unset = "FALSE")))
 #' @keywords internal
 outbreak_continue <- function(case_data, sim) {
 
-  latest_onset <- max(case_data$onset)
+  # if all sampled == TRUE, then use Inf to end outbreak
+  earliest_exposure <- min(c(case_data[sampled == FALSE, exposure], Inf))
   total_cases <- nrow(case_data)
   extinct <- all(case_data$sampled)
 
   return(
-    latest_onset < sim$cap_max_days &&
+    earliest_exposure < sim$cap_max_days &&
       total_cases < sim$cap_cases && !extinct
   )
 }
