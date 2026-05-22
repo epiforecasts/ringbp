@@ -90,8 +90,10 @@ test_that("outbreak_model runs to cap_cases stopping criterion", {
   expect_identical(res$cumulative, sort(res$cumulative))
 })
 
-test_that("outbreak_model warns if outbreak_step is not run (cap_max_days)", {
-  expect_warning(
+test_that("outbreak_model runs for 1 gen when onset > cap_max_days", {
+  # regression test for #163: an initial case whose symptom onset exceeds
+  # `cap_max_days` should not stop the simulation before any transmission
+  expect_no_warning(
     res <- outbreak_model(
       initial_cases = 1,
       offspring = offspring_opts(
@@ -111,13 +113,50 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_max_days)", {
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts(cap_max_days = 5)
     ),
-    regexp = "(The outbreak simulation ran for zero generations)"
+    message = "zero generations"
   )
-  expect_identical(res$week, 0L)
-  expect_identical(res$weekly_cases, 0L)
-  expect_identical(res$cumulative, 0L)
-  expect_identical(res$effective_r0, NaN)
-  expect_identical(res$cases_per_gen, list(NA_real_))
+  # the simulation ran at least one generation, so effective R0 and cases per
+  # generation are populated rather than the zero-generation NA placeholders
+  expect_false(is.nan(res$effective_r0))
+  expect_false(identical(res$cases_per_gen, list(NA_real_)))
+})
+
+test_that("outbreak_model in-window counts are independent of cap_max_days", {
+  # regression test for #225: for a fixed seed, weekly and cumulative case
+  # counts for weeks fully inside the simulation window must not change with
+  # `cap_max_days`
+  outbreaks <- list()
+  cap_max_days <- c(50, 100)
+  for (i in seq_along(cap_max_days)) {
+    set.seed(19)
+    outbreaks[[i]] <- outbreak_model(
+      initial_cases = 1,
+      offspring = offspring_opts(
+        community = \(n) rnbinom(n = n, mu = 3, size = 0.27),
+        isolated = \(n) rep(0, n)
+      ),
+      delays = delay_opts(
+        incubation_period = \(n) rgamma(n = n, shape = 4, scale = 2),
+        onset_to_isolation = \(n) rgamma(n = n, shape = 2.5, scale = 2)
+      ),
+      event_probs = event_prob_opts(
+        asymptomatic = 0.25,
+        presymptomatic_transmission = 0.01,
+        symptomatic_traced = 0
+      ),
+      interventions = intervention_opts(test_sensitivity = 0),
+      sim = sim_opts(cap_max_days = cap_max_days[i], cap_cases = 1e4)
+    )
+  }
+  # the larger cap runs the (growing) outbreak further: a non-trivial test
+  expect_gt(outbreaks[[2]][.N, cumulative], outbreaks[[1]][.N, cumulative])
+
+  # weeks 0-5 fall fully inside both simulation windows, so their cumulative
+  # case counts must be identical
+  expect_identical(
+    outbreaks[[1]][week <= 5, cumulative],
+    outbreaks[[2]][week <= 5, cumulative]
+  )
 })
 
 test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
