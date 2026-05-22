@@ -43,6 +43,31 @@ generation
 \description{
 Move forward one generation in the branching process
 }
+\details{
+Each new case is assigned an isolation time (\code{isolated_time}) as the
+earliest of up to three pathways; a case to which no pathway applies is
+never isolated (\code{isolated_time} is \code{Inf}):
+\itemize{
+\item \strong{Self-isolation}: a symptomatic case self-isolates with probability
+\code{symptomatic_self_isolate} (from \code{\link[=event_prob_opts]{event_prob_opts()}}), entering isolation
+an \code{onset_to_self_isolation} delay (from \code{\link[=delay_opts]{delay_opts()}}) after symptom
+onset. Self-isolating cases are not tested.
+\item \strong{Testing}: a symptomatic case that does not self-isolate is tested and
+returns a positive result with probability \code{test_sensitivity} (from
+\code{\link[=intervention_opts]{intervention_opts()}}), entering isolation an \code{onset_to_isolation} delay
+after symptom onset. A false-negative result does not isolate the case
+via this pathway.
+\item \strong{Tracing}: a case whose infector is symptomatic is traced with
+probability \code{symptomatic_traced} (from \code{\link[=event_prob_opts]{event_prob_opts()}}). When
+\code{quarantine} is active (from \code{\link[=intervention_opts]{intervention_opts()}}) tracing is
+exposure-based: a traced case is isolated when its infector is isolated,
+regardless of its own symptom status. Without \code{quarantine}, only a traced
+symptomatic case is isolated, and no earlier than its own symptom onset.
+}
+
+Self-isolation and testing are symptom-based, so asymptomatic cases are
+isolated only via the tracing pathway, and only when \code{quarantine} is active.
+}
 \examples{
 offspring <- offspring_opts(
   community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
