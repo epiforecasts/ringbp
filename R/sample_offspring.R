@@ -7,15 +7,15 @@
 #'   The generation times for each infector-infectee pair is also sampled and
 #'   is returned from the function.
 #'
-#' @details The offspring distribution for a case in the community cannot simply
-#'   be sampled from the `community` offspring distribution as it might become
-#'   isolated before infecting some or all of those cases.
-#'   To account for cases that transition between states (for now only
-#'   _community_ -> _isolated_) we draw from the offspring from both
+#' @details A case's offspring cannot simply be sampled from a single
+#'   offspring distribution, as the case might become isolated before
+#'   infecting some or all of those cases. To account for cases that
+#'   transition between states (_community_ -> _isolated_ for symptomatic
+#'   cases, _asymptomatic_ -> _isolated_ for asymptomatic cases) we sample
+#'   offspring from both the pre-isolation and the post-isolation (`isolated`)
 #'   distributions, assign all new cases a generation time, and then discard
-#'   the ones that have generation time <= isolation time (for those from the
-#'   isolated offspring distribution) or generation time > isolation time
-#'   (for those from the community offspring distribution), respectively.
+#'   pre-isolation offspring with a generation time after the isolation time
+#'   and post-isolation offspring with a generation time before it.
 #'
 #' @inheritParams outbreak_step
 #' @inheritParams incubation_to_generation_time
@@ -45,10 +45,11 @@ sample_offspring <- function(case_data, offspring, alpha, latent_period) {
   community <- offspring$community(sum(symptomatic_idx))
   isolated <- offspring$isolated(sum(symptomatic_idx))
 
-  # asymptomatic cases are known from the start of their generation so their
-  # offspring can be sampled directly from the asymptomatic offspring
-  # distribution
+  # asymptomatic cases transmit via the asymptomatic offspring distribution
+  # before isolation and the isolated distribution after isolation, so (as for
+  # symptomatic cases) both are sampled and later subset by the isolation time
   asymptomatic <- offspring$asymptomatic(sum(asymptomatic_idx))
+  isolated_asymptomatic <- offspring$isolated(sum(asymptomatic_idx))
 
   # get generation times for community and isolated cases
   community_exposure <- incubation_to_generation_time(
@@ -66,29 +67,47 @@ sample_offspring <- function(case_data, offspring, alpha, latent_period) {
   )
   names(isolated_exposure) <- rep(new_cases$caseid[symptomatic_idx], isolated)
 
-  # if there is any transmission from asymptomatic cases get generation time
-  if (length(asymptomatic) > 0) {
-    asymptomatic_exposure <- incubation_to_generation_time(
-      symptom_onset_time = rep(new_cases$onset[asymptomatic_idx], asymptomatic),
-      exposure_time = rep(new_cases$exposure[asymptomatic_idx], asymptomatic),
-      alpha = alpha,
-      latent_period = latent_period
-    )
-    names(asymptomatic_exposure) <- rep(new_cases$caseid[asymptomatic_idx], asymptomatic)
-  } else {
-    # create asymptomatic_exposure for all exposure vector below (NULL dropped)
-    asymptomatic_exposure <- NULL
-  }
+  # get generation times for asymptomatic cases (asymptomatic + isolated);
+  # incubation_to_generation_time() returns an empty vector for generations
+  # with no asymptomatic cases
+  asymptomatic_exposure <- incubation_to_generation_time(
+    symptom_onset_time = rep(new_cases$onset[asymptomatic_idx], asymptomatic),
+    exposure_time = rep(new_cases$exposure[asymptomatic_idx], asymptomatic),
+    alpha = alpha,
+    latent_period = latent_period
+  )
+  names(asymptomatic_exposure) <- rep(new_cases$caseid[asymptomatic_idx], asymptomatic)
+  isolated_asymptomatic_exposure <- incubation_to_generation_time(
+    symptom_onset_time = rep(new_cases$onset[asymptomatic_idx], isolated_asymptomatic),
+    exposure_time = rep(new_cases$exposure[asymptomatic_idx], isolated_asymptomatic),
+    alpha = alpha,
+    latent_period = latent_period
+  )
+  names(isolated_asymptomatic_exposure) <-
+    rep(new_cases$caseid[asymptomatic_idx], isolated_asymptomatic)
 
-  # subset transmission events in community and isolation based on infector
-  # isolation time and infectee exposure time
+  # subset transmission events based on infector isolation time and infectee
+  # exposure time: pre-isolation transmission is kept before the infector's
+  # isolation time, post-isolation (isolated) transmission after it
   infect_before_isolate <- community_exposure < rep(new_cases$isolated_time[symptomatic_idx], community)
   community_exposure <- community_exposure[infect_before_isolate]
   infect_after_isolate <- isolated_exposure > rep(new_cases$isolated_time[symptomatic_idx], isolated)
   isolated_exposure <- isolated_exposure[infect_after_isolate]
 
+  # the same split for asymptomatic cases: asymptomatic transmission before
+  # isolation, isolated transmission after. When an asymptomatic case is never
+  # isolated (isolated_time is Inf) all asymptomatic transmission is retained
+  # and none of the isolated transmission is
+  asympt_before_isolate <- asymptomatic_exposure < rep(new_cases$isolated_time[asymptomatic_idx], asymptomatic)
+  asymptomatic_exposure <- asymptomatic_exposure[asympt_before_isolate]
+  asympt_after_isolate <- isolated_asymptomatic_exposure > rep(new_cases$isolated_time[asymptomatic_idx], isolated_asymptomatic)
+  isolated_asymptomatic_exposure <- isolated_asymptomatic_exposure[asympt_after_isolate]
+
   # infectee exposure time for all transmission events
-  exposure <- c(community_exposure, isolated_exposure, asymptomatic_exposure)
+  exposure <- c(
+    community_exposure, isolated_exposure,
+    asymptomatic_exposure, isolated_asymptomatic_exposure
+  )
 
   next_gen <- table(names(exposure))
 

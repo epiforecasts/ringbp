@@ -47,14 +47,14 @@ The generation times for each infector-infectee pair is also sampled and
 is returned from the function.
 }
 \details{
-The offspring distribution for a case in the community cannot simply
-be sampled from the \code{community} offspring distribution as it might become
-isolated before infecting some or all of those cases.
-To account for cases that transition between states (for now only
-\emph{community} -> \emph{isolated}) we draw from the offspring from both
+A case's offspring cannot simply be sampled from a single
+offspring distribution, as the case might become isolated before
+infecting some or all of those cases. To account for cases that
+transition between states (\emph{community} -> \emph{isolated} for symptomatic
+cases, \emph{asymptomatic} -> \emph{isolated} for asymptomatic cases) we sample
+offspring from both the pre-isolation and the post-isolation (\code{isolated})
 distributions, assign all new cases a generation time, and then discard
-the ones that have generation time <= isolation time (for those from the
-isolated offspring distribution) or generation time > isolation time
-(for those from the community offspring distribution), respectively.
+pre-isolation offspring with a generation time after the isolation time
+and post-isolation offspring with a generation time before it.
 }
 \keyword{internal}
