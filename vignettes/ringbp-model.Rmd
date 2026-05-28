@@ -20,7 +20,7 @@ This vignette describes the epidemiological model implemented in the `{ringbp}` 
 
 The `{ringbp}` outbreak model is an individual-level branching process model to simulate an epidemic with individual-level non-pharmaceutical interventions (NPIs), namely: isolation, contact tracing and quarantine. 
 
-***Isolation***: Any infected individual that becomes symptomatic gets tested, and is isolated after a symptom onset-to-isolation delay.
+***Isolation***: Any infected individual that becomes symptomatic either self-isolates after an onset-to-self-isolation delay, or is tested and (if positive) isolated after an onset-to-isolation delay. The probability that a symptomatic case self-isolates rather than being tested is set by the user.
 
 ***Contact tracing***: If contact tracing is in operation the infectee can also be isolated as soon as they develop symptoms if the infector is isolating. Contact tracing in the `{ringbp}` model is a user-controlled parameter. Users can adjust the proportion of contacts ascertained by tracing between 0% (i.e. nobody is contact traced) and 100% (i.e. every symptomatic infector has all their contacts traced).
 
@@ -32,7 +32,7 @@ In the scenarios that contacts are being traced in the model (i.e. the proportio
 
 ![ringbp model schematic scenarios with no transmission.](../man/figures/model_schematic_scenario_noinfect.svg){width=800px}\
 
-Scenarios (1) and (2) show situations where an index infector is symptomatic or asymptomatic, respectively. Asymptomatic individuals are assumed to remain subclinical throughout the course of their infection.
+Scenarios (1) and (2) show situations where an index infector is symptomatic or asymptomatic, respectively. Asymptomatic individuals are assumed to remain subclinical throughout the course of their infection. Scenarios (1) and (3) show situations where an index infector is symptomatic and isolates, in (1) they isolate after a positive test result, in (3) they self-isolate. The delay from symptom onset to isolation can be modelled separately for isolation after testing and self-isolation without testing.
 
 ## Transmission scenarios with interventions
 

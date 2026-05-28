@@ -8,15 +8,41 @@
 #'   and `asymptomatic`
 #' @param delays a `list` with class `<ringbp_delay_opts>`: the
 #'   delay distribution `function`s for the \pkg{ringbp} model, returned
-#'   by [delay_opts()]. Contains two elements: `incubation_period` and
-#'   `onset_to_isolation`
+#'   by [delay_opts()]. Contains 4 elements: `incubation_period`,
+#'   `onset_to_isolation`, `latent_period` and `onset_to_self_isolation`
 #' @param event_probs a `list` with class `<ringbp_event_prob_opts>`: the
 #'   event probabilities for the \pkg{ringbp} model, returned by
-#'   [event_prob_opts()]. Contains three elements: `asymptomatic`,
-#'   `presymptomatic_transmission` and `symptomatic_traced`
+#'   [event_prob_opts()]. Contains 5 elements: `asymptomatic`,
+#'   `presymptomatic_transmission`, `alpha`, `symptomatic_traced` and
+#'   `symptomatic_self_isolate`
 #' @param interventions a `list` with class `<ringbp_intervention_opts>`:
 #'   the intervention settings for the \pkg{ringbp} model, returned by
-#'   [intervention_opts()]. Contains one element: `quarantine`
+#'   [intervention_opts()]. Contains 2 elements: `quarantine` and
+#'   `test_sensitivity`
+#'
+#' @details
+#' Each new case is assigned an isolation time (`isolated_time`) as the
+#' earliest of up to three pathways; a case to which no pathway applies is
+#' never isolated (`isolated_time` is `Inf`):
+#'
+#' * **Self-isolation**: a symptomatic case self-isolates with probability
+#'   `symptomatic_self_isolate` (from [event_prob_opts()]), entering isolation
+#'   an `onset_to_self_isolation` delay (from [delay_opts()]) after symptom
+#'   onset. Self-isolating cases are not tested.
+#' * **Testing**: a symptomatic case that does not self-isolate is tested and
+#'   returns a positive result with probability `test_sensitivity` (from
+#'   [intervention_opts()]), entering isolation an `onset_to_isolation` delay
+#'   after symptom onset. A false-negative result does not isolate the case
+#'   via this pathway.
+#' * **Tracing**: a case whose infector is symptomatic is traced with
+#'   probability `symptomatic_traced` (from [event_prob_opts()]). When
+#'   `quarantine` is active (from [intervention_opts()]) tracing is
+#'   exposure-based: a traced case is isolated when its infector is isolated,
+#'   regardless of its own symptom status. Without `quarantine`, only a traced
+#'   symptomatic case is isolated, and no earlier than its own symptom onset.
+#'
+#' Self-isolation and testing are symptom-based, so asymptomatic cases are
+#' isolated only via the tracing pathway, and only when `quarantine` is active.
 #'
 #' @importFrom data.table data.table rbindlist fcase fifelse copy
 #' @importFrom stats runif rnbinom rbinom
@@ -122,13 +148,23 @@ outbreak_step <- function(case_data,
     sampled = FALSE,
     # assign negative test result (FALSE) as placeholder;
     # will draw test result for symptomatic cases below
-    test_positive = FALSE
+    test_positive = FALSE,
+    # assign no isolation as placeholder; symptomatic, test-positive,
+    # traced or quarantined isolation time sampled below
+    isolated_time = Inf,
+    # assign no self-isolation (FALSE) as placeholder;
+    # will draw self-isolation for symptomatic cases below
+    self_isolate = FALSE
   )][,
     # draws a sample to see if this person is asymptomatic
     asymptomatic := runif(.N) < event_probs$asymptomatic
   ][,
     # onset of new case is exposure + incubation period sample
     onset := exposure + delays$incubation_period(.N)
+  ][
+    # draw a sample to see if each person self-isolates if symptomatic
+    asymptomatic == FALSE,
+    self_isolate := runif(.N) < event_probs$symptomatic_self_isolate
   ]
 
   # draw a sample for missing and test result
@@ -136,32 +172,59 @@ outbreak_step <- function(case_data,
     infector_asymptomatic == FALSE,
     traced := runif(.N) < event_probs$symptomatic_traced
   ][
-    asymptomatic == FALSE,
+    asymptomatic == FALSE & self_isolate == FALSE,
     test_positive := runif(.N) <= interventions$test_sensitivity
   ]
 
-  prob_samples[, isolated_time := {
-    ref_time <- onset + delays$onset_to_isolation(.N)
-    fcase(
-      # asymptomatic: never isolated
-      asymptomatic, Inf,
-      # symptomatic, false-negative test: never isolated
-      !test_positive, Inf,
-      # symptomatic, test-positive, not traced: isolated at symptom onset + delay
-      !traced, ref_time,
-      # symptomatic, test-positive, traced, quarantine:
-      # earliest of infector / infectee isolation time
-      rep(interventions$quarantine, .N), pmin(ref_time, infector_isolation_time),
-      # symptomatic, test-positive, traced, no quarantine:
-      # earliest of symptom onset + delay / infector isolation time
-      default = pmin(ref_time, pmax(onset, infector_isolation_time))
-    )
-  }]
+  # isolation time is the earliest of three pathways; each pathway holds the
+  # `Inf` placeholder for cases it does not apply to
+  prob_samples[, `:=`(
+    self_isolation_time = Inf,
+    test_isolation_time = Inf,
+    traced_isolation_time = Inf
+  )]
+
+  # self-isolation pathway: symptomatic individuals who self-isolate are
+  # isolated a self-isolation delay after symptom onset (no test required)
+  prob_samples[
+    self_isolate == TRUE,
+    self_isolation_time := onset + delays$onset_to_self_isolation(.N)
+  ]
+
+  # testing pathway: symptomatic individuals who do not self-isolate and test
+  # positive are isolated an onset-to-isolation delay after symptom onset
+  prob_samples[
+    test_positive == TRUE,
+    test_isolation_time := onset + delays$onset_to_isolation(.N)
+  ]
+
+  # tracing pathway: when quarantine is active it is exposure-based, so every
+  # traced contact is isolated when its infector is isolated, regardless of
+  # symptom status; without quarantine isolation is symptom-based, so only
+  # symptomatic traced contacts are isolated, and no earlier than their own
+  # symptom onset
+  if (interventions$quarantine) {
+    prob_samples[
+      traced == TRUE,
+      traced_isolation_time := infector_isolation_time
+    ]
+  } else {
+    prob_samples[
+      traced == TRUE & asymptomatic == FALSE,
+      traced_isolation_time := pmax(onset, infector_isolation_time)
+    ]
+  }
+
+  # a case is isolated via the earliest pathway that applies to it
+  prob_samples[, isolated_time := pmin(
+    self_isolation_time, test_isolation_time, traced_isolation_time
+  )]
 
   # Chop out unneeded sample columns
   prob_samples[
-    , c("infector_isolation_time", "infector_asymptomatic",
-        "test_positive") := NULL
+    , c("infector_isolation_time", "infector_asymptomatic", "test_positive",
+        "self_isolation_time", "test_isolation_time",
+        "traced_isolation_time") := NULL
   ]
   # Set new case ids for new people
   prob_samples[, caseid := case_data[.N, caseid] + seq_len(.N)]

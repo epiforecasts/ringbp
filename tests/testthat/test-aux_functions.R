@@ -34,7 +34,11 @@ test_that("incubation_to_generation_time errors with latent period", {
       symptom_onset_time = 5,
       alpha = -5, # ~94% presymptomatic
       latent_period = 10
-    ), regexp = "(Cannot sample generation time)*(incubation)*(latent)"
+    ), regexp = paste(
+      "Unable to sample generation times satisfying `latent_period` >= ",
+      "`incubation_period`", "Consider reducing the `latent_period`",
+      sep = ".*"
+    )
   )
 })
 
@@ -83,9 +87,8 @@ test_that("presymptomatic_transmission_to_alpha errors from non-convergence", {
   expect_error(
     presymptomatic_transmission_to_alpha(presymptomatic_transmission = 1.1),
     regexp = paste(
-      "(Estimating)*(alpha)*(from)*(presymptomatic_transmission)",
-      "(did not converge)",
-      sep = "*"
+      "Estimating the `alpha` parameter from `presymptomatic_transmission`",
+      "did not converge"
     )
   )
 })

@@ -13,6 +13,7 @@
 #' * `$traced`: `logical`
 #' * `$onset`: `numeric`
 #' * `$new_cases`: `integer`
+#' * `$self_isolate`: `logical`
 #' * `$isolated_time`: `numeric`
 #' * `$sampled`: `logical`
 #' @autoglobal
@@ -53,6 +54,7 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     traced = FALSE,
     onset = delays$incubation_period(initial_cases),
     new_cases = NA_integer_,
+    self_isolate = FALSE,
     isolated_time = Inf,
     sampled = FALSE
   )

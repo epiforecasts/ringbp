@@ -14,10 +14,11 @@ of times to sample the offspring distribution (i.e. the length of the
 \code{function} output)}
 
 \item{isolated}{a \code{function}: a random number generating \code{function} that
-samples from the isolated cases offspring distribution, the \code{function}
+samples from the offspring distribution of isolated cases, the \code{function}
 accepts a single \code{integer} argument specifying the number of times to
 sample the offspring distribution (i.e. the length of the \code{function}
-output)}
+output). This distribution is used for the transmission of any case once
+it has been isolated, whether symptomatic or asymptomatic}
 
 \item{asymptomatic}{a \code{function}: a random number generating \code{function}
 that samples from the sub-clinical non-isolated cases offspring

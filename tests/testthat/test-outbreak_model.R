@@ -111,7 +111,7 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_max_days)", {
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts(cap_max_days = 5)
     ),
-    regexp = "(The outbreak simulation ran for zero generations)"
+    regexp = "The outbreak simulation ran for zero generations"
   )
   expect_identical(res$week, 0L)
   expect_identical(res$weekly_cases, 0L)
@@ -141,7 +141,7 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
       interventions = intervention_opts(quarantine = TRUE),
       sim = sim_opts(cap_cases = 10)
     ),
-    regexp = "(The outbreak simulation ran for zero generations)"
+    regexp = "The outbreak simulation ran for zero generations"
   )
   expect_identical(res$week, 0:50)
   expect_identical(res$weekly_cases[1], 25L)
@@ -176,9 +176,9 @@ test_that("outbreak_model warns if latent period is positive & cases > 1", {
       sim = sim_opts()
     ),
     regexp = paste(
-      "(The proportion of presymptomatic transmission supplied is:)",
-      "(The realised proportion of presymptomatic transmission is:)",
-      sep = "*"
+      "The proportion of presymptomatic transmission supplied is:",
+      "The realised proportion of presymptomatic transmission is:",
+      sep = ".*"
     )
   )
 })
