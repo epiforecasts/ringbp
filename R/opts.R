@@ -11,10 +11,11 @@
 #'   of times to sample the offspring distribution (i.e. the length of the
 #'   `function` output)
 #' @param isolated a `function`: a random number generating `function` that
-#'   samples from the isolated cases offspring distribution, the `function`
+#'   samples from the offspring distribution of isolated cases, the `function`
 #'   accepts a single `integer` argument specifying the number of times to
 #'   sample the offspring distribution (i.e. the length of the `function`
-#'   output)
+#'   output). This distribution is used for the transmission of any case once
+#'   it has been isolated, whether symptomatic or asymptomatic
 #' @param asymptomatic a `function`: a random number generating `function`
 #'   that samples from the sub-clinical non-isolated cases offspring
 #'   distribution, the `function` accepts a single `integer` argument
@@ -73,6 +74,21 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #'   presymptomatic transmission, depending on the `incubation_period`
 #'   distribution and `presymptomatic_transmission` (in [event_prob_opts()]).
 #'
+#' @param onset_to_self_isolation a `function`: a random number generating
+#'   `function` that samples from the onset-to-self-isolation distribution,
+#'   the `function` accepts a single `integer` argument specifying the length
+#'   of the `function` output.
+#'
+#'   By default `onset_to_self_isolation` is a function that generates `Inf`
+#'   (i.e. individuals never self-isolate). A different onset-to-self-isolation
+#'   `function` only needs to be specified if a non-zero value is specified to
+#'   `symptomatic_self_isolate` in [event_prob_opts()] (which by default is 0).
+#'   If `onset_to_self_isolation` is specified but `symptomatic_self_isolate`
+#'   is zero, a warning will be thrown and the `onset_to_self_isolation`
+#'   will be ignored; if `symptomatic_self_isolate` is non-zero and
+#'   `onset_to_self_isolation` is an `Inf` generating function,
+#'   [scenario_sim()] will error.
+#'
 #' @return A `list` with class `<ringbp_delay_opts>`.
 #' @export
 #'
@@ -83,11 +99,17 @@ offspring_opts <- function(community, isolated, asymptomatic = community) {
 #' )
 delay_opts <- function(incubation_period,
                        onset_to_isolation,
-                       latent_period = 0) {
+                       latent_period = 0,
+                       onset_to_self_isolation = \(n) rep(Inf, n)) {
 
   check_dist_func(incubation_period, dist_name = "incubation_period")
   check_dist_func(onset_to_isolation, dist_name = "onset_to_isolation")
   checkmate::assert_number(latent_period, lower = 0, finite = TRUE)
+  check_dist_func(
+    onset_to_self_isolation,
+    dist_name = "onset_to_self_isolation",
+    finite = FALSE
+  )
 
   if (latent_period > 0) {
     warning(
@@ -103,7 +125,8 @@ delay_opts <- function(incubation_period,
   opts <- list(
     incubation_period = incubation_period,
     onset_to_isolation = onset_to_isolation,
-    latent_period = latent_period
+    latent_period = latent_period,
+    onset_to_self_isolation = onset_to_self_isolation
   )
 
   class(opts) <- "ringbp_delay_opts"
@@ -119,6 +142,15 @@ delay_opts <- function(incubation_period,
 #' @param symptomatic_traced a `numeric` scalar probability (between 0
 #'   and 1 inclusive): proportion of infectious contacts ascertained by contact
 #'   tracing
+#' @param symptomatic_self_isolate a `numeric` scalar probability (between 0
+#'   and 1 inclusive): proportion of cases that self-isolate when they become
+#'   symptomatic. These individuals do not get tested and do not require a
+#'   positive test result to enter isolation. Default is 0 (i.e. no infectious
+#'   individuals self-isolate).
+#'
+#'   If `symptomatic_self_isolate` is non-zero a random number generating
+#'   `function` needs to be specified in the `onset_to_self_isolation` argument
+#'   in the [delay_opts()] function, otherwise the [scenario_sim()] will error.
 #'
 #' @return A `list` with class `<ringbp_event_prob_opts>`.
 #' @export
@@ -131,11 +163,13 @@ delay_opts <- function(incubation_period,
 #' )
 event_prob_opts <- function(asymptomatic,
                             presymptomatic_transmission,
-                            symptomatic_traced) {
+                            symptomatic_traced,
+                            symptomatic_self_isolate = 0) {
 
   checkmate::assert_number(asymptomatic, lower = 0, upper = 1)
   checkmate::assert_number(presymptomatic_transmission, lower = 0, upper = 1)
   checkmate::assert_number(symptomatic_traced, lower = 0, upper = 1)
+  checkmate::assert_number(symptomatic_self_isolate, lower = 0, upper = 1)
 
   # calculate alpha parameter from presymptomatic_transmission
   alpha <- presymptomatic_transmission_to_alpha(
@@ -146,7 +180,8 @@ event_prob_opts <- function(asymptomatic,
     asymptomatic = asymptomatic,
     presymptomatic_transmission = presymptomatic_transmission,
     alpha = alpha,
-    symptomatic_traced = symptomatic_traced
+    symptomatic_traced = symptomatic_traced,
+    symptomatic_self_isolate = symptomatic_self_isolate
   )
 
   class(opts) <- "ringbp_event_prob_opts"
@@ -155,15 +190,19 @@ event_prob_opts <- function(asymptomatic,
 
 #' Create a list of intervention settings to run the \pkg{ringbp} model
 #'
-#' @param quarantine a `logical` scalar: whether quarantine is in effect, if
-#'   `TRUE` then traced contacts are isolated before symptom onset; defaults to
-#'   `FALSE`
+#' @param quarantine a `logical` scalar: whether quarantine is in effect. If
+#'   `TRUE`, traced contacts are isolated when their infector is isolated,
+#'   regardless of their own symptom status (so they may be isolated before
+#'   symptom onset, and asymptomatic traced contacts are isolated too). If
+#'   `FALSE`, only symptomatic traced contacts are isolated, no earlier than
+#'   their own symptom onset. Defaults to `FALSE`
 #' @param test_sensitivity a `numeric` scalar probability (between 0
-#'   and 1 inclusive): the test sensitivity (i.e. probability that a true positive
-#'   tests positive). Individuals that are tested and get a false negative
-#'   are not isolated and their contacts are not traced. Only symptomatic
-#'   individuals are tested. Default is 1, which assumes all symptomatic
-#'   individuals tested get a positive test result.
+#'   and 1 inclusive): the test sensitivity (i.e. probability that a true
+#'   positive tests positive). Only symptomatic individuals that do not
+#'   self-isolate are tested; a false-negative result means the case is not
+#'   isolated via the testing pathway (see [outbreak_step()] for how isolation
+#'   times are assigned). Default is 1, which assumes all tested individuals
+#'   get a positive test result.
 #'
 #' @return A `list` with class `<ringbp_intervention_opts>`.
 #' @export

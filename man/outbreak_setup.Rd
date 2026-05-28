@@ -13,13 +13,14 @@ or starting cases which are all assumed to be missed by contact tracing
 
 \item{delays}{a \code{list} with class \verb{<ringbp_delay_opts>}: the
 delay distribution \code{function}s for the \pkg{ringbp} model, returned
-by \code{\link[=delay_opts]{delay_opts()}}. Contains two elements: \code{incubation_period} and
-\code{onset_to_isolation}}
+by \code{\link[=delay_opts]{delay_opts()}}. Contains 4 elements: \code{incubation_period},
+\code{onset_to_isolation}, \code{latent_period} and \code{onset_to_self_isolation}}
 
 \item{event_probs}{a \code{list} with class \verb{<ringbp_event_prob_opts>}: the
 event probabilities for the \pkg{ringbp} model, returned by
-\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains three elements: \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_traced}}
+\code{\link[=event_prob_opts]{event_prob_opts()}}. Contains 5 elements: \code{asymptomatic},
+\code{presymptomatic_transmission}, \code{alpha}, \code{symptomatic_traced} and
+\code{symptomatic_self_isolate}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -31,6 +32,7 @@ event probabilities for the \pkg{ringbp} model, returned by
 \item \verb{$traced}: \code{logical}
 \item \verb{$onset}: \code{numeric}
 \item \verb{$new_cases}: \code{integer}
+\item \verb{$self_isolate}: \code{logical}
 \item \verb{$isolated_time}: \code{numeric}
 \item \verb{$sampled}: \code{logical}
 }

@@ -1,5 +1,10 @@
 # ringbp 0.1.2.9999
 
+* Symptomatic individuals can now self-isolate without requiring a positive test. `event_prob_opts()` gains a `symptomatic_self_isolate` argument (the proportion of symptomatic cases that self-isolate, default `0`) and `delay_opts()` gains an `onset_to_self_isolation` argument, (by default a function generating `Inf` so that no individual self-isolates). A new internal `cross_check_opts()` checks that the `delay_opts()` and `event_prob_opts()` settings are mutually compatible. 
+
+  In `outbreak_step()` a case's isolation time is now the earliest of three pathways: self-isolation, a positive test, and contact tracing. Tracing under `quarantine` is now exposure-based, so all traced contacts, including asymptomatic ones, are isolated when their infector is isolated regardless of symptom status (previously asymptomatic cases were never isolated); `sample_offspring()` reduces post-isolation transmission for asymptomatic cases accordingly. Addresses #212 and #227 by @joshwlambert in #213 and reviewed by @pearsonca and @sbfnk.
+
+* The package test suite has been improved, adding several new unit tests, and increasing the test coverage to 100%. The {testthat} edition is incremented to use the 3rd edition. Snapshot (regression) tests are added for `outbreak_setup()` and `scenario_sim()`. Addresses #100 by @joshwlambert in #160 and reviewed by @pearsonca.
 * Updated package maintainer to @joshwlambert. By @joshwlambert in #223 and reviewed by @pearsonca and @sbfnk.
 
 * Added vignettes on:
