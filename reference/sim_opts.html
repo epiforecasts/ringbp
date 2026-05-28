@@ -53,8 +53,10 @@
 
 
 <dl><dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: stop the simulation when
-this many days is reached.</p></dd>
+<dd><p>a positive <code>integer</code> scalar: stops the outbreak
+simulation once all new infections occur on more than <code>cap_max_days</code>
+days after the start of the outbreak, counted from the exposure of the
+initial cases on day 0</p></dd>
 
 
 <dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
