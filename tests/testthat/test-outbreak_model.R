@@ -128,7 +128,7 @@ test_that("outbreak_model in-window counts are independent of cap_max_days", {
   outbreaks <- list()
   cap_max_days <- c(50, 100)
   for (i in seq_along(cap_max_days)) {
-    set.seed(19)
+    set.seed(1)
     outbreaks[[i]] <- outbreak_model(
       initial_cases = 1,
       offspring = offspring_opts(
