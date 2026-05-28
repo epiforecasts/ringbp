@@ -219,8 +219,10 @@ intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
 
 #' Create a list of simulation control options for the \pkg{ringbp} model
 #'
-#' @param cap_max_days a positive `integer` scalar: stop the simulation when
-#'   this many days is reached.
+#' @param cap_max_days a positive `integer` scalar: stops the outbreak
+#'   simulation once all new infections occur on more than `cap_max_days`
+#'   days after the start of the outbreak, counted from the exposure of the
+#'   initial cases on day 0
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
 #'   which the branching process (simulation) was terminated
 #'

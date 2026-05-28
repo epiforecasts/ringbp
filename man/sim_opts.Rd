@@ -7,8 +7,10 @@
 sim_opts(cap_max_days = 350, cap_cases = 5000)
 }
 \arguments{
-\item{cap_max_days}{a positive \code{integer} scalar: stop the simulation when
-this many days is reached.}
+\item{cap_max_days}{a positive \code{integer} scalar: stops the outbreak
+simulation once all new infections occur on more than \code{cap_max_days}
+days after the start of the outbreak, counted from the exposure of the
+initial cases on day 0}
 
 \item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
 which the branching process (simulation) was terminated}
