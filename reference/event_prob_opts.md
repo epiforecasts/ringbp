@@ -5,7 +5,12 @@ Create a list of event probabilities to run the ringbp model
 ## Usage
 
 ``` r
-event_prob_opts(asymptomatic, presymptomatic_transmission, symptomatic_traced)
+event_prob_opts(
+  asymptomatic,
+  presymptomatic_transmission,
+  symptomatic_traced,
+  symptomatic_self_isolate = 0
+)
 ```
 
 ## Arguments
@@ -24,6 +29,22 @@ event_prob_opts(asymptomatic, presymptomatic_transmission, symptomatic_traced)
 
   a `numeric` scalar probability (between 0 and 1 inclusive): proportion
   of infectious contacts ascertained by contact tracing
+
+- symptomatic_self_isolate:
+
+  a `numeric` scalar probability (between 0 and 1 inclusive): proportion
+  of cases that self-isolate when they become symptomatic. These
+  individuals do not get tested and do not require a positive test
+  result to enter isolation. Default is 0 (i.e. no infectious
+  individuals self-isolate).
+
+  If `symptomatic_self_isolate` is non-zero a random number generating
+  `function` needs to be specified in the `onset_to_self_isolation`
+  argument in the
+  [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md)
+  function, otherwise the
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+  will error.
 
 ## Value
 
@@ -48,6 +69,9 @@ event_prob_opts(
 #> 
 #> $symptomatic_traced
 #> [1] 0.2
+#> 
+#> $symptomatic_self_isolate
+#> [1] 0
 #> 
 #> attr(,"class")
 #> [1] "ringbp_event_prob_opts"

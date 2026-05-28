@@ -59,12 +59,12 @@ for more information.
 
 ## Details
 
-The offspring distribution for a case in the community cannot simply be
-sampled from the `community` offspring distribution as it might become
-isolated before infecting some or all of those cases. To account for
-cases that transition between states (for now only *community* -\>
-*isolated*) we draw from the offspring from both distributions, assign
-all new cases a generation time, and then discard the ones that have
-generation time \<= isolation time (for those from the isolated
-offspring distribution) or generation time \> isolation time (for those
-from the community offspring distribution), respectively.
+A case's offspring cannot simply be sampled from a single offspring
+distribution, as the case might become isolated before infecting some or
+all of those cases. To account for cases that transition between states
+(*community* -\> *isolated* for symptomatic cases, *asymptomatic* -\>
+*isolated* for asymptomatic cases) we sample offspring from both the
+pre-isolation and the post-isolation (`isolated`) distributions, assign
+all new cases a generation time, and then discard pre-isolation
+offspring with a generation time after the isolation time and
+post-isolation offspring with a generation time before it.

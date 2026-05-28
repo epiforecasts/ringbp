@@ -27,22 +27,23 @@ outbreak_step(case_data, offspring, delays, event_probs, interventions)
   a `list` with class `<ringbp_delay_opts>`: the delay distribution
   `function`s for the ringbp model, returned by
   [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md).
-  Contains two elements: `incubation_period` and `onset_to_isolation`
+  Contains 4 elements: `incubation_period`, `onset_to_isolation`,
+  `latent_period` and `onset_to_self_isolation`
 
 - event_probs:
 
   a `list` with class `<ringbp_event_prob_opts>`: the event
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
-  Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_traced`
+  Contains 5 elements: `asymptomatic`, `presymptomatic_transmission`,
+  `alpha`, `symptomatic_traced` and `symptomatic_self_isolate`
 
 - interventions:
 
   a `list` with class `<ringbp_intervention_opts>`: the intervention
   settings for the ringbp model, returned by
   [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md).
-  Contains one element: `quarantine`
+  Contains 2 elements: `quarantine` and `test_sensitivity`
 
 ## Value
 
@@ -54,6 +55,40 @@ A `list` with three elements:
 
 3.  `$cases_in_gen`: a `numeric` with the number of new cases in that
     generation
+
+## Details
+
+Each new case is assigned an isolation time (`isolated_time`) as the
+earliest of up to three pathways; a case to which no pathway applies is
+never isolated (`isolated_time` is `Inf`):
+
+- **Self-isolation**: a symptomatic case self-isolates with probability
+  `symptomatic_self_isolate` (from
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)),
+  entering isolation an `onset_to_self_isolation` delay (from
+  [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md))
+  after symptom onset. Self-isolating cases are not tested.
+
+- **Testing**: a symptomatic case that does not self-isolate is tested
+  and returns a positive result with probability `test_sensitivity`
+  (from
+  [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md)),
+  entering isolation an `onset_to_isolation` delay after symptom onset.
+  A false-negative result does not isolate the case via this pathway.
+
+- **Tracing**: a case whose infector is symptomatic is traced with
+  probability `symptomatic_traced` (from
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)).
+  When `quarantine` is active (from
+  [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md))
+  tracing is exposure-based: a traced case is isolated when its infector
+  is isolated, regardless of its own symptom status. Without
+  `quarantine`, only a traced symptomatic case is isolated, and no
+  earlier than its own symptom onset.
+
+Self-isolation and testing are symptom-based, so asymptomatic cases are
+isolated only via the tracing pathway, and only when `quarantine` is
+active.
 
 ## Examples
 
@@ -82,13 +117,13 @@ case_data <- outbreak_setup(
 )
 case_data
 #> Index: <asymptomatic>
-#>    exposure asymptomatic caseid infector traced    onset new_cases
-#>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>
-#> 1:        0        FALSE      1        0  FALSE 2.581700        NA
-#> 2:        0        FALSE      2        0  FALSE 4.811051        NA
-#> 3:        0        FALSE      3        0  FALSE 7.008587        NA
-#> 4:        0        FALSE      4        0  FALSE 9.262499        NA
-#> 5:        0        FALSE      5        0  FALSE 5.827982        NA
+#>    exposure asymptomatic caseid infector traced    onset new_cases self_isolate
+#>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>       <lgcl>
+#> 1:        0        FALSE      1        0  FALSE 2.581700        NA        FALSE
+#> 2:        0        FALSE      2        0  FALSE 4.811051        NA        FALSE
+#> 3:        0        FALSE      3        0  FALSE 7.008587        NA        FALSE
+#> 4:        0        FALSE      4        0  FALSE 9.262499        NA        FALSE
+#> 5:        0        FALSE      5        0  FALSE 5.827982        NA        FALSE
 #>    isolated_time sampled
 #>            <num>  <lgcl>
 #> 1:      3.641819   FALSE
@@ -122,20 +157,20 @@ case_data
 #> 12:  9.630210        FALSE     12        4  FALSE 16.542692        NA
 #> 13: 11.769312        FALSE     13        4  FALSE 19.913290        NA
 #> 14: 10.156739        FALSE     14        4  FALSE 14.509729        NA
-#>     isolated_time sampled
-#>             <num>  <lgcl>
-#>  1:      3.641819    TRUE
-#>  2:     11.661816    TRUE
-#>  3:     11.898353    TRUE
-#>  4:     14.418862    TRUE
-#>  5:      7.868309    TRUE
-#>  6:     16.319629   FALSE
-#>  7:     12.835367   FALSE
-#>  8:     15.083510   FALSE
-#>  9:     13.040281   FALSE
-#> 10:     18.433117   FALSE
-#> 11:     13.036644   FALSE
-#> 12:     21.622686   FALSE
-#> 13:     23.716574   FALSE
-#> 14:     17.977972   FALSE
+#>     self_isolate isolated_time sampled
+#>           <lgcl>         <num>  <lgcl>
+#>  1:        FALSE      3.641819    TRUE
+#>  2:        FALSE     11.661816    TRUE
+#>  3:        FALSE     11.898353    TRUE
+#>  4:        FALSE     14.418862    TRUE
+#>  5:        FALSE      7.868309    TRUE
+#>  6:        FALSE     19.796599   FALSE
+#>  7:        FALSE     12.263431   FALSE
+#>  8:        FALSE     17.821761   FALSE
+#>  9:        FALSE     13.568534   FALSE
+#> 10:        FALSE     19.168047   FALSE
+#> 11:        FALSE     11.646287   FALSE
+#> 12:        FALSE     23.382664   FALSE
+#> 13:        FALSE     25.139970   FALSE
+#> 14:        FALSE     17.040636   FALSE
 ```

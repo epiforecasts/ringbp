@@ -2,6 +2,51 @@
 
 ## ringbp 0.1.2.9999
 
+- Symptomatic individuals can now self-isolate without requiring a
+  positive test.
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
+  gains a `symptomatic_self_isolate` argument (the proportion of
+  symptomatic cases that self-isolate, default `0`) and
+  [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md)
+  gains an `onset_to_self_isolation` argument, (by default a function
+  generating `Inf` so that no individual self-isolates). A new internal
+  [`cross_check_opts()`](https://epiforecasts.io/ringbp/reference/cross_check_opts.md)
+  checks that the
+  [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md)
+  and
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
+  settings are mutually compatible.
+
+  In
+  [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md)
+  a case’s isolation time is now the earliest of three pathways:
+  self-isolation, a positive test, and contact tracing. Tracing under
+  `quarantine` is now exposure-based, so all traced contacts, including
+  asymptomatic ones, are isolated when their infector is isolated
+  regardless of symptom status (previously asymptomatic cases were never
+  isolated);
+  [`sample_offspring()`](https://epiforecasts.io/ringbp/reference/sample_offspring.md)
+  reduces post-isolation transmission for asymptomatic cases
+  accordingly. Addresses
+  [\#212](https://github.com/epiforecasts/ringbp/issues/212) and
+  [\#227](https://github.com/epiforecasts/ringbp/issues/227) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#213](https://github.com/epiforecasts/ringbp/issues/213) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
+- The package test suite has been improved, adding several new unit
+  tests, and increasing the test coverage to 100%. The {testthat}
+  edition is incremented to use the 3rd edition. Snapshot (regression)
+  tests are added for
+  [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
+  and
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md).
+  Addresses [\#100](https://github.com/epiforecasts/ringbp/issues/100)
+  by [@joshwlambert](https://github.com/joshwlambert) in
+  [\#160](https://github.com/epiforecasts/ringbp/issues/160) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
 - Updated package maintainer to
   [@joshwlambert](https://github.com/joshwlambert). By
   [@joshwlambert](https://github.com/joshwlambert) in

@@ -6,7 +6,13 @@ number of arguments
 ## Usage
 
 ``` r
-check_dist_func(func, dist_name, n_req_args = 1, func_eval_min = 0)
+check_dist_func(
+  func,
+  dist_name,
+  n_req_args = 1,
+  func_eval_min = 0,
+  finite = TRUE
+)
 ```
 
 ## Arguments
@@ -30,6 +36,12 @@ check_dist_func(func, dist_name, n_req_args = 1, func_eval_min = 0)
   `func` argument (i.e. the minimum of the acceptable value in the
   function's codomain). The default is `0` so `func` must return
   non-negative values.
+
+- finite:
+
+  Check for only finite values in distribution output, passed to
+  [`checkmate::test_numeric()`](https://mllg.github.io/checkmate/reference/checkNumeric.html).
+  Default is `TRUE`.
 
 ## Value
 

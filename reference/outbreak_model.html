@@ -75,21 +75,23 @@ and <code>asymptomatic</code></p></dd>
 <dt id="arg-delays">delays<a class="anchor" aria-label="anchor" href="#arg-delays"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_delay_opts&gt;</code>: the
 delay distribution <code>function</code>s for the <span class="pkg">ringbp</span> model, returned
-by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains two elements: <code>incubation_period</code> and
-<code>onset_to_isolation</code></p></dd>
+by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains 4 elements: <code>incubation_period</code>,
+<code>onset_to_isolation</code>, <code>latent_period</code> and <code>onset_to_self_isolation</code></p></dd>
 
 
 <dt id="arg-event-probs">event_probs<a class="anchor" aria-label="anchor" href="#arg-event-probs"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_event_prob_opts&gt;</code>: the
 event probabilities for the <span class="pkg">ringbp</span> model, returned by
-<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains three elements: <code>asymptomatic</code>,
-<code>presymptomatic_transmission</code> and <code>symptomatic_traced</code></p></dd>
+<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains 5 elements: <code>asymptomatic</code>,
+<code>presymptomatic_transmission</code>, <code>alpha</code>, <code>symptomatic_traced</code> and
+<code>symptomatic_self_isolate</code></p></dd>
 
 
 <dt id="arg-interventions">interventions<a class="anchor" aria-label="anchor" href="#arg-interventions"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_intervention_opts&gt;</code>:
 the intervention settings for the <span class="pkg">ringbp</span> model, returned by
-<code><a href="intervention_opts.html">intervention_opts()</a></code>. Contains one element: <code>quarantine</code></p></dd>
+<code><a href="intervention_opts.html">intervention_opts()</a></code>. Contains 2 elements: <code>quarantine</code> and
+<code>test_sensitivity</code></p></dd>
 
 
 <dt id="arg-sim">sim<a class="anchor" aria-label="anchor" href="#arg-sim"></a></dt>

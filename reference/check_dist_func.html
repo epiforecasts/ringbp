@@ -48,7 +48,13 @@ of arguments</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_dist_func</span><span class="op">(</span><span class="va">func</span>, <span class="va">dist_name</span>, n_req_args <span class="op">=</span> <span class="fl">1</span>, func_eval_min <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_dist_func</span><span class="op">(</span></span>
+<span>  <span class="va">func</span>,</span>
+<span>  <span class="va">dist_name</span>,</span>
+<span>  n_req_args <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  func_eval_min <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  finite <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +79,11 @@ being passed (e.g. <code>"incubation_period"</code>)</p></dd>
 output by the <code>func</code> argument (i.e. the minimum of the acceptable value in
 the function's codomain). The default is <code>0</code> so <code>func</code> must return
 non-negative values.</p></dd>
+
+
+<dt id="arg-finite">finite<a class="anchor" aria-label="anchor" href="#arg-finite"></a></dt>
+<dd><p>Check for only finite values in distribution output, passed
+to <code><a href="https://mllg.github.io/checkmate/reference/checkNumeric.html" class="external-link">checkmate::test_numeric()</a></code>. Default is <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

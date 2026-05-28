@@ -101,15 +101,15 @@ references, see <code><a href="https://rdrr.io/pkg/data.table/man/assign.html" c
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The offspring distribution for a case in the community cannot simply
-be sampled from the <code>community</code> offspring distribution as it might become
-isolated before infecting some or all of those cases.
-To account for cases that transition between states (for now only
-<em>community</em> -&gt; <em>isolated</em>) we draw from the offspring from both
+    <p>A case's offspring cannot simply be sampled from a single
+offspring distribution, as the case might become isolated before
+infecting some or all of those cases. To account for cases that
+transition between states (<em>community</em> -&gt; <em>isolated</em> for symptomatic
+cases, <em>asymptomatic</em> -&gt; <em>isolated</em> for asymptomatic cases) we sample
+offspring from both the pre-isolation and the post-isolation (<code>isolated</code>)
 distributions, assign all new cases a generation time, and then discard
-the ones that have generation time &lt;= isolation time (for those from the
-isolated offspring distribution) or generation time &gt; isolation time
-(for those from the community offspring distribution), respectively.</p>
+pre-isolation offspring with a generation time after the isolation time
+and post-isolation offspring with a generation time before it.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

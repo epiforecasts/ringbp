@@ -67,21 +67,23 @@ and <code>asymptomatic</code></p></dd>
 <dt id="arg-delays">delays<a class="anchor" aria-label="anchor" href="#arg-delays"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_delay_opts&gt;</code>: the
 delay distribution <code>function</code>s for the <span class="pkg">ringbp</span> model, returned
-by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains two elements: <code>incubation_period</code> and
-<code>onset_to_isolation</code></p></dd>
+by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains 4 elements: <code>incubation_period</code>,
+<code>onset_to_isolation</code>, <code>latent_period</code> and <code>onset_to_self_isolation</code></p></dd>
 
 
 <dt id="arg-event-probs">event_probs<a class="anchor" aria-label="anchor" href="#arg-event-probs"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_event_prob_opts&gt;</code>: the
 event probabilities for the <span class="pkg">ringbp</span> model, returned by
-<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains three elements: <code>asymptomatic</code>,
-<code>presymptomatic_transmission</code> and <code>symptomatic_traced</code></p></dd>
+<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains 5 elements: <code>asymptomatic</code>,
+<code>presymptomatic_transmission</code>, <code>alpha</code>, <code>symptomatic_traced</code> and
+<code>symptomatic_self_isolate</code></p></dd>
 
 
 <dt id="arg-interventions">interventions<a class="anchor" aria-label="anchor" href="#arg-interventions"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_intervention_opts&gt;</code>:
 the intervention settings for the <span class="pkg">ringbp</span> model, returned by
-<code><a href="intervention_opts.html">intervention_opts()</a></code>. Contains one element: <code>quarantine</code></p></dd>
+<code><a href="intervention_opts.html">intervention_opts()</a></code>. Contains 2 elements: <code>quarantine</code> and
+<code>test_sensitivity</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -91,6 +93,28 @@ the intervention settings for the <span class="pkg">ringbp</span> model, returne
 <li><p><code>$cases_in_gen</code>: a <code>numeric</code> with the number of new cases in that
 generation</p></li>
 </ol></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Each new case is assigned an isolation time (<code>isolated_time</code>) as the
+earliest of up to three pathways; a case to which no pathway applies is
+never isolated (<code>isolated_time</code> is <code>Inf</code>):</p><ul><li><p><strong>Self-isolation</strong>: a symptomatic case self-isolates with probability
+<code>symptomatic_self_isolate</code> (from <code><a href="event_prob_opts.html">event_prob_opts()</a></code>), entering isolation
+an <code>onset_to_self_isolation</code> delay (from <code><a href="delay_opts.html">delay_opts()</a></code>) after symptom
+onset. Self-isolating cases are not tested.</p></li>
+<li><p><strong>Testing</strong>: a symptomatic case that does not self-isolate is tested and
+returns a positive result with probability <code>test_sensitivity</code> (from
+<code><a href="intervention_opts.html">intervention_opts()</a></code>), entering isolation an <code>onset_to_isolation</code> delay
+after symptom onset. A false-negative result does not isolate the case
+via this pathway.</p></li>
+<li><p><strong>Tracing</strong>: a case whose infector is symptomatic is traced with
+probability <code>symptomatic_traced</code> (from <code><a href="event_prob_opts.html">event_prob_opts()</a></code>). When
+<code>quarantine</code> is active (from <code><a href="intervention_opts.html">intervention_opts()</a></code>) tracing is
+exposure-based: a traced case is isolated when its infector is isolated,
+regardless of its own symptom status. Without <code>quarantine</code>, only a traced
+symptomatic case is isolated, and no earlier than its own symptom onset.</p></li>
+</ul><p>Self-isolation and testing are symptom-based, so asymptomatic cases are
+isolated only via the tracing pathway, and only when <code>quarantine</code> is active.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -118,13 +142,13 @@ generation</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">case_data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Index: &lt;asymptomatic&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure asymptomatic caseid infector traced    onset new_cases</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;       &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;     &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0        FALSE      1        0  FALSE 2.581700        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        0        FALSE      2        0  FALSE 4.811051        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0        FALSE      3        0  FALSE 7.008587        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0        FALSE      4        0  FALSE 9.262499        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0        FALSE      5        0  FALSE 5.827982        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    exposure asymptomatic caseid infector traced    onset new_cases self_isolate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;       &lt;lgcl&gt;  &lt;int&gt;    &lt;num&gt; &lt;lgcl&gt;    &lt;num&gt;     &lt;int&gt;       &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        0        FALSE      1        0  FALSE 2.581700        NA        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        0        FALSE      2        0  FALSE 4.811051        NA        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0        FALSE      3        0  FALSE 7.008587        NA        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0        FALSE      4        0  FALSE 9.262499        NA        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0        FALSE      5        0  FALSE 5.827982        NA        FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    isolated_time sampled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;  &lt;lgcl&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:      3.641819   FALSE</span>
@@ -158,22 +182,22 @@ generation</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12:  9.630210        FALSE     12        4  FALSE 16.542692        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13: 11.769312        FALSE     13        4  FALSE 19.913290        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14: 10.156739        FALSE     14        4  FALSE 14.509729        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     isolated_time sampled</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;  &lt;lgcl&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      3.641819    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     11.661816    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     11.898353    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     14.418862    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      7.868309    TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     16.319629   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     12.835367   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     15.083510   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     13.040281   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     18.433117   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     13.036644   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     21.622686   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     23.716574   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     17.977972   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self_isolate isolated_time sampled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;lgcl&gt;         &lt;num&gt;  &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:        FALSE      3.641819    TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:        FALSE     11.661816    TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        FALSE     11.898353    TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:        FALSE     14.418862    TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:        FALSE      7.868309    TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:        FALSE     19.796599   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:        FALSE     12.263431   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:        FALSE     17.821761   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:        FALSE     13.568534   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:        FALSE     19.168047   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:        FALSE     11.646287   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:        FALSE     23.382664   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:        FALSE     25.139970   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:        FALSE     17.040636   FALSE</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

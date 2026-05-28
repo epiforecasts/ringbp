@@ -5,7 +5,12 @@ Create a list of delay distributions to run the ringbp model
 ## Usage
 
 ``` r
-delay_opts(incubation_period, onset_to_isolation, latent_period = 0)
+delay_opts(
+  incubation_period,
+  onset_to_isolation,
+  latent_period = 0,
+  onset_to_self_isolation = function(n) rep(Inf, n)
+)
 ```
 
 ## Arguments
@@ -38,6 +43,26 @@ delay_opts(incubation_period, onset_to_isolation, latent_period = 0)
   distribution and `presymptomatic_transmission` (in
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)).
 
+- onset_to_self_isolation:
+
+  a `function`: a random number generating `function` that samples from
+  the onset-to-self-isolation distribution, the `function` accepts a
+  single `integer` argument specifying the length of the `function`
+  output.
+
+  By default `onset_to_self_isolation` is a function that generates
+  `Inf` (i.e. individuals never self-isolate). A different
+  onset-to-self-isolation `function` only needs to be specified if a
+  non-zero value is specified to `symptomatic_self_isolate` in
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
+  (which by default is 0). If `onset_to_self_isolation` is specified but
+  `symptomatic_self_isolate` is zero, a warning will be thrown and the
+  `onset_to_self_isolation` will be ignored; if
+  `symptomatic_self_isolate` is non-zero and `onset_to_self_isolation`
+  is an `Inf` generating function,
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+  will error.
+
 ## Value
 
 A `list` with class `<ringbp_delay_opts>`.
@@ -52,15 +77,20 @@ delay_opts(
 #> $incubation_period
 #> function (n) 
 #> rweibull(n = n, shape = 2.32, scale = 6.49)
-#> <environment: 0x55c3688e1cc8>
+#> <environment: 0x5609afcfe468>
 #> 
 #> $onset_to_isolation
 #> function (n) 
 #> rweibull(n = n, shape = 1.65, scale = 4.28)
-#> <environment: 0x55c3688e1cc8>
+#> <environment: 0x5609afcfe468>
 #> 
 #> $latent_period
 #> [1] 0
+#> 
+#> $onset_to_self_isolation
+#> function (n) 
+#> rep(Inf, n)
+#> <environment: 0x5609afd1aa18>
 #> 
 #> attr(,"class")
 #> [1] "ringbp_delay_opts"

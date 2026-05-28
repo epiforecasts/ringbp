@@ -21,15 +21,16 @@ outbreak_setup(initial_cases, delays, event_probs)
   a `list` with class `<ringbp_delay_opts>`: the delay distribution
   `function`s for the ringbp model, returned by
   [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md).
-  Contains two elements: `incubation_period` and `onset_to_isolation`
+  Contains 4 elements: `incubation_period`, `onset_to_isolation`,
+  `latent_period` and `onset_to_self_isolation`
 
 - event_probs:
 
   a `list` with class `<ringbp_event_prob_opts>`: the event
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
-  Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_traced`
+  Contains 5 elements: `asymptomatic`, `presymptomatic_transmission`,
+  `alpha`, `symptomatic_traced` and `symptomatic_self_isolate`
 
 ## Value
 
@@ -48,6 +49,8 @@ outbreak_setup(initial_cases, delays, event_probs)
 - `$onset`: `numeric`
 
 - `$new_cases`: `integer`
+
+- `$self_isolate`: `logical`
 
 - `$isolated_time`: `numeric`
 
@@ -81,11 +84,11 @@ case_data
 #> 3:        0        FALSE      3        0  FALSE  5.494867        NA
 #> 4:        0        FALSE      4        0  FALSE  4.273768        NA
 #> 5:        0        FALSE      5        0  FALSE  9.144926        NA
-#>    isolated_time sampled
-#>            <num>  <lgcl>
-#> 1:      9.212328   FALSE
-#> 2:     14.155064   FALSE
-#> 3:     13.630713   FALSE
-#> 4:     12.000550   FALSE
-#> 5:      9.839796   FALSE
+#>    self_isolate isolated_time sampled
+#>          <lgcl>         <num>  <lgcl>
+#> 1:        FALSE      9.212328   FALSE
+#> 2:        FALSE     14.155064   FALSE
+#> 3:        FALSE     13.630713   FALSE
+#> 4:        FALSE     12.000550   FALSE
+#> 5:        FALSE      9.839796   FALSE
 ```

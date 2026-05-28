@@ -35,22 +35,23 @@ outbreak_model(
   a `list` with class `<ringbp_delay_opts>`: the delay distribution
   `function`s for the ringbp model, returned by
   [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md).
-  Contains two elements: `incubation_period` and `onset_to_isolation`
+  Contains 4 elements: `incubation_period`, `onset_to_isolation`,
+  `latent_period` and `onset_to_self_isolation`
 
 - event_probs:
 
   a `list` with class `<ringbp_event_prob_opts>`: the event
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
-  Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_traced`
+  Contains 5 elements: `asymptomatic`, `presymptomatic_transmission`,
+  `alpha`, `symptomatic_traced` and `symptomatic_self_isolate`
 
 - interventions:
 
   a `list` with class `<ringbp_intervention_opts>`: the intervention
   settings for the ringbp model, returned by
   [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md).
-  Contains one element: `quarantine`
+  Contains 2 elements: `quarantine` and `test_sensitivity`
 
 - sim:
 

@@ -45,7 +45,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">event_prob_opts</span><span class="op">(</span><span class="va">asymptomatic</span>, <span class="va">presymptomatic_transmission</span>, <span class="va">symptomatic_traced</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">event_prob_opts</span><span class="op">(</span></span>
+<span>  <span class="va">asymptomatic</span>,</span>
+<span>  <span class="va">presymptomatic_transmission</span>,</span>
+<span>  <span class="va">symptomatic_traced</span>,</span>
+<span>  symptomatic_self_isolate <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,6 +73,17 @@ before symptom onset.</p></dd>
 <dd><p>a <code>numeric</code> scalar probability (between 0
 and 1 inclusive): proportion of infectious contacts ascertained by contact
 tracing</p></dd>
+
+
+<dt id="arg-symptomatic-self-isolate">symptomatic_self_isolate<a class="anchor" aria-label="anchor" href="#arg-symptomatic-self-isolate"></a></dt>
+<dd><p>a <code>numeric</code> scalar probability (between 0
+and 1 inclusive): proportion of cases that self-isolate when they become
+symptomatic. These individuals do not get tested and do not require a
+positive test result to enter isolation. Default is 0 (i.e. no infectious
+individuals self-isolate).</p>
+<p>If <code>symptomatic_self_isolate</code> is non-zero a random number generating
+<code>function</code> needs to be specified in the <code>onset_to_self_isolation</code> argument
+in the <code><a href="delay_opts.html">delay_opts()</a></code> function, otherwise the <code><a href="scenario_sim.html">scenario_sim()</a></code> will error.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -93,6 +109,9 @@ tracing</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $symptomatic_traced</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $symptomatic_self_isolate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_event_prob_opts"</span>

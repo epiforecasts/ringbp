@@ -21,9 +21,11 @@ offspring_opts(community, isolated, asymptomatic = community)
 - isolated:
 
   a `function`: a random number generating `function` that samples from
-  the isolated cases offspring distribution, the `function` accepts a
+  the offspring distribution of isolated cases, the `function` accepts a
   single `integer` argument specifying the number of times to sample the
-  offspring distribution (i.e. the length of the `function` output)
+  offspring distribution (i.e. the length of the `function` output).
+  This distribution is used for the transmission of any case once it has
+  been isolated, whether symptomatic or asymptomatic
 
 - asymptomatic:
 
@@ -59,17 +61,17 @@ offspring_opts(
 #> $community
 #> function (n) 
 #> rnbinom(n = n, mu = 2.5, size = 0.16)
-#> <environment: 0x55c3719d03e8>
+#> <environment: 0x5609a6378180>
 #> 
 #> $isolated
 #> function (n) 
 #> rnbinom(n = n, mu = 0.5, size = 1)
-#> <environment: 0x55c3719d03e8>
+#> <environment: 0x5609a6378180>
 #> 
 #> $asymptomatic
 #> function (n) 
 #> rnbinom(n = n, mu = 2.5, size = 0.16)
-#> <environment: 0x55c3719d03e8>
+#> <environment: 0x5609a6378180>
 #> 
 #> attr(,"class")
 #> [1] "ringbp_offspring_opts"

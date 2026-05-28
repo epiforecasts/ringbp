@@ -147,9 +147,12 @@ The probability that an infector is asymptomatic
 ([`asymptomatic`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-asymptomatic)),
 the proportion of disease transmission that occurs before symptom onset
 ([`presymptomatic_transmission`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-presymptomatic-transmission)),
-and the proportion of symptomatic individuals that are ascertained by
+the proportion of symptomatic individuals that are ascertained by
 contact tracing
-([`symptomatic_traced`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-traced)).
+([`symptomatic_traced`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-traced)),
+and the proportion of symptomatic individuals that self-isolate
+([`symptomatic_self_isolate`](https://epiforecasts.io/ringbp/reference/event_prob_opts.html#arg-symptomatic-self-isolate),
+which defaults to 0, i.e. no self-isolation).
 
 ``` r
 
@@ -299,7 +302,7 @@ calculated using
 
 extinct_prob(outbreak)
 #> Calculating extinction using the extinction status from the simulation.
-#> [1] 0.85
+#> [1] 0.78
 ```
 
 By default, extinction is defined as all infectious individuals have had
@@ -407,7 +410,7 @@ scenarios[,
 
 # probability of extinction for each scenario
 scenarios$pext
-#>  [1] 1.0 0.7 0.3 0.1 1.0 1.0 0.9 0.2 1.0 1.0 1.0 1.0
+#>  [1] 0.9 0.7 0.8 0.1 1.0 1.0 0.8 0.5 1.0 1.0 1.0 1.0
 ```
 
 Hellewell et al. ([2020](#ref-Hellewell2020)) used

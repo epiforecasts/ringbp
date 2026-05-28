@@ -10,8 +10,11 @@ individual-level branching process model to simulate an epidemic with
 individual-level non-pharmaceutical interventions (NPIs), namely:
 isolation, contact tracing and quarantine.
 
-***Isolation***: Any infected individual that becomes symptomatic gets
-tested, and is isolated after a symptom onset-to-isolation delay.
+***Isolation***: Any infected individual that becomes symptomatic either
+self-isolates after an onset-to-self-isolation delay, or is tested and
+(if positive) isolated after an onset-to-isolation delay. The
+probability that a symptomatic case self-isolates rather than being
+tested is set by the user.
 
 ***Contact tracing***: If contact tracing is in operation the infectee
 can also be isolated as soon as they develop symptoms if the infector is
@@ -45,6 +48,11 @@ transmission.](../reference/figures/model_schematic_scenario_noinfect.svg)
 Scenarios (1) and (2) show situations where an index infector is
 symptomatic or asymptomatic, respectively. Asymptomatic individuals are
 assumed to remain subclinical throughout the course of their infection.
+Scenarios (1) and (3) show situations where an index infector is
+symptomatic and isolates, in (1) they isolate after a positive test
+result, in (3) they self-isolate. The delay from symptom onset to
+isolation can be modelled separately for isolation after testing and
+self-isolation without testing.
 
 ## Transmission scenarios with interventions
 

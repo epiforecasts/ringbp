@@ -40,22 +40,23 @@ scenario_sim(
   a `list` with class `<ringbp_delay_opts>`: the delay distribution
   `function`s for the ringbp model, returned by
   [`delay_opts()`](https://epiforecasts.io/ringbp/reference/delay_opts.md).
-  Contains two elements: `incubation_period` and `onset_to_isolation`
+  Contains 4 elements: `incubation_period`, `onset_to_isolation`,
+  `latent_period` and `onset_to_self_isolation`
 
 - event_probs:
 
   a `list` with class `<ringbp_event_prob_opts>`: the event
   probabilities for the ringbp model, returned by
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md).
-  Contains three elements: `asymptomatic`, `presymptomatic_transmission`
-  and `symptomatic_traced`
+  Contains 5 elements: `asymptomatic`, `presymptomatic_transmission`,
+  `alpha`, `symptomatic_traced` and `symptomatic_self_isolate`
 
 - interventions:
 
   a `list` with class `<ringbp_intervention_opts>`: the intervention
   settings for the ringbp model, returned by
   [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md).
-  Contains one element: `quarantine`
+  Contains 2 elements: `quarantine` and `test_sensitivity`
 
 - sim:
 
@@ -115,28 +116,28 @@ res <- scenario_sim(
 res
 #>        sim  week weekly_cases cumulative effective_r0
 #>      <int> <int>        <int>      <int>        <num>
-#>   1:     1     0            2          2     2.256141
-#>   2:     1     1           10         12     2.256141
-#>   3:     1     2           25         37     2.256141
-#>   4:     1     3           98        135     2.256141
-#>   5:     1     4          173        308     2.256141
+#>   1:     1     0            0          0    2.2426250
+#>   2:     1     1            9          9    2.2426250
+#>   3:     1     2           16         25    2.2426250
+#>   4:     1     3           32         57    2.2426250
+#>   5:     1     4          105        162    2.2426250
 #>  ---                                                 
-#> 261:     5    48            0       2356     2.070831
-#> 262:     5    49            0       2356     2.070831
-#> 263:     5    50            0       2356     2.070831
-#> 264:     5    51            0       2356     2.070831
-#> 265:     5    52            0       2356     2.070831
+#> 261:     5    48            0         20    0.9571429
+#> 262:     5    49            0         20    0.9571429
+#> 263:     5    50            0         20    0.9571429
+#> 264:     5    51            0         20    0.9571429
+#> 265:     5    52            0         20    0.9571429
 #>                       cases_per_gen
 #>                              <list>
-#>   1:  15, 24, 69,155,298,571,...[7]
-#>   2:  15, 24, 69,155,298,571,...[7]
-#>   3:  15, 24, 69,155,298,571,...[7]
-#>   4:  15, 24, 69,155,298,571,...[7]
-#>   5:  15, 24, 69,155,298,571,...[7]
+#>   1:  17, 20, 43,101,232,512,...[7]
+#>   2:  17, 20, 43,101,232,512,...[7]
+#>   3:  17, 20, 43,101,232,512,...[7]
+#>   4:  17, 20, 43,101,232,512,...[7]
+#>   5:  17, 20, 43,101,232,512,...[7]
 #>  ---                               
-#> 261:        8,29,27,22,41,73,...[9]
-#> 262:        8,29,27,22,41,73,...[9]
-#> 263:        8,29,27,22,41,73,...[9]
-#> 264:        8,29,27,22,41,73,...[9]
-#> 265:        8,29,27,22,41,73,...[9]
+#> 261:                       14, 1, 0
+#> 262:                       14, 1, 0
+#> 263:                       14, 1, 0
+#> 264:                       14, 1, 0
+#> 265:                       14, 1, 0
 ```

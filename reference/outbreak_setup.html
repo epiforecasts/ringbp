@@ -61,15 +61,16 @@ or starting cases which are all assumed to be missed by contact tracing
 <dt id="arg-delays">delays<a class="anchor" aria-label="anchor" href="#arg-delays"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_delay_opts&gt;</code>: the
 delay distribution <code>function</code>s for the <span class="pkg">ringbp</span> model, returned
-by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains two elements: <code>incubation_period</code> and
-<code>onset_to_isolation</code></p></dd>
+by <code><a href="delay_opts.html">delay_opts()</a></code>. Contains 4 elements: <code>incubation_period</code>,
+<code>onset_to_isolation</code>, <code>latent_period</code> and <code>onset_to_self_isolation</code></p></dd>
 
 
 <dt id="arg-event-probs">event_probs<a class="anchor" aria-label="anchor" href="#arg-event-probs"></a></dt>
 <dd><p>a <code>list</code> with class <code>&lt;ringbp_event_prob_opts&gt;</code>: the
 event probabilities for the <span class="pkg">ringbp</span> model, returned by
-<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains three elements: <code>asymptomatic</code>,
-<code>presymptomatic_transmission</code> and <code>symptomatic_traced</code></p></dd>
+<code><a href="event_prob_opts.html">event_prob_opts()</a></code>. Contains 5 elements: <code>asymptomatic</code>,
+<code>presymptomatic_transmission</code>, <code>alpha</code>, <code>symptomatic_traced</code> and
+<code>symptomatic_self_isolate</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,6 +82,7 @@ event probabilities for the <span class="pkg">ringbp</span> model, returned by
 <li><p><code>$traced</code>: <code>logical</code></p></li>
 <li><p><code>$onset</code>: <code>numeric</code></p></li>
 <li><p><code>$new_cases</code>: <code>integer</code></p></li>
+<li><p><code>$self_isolate</code>: <code>logical</code></p></li>
 <li><p><code>$isolated_time</code>: <code>numeric</code></p></li>
 <li><p><code>$sampled</code>: <code>logical</code></p></li>
 </ul></div>
@@ -112,13 +114,13 @@ event probabilities for the <span class="pkg">ringbp</span> model, returned by
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:        0        FALSE      3        0  FALSE  5.494867        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4:        0        FALSE      4        0  FALSE  4.273768        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5:        0        FALSE      5        0  FALSE  9.144926        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    isolated_time sampled</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;  &lt;lgcl&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      9.212328   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     14.155064   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:     13.630713   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     12.000550   FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      9.839796   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    self_isolate isolated_time sampled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;lgcl&gt;         &lt;num&gt;  &lt;lgcl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:        FALSE      9.212328   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        FALSE     14.155064   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:        FALSE     13.630713   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:        FALSE     12.000550   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:        FALSE      9.839796   FALSE</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
