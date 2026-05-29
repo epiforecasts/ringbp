@@ -113,24 +113,25 @@ interventions <- intervention_opts(quarantine = FALSE)
 case_data <- outbreak_setup(
   initial_cases = 5,
   delays = delays,
-  event_probs = event_probs
+  event_probs = event_probs,
+  interventions = interventions
 )
 case_data
-#> Index: <asymptomatic>
+#> Index: <self_isolate__asymptomatic>
 #>    exposure asymptomatic caseid infector traced    onset new_cases self_isolate
 #>       <num>       <lgcl>  <int>    <num> <lgcl>    <num>     <int>       <lgcl>
-#> 1:        0        FALSE      1        0  FALSE 2.581700        NA        FALSE
-#> 2:        0        FALSE      2        0  FALSE 4.811051        NA        FALSE
-#> 3:        0        FALSE      3        0  FALSE 7.008587        NA        FALSE
-#> 4:        0        FALSE      4        0  FALSE 9.262499        NA        FALSE
-#> 5:        0        FALSE      5        0  FALSE 5.827982        NA        FALSE
+#> 1:        0        FALSE      1        0  FALSE 1.173089        NA        FALSE
+#> 2:        0        FALSE      2        0  FALSE 8.745576        NA        FALSE
+#> 3:        0        FALSE      3        0  FALSE 4.773823        NA        FALSE
+#> 4:        0        FALSE      4        0  FALSE 7.845297        NA        FALSE
+#> 5:        0        FALSE      5        0  FALSE 2.786544        NA        FALSE
 #>    isolated_time sampled
 #>            <num>  <lgcl>
-#> 1:      3.641819   FALSE
-#> 2:     11.661816   FALSE
-#> 3:     11.898353   FALSE
-#> 4:     14.418862   FALSE
-#> 5:      7.868309   FALSE
+#> 1:      2.059485   FALSE
+#> 2:     12.840092   FALSE
+#> 3:     11.844717   FALSE
+#> 4:      8.844933   FALSE
+#> 5:      6.115403   FALSE
 # generate next generation of cases
 out <- outbreak_step(
   case_data = case_data,
@@ -141,36 +142,22 @@ out <- outbreak_step(
 )
 case_data <- out[[1]]
 case_data
-#>      exposure asymptomatic caseid infector traced     onset new_cases
-#>         <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
-#>  1:  0.000000        FALSE      1        0  FALSE  2.581700         0
-#>  2:  0.000000        FALSE      2        0  FALSE  4.811051         6
-#>  3:  0.000000        FALSE      3        0  FALSE  7.008587         0
-#>  4:  0.000000        FALSE      4        0  FALSE  9.262499         3
-#>  5:  0.000000        FALSE      5        0  FALSE  5.827982         0
-#>  6:  8.778479        FALSE      6        2  FALSE 14.348074        NA
-#>  7:  7.955102        FALSE      7        2  FALSE 11.189982        NA
-#>  8:  8.702365        FALSE      8        2  FALSE 13.061108        NA
-#>  9:  7.119254        FALSE      9        2  FALSE  8.336304        NA
-#> 10:  5.532936        FALSE     10        2  FALSE 12.868323        NA
-#> 11:  5.232672        FALSE     11        2  FALSE  7.312398        NA
-#> 12:  9.630210        FALSE     12        4  FALSE 16.542692        NA
-#> 13: 11.769312        FALSE     13        4  FALSE 19.913290        NA
-#> 14: 10.156739        FALSE     14        4  FALSE 14.509729        NA
-#>     self_isolate isolated_time sampled
-#>           <lgcl>         <num>  <lgcl>
-#>  1:        FALSE      3.641819    TRUE
-#>  2:        FALSE     11.661816    TRUE
-#>  3:        FALSE     11.898353    TRUE
-#>  4:        FALSE     14.418862    TRUE
-#>  5:        FALSE      7.868309    TRUE
-#>  6:        FALSE     19.796599   FALSE
-#>  7:        FALSE     12.263431   FALSE
-#>  8:        FALSE     17.821761   FALSE
-#>  9:        FALSE     13.568534   FALSE
-#> 10:        FALSE     19.168047   FALSE
-#> 11:        FALSE     11.646287   FALSE
-#> 12:        FALSE     23.382664   FALSE
-#> 13:        FALSE     25.139970   FALSE
-#> 14:        FALSE     17.040636   FALSE
+#>     exposure asymptomatic caseid infector traced     onset new_cases
+#>        <num>       <lgcl>  <int>    <num> <lgcl>     <num>     <int>
+#> 1:  0.000000        FALSE      1        0  FALSE  1.173089         0
+#> 2:  0.000000        FALSE      2        0  FALSE  8.745576         1
+#> 3:  0.000000        FALSE      3        0  FALSE  4.773823         1
+#> 4:  0.000000        FALSE      4        0  FALSE  7.845297         0
+#> 5:  0.000000        FALSE      5        0  FALSE  2.786544         0
+#> 6: 11.076900        FALSE      6        2  FALSE 19.220878        NA
+#> 7:  6.707449        FALSE      7        3  FALSE 11.060438        NA
+#>    self_isolate isolated_time sampled
+#>          <lgcl>         <num>  <lgcl>
+#> 1:        FALSE      2.059485    TRUE
+#> 2:        FALSE     12.840092    TRUE
+#> 3:        FALSE     11.844717    TRUE
+#> 4:        FALSE      8.844933    TRUE
+#> 5:        FALSE      6.115403    TRUE
+#> 6:        FALSE     22.211813   FALSE
+#> 7:        FALSE     18.344412   FALSE
 ```

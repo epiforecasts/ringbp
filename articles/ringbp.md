@@ -302,7 +302,7 @@ calculated using
 
 extinct_prob(outbreak)
 #> Calculating extinction using the extinction status from the simulation.
-#> [1] 0.78
+#> [1] 0.8
 ```
 
 By default, extinction is defined as all infectious individuals have had
@@ -410,7 +410,7 @@ scenarios[,
 
 # probability of extinction for each scenario
 scenarios$pext
-#>  [1] 0.9 0.7 0.8 0.1 1.0 1.0 0.8 0.5 1.0 1.0 1.0 1.0
+#>  [1] 1.0 0.7 0.7 0.0 1.0 1.0 0.8 0.7 1.0 1.0 1.0 1.0
 ```
 
 Hellewell et al. ([2020](#ref-Hellewell2020)) used

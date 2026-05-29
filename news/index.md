@@ -2,6 +2,21 @@
 
 ## ringbp 0.1.2.9999
 
+- Index cases in
+  [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
+  are now only isolated if they test positive (using the
+  `test_sensitivity` parameter), as opposed to previously where all
+  symptomatic index cases were isolated. The updated
+  [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
+  matches the testing pathway in
+  [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md).
+  [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
+  gains an `interventions` argument. Addresses
+  [\#231](https://github.com/epiforecasts/ringbp/issues/231) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#232](https://github.com/epiforecasts/ringbp/issues/232) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
 - Interventions can now activate after a delay rather than being active
   from the start of the outbreak. The `symptomatic_traced` argument of
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
