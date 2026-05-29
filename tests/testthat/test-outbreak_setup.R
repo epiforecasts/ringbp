@@ -11,7 +11,8 @@ test_that("outbreak_setup works as expected", {
         asymptomatic = 0.2,
         presymptomatic_transmission = 0.5,
         symptomatic_traced = 0.8
-      )
+      ),
+      interventions = intervention_opts()
     )
   )
 })
@@ -39,6 +40,10 @@ test_that("outbreak_setup with dynamic seed and parameters runs as expected", {
       asymptomatic = asymptomatic,
       presymptomatic_transmission = runif(n = 1, min = 0, max = 1),
       symptomatic_traced = runif(n = 1, min = 0, max = 1)
+    ),
+    interventions = intervention_opts(
+      quarantine = sample(c(TRUE, FALSE), size = 1),
+      test_sensitivity = runif(n = 1, min = 0, max = 1)
     )
   )
   expect_s3_class(res, class = c("data.table", "data.frame"), exact = TRUE)
@@ -89,7 +94,8 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
       asymptomatic = asymptomatic,
       presymptomatic_transmission = 0,
       symptomatic_traced = 0
-    )
+    ),
+    interventions = intervention_opts()
   )
 
   # proportion of asymptomatic cases is approximately equal to input parameter

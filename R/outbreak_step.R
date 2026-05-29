@@ -76,7 +76,8 @@
 #' case_data <- outbreak_setup(
 #'   initial_cases = 5,
 #'   delays = delays,
-#'   event_probs = event_probs
+#'   event_probs = event_probs,
+#'   interventions = interventions
 #' )
 #' case_data
 #' # generate next generation of cases

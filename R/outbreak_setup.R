@@ -31,19 +31,22 @@
 #'   presymptomatic_transmission = 0.15,
 #'   symptomatic_traced = 0
 #' )
+#' interventions <- intervention_opts()
 #'
 #' # generate initial cases
 #' case_data <- outbreak_setup(
 #'   initial_cases = 5,
 #'   delays = delays,
-#'   event_probs = event_probs
+#'   event_probs = event_probs,
+#'   interventions = interventions
 #' )
 #' case_data
-outbreak_setup <- function(initial_cases, delays, event_probs) {
+outbreak_setup <- function(initial_cases, delays, event_probs, interventions) {
 
   checkmate::assert_number(initial_cases, lower = 1, finite = TRUE)
   checkmate::assert_class(delays, "ringbp_delay_opts")
   checkmate::assert_class(event_probs, "ringbp_event_prob_opts")
+  checkmate::assert_class(interventions, "ringbp_intervention_opts")
 
   # Set up table of initial cases
   case_data <- data.table(
@@ -56,14 +59,21 @@ outbreak_setup <- function(initial_cases, delays, event_probs) {
     new_cases = NA_integer_,
     self_isolate = FALSE,
     isolated_time = Inf,
-    sampled = FALSE
+    sampled = FALSE,
+    test_positive = FALSE
   )
 
-  # isolate each symptomatic case after an onset-to-isolation delay after
-  # their symptom onset time, each case seeds an independent outbreak
+  # isolate each symptomatic case if they test positive after an
+  # onset-to-isolation delay after their symptom onset time, each case
+  # seeds an independent outbreak
   case_data <- case_data[
-    asymptomatic == FALSE,
+    asymptomatic == FALSE & self_isolate == FALSE,
+    test_positive := runif(.N) <= interventions$test_sensitivity(onset)
+  ][
+    test_positive == TRUE,
     isolated_time := onset + delays$onset_to_isolation(.N)
+  ][,
+    test_positive := NULL
   ]
 
   case_data[]

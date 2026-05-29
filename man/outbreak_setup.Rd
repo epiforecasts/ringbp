@@ -4,7 +4,7 @@
 \alias{outbreak_setup}
 \title{Set up initial cases for branching process}
 \usage{
-outbreak_setup(initial_cases, delays, event_probs)
+outbreak_setup(initial_cases, delays, event_probs, interventions)
 }
 \arguments{
 \item{initial_cases}{a non-negative \code{integer} scalar: number of initial
@@ -21,6 +21,11 @@ event probabilities for the \pkg{ringbp} model, returned by
 \code{\link[=event_prob_opts]{event_prob_opts()}}. Contains 5 elements: \code{asymptomatic},
 \code{presymptomatic_transmission}, \code{alpha}, \code{symptomatic_traced} and
 \code{symptomatic_self_isolate}}
+
+\item{interventions}{a \code{list} with class \verb{<ringbp_intervention_opts>}:
+the intervention settings for the \pkg{ringbp} model, returned by
+\code{\link[=intervention_opts]{intervention_opts()}}. Contains 2 elements: \code{quarantine} and
+\code{test_sensitivity}}
 }
 \value{
 \code{data.table} of cases in outbreak so far. \code{data.table} columns are:
@@ -50,12 +55,14 @@ event_probs <- event_prob_opts(
   presymptomatic_transmission = 0.15,
   symptomatic_traced = 0
 )
+interventions <- intervention_opts()
 
 # generate initial cases
 case_data <- outbreak_setup(
   initial_cases = 5,
   delays = delays,
-  event_probs = event_probs
+  event_probs = event_probs,
+  interventions = interventions
 )
 case_data
 }
