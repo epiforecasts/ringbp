@@ -308,3 +308,42 @@ outbreak_continue <- function(case_data, sim) {
   )
 }
 
+#' Coerce a probability input to a probability generating [function].
+#'
+#' @details Used to create time-constant functions from `numeric` scalar inputs
+#'   in `*_opts()` functions so that users can provide simple number inputs
+#'   but the internal outbreak simulation can use time-varying functions that
+#'   generate probabilities.
+#'
+#'   This function also contains the input checking to ensure valid `numeric`
+#'   scalar probabilities or `numeric` generating functions are provided.
+#'   Functions input to `as_prob_function()` are input checked and then returned.
+#'
+#' @param x An \R object.
+#'
+#' @return A `numeric` generating `function`
+#' @keywords internal
+#' @name as_prob_function
+as_prob_function <- function(x) {
+  if (is.numeric(x)) {
+    checkmate::assert_number(x, lower = 0, upper = 1)
+    return(\(t) rep(x, length(t)))
+  } else if (is.function(x)) {
+    checkmate::assert_function(x, nargs = 1)
+    # probability generating functions are [0,1]
+    checkmate::assert_numeric(
+      x(seq(0, 1000, length.out = 1e5)),
+      lower = 0,
+      upper = 1,
+      any.missing = FALSE,
+      len = 1e5
+    )
+    return(x)
+  } else {
+    stop(
+      "Probabilities must be `numeric` or a `numeric` generating function.\n",
+      "Check probabilities supplied in `*_opts()` functions.",
+      call. = FALSE
+    )
+  }
+}

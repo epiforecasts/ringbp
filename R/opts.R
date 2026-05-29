@@ -140,8 +140,21 @@ delay_opts <- function(incubation_period,
 #'   (subclinical)
 #' @inheritParams presymptomatic_transmission_to_alpha
 #' @param symptomatic_traced a `numeric` scalar probability (between 0
-#'   and 1 inclusive): proportion of infectious contacts ascertained by contact
-#'   tracing
+#'   and 1 inclusive), or a `function` of time returning probabilities in
+#'   `[0, 1]`: proportion of infectious contacts ascertained by contact
+#'   tracing.
+#'
+#'   A scalar is treated as a constant contact-tracing probability over the
+#'   whole simulation. A `function` accepts a `numeric` vector of times (the
+#'   contact's exposure time in days since the exposure of the initial cases
+#'   on day 0) and returns a `numeric` vector of probabilities of the same
+#'   length, allowing the contact-tracing probability to vary with time. For
+#'   example, `\(t) ifelse(t < 30, 0, 0.5)` represents a contact-tracing
+#'   programme that activates on day 30 and ascertains 50% of contacts.
+#'
+#'   Only contacts whose infector is symptomatic are eligible for tracing
+#'   (see [outbreak_step()] for how isolation times are assigned).
+#'
 #' @param symptomatic_self_isolate a `numeric` scalar probability (between 0
 #'   and 1 inclusive): proportion of cases that self-isolate when they become
 #'   symptomatic. These individuals do not get tested and do not require a
@@ -161,6 +174,14 @@ delay_opts <- function(incubation_period,
 #'   presymptomatic_transmission = 0.5,
 #'   symptomatic_traced = 0.2
 #' )
+#'
+#' # time-varying contact tracing ascertainment: programme activates
+#' # on day 30 and ascertains 50%
+#' event_prob_opts(
+#'   asymptomatic = 0.1,
+#'   presymptomatic_transmission = 0.5,
+#'   symptomatic_traced = \(t) ifelse(t < 30, 0, 0.5)
+#' )
 event_prob_opts <- function(asymptomatic,
                             presymptomatic_transmission,
                             symptomatic_traced,
@@ -168,7 +189,7 @@ event_prob_opts <- function(asymptomatic,
 
   checkmate::assert_number(asymptomatic, lower = 0, upper = 1)
   checkmate::assert_number(presymptomatic_transmission, lower = 0, upper = 1)
-  checkmate::assert_number(symptomatic_traced, lower = 0, upper = 1)
+  symptomatic_traced <- as_prob_function(symptomatic_traced)
   checkmate::assert_number(symptomatic_self_isolate, lower = 0, upper = 1)
 
   # calculate alpha parameter from presymptomatic_transmission
@@ -197,21 +218,45 @@ event_prob_opts <- function(asymptomatic,
 #'   `FALSE`, only symptomatic traced contacts are isolated, no earlier than
 #'   their own symptom onset. Defaults to `FALSE`
 #' @param test_sensitivity a `numeric` scalar probability (between 0
-#'   and 1 inclusive): the test sensitivity (i.e. probability that a true
-#'   positive tests positive). Only symptomatic individuals that do not
-#'   self-isolate are tested; a false-negative result means the case is not
-#'   isolated via the testing pathway (see [outbreak_step()] for how isolation
-#'   times are assigned). Default is 1, which assumes all tested individuals
-#'   get a positive test result.
+#'   and 1 inclusive), or a `function` of time returning probabilities in
+#'   `[0, 1]`: the test sensitivity (i.e. probability that a true positive
+#'   tests positive).
+#'
+#'   A scalar is treated as a constant test sensitivity over the whole
+#'   simulation. A `function` accepts a `numeric` vector of times (symptom
+#'   onset time in days since the exposure of the initial cases on day 0) and
+#'   returns a `numeric` vector of probabilities of the same length, allowing
+#'   the test sensitivity to vary with time. For example,
+#'   `\(t) ifelse(t < 30, 0, 0.8)` represents a testing programme that
+#'   activates on day 30 with sensitivity 0.8.
+#'
+#'   Only symptomatic individuals that do not self-isolate are tested; a
+#'   false-negative result means the case is not isolated via the testing
+#'   pathway (see [outbreak_step()] for how isolation times are assigned).
+#'   Default is 1, which assumes all tested individuals get a positive test
+#'   result.
 #'
 #' @return A `list` with class `<ringbp_intervention_opts>`.
 #' @export
 #'
 #' @examples
+#' # quarantine is not active (default)
 #' intervention_opts(quarantine = FALSE)
+#'
+#' # quarantine is active
+#' intervention_opts(quarantine = TRUE)
+#'
+#' # 20% of tests return a false-negative
+#' intervention_opts(test_sensitivity = 0.8)
+#'
+#' # time-varying test sensitivity, in the first 30 days of the outbreak
+#' # sensitivity is 0.5, then after 30 days, sensitivity improves to 0.8
+#' intervention_opts(
+#'   test_sensitivity = \(t) ifelse(t > 30, yes = 0.8, no = 0.5)
+#' )
 intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
   checkmate::assert_logical(quarantine, any.missing = FALSE, len = 1)
-  checkmate::assert_number(test_sensitivity, lower = 0, upper = 1)
+  test_sensitivity <- as_prob_function(test_sensitivity)
   opts <- list(quarantine = quarantine, test_sensitivity = test_sensitivity)
   class(opts) <- "ringbp_intervention_opts"
   opts

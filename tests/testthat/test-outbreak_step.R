@@ -197,7 +197,7 @@ test_that("No cases are missed when tracing ascertainment = 1", {
   offspring$community <- \(n) rep(100, n)
   offspring$asymptomatic <- \(n) rep(100, n)
 
-  event_probs$symptomatic_traced <- 1
+  event_probs$symptomatic_traced <- as_prob_function(1)
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(
@@ -219,7 +219,7 @@ test_that("Some cases are missed when tracing ascertainment = 0.5", {
   offspring$community <- \(n) rep(100, n)
   offspring$asymptomatic <- \(n) rep(100, n)
 
-  event_probs$symptomatic_traced <- 0.5
+  event_probs$symptomatic_traced <- as_prob_function(0.5)
 
   # generate next generation of cases
   first_gen_case_data <- outbreak_step(

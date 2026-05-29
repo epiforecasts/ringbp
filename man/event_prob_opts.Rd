@@ -21,8 +21,20 @@ inclusive): proportion of cases that are completely asymptomatic
 before symptom onset.}
 
 \item{symptomatic_traced}{a \code{numeric} scalar probability (between 0
-and 1 inclusive): proportion of infectious contacts ascertained by contact
-tracing}
+and 1 inclusive), or a \code{function} of time returning probabilities in
+\verb{[0, 1]}: proportion of infectious contacts ascertained by contact
+tracing.
+
+A scalar is treated as a constant contact-tracing probability over the
+whole simulation. A \code{function} accepts a \code{numeric} vector of times (the
+contact's exposure time in days since the exposure of the initial cases
+on day 0) and returns a \code{numeric} vector of probabilities of the same
+length, allowing the contact-tracing probability to vary with time. For
+example, \verb{\\(t) ifelse(t < 30, 0, 0.5)} represents a contact-tracing
+programme that activates on day 30 and ascertains 50\% of contacts.
+
+Only contacts whose infector is symptomatic are eligible for tracing
+(see \code{\link[=outbreak_step]{outbreak_step()}} for how isolation times are assigned).}
 
 \item{symptomatic_self_isolate}{a \code{numeric} scalar probability (between 0
 and 1 inclusive): proportion of cases that self-isolate when they become
@@ -45,5 +57,13 @@ event_prob_opts(
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.5,
   symptomatic_traced = 0.2
+)
+
+# time-varying contact tracing ascertainment: programme activates
+# on day 30 and ascertains 50\%
+event_prob_opts(
+  asymptomatic = 0.1,
+  presymptomatic_transmission = 0.5,
+  symptomatic_traced = \(t) ifelse(t < 30, 0, 0.5)
 )
 }
