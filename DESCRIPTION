@@ -61,7 +61,7 @@ Suggests:
     roxyglobals (>= 1.0.0),
     testthat (>= 3.0.0),
     tinyplot
-URL: https://epiforecasts.io/ringbp, https://github.com/epiforecasts/ringbp
+URL: https://epiforecasts.io/ringbp/, https://github.com/epiforecasts/ringbp
 BugReports: https://github.com/epiforecasts/ringbp/issues
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
