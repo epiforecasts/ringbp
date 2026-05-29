@@ -27,8 +27,23 @@ event_prob_opts(
 
 - symptomatic_traced:
 
-  a `numeric` scalar probability (between 0 and 1 inclusive): proportion
-  of infectious contacts ascertained by contact tracing
+  a `numeric` scalar probability (between 0 and 1 inclusive), or a
+  `function` of time returning probabilities in `[0, 1]`: proportion of
+  infectious contacts ascertained by contact tracing.
+
+  A scalar is treated as a constant contact-tracing probability over the
+  whole simulation. A `function` accepts a `numeric` vector of times
+  (the contact's exposure time in days since the exposure of the initial
+  cases on day 0) and returns a `numeric` vector of probabilities of the
+  same length, allowing the contact-tracing probability to vary with
+  time. For example, `\(t) ifelse(t < 30, 0, 0.5)` represents a
+  contact-tracing programme that activates on day 30 and ascertains 50%
+  of contacts.
+
+  Only contacts whose infector is symptomatic are eligible for tracing
+  (see
+  [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md)
+  for how isolation times are assigned).
 
 - symptomatic_self_isolate:
 
@@ -68,7 +83,37 @@ event_prob_opts(
 #> [1] 1.968077e-08
 #> 
 #> $symptomatic_traced
-#> [1] 0.2
+#> function (t) 
+#> rep(x, length(t))
+#> <bytecode: 0x55b950380ed8>
+#> <environment: 0x55b950380ae8>
+#> 
+#> $symptomatic_self_isolate
+#> [1] 0
+#> 
+#> attr(,"class")
+#> [1] "ringbp_event_prob_opts"
+
+# time-varying contact tracing ascertainment: programme activates
+# on day 30 and ascertains 50%
+event_prob_opts(
+  asymptomatic = 0.1,
+  presymptomatic_transmission = 0.5,
+  symptomatic_traced = \(t) ifelse(t < 30, 0, 0.5)
+)
+#> $asymptomatic
+#> [1] 0.1
+#> 
+#> $presymptomatic_transmission
+#> [1] 0.5
+#> 
+#> $alpha
+#> [1] 1.968077e-08
+#> 
+#> $symptomatic_traced
+#> function (t) 
+#> ifelse(t < 30, 0, 0.5)
+#> <environment: 0x55b95036eea0>
 #> 
 #> $symptomatic_self_isolate
 #> [1] 0

@@ -63,12 +63,21 @@ their own symptom onset. Defaults to <code>FALSE</code></p></dd>
 
 <dt id="arg-test-sensitivity">test_sensitivity<a class="anchor" aria-label="anchor" href="#arg-test-sensitivity"></a></dt>
 <dd><p>a <code>numeric</code> scalar probability (between 0
-and 1 inclusive): the test sensitivity (i.e. probability that a true
-positive tests positive). Only symptomatic individuals that do not
-self-isolate are tested; a false-negative result means the case is not
-isolated via the testing pathway (see <code><a href="outbreak_step.html">outbreak_step()</a></code> for how isolation
-times are assigned). Default is 1, which assumes all tested individuals
-get a positive test result.</p></dd>
+and 1 inclusive), or a <code>function</code> of time returning probabilities in
+<code>[0, 1]</code>: the test sensitivity (i.e. probability that a true positive
+tests positive).</p>
+<p>A scalar is treated as a constant test sensitivity over the whole
+simulation. A <code>function</code> accepts a <code>numeric</code> vector of times (symptom
+onset time in days since the exposure of the initial cases on day 0) and
+returns a <code>numeric</code> vector of probabilities of the same length, allowing
+the test sensitivity to vary with time. For example,
+<code>\(t) ifelse(t &lt; 30, 0, 0.8)</code> represents a testing programme that
+activates on day 30 with sensitivity 0.8.</p>
+<p>Only symptomatic individuals that do not self-isolate are tested; a
+false-negative result means the case is not isolated via the testing
+pathway (see <code><a href="outbreak_step.html">outbreak_step()</a></code> for how isolation times are assigned).
+Default is 1, which assumes all tested individuals get a positive test
+result.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -78,12 +87,60 @@ get a positive test result.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># quarantine is not active (default)</span></span></span>
+<span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $quarantine</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $test_sensitivity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (t) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rep(x, length(t))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55b950380ed8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b94dc2ddf8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_intervention_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># quarantine is active</span></span></span>
+<span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $quarantine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $test_sensitivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (t) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rep(x, length(t))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55b950380ed8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b94eebfae8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_intervention_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 20% of tests return a false-negative</span></span></span>
+<span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span>test_sensitivity <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $quarantine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $test_sensitivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (t) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rep(x, length(t))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55b950380ed8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b94f348858&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_intervention_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># time-varying test sensitivity, in the first 30 days of the outbreak</span></span></span>
+<span class="r-in"><span><span class="co"># sensitivity is 0.5, then after 30 days, sensitivity improves to 0.8</span></span></span>
+<span class="r-in"><span><span class="fu">intervention_opts</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  test_sensitivity <span class="op">=</span> \<span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">t</span> <span class="op">&gt;</span> <span class="fl">30</span>, yes <span class="op">=</span> <span class="fl">0.8</span>, no <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $quarantine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $test_sensitivity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (t) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ifelse(t &gt; 30, yes = 0.8, no = 0.5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b94e618a58&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_intervention_opts"</span>

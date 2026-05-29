@@ -2,6 +2,25 @@
 
 ## ringbp 0.1.2.9999
 
+- Interventions can now activate after a delay rather than being active
+  from the start of the outbreak. The `symptomatic_traced` argument of
+  [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)
+  and the `test_sensitivity` argument of
+  [`intervention_opts()`](https://epiforecasts.io/ringbp/reference/intervention_opts.md)
+  can now accept a `function` of time returning probabilities as well as
+  a `numeric` scalar (constant over the simulation, as before). The
+  function is evaluated at the contact’s exposure time
+  (`symptomatic_traced`) or the case’s symptom onset time
+  (`test_sensitivity`) in
+  [`outbreak_step()`](https://epiforecasts.io/ringbp/reference/outbreak_step.md),
+  so contact tracing and testing can vary over time. A new internal
+  [`as_prob_function()`](https://epiforecasts.io/ringbp/reference/as_prob_function.md)
+  coerces scalar inputs to constant functions. Addresses
+  [\#229](https://github.com/epiforecasts/ringbp/issues/229) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#230](https://github.com/epiforecasts/ringbp/issues/230) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
 - Symptomatic individuals can now self-isolate without requiring a
   positive test.
   [`event_prob_opts()`](https://epiforecasts.io/ringbp/reference/event_prob_opts.md)

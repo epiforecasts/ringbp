@@ -21,8 +21,18 @@ intervention_opts(quarantine = FALSE, test_sensitivity = 1)
 
 - test_sensitivity:
 
-  a `numeric` scalar probability (between 0 and 1 inclusive): the test
+  a `numeric` scalar probability (between 0 and 1 inclusive), or a
+  `function` of time returning probabilities in `[0, 1]`: the test
   sensitivity (i.e. probability that a true positive tests positive).
+
+  A scalar is treated as a constant test sensitivity over the whole
+  simulation. A `function` accepts a `numeric` vector of times (symptom
+  onset time in days since the exposure of the initial cases on day 0)
+  and returns a `numeric` vector of probabilities of the same length,
+  allowing the test sensitivity to vary with time. For example,
+  `\(t) ifelse(t < 30, 0, 0.8)` represents a testing programme that
+  activates on day 30 with sensitivity 0.8.
+
   Only symptomatic individuals that do not self-isolate are tested; a
   false-negative result means the case is not isolated via the testing
   pathway (see
@@ -37,12 +47,60 @@ A `list` with class `<ringbp_intervention_opts>`.
 ## Examples
 
 ``` r
+# quarantine is not active (default)
 intervention_opts(quarantine = FALSE)
 #> $quarantine
 #> [1] FALSE
 #> 
 #> $test_sensitivity
-#> [1] 1
+#> function (t) 
+#> rep(x, length(t))
+#> <bytecode: 0x55b950380ed8>
+#> <environment: 0x55b94dc2ddf8>
+#> 
+#> attr(,"class")
+#> [1] "ringbp_intervention_opts"
+
+# quarantine is active
+intervention_opts(quarantine = TRUE)
+#> $quarantine
+#> [1] TRUE
+#> 
+#> $test_sensitivity
+#> function (t) 
+#> rep(x, length(t))
+#> <bytecode: 0x55b950380ed8>
+#> <environment: 0x55b94eebfae8>
+#> 
+#> attr(,"class")
+#> [1] "ringbp_intervention_opts"
+
+# 20% of tests return a false-negative
+intervention_opts(test_sensitivity = 0.8)
+#> $quarantine
+#> [1] FALSE
+#> 
+#> $test_sensitivity
+#> function (t) 
+#> rep(x, length(t))
+#> <bytecode: 0x55b950380ed8>
+#> <environment: 0x55b94f348858>
+#> 
+#> attr(,"class")
+#> [1] "ringbp_intervention_opts"
+
+# time-varying test sensitivity, in the first 30 days of the outbreak
+# sensitivity is 0.5, then after 30 days, sensitivity improves to 0.8
+intervention_opts(
+  test_sensitivity = \(t) ifelse(t > 30, yes = 0.8, no = 0.5)
+)
+#> $quarantine
+#> [1] FALSE
+#> 
+#> $test_sensitivity
+#> function (t) 
+#> ifelse(t > 30, yes = 0.8, no = 0.5)
+#> <environment: 0x55b94e618a58>
 #> 
 #> attr(,"class")
 #> [1] "ringbp_intervention_opts"
