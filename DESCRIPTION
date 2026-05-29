@@ -1,52 +1,34 @@
-Package: ringbp
 Type: Package
-Title: Simulate and Evaluate Targeted Interventions in Infectious Disease Outbreaks
+Package: ringbp
+Title: Simulate and Evaluate Targeted Interventions in Infectious Disease
+    Outbreaks
 Version: 1.0.0
 Authors@R: c(
-    person("Joel", "Hellewell",
-           role = c("aut"),
-           email = "Joel.Hellewell@lshtm.ac.uk",
+    person("Joel", "Hellewell", , "Joel.Hellewell@lshtm.ac.uk", role = "aut",
            comment = c(ORCID = "0000-0003-2683-0849")),
-    person("Sam", "Abbott",
-           role = c("aut"),
-           email = "contact@samabbott.co.uk",
+    person("Sam", "Abbott", , "contact@samabbott.co.uk", role = "aut",
            comment = c(ORCID = "0000-0001-8057-8037")),
-    person("Amy", "Gimma", 
-           email = "amy.gimma@lshtm.ac.uk", 
-           role = c("aut")),
-    person("Tim", "Lucas",
-           email = "tim.lucas@leicester.ac.uk",
-           role = c("aut")),
-    person("Sebastian", "Funk",
-           email = "sebastian.funk@lshtm.ac.uk",
-           role = c("aut")),
-    person("Adam", "Kucharski",
-           email = "adam.kucharski@lshtm.ac.uk",
-           role = c("aut")),
-    person("Hugo", "Gruson",
-           email = "hugo.gruson@data.org",
-           role = c("ctb"),
+    person("Amy", "Gimma", , "amy.gimma@lshtm.ac.uk", role = "aut"),
+    person("Tim", "Lucas", , "tim.lucas@leicester.ac.uk", role = "aut"),
+    person("Sebastian", "Funk", , "sebastian.funk@lshtm.ac.uk", role = "aut"),
+    person("Adam", "Kucharski", , "adam.kucharski@lshtm.ac.uk", role = "aut"),
+    person("Hugo", "Gruson", , "hugo.gruson@data.org", role = "ctb",
            comment = c(ORCID = "https://orcid.org/0000-0002-4094-1476")),
-    person("Carl A. B.", "Pearson",
-           email = "carl.ab.pearson@gmail.com",
-           role = c("aut", "rev"),
+    person("Carl A. B.", "Pearson", , "carl.ab.pearson@gmail.com", role = c("aut", "rev"),
            comment = c(ORCID = "0000-0003-0701-7860")),
-    person("Joshua W.", "Lambert",
-           email = "joshua.lambert@lshtm.ac.uk", 
-           role = c("aut", "cre"),
+    person("Joshua W.", "Lambert", , "joshua.lambert@lshtm.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5218-3046"))
-           )
+  )
 Description: Branching process simulation model of infectious disease
-    transmission with flexible parameterisation of epidemiology and targeted
-    interventions, including isolation, contact tracing and quarantine, to
-    reduce transmission, together with functions to evaluate outbreak control.
-    Introduced in Hellewell et al. (2020) <doi:10.1016/S2214-109X(20)30074-7>.
+    transmission with flexible parameterisation of epidemiology and
+    targeted interventions, including isolation, contact tracing and
+    quarantine, to reduce transmission, together with functions to
+    evaluate outbreak control.  Introduced in Hellewell et al. (2020)
+    <doi:10.1016/S2214-109X(20)30074-7>.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
-    "roxyglobals::global_roclet"))
-RoxygenNote: 7.3.3
+URL: https://epiforecasts.io/ringbp/,
+    https://github.com/epiforecasts/ringbp
+BugReports: https://github.com/epiforecasts/ringbp/issues
 Depends:
     R (>= 4.4.0)
 Imports: 
@@ -61,9 +43,13 @@ Suggests:
     roxyglobals (>= 1.0.0),
     testthat (>= 3.0.0),
     tinyplot
-URL: https://epiforecasts.io/ringbp/, https://github.com/epiforecasts/ringbp
-BugReports: https://github.com/epiforecasts/ringbp/issues
+VignetteBuilder: 
+    knitr
 Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
-VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet"))
+RoxygenNote: 7.3.3
