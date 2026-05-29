@@ -62,7 +62,8 @@ outbreak_model <- function(initial_cases,
   case_data <- outbreak_setup(
     initial_cases = initial_cases,
     delays = delays,
-    event_probs = event_probs
+    event_probs = event_probs,
+    interventions = interventions
   )
 
   # Preallocate
