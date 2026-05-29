@@ -15,12 +15,23 @@ symptom onset, and asymptomatic traced contacts are isolated too). If
 their own symptom onset. Defaults to \code{FALSE}}
 
 \item{test_sensitivity}{a \code{numeric} scalar probability (between 0
-and 1 inclusive): the test sensitivity (i.e. probability that a true
-positive tests positive). Only symptomatic individuals that do not
-self-isolate are tested; a false-negative result means the case is not
-isolated via the testing pathway (see \code{\link[=outbreak_step]{outbreak_step()}} for how isolation
-times are assigned). Default is 1, which assumes all tested individuals
-get a positive test result.}
+and 1 inclusive), or a \code{function} of time returning probabilities in
+\verb{[0, 1]}: the test sensitivity (i.e. probability that a true positive
+tests positive).
+
+A scalar is treated as a constant test sensitivity over the whole
+simulation. A \code{function} accepts a \code{numeric} vector of times (symptom
+onset time in days since the exposure of the initial cases on day 0) and
+returns a \code{numeric} vector of probabilities of the same length, allowing
+the test sensitivity to vary with time. For example,
+\verb{\\(t) ifelse(t < 30, 0, 0.8)} represents a testing programme that
+activates on day 30 with sensitivity 0.8.
+
+Only symptomatic individuals that do not self-isolate are tested; a
+false-negative result means the case is not isolated via the testing
+pathway (see \code{\link[=outbreak_step]{outbreak_step()}} for how isolation times are assigned).
+Default is 1, which assumes all tested individuals get a positive test
+result.}
 }
 \value{
 A \code{list} with class \verb{<ringbp_intervention_opts>}.
@@ -29,5 +40,18 @@ A \code{list} with class \verb{<ringbp_intervention_opts>}.
 Create a list of intervention settings to run the \pkg{ringbp} model
 }
 \examples{
+# quarantine is not active (default)
 intervention_opts(quarantine = FALSE)
+
+# quarantine is active
+intervention_opts(quarantine = TRUE)
+
+# 20\% of tests return a false-negative
+intervention_opts(test_sensitivity = 0.8)
+
+# time-varying test sensitivity, in the first 30 days of the outbreak
+# sensitivity is 0.5, then after 30 days, sensitivity improves to 0.8
+intervention_opts(
+  test_sensitivity = \(t) ifelse(t > 30, yes = 0.8, no = 0.5)
+)
 }
