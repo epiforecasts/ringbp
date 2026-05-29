@@ -17,7 +17,8 @@ interventions <- intervention_opts(quarantine = FALSE)
 initial_case_data <- outbreak_setup(
   initial_cases = 1,
   delays = delays,
-  event_probs = event_probs
+  event_probs = event_probs,
+  interventions = interventions
 )
 
 test_that("outbreak_step creates new cases as expected", {
@@ -30,7 +31,8 @@ test_that("outbreak_step creates new cases as expected", {
   initial_case_data <- outbreak_setup(
     initial_cases = 1,
     delays = delays,
-    event_probs = event_probs
+    event_probs = event_probs,
+    interventions = interventions
   )
 
   # generate first generation of cases
@@ -88,7 +90,8 @@ test_that("outbreak_step with > 1 initial infections", {
   initial_case_data <- outbreak_setup(
     initial_cases = 2,
     delays = delays,
-    event_probs = event_probs
+    event_probs = event_probs,
+    interventions = interventions
   )
 
   first_gen_case_data <- outbreak_step(
@@ -156,7 +159,8 @@ test_that("isolated cases transmit as expected", {
   initial_case_data <- outbreak_setup(
     initial_cases = 1,
     delays = delays,
-    event_probs = event_probs
+    event_probs = event_probs,
+    interventions = interventions
   )
 
   # generate next generation of cases
