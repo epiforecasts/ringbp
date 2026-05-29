@@ -392,3 +392,82 @@ test_that("detect_extinct works", {
   expect6b <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6b, expect5b)
 })
+
+test_that("as_prob_function coerces a numeric scalar to a constant function", {
+  f <- as_prob_function(0.3)
+  expect_type(f, "closure")
+  # output length matches input vector length
+  expect_identical(f(c(0, 5, 10)), rep(0.3, 3))
+  expect_identical(f(numeric(0)), numeric(0))
+  expect_identical(f(seq_len(100)), rep(0.3, 100))
+})
+
+test_that("as_prob_function coerces probability boundaries (0 and 1)", {
+  expect_identical(as_prob_function(0)(c(1, 2, 3)), c(0, 0, 0))
+  expect_identical(as_prob_function(1)(c(1, 2, 3)), c(1, 1, 1))
+})
+
+test_that("as_prob_function passes valid functions through unchanged", {
+  g <- \(t) ifelse(t < 30, 0, 0.8)
+  f <- as_prob_function(g)
+  expect_identical(f, g)
+  expect_identical(f(c(10, 40)), c(0, 0.8))
+})
+
+test_that("as_prob_function errors on out-of-range scalar input", {
+  expect_error(
+    as_prob_function(-0.1),
+    regexp = "not >= 0"
+  )
+  expect_error(
+    as_prob_function(1.5),
+    regexp = "not <= 1"
+  )
+})
+
+test_that("as_prob_function errors on functions returning out-of-range probabilities", {
+  expect_error(
+    as_prob_function(\(t) rep(1.5, length(t))),
+    regexp = "not <= 1"
+  )
+  expect_error(
+    as_prob_function(\(t) rep(-0.1, length(t))),
+    regexp = "not >= 0"
+  )
+})
+
+test_that("as_prob_function errors on functions returning the wrong length", {
+  expect_error(
+    as_prob_function(\(t) 0.5),
+    regexp = "length"
+  )
+})
+
+test_that("as_prob_function errors on functions returning missing values", {
+  expect_error(
+    as_prob_function(\(t) rep(NA_real_, length(t))),
+    regexp = "missing"
+  )
+})
+
+test_that("as_prob_function errors on functions with the wrong number of arguments", {
+  expect_error(
+    as_prob_function(\(t, extra) 0.5),
+    regexp = "Must have exactly 1 formal arguments"
+  )
+})
+
+test_that("as_prob_function errors on non-numeric, non-function input", {
+  expect_error(
+    as_prob_function("0.5"),
+    regexp = "Probabilities must be `numeric` or a `numeric` generating function"
+  )
+  expect_error(
+    as_prob_function(NULL),
+    regexp = "Probabilities must be `numeric` or a `numeric` generating function"
+  )
+  expect_error(
+    as_prob_function(list(0.5)),
+    regexp = "Probabilities must be `numeric` or a `numeric` generating function"
+  )
+})
