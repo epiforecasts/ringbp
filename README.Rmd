@@ -35,12 +35,27 @@ For more details on the methods implemented here, see the associated [paper](htt
 
 ## Installation
 
-The current development version of `{ringbp}` can be installed from [GitHub](https://github.com/) using the `pak` package.
+The package can be installed from CRAN using
 
 ```r
-if(!require("pak")) install.packages("pak")
-pak::pak("{{ gh_repo }}")
+install.packages("ringbp")
 ```
+
+You can install the development version of `{ringbp}` from
+[GitHub](https://github.com/) with:
+
+``` r
+# check whether {pak} is installed
+if(!require("pak")) install.packages("pak")
+pak::pak("epiforecasts/ringbp")
+```
+
+Alternatively, install pre-compiled binaries from [the epiforecasts R-universe](https://epiforecasts.r-universe.dev/ringbp)
+
+``` r
+install.packages("ringbp", repos = c("https://epiforecasts.r-universe.dev", "https://cloud.r-project.org"))
+```
+
 
 ## Quick start
 
