@@ -28,12 +28,12 @@ Authors:
   \item Tim Lucas \email{tim.lucas@leicester.ac.uk}
   \item Sebastian Funk \email{sebastian.funk@lshtm.ac.uk}
   \item Adam Kucharski \email{adam.kucharski@lshtm.ac.uk}
+  \item Carl A. B. Pearson \email{carl.ab.pearson@gmail.com} (\href{https://orcid.org/0000-0003-0701-7860}{ORCID}) [reviewer]
 }
 
 Other contributors:
 \itemize{
   \item Hugo Gruson \email{hugo.gruson@data.org} (\href{https://orcid.org/0000-0002-4094-1476}{ORCID}) [contributor]
-  \item Carl A. B. Pearson \email{carl.ab.pearson@gmail.com} (\href{https://orcid.org/0000-0003-0701-7860}{ORCID}) [contributor, reviewer]
 }
 
 }
