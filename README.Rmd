@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 set.seed(111)
 ```
 
-# `{ringbp}`: Simulate infectious disease transmission with contact tracing
+# `{ringbp}`: Simulate infectious disease transmission with contact tracing <img src="man/figures/logo.svg" align="right" width="120" />
 
 <!-- badges: start -->
 ![GitHub R package version](https://img.shields.io/github/r-package/v/{{ gh_repo }})
