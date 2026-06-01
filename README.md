@@ -4,12 +4,12 @@
 <!-- badges: start -->
 
 ![GitHub R package
-version](https://img.shields.io/github/r-package/v/joshwlambert/ringbpepiforecasts/ringbp)
-[![R-CMD-check](https://github.com/joshwlambert/ringbpepiforecasts/ringbp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/joshwlambert/ringbpepiforecasts/ringbp/actions/workflows/R-CMD-check.yaml)
+version](https://img.shields.io/github/r-package/v/epiforecasts/ringbp)
+[![R-CMD-check](https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/epiforecasts/ringbp/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/joshwlambert/ringbpepiforecasts/ringbp/branch/main/graph/badge.svg)](https://app.codecov.io/gh/joshwlambert/ringbpepiforecasts/ringbp?branch=main)
+coverage](https://codecov.io/gh/epiforecasts/ringbp/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/ringbp?branch=main)
 ![GitHub
-contributors](https://img.shields.io/github/contributors/joshwlambert/ringbpepiforecasts/ringbp)
+contributors](https://img.shields.io/github/contributors/epiforecasts/ringbp)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
