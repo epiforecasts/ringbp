@@ -128,7 +128,7 @@ Interventions, thus far only quarantine ([`quarantine`](https://epiforecasts.io/
 interventions <- intervention_opts(quarantine = FALSE)
 ```
 
-By default, isolation of symptomatic cases is active and qurantine is not active.
+By default, isolation of symptomatic cases is active and quarantine is not active.
 
 ### Simulation controls
 
