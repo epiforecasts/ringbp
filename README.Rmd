@@ -110,7 +110,7 @@ res <- scenario_sim(
 ggplot(
   data = res, aes(x = week, y = cumulative, col = as.factor(sim))
 ) +
-  geom_line(show.legend = FALSE, alpha = 0.3) +
+  geom_line(show.legend = FALSE) +
   scale_y_continuous(name = "Cumulative number of cases") +
   theme_bw()
 ```
