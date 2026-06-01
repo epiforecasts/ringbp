@@ -96,8 +96,8 @@ res <- scenario_sim(
   ## whether quarantine is in effect
   interventions = intervention_opts(quarantine = FALSE),
   sim = sim_opts(
-    ## don't simulate beyond 350 days
-    cap_max_days = 350, 
+    ## don't simulate beyond 140 days
+    cap_max_days = 140, 
     ## don't simulate beyond 4500 infections
     cap_cases = 4500
   )
