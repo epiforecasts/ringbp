@@ -41,6 +41,7 @@ Suggests:
     knitr,
     rmarkdown,
     roxyglobals (>= 1.0.0),
+    spelling,
     testthat (>= 3.0.0),
     tinyplot
 VignetteBuilder: 
@@ -49,6 +50,7 @@ Config/roxyglobals/filename: globals.R
 Config/roxyglobals/unique: FALSE
 Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
