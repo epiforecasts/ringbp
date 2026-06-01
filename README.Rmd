@@ -1,5 +1,7 @@
 ---
 output: github_document
+bibliography: vignettes/references.bib
+link-citations: true
 ---
 
 ```{r, include = FALSE}
@@ -23,11 +25,17 @@ set.seed(111)
 <!-- badges: end -->
 
 `{ringbp}` is an R package that provides methods to simulate infectious
-disease transmission in the presence of contact tracing. It was
-initially developed to support a paper written in early 2020 to assess
-the feasibility of controlling
-COVID-19; see the [companion analysis code](https://github.com/cmmid/ringbp). 
-For more details on the methods implemented here, see the associated [paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
+disease transmission in the presence of contact tracing. It was based on an
+Ebola transmission model with ring vaccination [@Kucharski2016]. The `{ringbp}`
+model was initially developed to support a paper written in early 2020 to assess
+the feasibility of controlling COVID-19 [@Hellewell2020].
+
+See the [companion analysis code](https://github.com/cmmid/ringbp) to reproduce
+@Hellewell2020.
+
+For more details on the methods implemented in the `{ringbp}` R package, 
+see the @Hellewell2020 [paper](https://doi.org/10.1016/S2214-109X(20)30074-7),
+and the [package documentation](https://epiforecasts.io/ringbp/articles/).
 
 ## Installation
 
@@ -166,3 +174,5 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 Please note that the `{ringbp}` project is released with a 
 [Contributor Code of Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
+
+## References
