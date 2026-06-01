@@ -23,7 +23,7 @@ Description: Branching process simulation model of infectious disease
     transmission with flexible parameterisation of epidemiology and
     targeted interventions, including isolation, contact tracing and
     quarantine, to reduce transmission, together with functions to
-    evaluate outbreak control.  Introduced in Hellewell et al. (2020)
+    evaluate outbreak control.  Introduced in 'Hellewell et al.' (2020)
     <doi:10.1016/S2214-109X(20)30074-7>.
 License: MIT + file LICENSE
 URL: https://epiforecasts.io/ringbp/,
