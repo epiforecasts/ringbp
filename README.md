@@ -1,5 +1,5 @@
 
-# `{ringbp}`: Simulate infectious disease transmission with contact tracing <img src="man/figures/logo.svg" align="right" width="120" />
+# `{ringbp}`: Simulate infectious disease transmission with contact tracing <img src="man/figures/logo.svg" align="right" width="120" alt="The ringbp hex logo, showing the ringbp name underlined above a diagram of a branching process with infected (red) circles and isolated (green with a blue ring) circles" />
 
 <!-- badges: start -->
 
