@@ -198,7 +198,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'
 #' # calculate extinction in the last 2 weeks of the simulated outbreak
 #' # (i.e. the penultimate and last week of the outbreak)
-#' extinct_prob(res, extinction_week = max(res$week) - 1)
+#' extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
 #'
 #' # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
 #' extinct_prob(res, extinction_week = 12:16)
@@ -214,7 +214,7 @@ extinct_prob <- function(scenario,
     scenario = scenario,
     extinction_week = extinction_week
   )
-  sum(extinct_runs$extinct) / max(scenario$sim)
+  sum(extinct_runs$extinct) / max(extinct_runs$sim)
 }
 
 #' @rdname extinction
@@ -222,7 +222,7 @@ extinct_prob <- function(scenario,
 #' @export
 detect_extinct <- function(scenario,
                            extinction_week = NULL) {
-
+  scenario <- scenario$outbreak_ts
   extinct <- attr(scenario, which = "extinct", exact = TRUE)
   if (is.null(extinction_week)) {
     if (!is.null(extinct)) {

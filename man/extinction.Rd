@@ -97,7 +97,7 @@ detect_extinct(res)
 
 # calculate extinction in the last 2 weeks of the simulated outbreak
 # (i.e. the penultimate and last week of the outbreak)
-extinct_prob(res, extinction_week = max(res$week) - 1)
+extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
 
 # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
 extinct_prob(res, extinction_week = 12:16)
