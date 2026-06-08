@@ -90,9 +90,9 @@ outbreak_model <- function(initial_cases,
       interventions = interventions
     )
 
-    case_data <- out[[1]]
-    effective_r0_vect <- c(effective_r0_vect, out[[2]])
-    cases_in_gen_vect <- c(cases_in_gen_vect, out[[3]])
+    case_data <- out$cases
+    effective_r0_vect <- c(effective_r0_vect, out$effective_r0)
+    cases_in_gen_vect <- c(cases_in_gen_vect, out$cases_in_gen)
   }
 
   # only warn if non-zero latent period and any transmission
