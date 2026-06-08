@@ -5,13 +5,21 @@
 #' @param sim a `list` with class `<ringbp_sim_opts>`: the simulation control
 #'   options for the \pkg{ringbp} model, returned by [sim_opts()]
 #'
-#' @return `data.table` of cases by week, cumulative cases, and the effective
-#' reproduction number of the outbreak. `data.table` columns are:
-#' * `$week`: `numeric`
-#' * `$weekly_cases`: `numeric`
-#' * `$cumulative`: `numeric`
-#' * `$effective_r0`: `numeric`
-#' * `$cases_per_gen`: `list`
+#' @return A `list` with 2 `data.table` elements:
+#' 1. `$outbreak_ts`: the results for a single outbreak simulation. The
+#'    `data.table` has columns:
+#'    * `week`: the week in the simulation (`integer`)
+#'    * `weekly_cases`: the number of new cases that week (`integer`)
+#'    * `cumulative`: the cumulative cases (`integer`)
+#' 2. `$outbreak_stats`: the summary statistics for the outbreak simulation. The
+#'    `data.table` has columns:
+#'    * `effective_r0`: the effective reproduction rate for the
+#'    whole simulation (`numeric`)
+#'    * `cases_per_gen`: the cases per generation (`list`)
+#'
+#' The `$outbreak_ts` element also carries an `extinct` attribute: a `logical`
+#' recording whether the outbreak went extinct. See [extinction] functions for
+#' the definition of extinction.
 #' @autoglobal
 #' @export
 #'
@@ -135,13 +143,16 @@ outbreak_model <- function(initial_cases,
     cases_in_gen_vect <- NA_real_
   }
 
-  # Add effective R0
-  weekly_cases <- weekly_cases[, `:=`(effective_r0 = mean(effective_r0_vect,
-                                                          na.rm = TRUE),
-                                        cases_per_gen = list(cases_in_gen_vect))]
-
   setattr(weekly_cases, name = "extinct", value = all(case_data$sampled))
 
+  outbreak_stats <- data.table(
+    effective_r0 = mean(effective_r0_vect, na.rm = TRUE),
+    cases_per_gen = list(cases_in_gen_vect)
+  )
+
   # return
-  weekly_cases[]
+  list(
+    outbreak_ts = weekly_cases[],
+    outbreak_stats = outbreak_stats
+  )
 }
