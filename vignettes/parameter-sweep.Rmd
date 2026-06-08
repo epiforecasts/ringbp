@@ -112,7 +112,7 @@ res <- lapply(scenario_sims$data, \(x, n) {
 )
 ```
 
-The output of this parameter sweep is a list of `data.table`s, so to give an idea of what the output looks like we show the first 3 scenarios (there are `r length(res)` in total). See `?scenario_sim` for more information on the contents of these `data.table`s.
+The output of this parameter sweep is a list with one element per scenario. Each element is the output of `scenario_sim()`, which is itself a `list` of two `data.table`s (`outbreak_ts` and `outbreak_stats`). To give an idea of what the output looks like we show the first 3 scenarios (there are `r length(res)` in total). See `?scenario_sim` for more information on the contents of these outputs.
 
 ```{r}
 head(res, 3)
@@ -122,7 +122,7 @@ head(res, 3)
 
 In the previous example we constructed the parameter grid and then ran the parameter sweep storing the simulated outbreaks in a separate object. It can be useful to keep the simulated output together with the parameter grid to be able to check which parameters correspond to which simulated outbreak.
 
-In this example we run the same scenario parameter sweep as before (again with `r n` replicates), but store the simulated outbreak `data.table`s in the same object as the list of scenarios. We append the simulation results to the `scenario_sims` `data.table` and assign them to the `sims` column.
+In this example we run the same scenario parameter sweep as before (again with `r n` replicates), but store the simulated outbreak results in the same object as the list of scenarios. We append the simulation results to the `scenario_sims` `data.table` and assign them to the `sims` column.
 
 ```{r}
 scenario_sims[, sims := lapply(data, \(x, n) {
