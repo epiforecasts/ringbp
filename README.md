@@ -1,5 +1,5 @@
 
-# `{ringbp}`: Simulate infectious disease transmission with contact tracing
+# `{ringbp}`: Simulate infectious disease transmission with contact tracing <img src="man/figures/logo.svg" align="right" width="120" alt="The ringbp hex logo, showing the ringbp name underlined above a diagram of a branching process with infected (red) circles and isolated (green with a blue ring) circles" />
 
 <!-- badges: start -->
 
@@ -15,28 +15,42 @@ MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/
 <!-- badges: end -->
 
 `{ringbp}` is an R package that provides methods to simulate infectious
-disease transmission in the presence of contact tracing. It was
-initially developed to support a paper written in early 2020 to assess
-the feasibility of controlling COVID-19; see the [companion analysis
-code](https://github.com/cmmid/ringbp) and
-[paper](https://doi.org/10.1016/S2214-109X(20)30074-7) for more details.
+disease transmission in the presence of contact tracing. It was based on
+an Ebola transmission model with ring vaccination ([Kucharski et al.
+2016](#ref-Kucharski2016)). The `{ringbp}` model was initially developed
+to support a paper written in early 2020 to assess the feasibility of
+controlling COVID-19 ([Hellewell et al. 2020](#ref-Hellewell2020)).
 
-`{ringbp}` is an R package that provides methods to simulate infectious
-disease transmission in the presence of contact tracing. It was
-initially developed to support a paper written in early 2020 to assess
-the [feasibility of controlling
-COVID-19](https://github.com/cmmid/ringbp). For more details on the
-methods implemented here, see the associated
-[paper](https://doi.org/10.1016/S2214-109X(20)30074-7).
+See the [companion analysis code](https://github.com/cmmid/ringbp) to
+reproduce Hellewell et al. ([2020](#ref-Hellewell2020)).
+
+For more details on the methods implemented in the `{ringbp}` R package,
+see the Hellewell et al. ([2020](#ref-Hellewell2020))
+[paper](https://doi.org/10.1016/S2214-109X(20)30074-7), and the [package
+documentation](https://epiforecasts.io/ringbp/articles/).
 
 ## Installation
 
-The current development version of `{ringbp}` can be installed from
-[GitHub](https://github.com/) using the `pak` package.
+The package can be installed from CRAN using
 
 ``` r
+install.packages("ringbp")
+```
+
+You can install the development version of `{ringbp}` from
+[GitHub](https://github.com/) with:
+
+``` r
+# check whether {pak} is installed
 if(!require("pak")) install.packages("pak")
 pak::pak("epiforecasts/ringbp")
+```
+
+Alternatively, install pre-compiled binaries from [the epiforecasts
+R-universe](https://epiforecasts.r-universe.dev/ringbp)
+
+``` r
+install.packages("ringbp", repos = c("https://epiforecasts.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 ## Quick start
@@ -75,8 +89,8 @@ res <- scenario_sim(
   ## whether quarantine is in effect
   interventions = intervention_opts(quarantine = FALSE),
   sim = sim_opts(
-    ## don't simulate beyond 350 days
-    cap_max_days = 350, 
+    ## don't simulate beyond 140 days
+    cap_max_days = 140, 
     ## don't simulate beyond 4500 infections
     cap_cases = 4500
   )
@@ -89,7 +103,7 @@ res <- scenario_sim(
 ggplot(
   data = res, aes(x = week, y = cumulative, col = as.factor(sim))
 ) +
-  geom_line(show.legend = FALSE, alpha = 0.3) +
+  geom_line(show.legend = FALSE) +
   scale_y_continuous(name = "Cumulative number of cases") +
   theme_bw()
 ```
@@ -101,7 +115,7 @@ ggplot(
 ``` r
 extinct_prob(res)
 #> Calculating extinction using the extinction status from the simulation.
-#> [1] 0.9
+#> [1] 0.6
 ```
 
 ## Contribute
@@ -158,3 +172,30 @@ Please note that the `{ringbp}` project is released with a [Contributor
 Code of
 Conduct](https://github.com/epiforecasts/.github/blob/main/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+
+<div id="ref-Hellewell2020" class="csl-entry">
+
+Hellewell, Joel, Sam Abbott, Amy Gimma, Nikos I Bosse, Christopher I
+Jarvis, Timothy W Russell, James D Munday, et al. 2020. “Feasibility of
+Controlling COVID-19 Outbreaks by Isolation of Cases and Contacts.” *The
+Lancet Global Health* 8 (4): e488–96.
+<https://doi.org/10.1016/s2214-109x(20)30074-7>.
+
+</div>
+
+<div id="ref-Kucharski2016" class="csl-entry">
+
+Kucharski, Adam J., Rosalind M. Eggo, Conall H. Watson, Anton Camacho,
+Sebastian Funk, and W. John Edmunds. 2016. “Effectiveness of Ring
+Vaccination as Control Strategy for Ebola Virus Disease.” *Emerging
+Infectious Diseases* 22 (1): 105–8.
+<https://doi.org/10.3201/eid2201.151410>.
+
+</div>
+
+</div>

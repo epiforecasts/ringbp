@@ -111,7 +111,10 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
     suppressWarnings(
       ks.test(res$onset, incubation_period(initial_cases))$p.value
     ),
-    expected = 0.05
+    # a small significance level as n = 1e5 for the KS test so a
+    # genuine distributional mismatch gives p ~ 0; a small threshold keeps the
+    # false-positive rate negligible while detecting bugs
+    expected = 1e-4
   )
 
   # remove asymptomatic cases that have an Inf isolation time
@@ -127,6 +130,9 @@ test_that("outbreak_setup has expected distribution properties (dynamic seed)", 
         onset_to_isolation(initial_cases)
       )$p.value
     ),
-    expected = 0.05
+    # a small significance level as n = 1e5 for the KS test so a
+    # genuine distributional mismatch gives p ~ 0; a small threshold keeps the
+    # false-positive rate negligible while detecting bugs
+    expected = 1e-4
   )
 })

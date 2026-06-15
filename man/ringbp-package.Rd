@@ -4,14 +4,14 @@
 \name{ringbp-package}
 \alias{ringbp}
 \alias{ringbp-package}
-\title{ringbp: Simulate and evaluate contact tracing scenarios}
+\title{ringbp: Simulate and Evaluate Targeted Interventions in Infectious Disease Outbreaks}
 \description{
-A package to simulate transmission of an infectious disease and associated efforts to trace contacts and reduce onwards transmission.
+Branching process simulation model of infectious disease transmission with flexible parameterisation of epidemiology and targeted interventions, including isolation, contact tracing and quarantine, to reduce transmission, together with functions to evaluate outbreak control. Introduced in Hellewell et al. (2020) \doi{10.1016/S2214-109X(20)30074-7}.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://epiforecasts.io/ringbp}
+  \item \url{https://epiforecasts.io/ringbp/}
   \item \url{https://github.com/epiforecasts/ringbp}
   \item Report bugs at \url{https://github.com/epiforecasts/ringbp/issues}
 }
@@ -28,12 +28,12 @@ Authors:
   \item Tim Lucas \email{tim.lucas@leicester.ac.uk}
   \item Sebastian Funk \email{sebastian.funk@lshtm.ac.uk}
   \item Adam Kucharski \email{adam.kucharski@lshtm.ac.uk}
+  \item Carl A. B. Pearson \email{carl.ab.pearson@gmail.com} (\href{https://orcid.org/0000-0003-0701-7860}{ORCID}) [reviewer]
 }
 
 Other contributors:
 \itemize{
   \item Hugo Gruson \email{hugo.gruson@data.org} (\href{https://orcid.org/0000-0002-4094-1476}{ORCID}) [contributor]
-  \item Carl A. B. Pearson \email{carl.ab.pearson@gmail.com} (\href{https://orcid.org/0000-0003-0701-7860}{ORCID}) [contributor, reviewer]
 }
 
 }

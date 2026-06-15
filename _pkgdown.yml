@@ -4,15 +4,16 @@ template:
 
 reference:
   - title: Model
+  - subtitle: Run outbreak scenario (multiple outbreak simulations) under one set of parameters
+    contents:
+    - scenario_sim
+  - subtitle: Outbreak simulation model components
     contents:
     - starts_with("outbreak_")
   - title: Helper functions
   - subtitle: Probability distribution manipulation
     contents:
     - incubation_to_generation_time
-  - subtitle: Loop wrappers for scenario modelling
-    contents:
-    - scenario_sim
   - subtitle: Model parameters and control options
     contents:
     - delay_opts

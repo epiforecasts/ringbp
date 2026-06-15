@@ -40,7 +40,7 @@ Different combinations of transmission timing and intervention effectiveness pro
 
 ![ringbp model schematic scenarios where transmission occurs after symptom onset.](../man/figures/model_schematic_scenario_postsym.svg){width=800px}\
 
-Scenarios (3a) and (3b) show what happense when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then being isolated when the infector is isolated in (3a), whereas in (3b) the infectee is isolated as soon as they develop symptoms because the infector is isolated at the same time or before the infectee's symptom onset.
+Scenarios (3a) and (3b) show what happens when a symptomatic infector transmits to a symptomatic infectee. The difference between (3a) and (3b) is that in (3b) the infectee develops symptoms later. As a result there is a short time delay between the infectee showing symptoms and then being isolated when the infector is isolated in (3a), whereas in (3b) the infectee is isolated as soon as they develop symptoms because the infector is isolated at the same time or before the infectee's symptom onset.
 
 Scenario (4) is the only scenario where quarantine is active. This scenario shows an example of an infectee being quarantined when the infector is isolated before the infectee's symptoms develop.
 
