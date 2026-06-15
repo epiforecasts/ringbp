@@ -26,7 +26,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/epiforecasts/ringbp/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/epiforecasts/ringbp/blob/v1.0.0/DESCRIPTION)
 
 Hellewell J, Abbott S, Gimma A, Lucas T, Funk S, Kucharski A, Pearson C,
 Lambert J (2026). *ringbp: Simulate and Evaluate Targeted Interventions
