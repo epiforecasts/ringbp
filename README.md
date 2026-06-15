@@ -175,13 +175,11 @@ By contributing to this project, you agree to abide by its terms.
 
 ## References
 
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
 <div id="ref-Hellewell2020" class="csl-entry">
 
-Hellewell, Joel, Sam Abbott, Amy Gimma, Nikos I Bosse, Christopher I
-Jarvis, Timothy W Russell, James D Munday, et al. 2020. “Feasibility of
+Hellewell, Joel, Sam Abbott, Amy Gimma, et al. 2020. “Feasibility of
 Controlling COVID-19 Outbreaks by Isolation of Cases and Contacts.” *The
 Lancet Global Health* 8 (4): e488–96.
 <https://doi.org/10.1016/s2214-109x(20)30074-7>.
