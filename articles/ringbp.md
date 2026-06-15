@@ -4,7 +4,7 @@
 
 Understanding how an infectious disease might spread, and under what
 conditions it can be controlled, is crucial for public health planning.
-The [ringbp](https://epiforecasts.io/ringbp) R package provides tools
+The [ringbp](https://epiforecasts.io/ringbp/) R package provides tools
 for simulating infectious disease transmission using a branching process
 model with explicit representation of case detection, isolation, and
 contact tracing. The package was developed in the early phase of the
@@ -14,7 +14,7 @@ dynamics and control feasibility.
 This vignette provides a brief introduction to the package and
 demonstrates how to:
 
-- load [ringbp](https://epiforecasts.io/ringbp)
+- load [ringbp](https://epiforecasts.io/ringbp/)
 - specify epidemiological parameters
 - run outbreak simulations
 - plot and summarise simulation results
@@ -22,7 +22,7 @@ demonstrates how to:
 It concludes with a simplified version of the analysis of COVID-19
 control feasibility from Hellewell et al. ([2020](#ref-Hellewell2020)).
 
-Firstly, we load the [ringbp](https://epiforecasts.io/ringbp) package,
+Firstly, we load the [ringbp](https://epiforecasts.io/ringbp/) package,
 as well as the [data.table](https://r-datatable.com) and
 [tinyplot](https://grantmcdermott.com/tinyplot/) packages which are used
 in this vignette.
@@ -41,7 +41,7 @@ library(tinyplot)
 
 ## Model overview
 
-At its core, [ringbp](https://epiforecasts.io/ringbp) simulates
+At its core, [ringbp](https://epiforecasts.io/ringbp/) simulates
 outbreaks using a branching process model. Each infected individual
 generates secondary infections according to an offspring distribution,
 with modifications arising from:
@@ -55,7 +55,7 @@ these components and then running one or more stochastic outbreak
 realisations.
 
 For a more detailed exposition of the
-[ringbp](https://epiforecasts.io/ringbp) epidemiological model and how
+[ringbp](https://epiforecasts.io/ringbp/) epidemiological model and how
 non-pharmaceutical interventions influence disease transmission see the
 [`ringbp-model.Rmd`
 vignette](https://epiforecasts.io/ringbp/articles/ringbp-model.md).
@@ -122,10 +122,10 @@ delays <- delay_opts(
 *Isolation* is the separation of infectious individuals from others,
 with the aim to prevent further transmission.
 
-In the [ringbp](https://epiforecasts.io/ringbp) model, *isolated*
+In the [ringbp](https://epiforecasts.io/ringbp/) model, *isolated*
 individuals have their own transmission dynamics (see
 [`offspring_opts()`](https://epiforecasts.io/ringbp/reference/offspring_opts.md)
-above). [ringbp](https://epiforecasts.io/ringbp) allows infected
+above). [ringbp](https://epiforecasts.io/ringbp/) allows infected
 individuals in isolation to transmit (i.e. non-zero reproduction
 number), and can even have higher transmissibility than infectors in the
 community.
@@ -169,7 +169,7 @@ infection.
 
 ### Intervention options
 
-Quarantine in the [ringbp](https://epiforecasts.io/ringbp) model is
+Quarantine in the [ringbp](https://epiforecasts.io/ringbp/) model is
 defined as the isolation of individuals independent of their infection
 status. Contacts can be isolated before they are symptomatic once the
 infecting individual is confirmed to be infected and goes into
@@ -186,7 +186,7 @@ is implemented, can be turned on or off via
 interventions <- intervention_opts(quarantine = FALSE)
 ```
 
-By default, isolation of symptomatic cases is active and qurantine is
+By default, isolation of symptomatic cases is active and quarantine is
 not active.
 
 ### Simulation controls
@@ -214,11 +214,11 @@ The example below runs 100 independent outbreak simulations starting
 from a single initial case.
 
 *Stochastic epidemic model*: the
-[ringbp](https://epiforecasts.io/ringbp) model uses random simulations
+[ringbp](https://epiforecasts.io/ringbp/) model uses random simulations
 to reflect the inherent uncertainty in real‑world outbreaks.
 
 We set the seed to ensure we have the same output each time the vignette
-is rendered. When using [ringbp](https://epiforecasts.io/ringbp),
+is rendered. When using [ringbp](https://epiforecasts.io/ringbp/),
 setting the seed is not required unless you need to simulate the same
 outbreak multiple times.
 
@@ -317,7 +317,7 @@ for other methods of checking for extinction.
 
 ## Simplified COVID-19 contact tracing effectiveness analysis
 
-Next we demonstrate how to use [ringbp](https://epiforecasts.io/ringbp)
+Next we demonstrate how to use [ringbp](https://epiforecasts.io/ringbp/)
 to reproduce a simplified version of the outbreak control analysis from
 Hellewell et al. ([2020](#ref-Hellewell2020)). This study, published in
 the first months of the COVID-19 pandemic, modelled the probability that
@@ -383,7 +383,7 @@ scenarios[, sims := lapply(data, \(x, n) {
 ```
 
 For a more detailed example of running
-[ringbp](https://epiforecasts.io/ringbp) across multiple parameter sets
+[ringbp](https://epiforecasts.io/ringbp/) across multiple parameter sets
 see the [`parameter-sweep.Rmd`
 vignette](https://epiforecasts.io/ringbp/articles/parameter-sweep.md),
 which also includes information on how to parallelise the simulation.
@@ -414,7 +414,7 @@ scenarios$pext
 ```
 
 Hellewell et al. ([2020](#ref-Hellewell2020)) used
-[ringbp](https://epiforecasts.io/ringbp) to show that:
+[ringbp](https://epiforecasts.io/ringbp/) to show that:
 
 - Outbreaks are controllable if contact tracing is fast and covers a
   high proportion of contacts
@@ -425,7 +425,7 @@ Hellewell et al. ([2020](#ref-Hellewell2020)) used
 ## `{ringbp}` Use Cases
 
 This vignette has focused on the high-level workflow for running
-simulations with [ringbp](https://epiforecasts.io/ringbp). Further uses
+simulations with [ringbp](https://epiforecasts.io/ringbp/). Further uses
 of the package include, but are not limited to:
 
 - Simulate outbreaks under different assumptions about $`R_0`$,

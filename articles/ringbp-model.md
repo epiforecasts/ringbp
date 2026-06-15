@@ -1,11 +1,11 @@
 # {ringbp} Model Description
 
 This vignette describes the epidemiological model implemented in the
-[ringbp](https://epiforecasts.io/ringbp) R package.
+[ringbp](https://epiforecasts.io/ringbp/) R package.
 
 ## Model Overview
 
-The [ringbp](https://epiforecasts.io/ringbp) outbreak model is an
+The [ringbp](https://epiforecasts.io/ringbp/) outbreak model is an
 individual-level branching process model to simulate an epidemic with
 individual-level non-pharmaceutical interventions (NPIs), namely:
 isolation, contact tracing and quarantine.
@@ -19,7 +19,7 @@ tested is set by the user.
 ***Contact tracing***: If contact tracing is in operation the infectee
 can also be isolated as soon as they develop symptoms if the infector is
 isolating. Contact tracing in the
-[ringbp](https://epiforecasts.io/ringbp) model is a user-controlled
+[ringbp](https://epiforecasts.io/ringbp/) model is a user-controlled
 parameter. Users can adjust the proportion of contacts ascertained by
 tracing between 0% (i.e. nobody is contact traced) and 100% (i.e. every
 symptomatic infector has all their contacts traced).
@@ -28,8 +28,8 @@ symptomatic infector has all their contacts traced).
 quarantine is activated in the model then an infectee can be
 quarantined/isolated as soon as their infector goes into isolation,
 independent of whether they are symptomatic. Quarantine can be turned on
-or off in the [ringbp](https://epiforecasts.io/ringbp) model and affects
-the whole population.
+or off in the [ringbp](https://epiforecasts.io/ringbp/) model and
+affects the whole population.
 
 In the scenarios that contacts are being traced in the model (i.e. the
 proportion of contacts ascertained \> 0%), or quarantine is active, then
@@ -67,7 +67,7 @@ case (Person A) to a secondary case (Person B).
 symptom
 onset.](../reference/figures/model_schematic_scenario_postsym.svg)  
 
-Scenarios (3a) and (3b) show what happense when a symptomatic infector
+Scenarios (3a) and (3b) show what happens when a symptomatic infector
 transmits to a symptomatic infectee. The difference between (3a) and
 (3b) is that in (3b) the infectee develops symptoms later. As a result
 there is a short time delay between the infectee showing symptoms and
@@ -125,7 +125,7 @@ In other words, these are infections averted.
 
 All of the scenarios in the figure above assume that transmission occurs
 after the infector is symptomatic. The
-[ringbp](https://epiforecasts.io/ringbp) model can also model
+[ringbp](https://epiforecasts.io/ringbp/) model can also model
 presymptomatic transmission. Below is another figure enumerating
 scenarios, but this time assuming that the infector infects the infectee
 before becoming symptomatic.
@@ -155,9 +155,9 @@ before the infector due to the shorter onset-to-isolation delay.
 ## Transmission in isolation
 
 So far we have assumed that once cases are isolated they cannot
-transmit. However, the [ringbp](https://epiforecasts.io/ringbp) epidemic
-model allows the user to specify any offspring distribution for isolated
-individuals.
+transmit. However, the [ringbp](https://epiforecasts.io/ringbp/)
+epidemic model allows the user to specify any offspring distribution for
+isolated individuals.
 
 Infectees that are infected by someone isolating are not isolated until
 an onset-to-isolation delay after they become symptomatic.
@@ -180,11 +180,11 @@ transmit.](../reference/figures/model_schematic_iso_infect.svg)
 
 ## Model parameters
 
-The table below includes the [ringbp](https://epiforecasts.io/ringbp)
+The table below includes the [ringbp](https://epiforecasts.io/ringbp/)
 parameters mentioned in this vignette that users can specify. Parameter
 values are given as examples and do not represent the default values.
 
-| Epidemiological Parameter | [ringbp](https://epiforecasts.io/ringbp) Model Parameterisation |
+| Epidemiological Parameter | [ringbp](https://epiforecasts.io/ringbp/) Model Parameterisation |
 |----|----|
 | Incubation period distribution | `delay_opts(incubation_period = \(n) rgamma(n = n, shape = 2, scale = 2))` |
 | Onset-to-isolation delay distribution | `delay_opts(onset_to_isolation = \(n) rgamma(n = n, shape = 2, scale = 2))` |
@@ -193,7 +193,7 @@ values are given as examples and do not represent the default values.
 | Contact tracing case ascertainment | `event_prob_opts(symptomatic_traced = 0.5)` |
 | Quarantine | `intervention_opts(quarantine = TRUE)` |
 
-In the [ringbp](https://epiforecasts.io/ringbp) model the generation
+In the [ringbp](https://epiforecasts.io/ringbp/) model the generation
 time is not parameterised, instead it is the result of the incubation
 period distribution and the proportion of transmission that occurs
 presymptomatically. The minimum generation time can be set by specifying
@@ -271,7 +271,7 @@ function.
 
 The
 [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
-function runs the [ringbp](https://epiforecasts.io/ringbp) model for a
+function runs the [ringbp](https://epiforecasts.io/ringbp/) model for a
 specified number of replicates.
 
 ## Further information

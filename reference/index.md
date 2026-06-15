@@ -2,6 +2,13 @@
 
 ## Model
 
+### Run outbreak scenario (multiple outbreak simulations) under one set of parameters
+
+- [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
+  : Run a specified number of simulations with identical parameters
+
+### Outbreak simulation model components
+
 - [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md)
   : Run a single instance of the branching process model
 - [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
@@ -15,11 +22,6 @@
 
 - [`incubation_to_generation_time()`](https://epiforecasts.io/ringbp/reference/incubation_to_generation_time.md)
   : Convert symptom onset times to generation times
-
-### Loop wrappers for scenario modelling
-
-- [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
-  : Run a specified number of simulations with identical parameters
 
 ### Model parameters and control options
 

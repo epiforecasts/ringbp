@@ -1,14 +1,15 @@
 # Scenario parameter sweep
 
 This vignette demonstrates how to run an analysis using the
-[ringbp](https://epiforecasts.io/ringbp) simulation across multiple
+[ringbp](https://epiforecasts.io/ringbp/) simulation across multiple
 scenarios.
 
 The functionality included in this vignette was previously in the
-`parameter_sweep()` function in [ringbp](https://epiforecasts.io/ringbp)
-\<= v0.1.2. This function has been removed as it is preferred to
-demonstrate the functionality but allow users the flexibility and
-control to run scenarios in whichever way they choose.
+`parameter_sweep()` function in
+[ringbp](https://epiforecasts.io/ringbp/) \<= v0.1.2. This function has
+been removed as it is preferred to demonstrate the functionality but
+allow users the flexibility and control to run scenarios in whichever
+way they choose.
 
 ``` r
 
@@ -24,7 +25,7 @@ library(data.table)
 The
 [`scenario_sim()`](https://epiforecasts.io/ringbp/reference/scenario_sim.md)
 function is the core function to run outbreak simulations using
-[ringbp](https://epiforecasts.io/ringbp), because it allows running the
+[ringbp](https://epiforecasts.io/ringbp/), because it allows running the
 [`outbreak_model()`](https://epiforecasts.io/ringbp/reference/outbreak_model.md)
 over multiple replicates.
 

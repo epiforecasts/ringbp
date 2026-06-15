@@ -1,6 +1,6 @@
 # Changelog
 
-## ringbp 0.1.2.9999
+## ringbp 1.0.0
 
 - Index cases in
   [`outbreak_setup()`](https://epiforecasts.io/ringbp/reference/outbreak_setup.md)
@@ -34,6 +34,18 @@
   [\#229](https://github.com/epiforecasts/ringbp/issues/229) by
   [@joshwlambert](https://github.com/joshwlambert) in
   [\#230](https://github.com/epiforecasts/ringbp/issues/230) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
+- The time-based stopping criterion in
+  [`outbreak_continue()`](https://epiforecasts.io/ringbp/reference/outbreak_continue.md)
+  now uses the earliest exposure time of unprocessed cases rather than
+  the latest symptom onset, so long incubation periods no longer end the
+  simulation prematurely and changing `cap_max_days` no longer alters
+  in-window case counts. Addresses
+  [\#163](https://github.com/epiforecasts/ringbp/issues/163) and
+  [\#225](https://github.com/epiforecasts/ringbp/issues/225) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#228](https://github.com/epiforecasts/ringbp/issues/228) and
   reviewed by [@pearsonca](https://github.com/pearsonca).
 
 - Symptomatic individuals can now self-isolate without requiring a
@@ -91,7 +103,7 @@
 - Added vignettes on:
 
   - Getting started vignette (`ringbp.Rmd`), containing an overview of
-    the [ringbp](https://epiforecasts.io/ringbp) model and how to
+    the [ringbp](https://epiforecasts.io/ringbp/) model and how to
     parameterise it, with an explanation of the model parameters, as
     well as how to plot the outbreak, and summarise the results
     (e.g. [`extinct_prob()`](https://epiforecasts.io/ringbp/reference/extinction.md)).
@@ -105,18 +117,18 @@
     model schematic figures which describe and illustrate how disease
     transmission and interventions (isolation, contact tracing and
     quarantine) are structured in the
-    [ringbp](https://epiforecasts.io/ringbp) model. The vignette also
+    [ringbp](https://epiforecasts.io/ringbp/) model. The vignette also
     links the epidemiological parameters that control the interventions,
     disease transmissibility and delay distributions with the R code for
-    parameterising a [ringbp](https://epiforecasts.io/ringbp)
+    parameterising a [ringbp](https://epiforecasts.io/ringbp/)
     simulation. Addresses
     [\#140](https://github.com/epiforecasts/ringbp/issues/140) by
     [@joshwlambert](https://github.com/joshwlambert) in
     [\#188](https://github.com/epiforecasts/ringbp/issues/188) and
     reviewed by [@sbfnk](https://github.com/sbfnk) and
     [@pearsonca](https://github.com/pearsonca).
-  - A vignette running [ringbp](https://epiforecasts.io/ringbp) across a
-    parameter set (`parameter-sweep.Rmd`) replaces the
+  - A vignette running [ringbp](https://epiforecasts.io/ringbp/) across
+    a parameter set (`parameter-sweep.Rmd`) replaces the
     `parameter_sweep()` function. Addresses
     [\#86](https://github.com/epiforecasts/ringbp/issues/86),
     [\#125](https://github.com/epiforecasts/ringbp/issues/125) by
@@ -357,7 +369,7 @@
   [@joshwlambert](https://github.com/joshwlambert).
 
 - The minimum R version required by the
-  [ringbp](https://epiforecasts.io/ringbp) package is now `>= 4.4.0`.
+  [ringbp](https://epiforecasts.io/ringbp/) package is now `>= 4.4.0`.
   This is due to the dependency on
   [Matrix](https://Matrix.R-forge.R-project.org). A GitHub actions
   workflow for R CMD check has been added to check the package is valid
