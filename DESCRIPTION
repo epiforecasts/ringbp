@@ -2,7 +2,7 @@ Type: Package
 Package: ringbp
 Title: Simulate and Evaluate Targeted Interventions in Infectious Disease
     Outbreaks
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: c(
     person("Joel", "Hellewell", , "Joel.Hellewell@lshtm.ac.uk", role = "aut",
            comment = c(ORCID = "0000-0003-2683-0849")),

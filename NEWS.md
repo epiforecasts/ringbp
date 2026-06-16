@@ -1,3 +1,5 @@
+# ringbp (development version)
+
 # ringbp 1.0.0
 
 * Index cases in `outbreak_setup()` are now only isolated if they test positive (using the `test_sensitivity` parameter), as opposed to previously where all symptomatic index cases were isolated. The updated `outbreak_setup()` matches the testing pathway in `outbreak_step()`. `outbreak_setup()` gains an `interventions` argument. Addresses #231 by @joshwlambert in #232 and reviewed by @pearsonca.

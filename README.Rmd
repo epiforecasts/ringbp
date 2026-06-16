@@ -22,6 +22,7 @@ set.seed(111)
 [![Codecov test coverage](https://codecov.io/gh/{{ gh_repo }}/branch/main/graph/badge.svg)](https://app.codecov.io/gh/{{ gh_repo }}?branch=main)
 ![GitHub contributors](https://img.shields.io/github/contributors/{{ gh_repo }})
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3749529.svg)](https://doi.org/10.5281/zenodo.3749529)
 <!-- badges: end -->
 
 `{ringbp}` is an R package that provides methods to simulate infectious

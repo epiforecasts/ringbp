@@ -2,6 +2,9 @@ url: https://epiforecasts.io/ringbp/
 template:
   bootstrap: 5
 
+development:
+  mode: auto
+
 reference:
   - title: Model
   - subtitle: Run outbreak scenario (multiple outbreak simulations) under one set of parameters
