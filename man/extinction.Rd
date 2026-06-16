@@ -11,7 +11,8 @@ extinct_prob(scenario, extinction_week = NULL)
 detect_extinct(scenario, extinction_week = NULL)
 }
 \arguments{
-\item{scenario}{a \code{data.table}: weekly cases output by \code{\link[=scenario_sim]{scenario_sim()}}}
+\item{scenario}{a \code{list} output by \code{\link[=scenario_sim]{scenario_sim()}}, containing the
+\verb{$outbreak_ts} \code{data.table} of weekly cases used to determine extinction}
 
 \item{extinction_week}{By default \code{NULL} but also accepts a positive
 \code{integer} scalar or \code{integer} vector to test if the outbreak has gone
@@ -62,11 +63,11 @@ The data passed to \code{scenario} has to be produced by \code{\link[=scenario_s
 It cannot be produced by \code{\link[=outbreak_model]{outbreak_model()}} as it requires the \code{sim} column,
 which is only appended in \code{\link[=scenario_sim]{scenario_sim()}}.
 
-\emph{\strong{Warning}}: the output from \code{\link[=scenario_sim]{scenario_sim()}} contains an \code{cap_cases}
-attribute which is used by \code{\link[=extinct_prob]{extinct_prob()}} and \code{\link[=detect_extinct]{detect_extinct()}},
-therefore if you modify the output of \code{\link[=scenario_sim]{scenario_sim()}} before passing
-to \code{\link[=extinct_prob]{extinct_prob()}} be careful not to drop the attribute (e.g.
-from subsetting the \code{data.table}).
+\emph{\strong{Warning}}: the \verb{$outbreak_ts} element of the \code{\link[=scenario_sim]{scenario_sim()}} output
+carries an \code{cap_cases} attribute which is used by \code{\link[=extinct_prob]{extinct_prob()}} and
+\code{\link[=detect_extinct]{detect_extinct()}}, therefore if you modify the output of \code{\link[=scenario_sim]{scenario_sim()}}
+before passing to \code{\link[=extinct_prob]{extinct_prob()}} be careful not to drop the attribute
+(e.g. from subsetting the \code{data.table}).
 }
 \examples{
 res <- scenario_sim(

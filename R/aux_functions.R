@@ -123,13 +123,14 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #' It cannot be produced by [outbreak_model()] as it requires the `sim` column,
 #' which is only appended in [scenario_sim()].
 #'
-#' ***Warning***: the output from [scenario_sim()] contains an `cap_cases`
-#' attribute which is used by [extinct_prob()] and [detect_extinct()],
-#' therefore if you modify the output of [scenario_sim()] before passing
-#' to [extinct_prob()] be careful not to drop the attribute (e.g.
-#' from subsetting the `data.table`).
+#' ***Warning***: the `$outbreak_ts` element of the [scenario_sim()] output
+#' carries an `cap_cases` attribute which is used by [extinct_prob()] and
+#' [detect_extinct()], therefore if you modify the output of [scenario_sim()]
+#' before passing to [extinct_prob()] be careful not to drop the attribute
+#' (e.g. from subsetting the `data.table`).
 #'
-#' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
+#' @param scenario a `list` output by [scenario_sim()], containing the
+#'   `$outbreak_ts` `data.table` of weekly cases used to determine extinction
 #' @param extinction_week By default `NULL` but also accepts a positive
 #'   `integer` scalar or `integer` vector to test if the outbreak has gone
 #'   extinct (i.e. no new cases) by this week (zero indexed):
