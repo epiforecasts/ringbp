@@ -102,7 +102,7 @@ res <- scenario_sim(
 
 ``` r
 ggplot(
-  data = res, aes(x = week, y = cumulative, col = as.factor(sim))
+  data = res$outbreak_ts, aes(x = week, y = cumulative, col = as.factor(sim))
 ) +
   geom_line(show.legend = FALSE) +
   scale_y_continuous(name = "Cumulative number of cases") +
