@@ -43,15 +43,27 @@ the intervention settings for the \pkg{ringbp} model, returned by
 options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
-\code{data.table} of cases by week, cumulative cases, and the effective
-reproduction number of the outbreak. \code{data.table} columns are:
+A \code{list} with 2 \code{data.table} elements:
+\enumerate{
+\item \verb{$outbreak_ts}: the results for a single outbreak simulation. The
+\code{data.table} has columns:
 \itemize{
-\item \verb{$week}: \code{numeric}
-\item \verb{$weekly_cases}: \code{numeric}
-\item \verb{$cumulative}: \code{numeric}
-\item \verb{$effective_r0}: \code{numeric}
-\item \verb{$cases_per_gen}: \code{list}
+\item \code{week}: the week in the simulation (\code{integer})
+\item \code{weekly_cases}: the number of new cases that week (\code{integer})
+\item \code{cumulative}: the cumulative cases (\code{integer})
 }
+\item \verb{$outbreak_stats}: the summary statistics for the outbreak simulation. The
+\code{data.table} has columns:
+\itemize{
+\item \code{effective_r0}: the effective reproduction rate for the
+whole simulation (\code{numeric})
+\item \code{cases_per_gen}: the cases per generation (\code{list})
+}
+}
+
+The \verb{$outbreak_ts} element also carries an \code{extinct} attribute: a \code{logical}
+recording whether the outbreak went extinct. See \link{extinction} functions for
+the definition of extinction.
 }
 \description{
 Run a single instance of the branching process model

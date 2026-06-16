@@ -46,17 +46,30 @@ the intervention settings for the \pkg{ringbp} model, returned by
 options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
-A \code{data.table} object returning the results for multiple simulations
-using the same set of parameters. The table has columns
+A \code{list} with 2 \code{data.table} elements:
+\enumerate{
+\item \verb{$outbreak_ts}: the results for multiple simulations using the same
+set of parameters. The \code{data.table} has columns:
 \itemize{
-\item week: The week in the simulation.
-\item weekly_cases: The number of new cases that week.
-\item cumulative: The cumulative cases.
-\item effective_r0: The effective reproduction rate for the whole simulation
-\item cases_per_gen: A list column with the cases per generation. This is
-repeated each row.
-\item sim: Index column for which simulation.
+\item \code{sim}: the simulation replicate index (\code{integer})
+\item \code{week}: the week in the simulation (\code{integer})
+\item \code{weekly_cases}: the number of new cases that week (\code{integer})
+\item \code{cumulative}: the cumulative cases (\code{integer})
 }
+\item \verb{$outbreak_stats}: the summary statistics for each outbreak simulation
+replicate using the same set of parameters. The \code{data.table} has columns:
+\itemize{
+\item \code{sim}: the simulation replicate index (\code{integer})
+\item \code{effective_r0}: the effective reproduction rate for the whole
+simulation (\code{numeric})
+\item \code{cases_per_gen}: the cases per generation (\code{list})
+}
+}
+
+The \verb{$outbreak_ts} element also carries two attributes used by
+\code{\link[=extinct_prob]{extinct_prob()}} and \code{\link[=detect_extinct]{detect_extinct()}}: \code{extinct}, a \code{logical} vector
+recording whether each replicate went extinct, and \code{cap_cases}, the maximum
+number of cases used to cap each simulation.
 }
 \description{
 Run a specified number of simulations with identical parameters

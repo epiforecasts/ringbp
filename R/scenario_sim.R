@@ -6,15 +6,25 @@
 #' @inheritParams outbreak_model
 #'
 #' @importFrom data.table rbindlist setattr
-#' @return A `data.table` object returning the results for multiple simulations
-#'   using the same set of parameters. The table has columns
-#' * week: The week in the simulation.
-#' * weekly_cases: The number of new cases that week.
-#' * cumulative: The cumulative cases.
-#' * effective_r0: The effective reproduction rate for the whole simulation
-#' * cases_per_gen: A list column with the cases per generation. This is
-#'   repeated each row.
-#' * sim: Index column for which simulation.
+#' @return A `list` with 2 `data.table` elements:
+#' 1. `$outbreak_ts`: the results for multiple simulations using the same
+#'    set of parameters. The `data.table` has columns:
+#'    * `sim`: the simulation replicate index (`integer`)
+#'    * `week`: the week in the simulation (`integer`)
+#'    * `weekly_cases`: the number of new cases that week (`integer`)
+#'    * `cumulative`: the cumulative cases (`integer`)
+#' 2. `$outbreak_stats`: the summary statistics for each outbreak simulation
+#'    replicate using the same set of parameters. The `data.table` has columns:
+#'    * `sim`: the simulation replicate index (`integer`)
+#'    * `effective_r0`: the effective reproduction rate for the whole
+#'      simulation (`numeric`)
+#'    * `cases_per_gen`: the cases per generation (`list`)
+#'
+#' The `$outbreak_ts` element also carries two attributes used by
+#' [extinct_prob()] and [detect_extinct()]: `extinct`, a `logical` vector
+#' recording whether each replicate went extinct, and `cap_cases`, the maximum
+#' number of cases used to cap each simulation.
+#'
 #' @autoglobal
 #' @export
 #'
@@ -81,15 +91,22 @@ scenario_sim <- function(n,
     simplify = FALSE
   )
 
+  outbreak_ts <- lapply(res, `[[`, "outbreak_ts")
+  outbreak_stats <- lapply(res, `[[`, "outbreak_stats")
+
   extinct <- vapply(
-    res, attr, FUN.VALUE = logical(1), which = "extinct", exact = TRUE
+    outbreak_ts, attr, FUN.VALUE = logical(1), which = "extinct", exact = TRUE
   )
 
   # bind output together and add simulation index
-  res <- data.table::rbindlist(res, idcol = "sim")
+  outbreak_ts <- data.table::rbindlist(outbreak_ts, idcol = "sim")
+  outbreak_stats <- data.table::rbindlist(outbreak_stats, idcol = "sim")
 
-  setattr(res, name = "cap_cases", value = sim$cap_cases)
-  setattr(res, name = "extinct", value = extinct)
+  setattr(outbreak_ts, name = "cap_cases", value = sim$cap_cases)
+  setattr(outbreak_ts, name = "extinct", value = extinct)
 
-  res[]
+  list(
+    outbreak_ts = outbreak_ts,
+    outbreak_stats = outbreak_stats
+  )
 }

@@ -123,13 +123,14 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #' It cannot be produced by [outbreak_model()] as it requires the `sim` column,
 #' which is only appended in [scenario_sim()].
 #'
-#' ***Warning***: the output from [scenario_sim()] contains an `cap_cases`
-#' attribute which is used by [extinct_prob()] and [detect_extinct()],
-#' therefore if you modify the output of [scenario_sim()] before passing
-#' to [extinct_prob()] be careful not to drop the attribute (e.g.
-#' from subsetting the `data.table`).
+#' ***Warning***: the `$outbreak_ts` element of the [scenario_sim()] output
+#' carries an `cap_cases` attribute which is used by [extinct_prob()] and
+#' [detect_extinct()], therefore if you modify the output of [scenario_sim()]
+#' before passing to [extinct_prob()] be careful not to drop the attribute
+#' (e.g. from subsetting the `data.table`).
 #'
-#' @param scenario a `data.table`: weekly cases output by [scenario_sim()]
+#' @param scenario a `list` output by [scenario_sim()], containing the
+#'   `$outbreak_ts` `data.table` of weekly cases used to determine extinction
 #' @param extinction_week By default `NULL` but also accepts a positive
 #'   `integer` scalar or `integer` vector to test if the outbreak has gone
 #'   extinct (i.e. no new cases) by this week (zero indexed):
@@ -198,7 +199,7 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'
 #' # calculate extinction in the last 2 weeks of the simulated outbreak
 #' # (i.e. the penultimate and last week of the outbreak)
-#' extinct_prob(res, extinction_week = max(res$week) - 1)
+#' extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
 #'
 #' # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
 #' extinct_prob(res, extinction_week = 12:16)
@@ -214,7 +215,7 @@ extinct_prob <- function(scenario,
     scenario = scenario,
     extinction_week = extinction_week
   )
-  sum(extinct_runs$extinct) / max(scenario$sim)
+  sum(extinct_runs$extinct) / max(extinct_runs$sim)
 }
 
 #' @rdname extinction
@@ -222,7 +223,7 @@ extinct_prob <- function(scenario,
 #' @export
 detect_extinct <- function(scenario,
                            extinction_week = NULL) {
-
+  scenario <- scenario$outbreak_ts
   extinct <- attr(scenario, which = "extinct", exact = TRUE)
   if (is.null(extinction_week)) {
     if (!is.null(extinct)) {

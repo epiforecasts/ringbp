@@ -18,14 +18,14 @@ test_that("outbreak_model runs with no transmission", {
     interventions = intervention_opts(quarantine = TRUE),
     sim = sim_opts()
   )
-  expect_equal(res$week, 0:(sim_opts()$cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7))
   # one initial case
-  expect_identical(res$weekly_cases[1], 1L)
+  expect_identical(res$outbreak_ts$weekly_cases[1], 1L)
   # no secondary cases
-  expect_identical(unique(res$weekly_cases[-1]), 0L)
-  expect_identical(unique(res$cumulative), 1L)
-  expect_identical(unique(res$effective_r0), 0)
-  expect_identical(unique(res$cases_per_gen), list(0))
+  expect_identical(unique(res$outbreak_ts$weekly_cases[-1]), 0L)
+  expect_identical(unique(res$outbreak_ts$cumulative), 1L)
+  expect_identical(unique(res$outbreak_stats$effective_r0), 0)
+  expect_identical(unique(res$outbreak_stats$cases_per_gen), list(0))
 })
 
 test_that("outbreak_model runs to cap_max_days stopping criterion", {
@@ -50,13 +50,16 @@ test_that("outbreak_model runs to cap_max_days stopping criterion", {
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_max_days = cap_max_days, cap_cases = cap_cases)
   )
-  expect_equal(res$week, 0:(cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(cap_max_days / 7))
   # has not reached cap_cases stopping criterion
-  expect_lt(res[.N, cumulative], cap_cases)
+  expect_lt(res$outbreak_ts[.N, cumulative], cap_cases)
   # monotonic cumulative cases
-  expect_identical(res$cumulative, sort(res$cumulative))
+  expect_identical(
+    res$outbreak_ts$cumulative,
+    sort(res$outbreak_ts$cumulative)
+  )
   # non-extinction of outbreak
-  expect_true(all(res$weekly_cases > 0))
+  expect_true(all(res$outbreak_ts$weekly_cases > 0))
 })
 
 test_that("outbreak_model runs to cap_cases stopping criterion", {
@@ -80,14 +83,17 @@ test_that("outbreak_model runs to cap_cases stopping criterion", {
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_cases = cap_cases)
   )
-  expect_equal(res$week, 0:(sim_opts()$cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7))
   # no cases in the last 10 weeks
-  expect_identical(tail(res$weekly_cases, n = 10), rep(0L, 10))
+  expect_identical(tail(res$outbreak_ts$weekly_cases, n = 10), rep(0L, 10))
   # cap_cases is soft upper bound so cumulative cases exceed cap_cases
   # cumulative cases has reached cap_cases stopping criterion
-  expect_gt(res[.N, cumulative], cap_cases)
+  expect_gt(res$outbreak_ts[.N, cumulative], cap_cases)
   # monotonic cumulative cases
-  expect_identical(res$cumulative, sort(res$cumulative))
+  expect_identical(
+    res$outbreak_ts$cumulative,
+    sort(res$outbreak_ts$cumulative)
+  )
 })
 
 test_that("outbreak_model runs for 1 gen when onset > cap_max_days", {
@@ -117,8 +123,8 @@ test_that("outbreak_model runs for 1 gen when onset > cap_max_days", {
   )
   # the simulation ran at least one generation, so effective R0 and cases per
   # generation are populated rather than the zero-generation NA placeholders
-  expect_false(is.nan(res$effective_r0))
-  expect_false(identical(res$cases_per_gen, list(NA_real_)))
+  expect_false(is.nan(res$outbreak_stats$effective_r0))
+  expect_false(identical(res$outbreak_stats$cases_per_gen, list(NA_real_)))
 })
 
 test_that("outbreak_model in-window counts are independent of cap_max_days", {
@@ -149,13 +155,16 @@ test_that("outbreak_model in-window counts are independent of cap_max_days", {
     )
   }
   # the larger cap runs the (growing) outbreak further: a non-trivial test
-  expect_gt(outbreaks[[2]][.N, cumulative], outbreaks[[1]][.N, cumulative])
+  expect_gt(
+    outbreaks[[2]]$outbreak_ts[.N, cumulative],
+    outbreaks[[1]]$outbreak_ts[.N, cumulative]
+  )
 
   # weeks 0-5 fall fully inside both simulation windows, so their cumulative
   # case counts must be identical
   expect_identical(
-    outbreaks[[1]][week <= 5, cumulative],
-    outbreaks[[2]][week <= 5, cumulative]
+    outbreaks[[1]]$outbreak_ts[week <= 5, cumulative],
+    outbreaks[[2]]$outbreak_ts[week <= 5, cumulative]
   )
 })
 
@@ -182,12 +191,12 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
     ),
     regexp = "The outbreak simulation ran for zero generations"
   )
-  expect_identical(res$week, 0:50)
-  expect_identical(res$weekly_cases[1], 25L)
-  expect_identical(unique(res$weekly_cases[-1]), 0L)
-  expect_identical(unique(res$cumulative), 25L)
-  expect_identical(unique(res$effective_r0), NaN)
-  expect_identical(unique(res$cases_per_gen), list(NA_real_))
+  expect_identical(res$outbreak_ts$week, 0:50)
+  expect_identical(res$outbreak_ts$weekly_cases[1], 25L)
+  expect_identical(unique(res$outbreak_ts$weekly_cases[-1]), 0L)
+  expect_identical(unique(res$outbreak_ts$cumulative), 25L)
+  expect_identical(unique(res$outbreak_stats$effective_r0), NaN)
+  expect_identical(unique(res$outbreak_stats$cases_per_gen), list(NA_real_))
 })
 
 test_that("outbreak_model warns if latent period is positive & cases > 1", {
