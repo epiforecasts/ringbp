@@ -1,5 +1,7 @@
 # ringbp (development version)
 
+* `outbreak_model()` and `scenario_sim()` now return a `list` of two `data.table`s rather than a single `data.table`. The `$outbreak_ts` element holds the outbreak time series (`sim`, `week`, `weekly_cases`, `cumulative`) and the `$outbreak_stats` element holds the per-replicate summary statistics (`sim`, `effective_r0`, `cases_per_gen`). Previously `effective_r0` and `cases_per_gen` were recycled across every week of a replicate, duplicating identical values and increasing the memory footprint of the output; they are now stored once per replicate. The `extinct` and `cap_cases` attributes are carried on `$outbreak_ts`. Addresses #237 by @joshwlambert in #239 and reviewed by @pearsonca.
+
 # ringbp 1.0.0
 
 * Index cases in `outbreak_setup()` are now only isolated if they test positive (using the `test_sensitivity` parameter), as opposed to previously where all symptomatic index cases were isolated. The updated `outbreak_setup()` matches the testing pathway in `outbreak_step()`. `outbreak_setup()` gains an `interventions` argument. Addresses #231 by @joshwlambert in #232 and reviewed by @pearsonca.
