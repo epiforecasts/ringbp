@@ -12,6 +12,7 @@ coverage](https://codecov.io/gh/epiforecasts/ringbp/branch/main/graph/badge.svg)
 contributors](https://img.shields.io/github/contributors/epiforecasts/ringbp)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3749529.svg)](https://doi.org/10.5281/zenodo.3749529)
 <!-- badges: end -->
 
 `{ringbp}` is an R package that provides methods to simulate infectious
