@@ -273,8 +273,12 @@ times.</p>
 <span>  interventions <span class="op">=</span> <span class="va">interventions</span>,</span>
 <span>  sim <span class="op">=</span> <span class="va">sim</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>The returned object is a <code>data.table</code> containing the
-simulated outbreak trajectories. The columns are:</p>
+<p>The returned object is a <code>list</code> with two
+<code>data.table</code> elements:</p>
+<ul>
+<li>
+<code>outbreak_ts</code>: the simulated outbreak trajectories (time
+series), with one row per simulation week. The columns are:
 <ul>
 <li>
 <code>sim</code>: simulation replicate ID</li>
@@ -284,13 +288,26 @@ simulated outbreak trajectories. The columns are:</p>
 <code>weekly_cases</code>: number of new cases that week</li>
 <li>
 <code>cumulative</code>: cumulative weekly cases</li>
-<li>
-<code>effective_r0</code>: the effective reproduction number, the
-same for each simulation replicate</li>
-<li>
-<code>cases_per_gen</code>: the number of cases per generation of
-the outbreak</li>
 </ul>
+</li>
+<li>
+<code>outbreak_stats</code>: summary statistics for each replicate,
+with one row per simulation. The columns are:
+<ul>
+<li>
+<code>sim</code>: simulation replicate ID</li>
+<li>
+<code>effective_r0</code>: the effective reproduction number for the
+replicate</li>
+<li>
+<code>cases_per_gen</code>: a list column of the number of cases per
+generation of the outbreak</li>
+</ul>
+</li>
+</ul>
+<p>The trajectories used in the plots below are in
+<code>outbreak$outbreak_ts</code>, and the per-replicate summaries are
+in <code>outbreak$outbreak_stats</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="visualising-results">Visualising results<a class="anchor" aria-label="anchor" href="#visualising-results"></a>
@@ -300,7 +317,7 @@ time.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://grantmcdermott.com/tinyplot/man/tinyplot.html" class="external-link">tinyplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">cumulative</span> <span class="op">~</span> <span class="va">week</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">outbreak</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">outbreak</span><span class="op">$</span><span class="va">outbreak_ts</span>, </span>
 <span>  type <span class="op">=</span> <span class="st">"l"</span>, </span>
 <span>  lwd <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="st">"Cumulative number of cases"</span>, </span>
@@ -315,7 +332,7 @@ decline in cases to zero is due to reaching that upper bound.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://grantmcdermott.com/tinyplot/man/tinyplot.html" class="external-link">tinyplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">weekly_cases</span> <span class="op">~</span> <span class="va">week</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">outbreak</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">outbreak</span><span class="op">$</span><span class="va">outbreak_ts</span>, </span>
 <span>  type <span class="op">=</span> <span class="st">"l"</span>, </span>
 <span>  lwd <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="st">"Weekly number of cases"</span>, </span>

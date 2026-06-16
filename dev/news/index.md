@@ -2,6 +2,23 @@
 
 ## ringbp (development version)
 
+- [`outbreak_model()`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)
+  and
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
+  now return a `list` of two `data.table`s rather than a single
+  `data.table`. The `$outbreak_ts` element holds the outbreak time
+  series (`sim`, `week`, `weekly_cases`, `cumulative`) and the
+  `$outbreak_stats` element holds the per-replicate summary statistics
+  (`sim`, `effective_r0`, `cases_per_gen`). Previously `effective_r0`
+  and `cases_per_gen` were recycled across every week of a replicate,
+  duplicating identical values and increasing the memory footprint of
+  the output; they are now stored once per replicate. The `extinct` and
+  `cap_cases` attributes are carried on `$outbreak_ts`. Addresses
+  [\#237](https://github.com/epiforecasts/ringbp/issues/237) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#239](https://github.com/epiforecasts/ringbp/issues/239) and
+  reviewed by [@pearsonca](https://github.com/pearsonca).
+
 ## ringbp 1.0.0
 
 CRAN release: 2026-06-15

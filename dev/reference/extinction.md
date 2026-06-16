@@ -17,8 +17,10 @@ detect_extinct(scenario, extinction_week = NULL)
 
 - scenario:
 
-  a `data.table`: weekly cases output by
-  [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
+  a `list` output by
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md),
+  containing the `$outbreak_ts` `data.table` of weekly cases used to
+  determine extinction
 
 - extinction_week:
 
@@ -76,10 +78,11 @@ It cannot be produced by
 as it requires the `sim` column, which is only appended in
 [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md).
 
-***Warning***: the output from
+***Warning***: the `$outbreak_ts` element of the
 [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
-contains an `cap_cases` attribute which is used by `extinct_prob()` and
-`detect_extinct()`, therefore if you modify the output of
+output carries an `cap_cases` attribute which is used by
+`extinct_prob()` and `detect_extinct()`, therefore if you modify the
+output of
 [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
 before passing to `extinct_prob()` be careful not to drop the attribute
 (e.g. from subsetting the `data.table`).
@@ -130,7 +133,7 @@ detect_extinct(res)
 
 # calculate extinction in the last 2 weeks of the simulated outbreak
 # (i.e. the penultimate and last week of the outbreak)
-extinct_prob(res, extinction_week = max(res$week) - 1)
+extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
 #> Calculating extinction as no new cases within weeks: 49 to 50 (inclusive).
 #> [1] 0.7
 

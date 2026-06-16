@@ -61,18 +61,29 @@ outbreak_model(
 
 ## Value
 
-`data.table` of cases by week, cumulative cases, and the effective
-reproduction number of the outbreak. `data.table` columns are:
+A `list` with 2 `data.table` elements:
 
-- `$week`: `numeric`
+1.  `$outbreak_ts`: the results for a single outbreak simulation. The
+    `data.table` has columns:
 
-- `$weekly_cases`: `numeric`
+    - `week`: the week in the simulation (`integer`)
 
-- `$cumulative`: `numeric`
+    - `weekly_cases`: the number of new cases that week (`integer`)
 
-- `$effective_r0`: `numeric`
+    - `cumulative`: the cumulative cases (`integer`)
 
-- `$cases_per_gen`: `list`
+2.  `$outbreak_stats`: the summary statistics for the outbreak
+    simulation. The `data.table` has columns:
+
+    - `effective_r0`: the effective reproduction rate for the whole
+      simulation (`numeric`)
+
+    - `cases_per_gen`: the cases per generation (`list`)
+
+The `$outbreak_ts` element also carries an `extinct` attribute: a
+`logical` recording whether the outbreak went extinct. See
+[extinction](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
+functions for the definition of extinction.
 
 ## Examples
 
@@ -102,59 +113,66 @@ out <- outbreak_model(
   sim = sim_opts()
 )
 out
-#>      week weekly_cases cumulative effective_r0 cases_per_gen
-#>     <int>        <int>      <int>        <num>        <list>
-#>  1:     0            2          2          0.5           1,0
-#>  2:     1            0          2          0.5           1,0
-#>  3:     2            0          2          0.5           1,0
-#>  4:     3            0          2          0.5           1,0
-#>  5:     4            0          2          0.5           1,0
-#>  6:     5            0          2          0.5           1,0
-#>  7:     6            0          2          0.5           1,0
-#>  8:     7            0          2          0.5           1,0
-#>  9:     8            0          2          0.5           1,0
-#> 10:     9            0          2          0.5           1,0
-#> 11:    10            0          2          0.5           1,0
-#> 12:    11            0          2          0.5           1,0
-#> 13:    12            0          2          0.5           1,0
-#> 14:    13            0          2          0.5           1,0
-#> 15:    14            0          2          0.5           1,0
-#> 16:    15            0          2          0.5           1,0
-#> 17:    16            0          2          0.5           1,0
-#> 18:    17            0          2          0.5           1,0
-#> 19:    18            0          2          0.5           1,0
-#> 20:    19            0          2          0.5           1,0
-#> 21:    20            0          2          0.5           1,0
-#> 22:    21            0          2          0.5           1,0
-#> 23:    22            0          2          0.5           1,0
-#> 24:    23            0          2          0.5           1,0
-#> 25:    24            0          2          0.5           1,0
-#> 26:    25            0          2          0.5           1,0
-#> 27:    26            0          2          0.5           1,0
-#> 28:    27            0          2          0.5           1,0
-#> 29:    28            0          2          0.5           1,0
-#> 30:    29            0          2          0.5           1,0
-#> 31:    30            0          2          0.5           1,0
-#> 32:    31            0          2          0.5           1,0
-#> 33:    32            0          2          0.5           1,0
-#> 34:    33            0          2          0.5           1,0
-#> 35:    34            0          2          0.5           1,0
-#> 36:    35            0          2          0.5           1,0
-#> 37:    36            0          2          0.5           1,0
-#> 38:    37            0          2          0.5           1,0
-#> 39:    38            0          2          0.5           1,0
-#> 40:    39            0          2          0.5           1,0
-#> 41:    40            0          2          0.5           1,0
-#> 42:    41            0          2          0.5           1,0
-#> 43:    42            0          2          0.5           1,0
-#> 44:    43            0          2          0.5           1,0
-#> 45:    44            0          2          0.5           1,0
-#> 46:    45            0          2          0.5           1,0
-#> 47:    46            0          2          0.5           1,0
-#> 48:    47            0          2          0.5           1,0
-#> 49:    48            0          2          0.5           1,0
-#> 50:    49            0          2          0.5           1,0
-#> 51:    50            0          2          0.5           1,0
-#>      week weekly_cases cumulative effective_r0 cases_per_gen
-#>     <int>        <int>      <int>        <num>        <list>
+#> $outbreak_ts
+#>      week weekly_cases cumulative
+#>     <int>        <int>      <int>
+#>  1:     0            2          2
+#>  2:     1            0          2
+#>  3:     2            0          2
+#>  4:     3            0          2
+#>  5:     4            0          2
+#>  6:     5            0          2
+#>  7:     6            0          2
+#>  8:     7            0          2
+#>  9:     8            0          2
+#> 10:     9            0          2
+#> 11:    10            0          2
+#> 12:    11            0          2
+#> 13:    12            0          2
+#> 14:    13            0          2
+#> 15:    14            0          2
+#> 16:    15            0          2
+#> 17:    16            0          2
+#> 18:    17            0          2
+#> 19:    18            0          2
+#> 20:    19            0          2
+#> 21:    20            0          2
+#> 22:    21            0          2
+#> 23:    22            0          2
+#> 24:    23            0          2
+#> 25:    24            0          2
+#> 26:    25            0          2
+#> 27:    26            0          2
+#> 28:    27            0          2
+#> 29:    28            0          2
+#> 30:    29            0          2
+#> 31:    30            0          2
+#> 32:    31            0          2
+#> 33:    32            0          2
+#> 34:    33            0          2
+#> 35:    34            0          2
+#> 36:    35            0          2
+#> 37:    36            0          2
+#> 38:    37            0          2
+#> 39:    38            0          2
+#> 40:    39            0          2
+#> 41:    40            0          2
+#> 42:    41            0          2
+#> 43:    42            0          2
+#> 44:    43            0          2
+#> 45:    44            0          2
+#> 46:    45            0          2
+#> 47:    46            0          2
+#> 48:    47            0          2
+#> 49:    48            0          2
+#> 50:    49            0          2
+#> 51:    50            0          2
+#>      week weekly_cases cumulative
+#>     <int>        <int>      <int>
+#> 
+#> $outbreak_stats
+#>    effective_r0 cases_per_gen
+#>           <num>        <list>
+#> 1:          0.5           1,0
+#> 
 ```

@@ -57,7 +57,8 @@ detect_extinct(): Calculate whether outbreaks went extinct or not"><meta propert
 
 
 <dl><dt id="arg-scenario">scenario<a class="anchor" aria-label="anchor" href="#arg-scenario"></a></dt>
-<dd><p>a <code>data.table</code>: weekly cases output by <code><a href="scenario_sim.html">scenario_sim()</a></code></p></dd>
+<dd><p>a <code>list</code> output by <code><a href="scenario_sim.html">scenario_sim()</a></code>, containing the
+<code>$outbreak_ts</code> <code>data.table</code> of weekly cases used to determine extinction</p></dd>
 
 
 <dt id="arg-extinction-week">extinction_week<a class="anchor" aria-label="anchor" href="#arg-extinction-week"></a></dt>
@@ -102,11 +103,11 @@ replicate. <code>1</code> is an outbreak that went extinct, <code>0</code> if no
     <p>The data passed to <code>scenario</code> has to be produced by <code><a href="scenario_sim.html">scenario_sim()</a></code>.
 It cannot be produced by <code><a href="outbreak_model.html">outbreak_model()</a></code> as it requires the <code>sim</code> column,
 which is only appended in <code><a href="scenario_sim.html">scenario_sim()</a></code>.</p>
-<p><em><strong>Warning</strong></em>: the output from <code><a href="scenario_sim.html">scenario_sim()</a></code> contains an <code>cap_cases</code>
-attribute which is used by <code>extinct_prob()</code> and <code>detect_extinct()</code>,
-therefore if you modify the output of <code><a href="scenario_sim.html">scenario_sim()</a></code> before passing
-to <code>extinct_prob()</code> be careful not to drop the attribute (e.g.
-from subsetting the <code>data.table</code>).</p>
+<p><em><strong>Warning</strong></em>: the <code>$outbreak_ts</code> element of the <code><a href="scenario_sim.html">scenario_sim()</a></code> output
+carries an <code>cap_cases</code> attribute which is used by <code>extinct_prob()</code> and
+<code>detect_extinct()</code>, therefore if you modify the output of <code><a href="scenario_sim.html">scenario_sim()</a></code>
+before passing to <code>extinct_prob()</code> be careful not to drop the attribute
+(e.g. from subsetting the <code>data.table</code>).</p>
     </div>
 
     <div class="section level2">
@@ -154,7 +155,7 @@ from subsetting the <code>data.table</code>).</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate extinction in the last 2 weeks of the simulated outbreak</span></span></span>
 <span class="r-in"><span><span class="co"># (i.e. the penultimate and last week of the outbreak)</span></span></span>
-<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">week</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">outbreak_ts</span><span class="op">$</span><span class="va">week</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 49 to 50 (inclusive).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
 <span class="r-in"><span></span></span>

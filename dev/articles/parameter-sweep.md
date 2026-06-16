@@ -136,59 +136,88 @@ res <- lapply(scenario_sims$data, \(x, n) {
 )
 ```
 
-The output of this parameter sweep is a list of `data.table`s, so to
-give an idea of what the output looks like we show the first 3 scenarios
-(there are 160 in total). See
+The output of this parameter sweep is a list with one element per
+scenario. Each element is the output of
+[`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md),
+which is itself a `list` of two `data.table`s (`outbreak_ts` and
+`outbreak_stats`). To give an idea of what the output looks like we show
+the first 3 scenarios (there are 160 in total). See
 [`?scenario_sim`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
-for more information on the contents of these `data.table`s.
+for more information on the contents of these outputs.
 
 ``` r
 
 head(res, 3)
 #> [[1]]
-#>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>        <list>
-#>   1:     1     0            5          5            0             0
-#>   2:     1     1            0          5            0             0
-#>   3:     1     2            0          5            0             0
-#>   4:     1     3            0          5            0             0
-#>   5:     1     4            0          5            0             0
-#>  ---                                                               
-#> 155:     3    48            0          5            0             0
-#> 156:     3    49            0          5            0             0
-#> 157:     3    50            0          5            0             0
-#> 158:     3    51            0          5            0             0
-#> 159:     3    52            0          5            0             0
+#> [[1]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            5          5
+#>   2:     1     1            0          5
+#>   3:     1     2            0          5
+#>   4:     1     3            0          5
+#>   5:     1     4            0          5
+#>  ---                                    
+#> 155:     3    48            0          5
+#> 156:     3    49            0          5
+#> 157:     3    50            0          5
+#> 158:     3    51            0          5
+#> 159:     3    52            0          5
+#> 
+#> [[1]]$outbreak_stats
+#>      sim effective_r0     cases_per_gen
+#>    <int>        <num>            <list>
+#> 1:     1     0.000000                 0
+#> 2:     2     1.717344 33,48,77,26, 8, 0
+#> 3:     3     0.000000                 0
+#> 
 #> 
 #> [[2]]
-#>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>        <list>
-#>   1:     1     0            4          4    1.0666667         1,3,0
-#>   2:     1     1            3          7    1.0666667         1,3,0
-#>   3:     1     2            2          9    1.0666667         1,3,0
-#>   4:     1     3            0          9    1.0666667         1,3,0
-#>   5:     1     4            0          9    1.0666667         1,3,0
-#>  ---                                                               
-#> 155:     3    48            0         33    0.9162698   7,5,4,9,3,0
-#> 156:     3    49            0         33    0.9162698   7,5,4,9,3,0
-#> 157:     3    50            0         33    0.9162698   7,5,4,9,3,0
-#> 158:     3    51            0         33    0.9162698   7,5,4,9,3,0
-#> 159:     3    52            0         33    0.9162698   7,5,4,9,3,0
+#> [[2]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            4          4
+#>   2:     1     1            3          7
+#>   3:     1     2            2          9
+#>   4:     1     3            0          9
+#>   5:     1     4            0          9
+#>  ---                                    
+#> 155:     3    48            0         33
+#> 156:     3    49            0         33
+#> 157:     3    50            0         33
+#> 158:     3    51            0         33
+#> 159:     3    52            0         33
+#> 
+#> [[2]]$outbreak_stats
+#>      sim effective_r0             cases_per_gen
+#>    <int>        <num>                    <list>
+#> 1:     1    1.0666667                     1,3,0
+#> 2:     2    1.2759899  9,34,22,16,29,69,...[25]
+#> 3:     3    0.9162698               7,5,4,9,3,0
+#> 
 #> 
 #> [[3]]
-#>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>        <list>
-#>   1:     1     0            8          8    0.6357143       7,1,1,0
-#>   2:     1     1            6         14    0.6357143       7,1,1,0
-#>   3:     1     2            0         14    0.6357143       7,1,1,0
-#>   4:     1     3            0         14    0.6357143       7,1,1,0
-#>   5:     1     4            0         14    0.6357143       7,1,1,0
-#>  ---                                                               
-#> 155:     3    48            0         12    0.4666667         5,2,0
-#> 156:     3    49            0         12    0.4666667         5,2,0
-#> 157:     3    50            0         12    0.4666667         5,2,0
-#> 158:     3    51            0         12    0.4666667         5,2,0
-#> 159:     3    52            0         12    0.4666667         5,2,0
+#> [[3]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            8          8
+#>   2:     1     1            6         14
+#>   3:     1     2            0         14
+#>   4:     1     3            0         14
+#>   5:     1     4            0         14
+#>  ---                                    
+#> 155:     3    48            0         12
+#> 156:     3    49            0         12
+#> 157:     3    50            0         12
+#> 158:     3    51            0         12
+#> 159:     3    52            0         12
+#> 
+#> [[3]]$outbreak_stats
+#>      sim effective_r0 cases_per_gen
+#>    <int>        <num>        <list>
+#> 1:     1    0.6357143       7,1,1,0
+#> 2:     2    0.1000000           1,0
+#> 3:     3    0.4666667         5,2,0
 ```
 
 ## Storing simulations with scenarios
@@ -200,10 +229,10 @@ parameter grid to be able to check which parameters correspond to which
 simulated outbreak.
 
 In this example we run the same scenario parameter sweep as before
-(again with 3 replicates), but store the simulated outbreak
-`data.table`s in the same object as the list of scenarios. We append the
-simulation results to the `scenario_sims` `data.table` and assign them
-to the `sims` column.
+(again with 3 replicates), but store the simulated outbreak results in
+the same object as the list of scenarios. We append the simulation
+results to the `scenario_sims` `data.table` and assign them to the
+`sims` column.
 
 ``` r
 
@@ -231,19 +260,19 @@ scenario_sims[, sims := lapply(data, \(x, n) {
   n = n
 )]
 scenario_sims
-#>      scenario               data                sims
-#>         <int>             <list>              <list>
-#>   1:        1 <data.table[1x14]> <data.table[159x6]>
-#>   2:        2 <data.table[1x14]> <data.table[159x6]>
-#>   3:        3 <data.table[1x14]> <data.table[159x6]>
-#>   4:        4 <data.table[1x14]> <data.table[159x6]>
-#>   5:        5 <data.table[1x14]> <data.table[159x6]>
-#>  ---                                                
-#> 156:      156 <data.table[1x14]> <data.table[159x6]>
-#> 157:      157 <data.table[1x14]> <data.table[159x6]>
-#> 158:      158 <data.table[1x14]> <data.table[159x6]>
-#> 159:      159 <data.table[1x14]> <data.table[159x6]>
-#> 160:      160 <data.table[1x14]> <data.table[159x6]>
+#>      scenario               data      sims
+#>         <int>             <list>    <list>
+#>   1:        1 <data.table[1x14]> <list[2]>
+#>   2:        2 <data.table[1x14]> <list[2]>
+#>   3:        3 <data.table[1x14]> <list[2]>
+#>   4:        4 <data.table[1x14]> <list[2]>
+#>   5:        5 <data.table[1x14]> <list[2]>
+#>  ---                                      
+#> 156:      156 <data.table[1x14]> <list[2]>
+#> 157:      157 <data.table[1x14]> <list[2]>
+#> 158:      158 <data.table[1x14]> <list[2]>
+#> 159:      159 <data.table[1x14]> <list[2]>
+#> 160:      160 <data.table[1x14]> <list[2]>
 head(scenario_sims$data, 3)
 #> [[1]]
 #>    r0_community r0_isolated disp_community disp_isolated prop_presymptomatic
@@ -279,49 +308,75 @@ head(scenario_sims$data, 3)
 #> 1:      5000   SARS      <function[1]>     <function[1]>
 head(scenario_sims$sims, 3)
 #> [[1]]
-#>        sim  week weekly_cases cumulative effective_r0  cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>         <list>
-#>   1:     1     0            5          5    0.0000000              0
-#>   2:     1     1            0          5    0.0000000              0
-#>   3:     1     2            0          5    0.0000000              0
-#>   4:     1     3            0          5    0.0000000              0
-#>   5:     1     4            0          5    0.0000000              0
-#>  ---                                                                
-#> 155:     3    48            0         38    0.8541026 13,15, 4, 1, 0
-#> 156:     3    49            0         38    0.8541026 13,15, 4, 1, 0
-#> 157:     3    50            0         38    0.8541026 13,15, 4, 1, 0
-#> 158:     3    51            0         38    0.8541026 13,15, 4, 1, 0
-#> 159:     3    52            0         38    0.8541026 13,15, 4, 1, 0
+#> [[1]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            5          5
+#>   2:     1     1            0          5
+#>   3:     1     2            0          5
+#>   4:     1     3            0          5
+#>   5:     1     4            0          5
+#>  ---                                    
+#> 155:     3    48            0         38
+#> 156:     3    49            0         38
+#> 157:     3    50            0         38
+#> 158:     3    51            0         38
+#> 159:     3    52            0         38
+#> 
+#> [[1]]$outbreak_stats
+#>      sim effective_r0  cases_per_gen
+#>    <int>        <num>         <list>
+#> 1:     1    0.0000000              0
+#> 2:     2    0.3000000            3,0
+#> 3:     3    0.8541026 13,15, 4, 1, 0
+#> 
 #> 
 #> [[2]]
-#>        sim  week weekly_cases cumulative effective_r0 cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>        <list>
-#>   1:     1     0            6          6    0.3000000           3,0
-#>   2:     1     1            2          8    0.3000000           3,0
-#>   3:     1     2            0          8    0.3000000           3,0
-#>   4:     1     3            0          8    0.3000000           3,0
-#>   5:     1     4            0          8    0.3000000           3,0
-#>  ---                                                               
-#> 155:     3    48            0         20    0.6866667     6,5,2,2,0
-#> 156:     3    49            0         20    0.6866667     6,5,2,2,0
-#> 157:     3    50            0         20    0.6866667     6,5,2,2,0
-#> 158:     3    51            0         20    0.6866667     6,5,2,2,0
-#> 159:     3    52            0         20    0.6866667     6,5,2,2,0
+#> [[2]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            6          6
+#>   2:     1     1            2          8
+#>   3:     1     2            0          8
+#>   4:     1     3            0          8
+#>   5:     1     4            0          8
+#>  ---                                    
+#> 155:     3    48            0         20
+#> 156:     3    49            0         20
+#> 157:     3    50            0         20
+#> 158:     3    51            0         20
+#> 159:     3    52            0         20
+#> 
+#> [[2]]$outbreak_stats
+#>      sim effective_r0 cases_per_gen
+#>    <int>        <num>        <list>
+#> 1:     1    0.3000000           3,0
+#> 2:     2    0.3000000           3,0
+#> 3:     3    0.6866667     6,5,2,2,0
+#> 
 #> 
 #> [[3]]
-#>        sim  week weekly_cases cumulative effective_r0            cases_per_gen
-#>      <int> <int>        <int>      <int>        <num>                   <list>
-#>   1:     1     0           14         14     1.232248 21,28,38,56,46,16,...[9]
-#>   2:     1     1           35         49     1.232248 21,28,38,56,46,16,...[9]
-#>   3:     1     2           60        109     1.232248 21,28,38,56,46,16,...[9]
-#>   4:     1     3           48        157     1.232248 21,28,38,56,46,16,...[9]
-#>   5:     1     4           49        206     1.232248 21,28,38,56,46,16,...[9]
-#>  ---                                                                          
-#> 155:     3    48            0          6     0.100000                      1,0
-#> 156:     3    49            0          6     0.100000                      1,0
-#> 157:     3    50            0          6     0.100000                      1,0
-#> 158:     3    51            0          6     0.100000                      1,0
-#> 159:     3    52            0          6     0.100000                      1,0
+#> [[3]]$outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0           14         14
+#>   2:     1     1           35         49
+#>   3:     1     2           60        109
+#>   4:     1     3           48        157
+#>   5:     1     4           49        206
+#>  ---                                    
+#> 155:     3    48            0          6
+#> 156:     3    49            0          6
+#> 157:     3    50            0          6
+#> 158:     3    51            0          6
+#> 159:     3    52            0          6
+#> 
+#> [[3]]$outbreak_stats
+#>      sim effective_r0            cases_per_gen
+#>    <int>        <num>                   <list>
+#> 1:     1     1.232248 21,28,38,56,46,16,...[9]
+#> 2:     2     0.300000                    2,1,0
+#> 3:     3     0.100000                      1,0
 ```
 
 ## Running scenarios in parallel

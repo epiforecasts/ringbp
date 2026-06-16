@@ -240,16 +240,23 @@ outbreak <- scenario_sim(
 )
 ```
 
-The returned object is a `data.table` containing the simulated outbreak
-trajectories. The columns are:
+The returned object is a `list` with two `data.table` elements:
 
-- `sim`: simulation replicate ID
-- `week`: outbreak week, zero indexed
-- `weekly_cases`: number of new cases that week
-- `cumulative`: cumulative weekly cases
-- `effective_r0`: the effective reproduction number, the same for each
-  simulation replicate
-- `cases_per_gen`: the number of cases per generation of the outbreak
+- `outbreak_ts`: the simulated outbreak trajectories (time series), with
+  one row per simulation week. The columns are:
+  - `sim`: simulation replicate ID
+  - `week`: outbreak week, zero indexed
+  - `weekly_cases`: number of new cases that week
+  - `cumulative`: cumulative weekly cases
+- `outbreak_stats`: summary statistics for each replicate, with one row
+  per simulation. The columns are:
+  - `sim`: simulation replicate ID
+  - `effective_r0`: the effective reproduction number for the replicate
+  - `cases_per_gen`: a list column of the number of cases per generation
+    of the outbreak
+
+The trajectories used in the plots below are in `outbreak$outbreak_ts`,
+and the per-replicate summaries are in `outbreak$outbreak_stats`.
 
 ## Visualising results
 
@@ -259,7 +266,7 @@ A simple way to explore results is to plot cumulative cases over time.
 
 tinyplot(
   cumulative ~ week | as.factor(sim), 
-  data = outbreak, 
+  data = outbreak$outbreak_ts, 
   type = "l", 
   lwd = 3,
   ylab = "Cumulative number of cases", 
@@ -279,7 +286,7 @@ cases to zero is due to reaching that upper bound.
 
 tinyplot(
   weekly_cases ~ week | as.factor(sim), 
-  data = outbreak, 
+  data = outbreak$outbreak_ts, 
   type = "l", 
   lwd = 3,
   ylab = "Weekly number of cases", 

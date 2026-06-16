@@ -100,13 +100,20 @@ options for the <span class="pkg">ringbp</span> model, returned by <code><a href
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>data.table</code> of cases by week, cumulative cases, and the effective
-reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul><li><p><code>$week</code>: <code>numeric</code></p></li>
-<li><p><code>$weekly_cases</code>: <code>numeric</code></p></li>
-<li><p><code>$cumulative</code>: <code>numeric</code></p></li>
-<li><p><code>$effective_r0</code>: <code>numeric</code></p></li>
-<li><p><code>$cases_per_gen</code>: <code>list</code></p></li>
-</ul></div>
+    <p>A <code>list</code> with 2 <code>data.table</code> elements:</p><ol><li><p><code>$outbreak_ts</code>: the results for a single outbreak simulation. The
+<code>data.table</code> has columns:</p><ul><li><p><code>week</code>: the week in the simulation (<code>integer</code>)</p></li>
+<li><p><code>weekly_cases</code>: the number of new cases that week (<code>integer</code>)</p></li>
+<li><p><code>cumulative</code>: the cumulative cases (<code>integer</code>)</p></li>
+</ul></li>
+<li><p><code>$outbreak_stats</code>: the summary statistics for the outbreak simulation. The
+<code>data.table</code> has columns:</p><ul><li><p><code>effective_r0</code>: the effective reproduction rate for the
+whole simulation (<code>numeric</code>)</p></li>
+<li><p><code>cases_per_gen</code>: the cases per generation (<code>list</code>)</p></li>
+</ul></li>
+</ol><p>The <code>$outbreak_ts</code> element also carries an <code>extinct</code> attribute: a <code>logical</code>
+recording whether the outbreak went extinct. See <a href="extinction.html">extinction</a> functions for
+the definition of extinction.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -135,61 +142,68 @@ reproduction number of the outbreak. <code>data.table</code> columns are:</p><ul
 <span class="r-in"><span>  sim <span class="op">=</span> <span class="fu"><a href="sim_opts.html">sim_opts</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative effective_r0 cases_per_gen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;        &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     0            2          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     1            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     2            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     3            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     4            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     5            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     6            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     7            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     8            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     9            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    10            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    11            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    12            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:    13            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:    14            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    15            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    16            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    17            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    18            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    19            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    20            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    21            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    22            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    23            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    24            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    25            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    26            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    27            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:    28            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    29            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    30            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    31            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    32            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    33            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    34            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    35            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    36            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    37            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    38            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    39            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    40            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    41            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    42            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    43            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    44            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    45            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    46            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    47            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    48            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    49            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    50            0          2          0.5           1,0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative effective_r0 cases_per_gen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;        &lt;int&gt;      &lt;int&gt;        &lt;num&gt;        &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $outbreak_ts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;        &lt;int&gt;      &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     0            2          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     1            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     2            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     3            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     4            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     5            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     6            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     7            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     8            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     9            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    10            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    11            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    12            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:    13            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:    14            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    15            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    16            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    17            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    18            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    19            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    20            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    21            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    22            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    23            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    24            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    25            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    26            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    27            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:    28            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    29            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    30            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    31            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    32            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    33            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    34            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    35            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    36            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    37            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    38            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    39            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    40            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    41            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    42            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    43            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    44            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    45            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    46            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    47            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    48            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    49            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    50            0          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;        &lt;int&gt;      &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $outbreak_stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    effective_r0 cases_per_gen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;        &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:          0.5           1,0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

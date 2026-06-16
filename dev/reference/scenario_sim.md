@@ -66,21 +66,37 @@ scenario_sim(
 
 ## Value
 
-A `data.table` object returning the results for multiple simulations
-using the same set of parameters. The table has columns
+A `list` with 2 `data.table` elements:
 
-- week: The week in the simulation.
+1.  `$outbreak_ts`: the results for multiple simulations using the same
+    set of parameters. The `data.table` has columns:
 
-- weekly_cases: The number of new cases that week.
+    - `sim`: the simulation replicate index (`integer`)
 
-- cumulative: The cumulative cases.
+    - `week`: the week in the simulation (`integer`)
 
-- effective_r0: The effective reproduction rate for the whole simulation
+    - `weekly_cases`: the number of new cases that week (`integer`)
 
-- cases_per_gen: A list column with the cases per generation. This is
-  repeated each row.
+    - `cumulative`: the cumulative cases (`integer`)
 
-- sim: Index column for which simulation.
+2.  `$outbreak_stats`: the summary statistics for each outbreak
+    simulation replicate using the same set of parameters. The
+    `data.table` has columns:
+
+    - `sim`: the simulation replicate index (`integer`)
+
+    - `effective_r0`: the effective reproduction rate for the whole
+      simulation (`numeric`)
+
+    - `cases_per_gen`: the cases per generation (`list`)
+
+The `$outbreak_ts` element also carries two attributes used by
+[`extinct_prob()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
+and
+[`detect_extinct()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md):
+`extinct`, a `logical` vector recording whether each replicate went
+extinct, and `cap_cases`, the maximum number of cases used to cap each
+simulation.
 
 ## Examples
 
@@ -114,30 +130,28 @@ res <- scenario_sim(
   sim = sim
 )
 res
-#>        sim  week weekly_cases cumulative effective_r0
-#>      <int> <int>        <int>      <int>        <num>
-#>   1:     1     0            4          4     2.820762
-#>   2:     1     1           17         21     2.820762
-#>   3:     1     2           36         57     2.820762
-#>   4:     1     3          198        255     2.820762
-#>   5:     1     4          488        743     2.820762
-#>  ---                                                 
-#> 261:     5    48            0       2860     2.609450
-#> 262:     5    49            0       2860     2.609450
-#> 263:     5    50            0       2860     2.609450
-#> 264:     5    51            0       2860     2.609450
-#> 265:     5    52            0       2860     2.609450
-#>                       cases_per_gen
-#>                              <list>
-#>   1:    18,  30, 138, 382, 832,1757
-#>   2:    18,  30, 138, 382, 832,1757
-#>   3:    18,  30, 138, 382, 832,1757
-#>   4:    18,  30, 138, 382, 832,1757
-#>   5:    18,  30, 138, 382, 832,1757
-#>  ---                               
-#> 261:  33, 43, 96,136,332,700,...[7]
-#> 262:  33, 43, 96,136,332,700,...[7]
-#> 263:  33, 43, 96,136,332,700,...[7]
-#> 264:  33, 43, 96,136,332,700,...[7]
-#> 265:  33, 43, 96,136,332,700,...[7]
+#> $outbreak_ts
+#>        sim  week weekly_cases cumulative
+#>      <int> <int>        <int>      <int>
+#>   1:     1     0            4          4
+#>   2:     1     1           17         21
+#>   3:     1     2           36         57
+#>   4:     1     3          198        255
+#>   5:     1     4          488        743
+#>  ---                                    
+#> 261:     5    48            0       2860
+#> 262:     5    49            0       2860
+#> 263:     5    50            0       2860
+#> 264:     5    51            0       2860
+#> 265:     5    52            0       2860
+#> 
+#> $outbreak_stats
+#>      sim effective_r0                  cases_per_gen
+#>    <int>        <num>                         <list>
+#> 1:     1     2.820762    18,  30, 138, 382, 832,1757
+#> 2:     2     0.000000                              0
+#> 3:     3     2.759802    20,  51, 124, 285, 901,1908
+#> 4:     4     3.517917     6,  62, 187, 402, 921,1950
+#> 5:     5     2.609450  33, 43, 96,136,332,700,...[7]
+#> 
 ```
