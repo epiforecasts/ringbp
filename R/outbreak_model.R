@@ -74,7 +74,7 @@ outbreak_model <- function(initial_cases,
     interventions = interventions
   )
 
-  # Preallocate
+  # create outbreak statistic vectors
   effective_r0_vect <- c()
   cases_in_gen_vect <- c()
 
