@@ -392,7 +392,7 @@ CRAN release: 2026-06-15
 - The minimum R version required by the
   [ringbp](https://epiforecasts.io/ringbp/) package is now `>= 4.4.0`.
   This is due to the dependency on
-  [Matrix](https://Matrix.R-forge.R-project.org). A GitHub actions
+  [Matrix](https://codeberg.org/jaganmn/Matrix). A GitHub actions
   workflow for R CMD check has been added to check the package is valid
   on the minimum required R version. Addressed in
   [\#85](https://github.com/epiforecasts/ringbp/issues/85) by
