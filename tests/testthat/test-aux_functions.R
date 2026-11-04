@@ -113,7 +113,7 @@ test_that("extinct_prob works as expected", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
+    sim = sim_opts(cap_max_days = 105, cap_cases = cap)
   )
 
   r1 <- extinct_prob(res, extinction_time = 12:14)
@@ -163,7 +163,7 @@ test_that("extinct_prob works as expected", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
+    sim = sim_opts(cap_max_days = 105, cap_cases = cap)
   )
   r3 <- extinct_prob(res3)
   expect_equal(r3, 0)
@@ -186,7 +186,7 @@ test_that("extinct_prob works as expected", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
+    sim = sim_opts(cap_max_days = 105, cap_cases = cap)
   )
   r3 <- extinct_prob(res3)
   expect_equal(r3, 1)
@@ -212,7 +212,7 @@ test_that("extinct_prob extinction_time argument works", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
+    sim = sim_opts(cap_max_days = 105, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions
@@ -298,7 +298,7 @@ test_that("detect_extinct works", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 100, cap_cases = cap)
+    sim = sim_opts(cap_max_days = 105, cap_cases = cap)
   )
 
   # Manually build an output with known proportion of extinctions
@@ -496,7 +496,7 @@ test_that("extinct_prob works with other aggregation intervals", {
   # initial cases have onset on day 10
   expect_message(
     expect_identical(extinct_prob(daily, extinction_time = 10), 0),
-    regexp = "no new cases within days: 10 to 50"
+    regexp = "no new cases within days: 10 to 49"
   )
   expect_identical(extinct_prob(daily, extinction_time = 11), 1)
 
@@ -510,7 +510,7 @@ test_that("extinct_prob works with other aggregation intervals", {
       expect_identical(extinct_prob(none, extinction_time = 10), 0),
       regexp = "will be aggregated to daily cases"
     ),
-    regexp = "no new cases within days: 10 to 50"
+    regexp = "no new cases within days: 10 to 49"
   )
   expect_warning(
     expect_identical(extinct_prob(none, extinction_time = 11), 1),
@@ -524,7 +524,7 @@ test_that("extinct_prob works with other aggregation intervals", {
   )
   expect_message(
     expect_identical(extinct_prob(period, extinction_time = 2), 0),
-    regexp = "no new cases within 5-day periods: 2 to 10"
+    regexp = "no new cases within 5-day periods: 2 to 9"
   )
   expect_identical(extinct_prob(period, extinction_time = 3), 1)
 })
@@ -547,7 +547,7 @@ test_that("detect_extinct errors when aggregation attribute is missing", {
       symptomatic_traced = 0
     ),
     interventions = intervention_opts(),
-    sim = sim_opts(cap_max_days = 50)
+    sim = sim_opts(cap_max_days = 49)
   )
   setattr(res$outbreak_ts, name = "aggregation", value = NULL)
   expect_error(
