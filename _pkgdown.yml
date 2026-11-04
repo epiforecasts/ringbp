@@ -28,3 +28,4 @@ reference:
     contents:
     - detect_extinct
     - extinct_prob
+    - aggregate.ringbp
