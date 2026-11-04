@@ -70,10 +70,11 @@ test_that("sim_opts works as expected with defaults", {
       aggregation = "character"
     )
   )
+  expect_identical(sim$cap_max_days, 350)
 })
 
 test_that("sim_opts works as expected with arguments", {
-  sim <- sim_opts(cap_max_days = 1000, cap_cases = 1000)
+  sim <- sim_opts(cap_max_days = 700, cap_cases = 1000)
   expect_s3_class(sim, "ringbp_sim_opts")
   expect_identical(
     vapply(sim, class, FUN.VALUE = character(1)),
@@ -99,13 +100,36 @@ test_that("sim_opts aggregation accepts and standardises aliases", {
     expect_identical(sim_opts(aggregation = x)$aggregation, "weekly")
   }
   for (x in c("month", "months", "monthly", "mOnTh")) {
-    expect_identical(sim_opts(aggregation = x)$aggregation, "monthly")
+    expect_identical(
+      sim_opts(cap_max_days = 360, aggregation = x)$aggregation, "monthly"
+    )
   }
 })
 
 test_that("sim_opts aggregation accepts an integer number of days", {
   expect_identical(sim_opts(aggregation = 14)$aggregation, 14L)
   expect_identical(sim_opts(aggregation = 1L)$aggregation, 1L)
+})
+
+test_that("sim_opts errors if cap_max_days is not whole intervals", {
+  expect_error(
+    sim_opts(cap_max_days = 350, aggregation = "monthly"),
+    regexp = "`cap_max_days` \\(350\\) is not a whole number of `monthly`"
+  )
+  expect_error(
+    sim_opts(cap_max_days = 350, aggregation = "monthly"),
+    regexp = "for example 330 or 360"
+  )
+  expect_error(
+    sim_opts(cap_max_days = 20, aggregation = "monthly"),
+    regexp = "for example 30\\."
+  )
+  expect_error(
+    sim_opts(cap_max_days = 50, aggregation = "weekly"),
+    regexp = "multiple of 7"
+  )
+  expect_no_error(sim_opts(cap_max_days = 360, aggregation = "monthly"))
+  expect_no_error(sim_opts(cap_max_days = 50, aggregation = "none"))
 })
 
 test_that("sim_opts aggregation errors with invalid input", {
