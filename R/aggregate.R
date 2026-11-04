@@ -178,7 +178,7 @@ aggregate.ringbp <- function(x, interval, ...) {
 #' Check and standardise a time interval for aggregation
 #'
 #' @param aggregation a time interval, see the `aggregation` argument of
-#'   [sim_opts()].
+#'   [sim_opts()]. `character` strings are case insensitive.
 #'
 #' @return A `character` string (`"none"`, `"daily"`, `"weekly"` or
 #'   `"monthly"`) or an `integer` scalar (number of days). An error is thrown
@@ -195,6 +195,7 @@ match_aggregation <- function(aggregation) {
     week = "weekly", weeks = "weekly", weekly = "weekly",
     month = "monthly", months = "monthly", monthly = "monthly"
   )
+  aggregation <- tolower(aggregation)
   checkmate::assert_choice(aggregation, choices = names(aliases))
   aliases[[aggregation]]
 }

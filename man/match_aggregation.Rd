@@ -8,7 +8,7 @@ match_aggregation(aggregation)
 }
 \arguments{
 \item{aggregation}{a time interval, see the \code{aggregation} argument of
-\code{\link[=sim_opts]{sim_opts()}}.}
+\code{\link[=sim_opts]{sim_opts()}}. \code{character} strings are case insensitive.}
 }
 \value{
 A \code{character} string (\code{"none"}, \code{"daily"}, \code{"weekly"} or
