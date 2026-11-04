@@ -243,7 +243,9 @@ detect_extinct <- function(scenario,
       )
       return(
         data.table(
-          sim = 1:max(scenario$sim),
+          # one extinct value per replicate, including replicates without
+          # cases in a case line list
+          sim = seq_along(extinct),
           extinct = as.integer(extinct)
         )
       )
