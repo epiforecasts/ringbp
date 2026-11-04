@@ -116,7 +116,7 @@ test_that("extinct_prob works as expected", {
     sim = sim_opts(cap_max_days = 100, cap_cases = cap)
   )
 
-  r1 <- extinct_prob(res, extinction_week = 12:14)
+  r1 <- extinct_prob(res, extinction_time = 12:14)
   expect_true(r1 <= 1)
   expect_true(r1 >= 0)
   expect_length(r1, 1)
@@ -141,7 +141,7 @@ test_that("extinct_prob works as expected", {
 
   res2 <- list(outbreak_ts = res2, outbreak_stats = res$outbreak_stats)
 
-  r2 <- extinct_prob(res2, extinction_week = 1)
+  r2 <- extinct_prob(res2, extinction_time = 1)
   expect_equal(r2, 0.5)
 
   # Run some sims with almost certain outputs
@@ -192,7 +192,7 @@ test_that("extinct_prob works as expected", {
   expect_equal(r3, 1)
 })
 
-test_that("extinct_prob extinction_week argument works", {
+test_that("extinct_prob extinction_time argument works", {
   cap <- 100
   sims <- 2
   res <- scenario_sim(
@@ -231,16 +231,16 @@ test_that("extinct_prob extinction_week argument works", {
 
   res2 <- list(outbreak_ts = res2, outbreak_stats = res$outbreak_stats)
 
-  r2 <- extinct_prob(res2, extinction_week = 1)
+  r2 <- extinct_prob(res2, extinction_time = 1)
   expect_equal(r2, 0.5)
 
-  # Now add a week and test extinction_week = 1:2
+  # Now add a week and test extinction_time = 1:2
   # Simple case of cases in week 1 and 2
   res3 <- res$outbreak_ts[c(1, 2, 3), ]
   res3$weekly_cases[1:3] <- c(1, 1, 1)
   res3$cumulative[1:3] <- c(1, 2, 3)
   res3 <- list(outbreak_ts = res3, outbreak_stats = res$outbreak_stats)
-  r3 <- extinct_prob(res3, extinction_week = 1:2)
+  r3 <- extinct_prob(res3, extinction_time = 1:2)
   expect_equal(r3, 0)
 
   # Simple case of no cases in week 1 or 2
@@ -248,33 +248,33 @@ test_that("extinct_prob extinction_week argument works", {
   res4$weekly_cases[1:3] <- c(1, 0, 0)
   res4$cumulative[1:3] <- c(1, 1, 1)
   res4 <- list(outbreak_ts = res4, outbreak_stats = res$outbreak_stats)
-  r4 <- extinct_prob(res4, extinction_week = 1:2)
+  r4 <- extinct_prob(res4, extinction_time = 1:2)
   expect_equal(r4, 1)
 
   # Case of cases in week 1 but not 2 (by the definition used in this function
-  # this is not an extinction). Test here that extinction_week 1:2 says no
-  # extintion but extinction_week 2 says extinction.
+  # this is not an extinction). Test here that extinction_time 1:2 says no
+  # extintion but extinction_time 2 says extinction.
   res5 <- res$outbreak_ts[c(1, 2, 3), ]
   res5$weekly_cases[1:3] <- c(1, 1, 0)
   res5$cumulative[1:3] <- c(1, 2, 2)
   res5 <- list(outbreak_ts = res5, outbreak_stats = res$outbreak_stats)
-  r5 <- extinct_prob(res5, extinction_week = 1:2)
+  r5 <- extinct_prob(res5, extinction_time = 1:2)
   expect_equal(r5, 0)
 
-  r5b <- extinct_prob(res5, extinction_week = 2)
+  r5b <- extinct_prob(res5, extinction_time = 2)
   expect_equal(r5b, 1)
 
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
-  # extinction). Test here that extinction_week 1:2 says no extinction and
-  # neither does extinction_week 2.
+  # extinction). Test here that extinction_time 1:2 says no extinction and
+  # neither does extinction_time 2.
   res6 <- res$outbreak_ts[c(1, 2, 3), ]
   res6$weekly_cases[1:3] <- c(1, 0, 1)
   res6$cumulative[1:3] <- c(1, 1, 2)
   res6 <- list(outbreak_ts = res6, outbreak_stats = res$outbreak_stats)
-  r6 <- extinct_prob(res6, extinction_week = 1:2)
+  r6 <- extinct_prob(res6, extinction_time = 1:2)
   expect_equal(r6, 0)
 
-  r6b <- extinct_prob(res6, extinction_week = 2)
+  r6b <- extinct_prob(res6, extinction_time = 2)
   expect_equal(r6b, 0)
 })
 
@@ -315,20 +315,20 @@ test_that("detect_extinct works", {
 
   res2 <- list(outbreak_ts = res2, outbreak_stats = res$outbreak_stats)
 
-  r2 <- detect_extinct(res2, extinction_week = 1)
+  r2 <- detect_extinct(res2, extinction_time = 1)
   # The types in the output is a bit random. So just force all to doubles.
   r2 <- data.table(r2)[, lapply(.SD, as.double)]
 
   expect2 <- data.table(sim = c(1.0, 2.0), extinct = c(0.0, 1.0))
   expect_equal(r2, expect2)
 
-  # Now add a week and test extinction_week = 1:2
+  # Now add a week and test extinction_time = 1:2
   # Simple case of cases in week 1 and 2
   res3 <- res$outbreak_ts[c(1, 2, 3), ]
   res3$weekly_cases[1:3] <- c(1, 1, 1)
   res3$cumulative[1:3] <- c(1, 2, 3)
   res3 <- list(outbreak_ts = res3, outbreak_stats = res$outbreak_stats)
-  r3 <- detect_extinct(res3, extinction_week = 1:2)
+  r3 <- detect_extinct(res3, extinction_time = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r3 <- data.table(r3)[, lapply(.SD, as.double)]
 
@@ -340,7 +340,7 @@ test_that("detect_extinct works", {
   res4$weekly_cases[1:3] <- c(1, 0, 0)
   res4$cumulative[1:3] <- c(1, 1, 1)
   res4 <- list(outbreak_ts = res4, outbreak_stats = res$outbreak_stats)
-  r4 <- detect_extinct(res4, extinction_week = 1:2)
+  r4 <- detect_extinct(res4, extinction_time = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r4 <- data.table(r4)[, lapply(.SD, as.double)]
 
@@ -348,20 +348,20 @@ test_that("detect_extinct works", {
   expect_equal(r4, expect4)
 
   # Case of cases in week 1 but not 2 (by the definition used in this function
-  # this is not an extinction). Test here that extinction_week 1:2 says
-  # extinction by extinction_week 2 does not.
+  # this is not an extinction). Test here that extinction_time 1:2 says
+  # extinction by extinction_time 2 does not.
   res5 <- res$outbreak_ts[c(1, 2, 3), ]
   res5$weekly_cases[1:3] <- c(1, 1, 0)
   res5$cumulative[1:3] <- c(1, 2, 2)
   res5 <- list(outbreak_ts = res5, outbreak_stats = res$outbreak_stats)
-  r5 <- detect_extinct(res5, extinction_week = 1:2)
+  r5 <- detect_extinct(res5, extinction_time = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r5 <- data.table(r5)[, lapply(.SD, as.double)]
 
   expect5 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r5, expect5)
 
-  r5b <- detect_extinct(res5, extinction_week = 2)
+  r5b <- detect_extinct(res5, extinction_time = 2)
   # The types in the output is a bit random. So just force all to doubles.
   r5b <- data.table(r5b)[, lapply(.SD, as.double)]
 
@@ -369,20 +369,20 @@ test_that("detect_extinct works", {
   expect_equal(r5b, expect5b)
 
   # Case of cases in week 2 but not 1 (by all sensible definitions is not an
-  # extinction). Test here that extinction_week 1:2 says no extinction and
-  # neither does extinction_week 2.
+  # extinction). Test here that extinction_time 1:2 says no extinction and
+  # neither does extinction_time 2.
   res6 <- res$outbreak_ts[c(1, 2, 3), ]
   res6$weekly_cases[1:3] <- c(1, 0, 1)
   res6$cumulative[1:3] <- c(1, 1, 2)
   res6 <- list(outbreak_ts = res6, outbreak_stats = res$outbreak_stats)
-  r6 <- detect_extinct(res6, extinction_week = 1:2)
+  r6 <- detect_extinct(res6, extinction_time = 1:2)
   # The types in the output is a bit random. So just force all to doubles.
   r6 <- data.table(r6)[, lapply(.SD, as.double)]
 
   expect6 <- data.table(sim = c(1.0), extinct = c(0.0))
   expect_equal(r6, expect6)
 
-  r6b <- detect_extinct(res6, extinction_week = 2)
+  r6b <- detect_extinct(res6, extinction_time = 2)
 
   r6b <- data.table(r6b)[, lapply(.SD, as.double)]
 
@@ -466,5 +466,124 @@ test_that("as_prob_function errors on non-numeric, non-function input", {
   expect_error(
     as_prob_function(list(0.5)),
     regexp = "Probabilities must be `numeric` or a `numeric` generating function"
+  )
+})
+
+test_that("extinct_prob works with other aggregation intervals", {
+  # no transmission so all outbreaks are extinct after the initial cases
+  sim_args <- list(
+    n = 2,
+    initial_cases = 1,
+    offspring = offspring_opts(
+      community = \(n) rep(0, n),
+      isolated = \(n) rep(0, n)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) rep(10.5, n),
+      onset_to_isolation = \(n) rep(1, n)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_traced = 0
+    ),
+    interventions = intervention_opts()
+  )
+  daily <- do.call(
+    scenario_sim,
+    c(sim_args, list(sim = sim_opts(cap_max_days = 50, aggregation = "daily")))
+  )
+  # initial cases have onset on day 10
+  expect_message(
+    expect_identical(extinct_prob(daily, extinction_time = 10), 0),
+    regexp = "no new cases within days: 10 to 50"
+  )
+  expect_identical(extinct_prob(daily, extinction_time = 11), 1)
+
+  # line list is aggregated to daily
+  none <- do.call(
+    scenario_sim,
+    c(sim_args, list(sim = sim_opts(cap_max_days = 50, aggregation = "none")))
+  )
+  expect_message(
+    expect_warning(
+      expect_identical(extinct_prob(none, extinction_time = 10), 0),
+      regexp = "will be aggregated to daily cases"
+    ),
+    regexp = "no new cases within days: 10 to 50"
+  )
+  expect_warning(
+    expect_identical(extinct_prob(none, extinction_time = 11), 1),
+    regexp = "will be aggregated to daily cases"
+  )
+
+  # integer number of days, onset in period 2 (days 10 to 14)
+  period <- do.call(
+    scenario_sim,
+    c(sim_args, list(sim = sim_opts(cap_max_days = 50, aggregation = 5)))
+  )
+  expect_message(
+    expect_identical(extinct_prob(period, extinction_time = 2), 0),
+    regexp = "no new cases within 5-day periods: 2 to 10"
+  )
+  expect_identical(extinct_prob(period, extinction_time = 3), 1)
+})
+
+test_that("detect_extinct errors when aggregation attribute is missing", {
+  res <- scenario_sim(
+    n = 2,
+    initial_cases = 1,
+    offspring = offspring_opts(
+      community = \(n) rep(0, n),
+      isolated = \(n) rep(0, n)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) rep(1, n),
+      onset_to_isolation = \(n) rep(1, n)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_traced = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 50)
+  )
+  setattr(res$outbreak_ts, name = "aggregation", value = NULL)
+  expect_error(
+    detect_extinct(res, extinction_time = 2),
+    regexp = "`scenario` is missing the `aggregation` attribute"
+  )
+  setattr(res$outbreak_ts, name = "extinct", value = NULL)
+  expect_error(
+    detect_extinct(res),
+    regexp = "`extinction_time` not specified and `scenario` is missing"
+  )
+})
+
+test_that("detect_extinct errors for case line list without ringbp class", {
+  res <- scenario_sim(
+    n = 2,
+    initial_cases = 1,
+    offspring = offspring_opts(
+      community = \(n) rep(0, n),
+      isolated = \(n) rep(0, n)
+    ),
+    delays = delay_opts(
+      incubation_period = \(n) rep(1, n),
+      onset_to_isolation = \(n) rep(1, n)
+    ),
+    event_probs = event_prob_opts(
+      asymptomatic = 0,
+      presymptomatic_transmission = 0.3,
+      symptomatic_traced = 0
+    ),
+    interventions = intervention_opts(),
+    sim = sim_opts(cap_max_days = 50, aggregation = "none")
+  )
+  res <- unclass(res)
+  expect_error(
+    detect_extinct(res, extinction_time = 2),
+    regexp = "scenario.*Must inherit from class 'ringbp'"
   )
 })
