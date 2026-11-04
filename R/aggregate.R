@@ -11,9 +11,9 @@
 #'
 #' @details
 #' Time in the \pkg{ringbp} model is measured in days since the exposure of
-#' the initial cases (day 0), there are no calendar dates. The time intervals
-#' are therefore fixed-length blocks of days counted from day 0, a `"weekly"`
-#' interval is 7 days and a `"monthly"` interval is 30 days, and are not
+#' the initial cases (day 0); there are no calendar dates. The time intervals
+#' are therefore fixed-length blocks of days counted from day 0 (a `"weekly"`
+#' interval is 7 days and a `"monthly"` interval is 30 days), and are not
 #' aligned to calendar weeks or months.
 #'
 #' Aggregated output contains every interval from 0 up to the end of the
@@ -41,7 +41,7 @@
 #'   [scenario_sim()].
 #' @param interval the time interval to aggregate the outbreak simulation to,
 #'   accepts the same values as the `aggregation` argument of [sim_opts()].
-#' @param ... [dots] not used, extra arguments supplied will be ignored with a
+#' @param ... [dots] Not used; any extra arguments are ignored with a
 #'   warning.
 #'
 #' @return A `<ringbp>` object with the `$outbreak_ts` element aggregated to
@@ -138,8 +138,7 @@ aggregate.ringbp <- function(x, interval, ...) {
     stop(
       "Cannot aggregate to `", new_interval, "` as the simulation (",
       cap_max_days, " days) cannot be divided exactly into `", new_interval,
-      "` intervals (", width, " days).
-",
+      "` intervals (", width, " days).\n",
       "Use a `cap_max_days` in `sim_opts()` that is a multiple of ", width,
       " to be able to aggregate without dropping data.",
       call. = FALSE
@@ -217,7 +216,7 @@ match_aggregation <- function(aggregation) {
   aliases[[aggregation]]
 }
 
-#' Number of days in an aggregation time interval specified as a `character`
+#' Number of days in an aggregation time interval
 #'
 #' @param aggregation a time interval, standardised by [match_aggregation()].
 #'   `"none"` is measured in days.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggregate.R
 \name{aggregation_as_int}
 \alias{aggregation_as_int}
-\title{Number of days in an aggregation time interval specified as a \code{character}}
+\title{Number of days in an aggregation time interval}
 \usage{
 aggregation_as_int(aggregation)
 }
@@ -14,6 +14,6 @@ aggregation_as_int(aggregation)
 An \code{integer} scalar.
 }
 \description{
-Number of days in an aggregation time interval specified as a \code{character}
+Number of days in an aggregation time interval
 }
 \keyword{internal}

@@ -340,7 +340,7 @@ sim_opts <- function(cap_max_days = 350,
       aggregation, "` (", width, " day) intervals.\n",
       "Use a `cap_max_days` that is a multiple of ", width, ", for example ",
       paste(valid, collapse = " or "), ".\n",
-      "Or change `aggregation` to `\"daily\"`.",
+      "Alternatively, use `aggregation = \"daily\"`.",
       call. = FALSE
     )
   }

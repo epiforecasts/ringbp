@@ -13,7 +13,7 @@
 \item{interval}{the time interval to aggregate the outbreak simulation to,
 accepts the same values as the \code{aggregation} argument of \code{\link[=sim_opts]{sim_opts()}}.}
 
-\item{...}{\link{dots} not used, extra arguments supplied will be ignored with a
+\item{...}{\link{dots} Not used; any extra arguments are ignored with a
 warning.}
 }
 \value{
@@ -33,9 +33,9 @@ simulation output to a different time interval after the simulation.
 }
 \details{
 Time in the \pkg{ringbp} model is measured in days since the exposure of
-the initial cases (day 0), there are no calendar dates. The time intervals
-are therefore fixed-length blocks of days counted from day 0, a \code{"weekly"}
-interval is 7 days and a \code{"monthly"} interval is 30 days, and are not
+the initial cases (day 0); there are no calendar dates. The time intervals
+are therefore fixed-length blocks of days counted from day 0 (a \code{"weekly"}
+interval is 7 days and a \code{"monthly"} interval is 30 days), and are not
 aligned to calendar weeks or months.
 
 Aggregated output contains every interval from 0 up to the end of the

@@ -33,7 +33,7 @@ outbreak is extinct by week 5 (inclusive) until the end of the outbreak.
 and upper bounds (inclusive) of the time range to test for whether
 extinction occurred by this window. For example, for weekly data,
 \code{extinction_time = c(5, 10)} will test whether the outbreak went extinct
-by week 5 and there we no new cases between weeks 5 and 10 (inclusive).
+by week 5 and there were no new cases between weeks 5 and 10 (inclusive).
 \item An \code{integer} vector of length \emph{n} can be supplied to provide the times
 to test for whether extinction occurred by this window. For example,
 for weekly data, \code{extinction_time = 12:16} will test that there are no

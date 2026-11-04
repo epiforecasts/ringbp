@@ -233,11 +233,11 @@ outbreak_fortnightly$outbreak_ts
 
 ```{r}
 tinyplot(
-  period_cases ~ period | as.factor(sim), 
-  data = outbreak_fortnightly$outbreak_ts, 
-  type = "l", 
+  period_cases ~ period | as.factor(sim),
+  data = outbreak_fortnightly$outbreak_ts,
+  type = "l",
   lwd = 3,
-  ylab = "Number of cases per fortnight", 
+  ylab = "Number of cases per fortnight",
   xlab = "Fortnight",
   legend = FALSE,
   theme = "clean"

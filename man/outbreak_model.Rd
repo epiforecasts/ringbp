@@ -69,8 +69,8 @@ For \code{aggregation = "none"} the \code{data.table} contains one row per case
 
 For all aggregations, only cases with symptom onset before
 \code{cap_max_days} (see \code{\link[=sim_opts]{sim_opts()}}) are included, as cases with a later
-symptom onset are not fully simulated, and the final time interval ends
-at \code{cap_max_days}.
+symptom onset are not fully simulated. The final time interval ends at
+\code{cap_max_days}.
 \item \verb{$outbreak_stats}: the summary statistics for the outbreak simulation. The
 \code{data.table} has columns:
 \itemize{

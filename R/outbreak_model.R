@@ -26,8 +26,8 @@
 #'
 #'    For all aggregations, only cases with symptom onset before
 #'    `cap_max_days` (see [sim_opts()]) are included, as cases with a later
-#'    symptom onset are not fully simulated, and the final time interval ends
-#'    at `cap_max_days`.
+#'    symptom onset are not fully simulated. The final time interval ends at
+#'    `cap_max_days`.
 #' 2. `$outbreak_stats`: the summary statistics for the outbreak simulation. The
 #'    `data.table` has columns:
 #'    * `effective_r0`: the effective reproduction rate for the
