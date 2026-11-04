@@ -136,6 +136,8 @@ Finally, global simulation limits (for example, maximum duration ([`cap_max_days
 
 The time interval that the simulated cases are aggregated to ([`aggregation`](https://epiforecasts.io/ringbp/reference/sim_opts.html#arg-aggregation)) is also specified using `sim_opts()`. Cases are counted by their symptom onset time, and the aggregation can be `"daily"`, `"weekly"` (the default), `"monthly"`, a whole number of days (e.g. `14` for fortnightly), or `"none"` to return a case line list without aggregation. Time intervals are fixed-length blocks of days counted from the exposure of the initial cases on day 0 (e.g. weeks are 7 days and months are 30 days), not calendar weeks or months.
 
+The maximum duration of the simulation (`cap_max_days`) must be a whole number of aggregation time intervals, for example below `cap_max_days = 350` is 50 weeks. The output contains every time interval up to `cap_max_days`, so the final interval ends at `cap_max_days`.
+
 ```{r}
 sim <- sim_opts(
   cap_max_days = 350,
@@ -222,21 +224,21 @@ tinyplot(
 
 ### Aggregating to a different time interval
 
-The simulated outbreaks can be aggregated to a different time interval after the simulation using `aggregate()`. Aggregated output can only be aggregated to a longer time interval that is made up of whole intervals of the current aggregation, for example weekly cases can be aggregated to 4-week (28-day) periods.
+The simulated outbreaks can be aggregated to a different time interval after the simulation using `aggregate()`. Aggregated output can only be aggregated to a longer time interval that is made up of whole intervals of the current aggregation, and the simulation must be divided exactly into the new time interval so no simulated cases are dropped. For example, the weekly cases simulated for 50 weeks (350 days) can be aggregated to fortnightly (14-day) periods, but not to 4-week (28-day) periods as 350 days is not a whole number of 28-day periods.
 
 ```{r}
-outbreak_4_weekly <- aggregate(outbreak, interval = 28)
-outbreak_4_weekly$outbreak_ts
+outbreak_fortnightly <- aggregate(outbreak, interval = 14)
+outbreak_fortnightly$outbreak_ts
 ```
 
 ```{r}
 tinyplot(
   period_cases ~ period | as.factor(sim), 
-  data = outbreak_4_weekly$outbreak_ts, 
+  data = outbreak_fortnightly$outbreak_ts, 
   type = "l", 
   lwd = 3,
-  ylab = "Number of cases per 4 weeks", 
-  xlab = "4-week period",
+  ylab = "Number of cases per fortnight", 
+  xlab = "Fortnight",
   legend = FALSE,
   theme = "clean"
 )
@@ -302,7 +304,7 @@ scenarios[, sims := lapply(data, \(x, n) {
     ),
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(
-      cap_max_days = 365,
+      cap_max_days = 364,
       cap_cases = 5000,
       aggregation = "weekly"
     )
