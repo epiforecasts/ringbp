@@ -24,9 +24,10 @@
 #'    * `onset`: the symptom onset time of the case (`numeric`)
 #'    * `cumulative`: the cumulative cases (`integer`)
 #'
-#'    Only cases with symptom onset before `cap_max_days` (see [sim_opts()])
-#'    are included, as cases with a later symptom onset are not fully
-#'    simulated.
+#'    For all aggregations, only cases with symptom onset before
+#'    `cap_max_days` (see [sim_opts()]) are included, as cases with a later
+#'    symptom onset are not fully simulated, and the final time interval ends
+#'    at `cap_max_days`.
 #' 2. `$outbreak_stats`: the summary statistics for the outbreak simulation. The
 #'    `data.table` has columns:
 #'    * `effective_r0`: the effective reproduction rate for the
@@ -147,10 +148,8 @@ outbreak_model <- function(initial_cases,
 
   # case line list ordered by symptom onset time
   outbreak_ts <- case_data[order(onset), list(onset, cumulative = seq_len(.N))]
-  if (identical(sim$aggregation, "none")) {
-    # cases with symptom onset after cap_max_days are not fully simulated
-    outbreak_ts <- outbreak_ts[onset < sim$cap_max_days]
-  }
+  # cases with symptom onset after cap_max_days are not fully simulated
+  outbreak_ts <- outbreak_ts[onset < sim$cap_max_days]
 
   setattr(outbreak_ts, name = "extinct", value = all(case_data$sampled))
   setattr(outbreak_ts, name = "cap_max_days", value = sim$cap_max_days)
