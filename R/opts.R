@@ -270,6 +270,27 @@ intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
 #'   initial cases on day 0
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
 #'   which the branching process (simulation) was terminated
+#' @param aggregation a `character` string or a positive `integer` scalar:
+#'   the time interval to aggregate the simulated cases to, by symptom onset
+#'   time. One of:
+#'   * `"none"`: no aggregation, the output contains the symptom onset time of
+#'     each case with symptom onset before `cap_max_days` (i.e. a line list).
+#'     See [outbreak_model()] for the output columns.
+#'   * `"daily"` (or `"day"`, `"days"`): number of cases each day.
+#'   * `"weekly"` (or `"week"`, `"weeks"`): number of cases each week (7 days).
+#'     This is the default.
+#'   * `"monthly"` (or `"month"`, `"months"`): number of cases each month (30
+#'     days).
+#'   * A positive `integer`: number of cases in each period of that many days
+#'     (e.g. `14` for fortnightly cases).
+#'
+#'   `character` strings are case insensitive (e.g. `"Weekly"` is the same as
+#'   `"weekly"`).
+#'
+#'   Intervals are fixed-length blocks of days counted from the exposure of
+#'   the initial cases on day 0, not calendar weeks or months. The output can
+#'   be aggregated to a different interval after the simulation using
+#'   [`aggregate()`][aggregate.ringbp()].
 #'
 #' @return A `list` with class `<ringbp_sim_opts>`.
 #' @export
@@ -283,14 +304,24 @@ intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
 #'   cap_max_days = 140,
 #'   cap_cases = 1000
 #' )
-sim_opts <- function(cap_max_days = 350, cap_cases  = 5000) {
+#'
+#' # daily case counts
+#' sim_opts(aggregation = "daily")
+#'
+#' # no aggregation (case line list)
+#' sim_opts(aggregation = "none")
+sim_opts <- function(cap_max_days = 350,
+                     cap_cases  = 5000,
+                     aggregation = "weekly") {
 
   checkmate::assert_int(cap_max_days, lower = 1)
   checkmate::assert_int(cap_cases, lower = 1)
+  aggregation <- match_aggregation(aggregation)
 
   opts <- list(
     cap_max_days = cap_max_days,
-    cap_cases = cap_cases
+    cap_cases = cap_cases,
+    aggregation = aggregation
   )
 
   class(opts) <- "ringbp_sim_opts"
