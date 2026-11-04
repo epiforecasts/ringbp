@@ -6,45 +6,47 @@
 \alias{detect_extinct}
 \title{Outbreak extinction functions}
 \usage{
-extinct_prob(scenario, extinction_week = NULL)
+extinct_prob(scenario, extinction_time = NULL)
 
-detect_extinct(scenario, extinction_week = NULL)
+detect_extinct(scenario, extinction_time = NULL)
 }
 \arguments{
 \item{scenario}{a \code{list} output by \code{\link[=scenario_sim]{scenario_sim()}}, containing the
-\verb{$outbreak_ts} \code{data.table} of weekly cases used to determine extinction}
+\verb{$outbreak_ts} \code{data.table} of cases used to determine extinction}
 
-\item{extinction_week}{By default \code{NULL} but also accepts a positive
+\item{extinction_time}{By default \code{NULL} but also accepts a positive
 \code{integer} scalar or \code{integer} vector to test if the outbreak has gone
-extinct (i.e. no new cases) by this week (zero indexed):
+extinct (i.e. no new cases) by this time (zero indexed), in the time
+interval of the aggregated \code{scenario} (e.g. weeks for weekly aggregated
+data):
 \itemize{
 \item By default (\code{NULL}) the extinction status is stored in the output of
 \code{scenario_sim()} which is supplied to the \code{scenario} argument. If
-\code{extinction_week} is not specified or specified as \code{NULL} then the
+\code{extinction_time} is not specified or specified as \code{NULL} then the
 pre-computed extinction status from the outbreak simulation will be used.
 This is defined as all infectious cases have had the opportunity to
 transmit but no new cases are generated.
-\item A single \code{integer} to test if extinction has occurred by this week.
-For example, \code{extinction_week = 5} tests whether the outbreak is
-extinct by week 5 (inclusive) until the end of the outbreak.
+\item A single \code{integer} to test if extinction has occurred by this time.
+For example, for weekly data, \code{extinction_time = 5} tests whether the
+outbreak is extinct by week 5 (inclusive) until the end of the outbreak.
 \item An \code{integer} vector of length two can be supplied to provide the lower
-and upper bounds (inclusive) of the week range to test for whether
-extinction occurred by this window. For example
-\code{extinction_week = c(5, 10)} will test whether the outbreak went extinct
+and upper bounds (inclusive) of the time range to test for whether
+extinction occurred by this window. For example, for weekly data,
+\code{extinction_time = c(5, 10)} will test whether the outbreak went extinct
 by week 5 and there we no new cases between weeks 5 and 10 (inclusive).
-\item An \code{integer} vector of length \emph{n} can be supplied to provide the weeks
-to test for whether extinction occurred by this window. For example
-\code{extinction_week = 12:16} will test that there are no new infections
-between 12 and 16 weeks after the initial cases (inclusive). These
-integer sequences will most likely be contiguous but the function
-does allow non-contiguous integer sequences.
+\item An \code{integer} vector of length \emph{n} can be supplied to provide the times
+to test for whether extinction occurred by this window. For example,
+for weekly data, \code{extinction_time = 12:16} will test that there are no
+new infections between 12 and 16 weeks after the initial cases
+(inclusive). These integer sequences will most likely be contiguous but
+the function does allow non-contiguous integer sequences.
 }
 
-If extinction occurs before the \code{extinction_week} window then the outbreak
+If extinction occurs before the \code{extinction_time} window then the outbreak
 extinction is considered extinct, however, if the extinction occurs within
-the \code{extinction_week} window it is not considered extinct. Therefore,
-using a single \code{integer} for \code{extinction_week} and thinking of this as
-"\emph{has the outbreak gone extinct by week X}".}
+the \code{extinction_time} window it is not considered extinct. Therefore,
+using a single \code{integer} for \code{extinction_time} and thinking of this as
+"\emph{has the outbreak gone extinct by time X}".}
 }
 \value{
 \code{extinct_prob()}: a single \code{numeric} with the probability of extinction
@@ -68,6 +70,13 @@ carries an \code{cap_cases} attribute which is used by \code{\link[=extinct_prob
 \code{\link[=detect_extinct]{detect_extinct()}}, therefore if you modify the output of \code{\link[=scenario_sim]{scenario_sim()}}
 before passing to \code{\link[=extinct_prob]{extinct_prob()}} be careful not to drop the attribute
 (e.g. from subsetting the \code{data.table}).
+
+The \code{extinction_time} is in the time interval the \code{scenario} is aggregated
+to (set by the \code{aggregation} argument in \code{\link[=sim_opts]{sim_opts()}}, or by
+\code{\link[=aggregate.ringbp]{aggregate()}}), for example weeks for the default
+\code{"weekly"} aggregation, or days for \code{"daily"} aggregation. If the \code{scenario}
+is not aggregated (\code{aggregation = "none"}) it is aggregated to daily cases,
+with a warning, and \code{extinction_time} is in days.
 }
 \examples{
 res <- scenario_sim(
@@ -98,8 +107,8 @@ detect_extinct(res)
 
 # calculate extinction in the last 2 weeks of the simulated outbreak
 # (i.e. the penultimate and last week of the outbreak)
-extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
+extinct_prob(res, extinction_time = max(res$outbreak_ts$week) - 1)
 
 # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
-extinct_prob(res, extinction_week = 12:16)
+extinct_prob(res, extinction_time = 12:16)
 }
