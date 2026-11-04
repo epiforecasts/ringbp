@@ -7,10 +7,17 @@
 sim_opts(cap_max_days = 350, cap_cases = 5000, aggregation = "weekly")
 }
 \arguments{
-\item{cap_max_days}{a positive \code{integer} scalar: stops the outbreak
-simulation once all new infections occur on more than \code{cap_max_days}
-days after the start of the outbreak, counted from the exposure of the
-initial cases on day 0}
+\item{cap_max_days}{a positive \code{integer} scalar: the maximum number of days
+of the outbreak simulation, counted from the exposure of the initial cases
+on day 0. The outbreak simulation stops once all new infections occur
+after \code{cap_max_days}, so every case with symptom onset before
+\code{cap_max_days} is simulated.
+
+\code{cap_max_days} must be a whole number of \code{aggregation} time intervals
+(e.g. a multiple of 7 for \code{"weekly"} aggregation, or of 30 for
+\code{"monthly"}), so the output contains every time interval up to
+\code{cap_max_days} and the final interval ends at \code{cap_max_days}. The default
+of 350 days is 50 weeks.}
 
 \item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
 which the branching process (simulation) was terminated}
@@ -37,7 +44,9 @@ days).
 Intervals are fixed-length blocks of days counted from the exposure of
 the initial cases on day 0, not calendar weeks or months. The output can
 be aggregated to a different interval after the simulation using
-\code{\link[=aggregate.ringbp]{aggregate()}}.}
+\code{\link[=aggregate.ringbp]{aggregate()}}, if the simulation can be divided
+exactly into the new interval (i.e. \code{cap_max_days} is a multiple of the
+new interval).}
 }
 \value{
 A \code{list} with class \verb{<ringbp_sim_opts>}.
@@ -57,6 +66,9 @@ sim_opts(
 
 # daily case counts
 sim_opts(aggregation = "daily")
+
+# monthly case counts, cap_max_days must be a multiple of 30
+sim_opts(cap_max_days = 360, aggregation = "monthly")
 
 # no aggregation (case line list)
 sim_opts(aggregation = "none")
