@@ -16,10 +16,11 @@
 #' interval is 7 days and a `"monthly"` interval is 30 days, and are not
 #' aligned to calendar weeks or months.
 #'
-#' Aggregated output contains every interval from 0 up to the interval
-#' containing `cap_max_days` (see [sim_opts()]), intervals with no cases are
-#' included with zero cases. Cases with symptom onset in a later interval are
-#' excluded.
+#' Aggregated output contains every interval from 0 up to the end of the
+#' simulation, the final interval ends at `cap_max_days` (see [sim_opts()]).
+#' Intervals with no cases are included with zero cases. Only cases with
+#' symptom onset before `cap_max_days` are included, as cases with a later
+#' symptom onset are not fully simulated.
 #'
 #' Aggregation cannot be undone, so a `<ringbp>` object can only be aggregated
 #' if it is disaggregated (`"none"`, i.e. a case line list), or if each new
@@ -29,6 +30,12 @@
 #' aggregated to `"monthly"` or `"daily"`. To be able to aggregate to any
 #' interval use `aggregation = "none"` in [sim_opts()] when running the
 #' simulation.
+#'
+#' The simulation must also be divided exactly into the new interval, so no
+#' simulated cases are dropped and the final interval is complete. For
+#' example, a simulation with `cap_max_days = 350` can be aggregated from
+#' `"weekly"` to `14` (days), but not to `28` (days) as 350 days is not a whole
+#' number of 28 day intervals.
 #'
 #' @param x a `<ringbp>` object: the output of [outbreak_model()] or
 #'   [scenario_sim()].
@@ -127,6 +134,17 @@ aggregate.ringbp <- function(x, interval, ...) {
     onset <- outbreak_ts[[current_cols[["time"]]]] * current_width
     cases <- outbreak_ts[[current_cols[["cases"]]]]
   }
+  if (cap_max_days %% width != 0) {
+    stop(
+      "Cannot aggregate to `", new_interval, "` as the simulation (",
+      cap_max_days, " days) cannot be divided exactly into `", new_interval,
+      "` intervals (", width, " days).
+",
+      "Use a `cap_max_days` in `sim_opts()` that is a multiple of ", width,
+      " to be able to aggregate without dropping data.",
+      call. = FALSE
+    )
+  }
 
   has_sim <- "sim" %in% colnames(outbreak_ts)
   sim_idx <- if (has_sim) outbreak_ts$sim else rep(1L, nrow(outbreak_ts))
@@ -137,8 +155,8 @@ aggregate.ringbp <- function(x, interval, ...) {
     cases = cases
   )[, list(cases = sum(cases)), by = c("sim", "time")]
 
-  # maximum outbreak interval
-  max_time <- floor(cap_max_days / width)
+  # maximum outbreak interval, the final interval ends at cap_max_days
+  max_time <- cap_max_days / width - 1
   # null data.table for zero cases from interval zero to max interval for
   # every replicate (one extinct value per replicate), including replicates
   # without cases in the line list
@@ -148,8 +166,7 @@ aggregate.ringbp <- function(x, interval, ...) {
     sorted = FALSE
   )
   agg_cases[, cases := 0L]
-  # splice in/replace with outbreak data for intervals with cases, cases in
-  # intervals after max interval are dropped
+  # splice in/replace with outbreak data for intervals with cases
   agg_cases[outbreak_cases, on = c("sim", "time"), cases := i.cases]
   agg_cases[, cumulative := cumsum(cases), by = sim]
 
@@ -202,8 +219,8 @@ match_aggregation <- function(aggregation) {
 
 #' Number of days in an aggregation time interval specified as a `character`
 #'
-#' @param aggregation a time interval, standardised by [match_aggregation()],
-#'   excluding `"none"`.
+#' @param aggregation a time interval, standardised by [match_aggregation()].
+#'   `"none"` is measured in days.
 #'
 #' @return An `integer` scalar.
 #' @keywords internal
@@ -211,7 +228,7 @@ aggregation_as_int <- function(aggregation) {
   if (is.numeric(aggregation)) {
     return(aggregation)
   }
-  c(daily = 1L, weekly = 7L, monthly = 30L)[[aggregation]]
+  c(none = 1L, daily = 1L, weekly = 7L, monthly = 30L)[[aggregation]]
 }
 
 #' Column names of the aggregated outbreak time series

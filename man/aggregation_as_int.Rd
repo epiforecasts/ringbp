@@ -7,8 +7,8 @@
 aggregation_as_int(aggregation)
 }
 \arguments{
-\item{aggregation}{a time interval, standardised by \code{\link[=match_aggregation]{match_aggregation()}},
-excluding \code{"none"}.}
+\item{aggregation}{a time interval, standardised by \code{\link[=match_aggregation]{match_aggregation()}}.
+\code{"none"} is measured in days.}
 }
 \value{
 An \code{integer} scalar.

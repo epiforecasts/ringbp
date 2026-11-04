@@ -38,10 +38,11 @@ are therefore fixed-length blocks of days counted from day 0, a \code{"weekly"}
 interval is 7 days and a \code{"monthly"} interval is 30 days, and are not
 aligned to calendar weeks or months.
 
-Aggregated output contains every interval from 0 up to the interval
-containing \code{cap_max_days} (see \code{\link[=sim_opts]{sim_opts()}}), intervals with no cases are
-included with zero cases. Cases with symptom onset in a later interval are
-excluded.
+Aggregated output contains every interval from 0 up to the end of the
+simulation, the final interval ends at \code{cap_max_days} (see \code{\link[=sim_opts]{sim_opts()}}).
+Intervals with no cases are included with zero cases. Only cases with
+symptom onset before \code{cap_max_days} are included, as cases with a later
+symptom onset are not fully simulated.
 
 Aggregation cannot be undone, so a \verb{<ringbp>} object can only be aggregated
 if it is disaggregated (\code{"none"}, i.e. a case line list), or if each new
@@ -51,6 +52,12 @@ example \code{"daily"} can be aggregated to \code{"weekly"} or \code{"monthly"},
 aggregated to \code{"monthly"} or \code{"daily"}. To be able to aggregate to any
 interval use \code{aggregation = "none"} in \code{\link[=sim_opts]{sim_opts()}} when running the
 simulation.
+
+The simulation must also be divided exactly into the new interval, so no
+simulated cases are dropped and the final interval is complete. For
+example, a simulation with \code{cap_max_days = 350} can be aggregated from
+\code{"weekly"} to \code{14} (days), but not to \code{28} (days) as 350 days is not a whole
+number of 28 day intervals.
 }
 \examples{
 set.seed(1)
