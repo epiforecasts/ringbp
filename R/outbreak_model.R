@@ -5,21 +5,40 @@
 #' @param sim a `list` with class `<ringbp_sim_opts>`: the simulation control
 #'   options for the \pkg{ringbp} model, returned by [sim_opts()]
 #'
-#' @return A `list` with 2 `data.table` elements:
-#' 1. `$outbreak_ts`: the results for a single outbreak simulation. The
-#'    `data.table` has columns:
+#' @return A `list` with class `<ringbp>` with 2 `data.table` elements:
+#' 1. `$outbreak_ts`: the results for a single outbreak simulation, aggregated
+#'    by symptom onset time to the time interval set by the `aggregation`
+#'    argument of [sim_opts()]. For the default `aggregation = "weekly"`
+#'    the `data.table` has columns:
 #'    * `week`: the week in the simulation (`integer`)
 #'    * `weekly_cases`: the number of new cases that week (`integer`)
 #'    * `cumulative`: the cumulative cases (`integer`)
+#'
+#'    For `"daily"` the columns are `day` and `daily_cases`, for `"monthly"`
+#'    they are `month` and `monthly_cases`, and for an `integer` number of
+#'    days they are `period` and `period_cases`, each with `cumulative`.
+#'    Time intervals are zero indexed from the exposure of the initial cases.
+#'
+#'    For `aggregation = "none"` the `data.table` contains one row per case
+#'    (i.e. a line list), ordered by symptom onset time, with columns:
+#'    * `onset`: the symptom onset time of the case (`numeric`)
+#'    * `cumulative`: the cumulative cases (`integer`)
+#'
+#'    Only cases with symptom onset before `cap_max_days` (see [sim_opts()])
+#'    are included, as cases with a later symptom onset are not fully
+#'    simulated.
 #' 2. `$outbreak_stats`: the summary statistics for the outbreak simulation. The
 #'    `data.table` has columns:
 #'    * `effective_r0`: the effective reproduction rate for the
 #'    whole simulation (`numeric`)
 #'    * `cases_per_gen`: the cases per generation (`list`)
 #'
-#' The `$outbreak_ts` element also carries an `extinct` attribute: a `logical`
-#' recording whether the outbreak went extinct. See [extinction] functions for
-#' the definition of extinction.
+#' The `$outbreak_ts` element also carries the attributes: `extinct`, a
+#' `logical` recording whether the outbreak went extinct (see [extinction]
+#' functions for the definition of extinction); `aggregation`, the time
+#' interval of the aggregation; and `cap_max_days`, from [sim_opts()]. These
+#' are used by [`aggregate()`][aggregate.ringbp()] to aggregate the outbreak
+#' simulation after it has been run.
 #' @autoglobal
 #' @export
 #'
@@ -114,23 +133,6 @@ outbreak_model <- function(initial_cases,
     )
   }
 
-  # Prepare output, group into weeks
-  weekly_cases_outbreak <- case_data[, week := floor(onset / 7)
-                            ][, list(weekly_cases = .N), by = week
-                              ]
-  # maximum outbreak week
-  max_week <- floor(sim$cap_max_days / 7)
-  # null data.table for zero cases from week zero to max week
-  weekly_cases <- data.table::data.table(week = 0:max_week, weekly_cases = 0L)
-  # splice in/replace with outbreak data for weeks with cases
-  weekly_cases[weekly_cases_outbreak, on = "week", weekly_cases := i.weekly_cases]
-
-  # order and sum up
-  weekly_cases <- weekly_cases[order(week)
-                               ][, cumulative := cumsum(weekly_cases)]
-  # cut at max_week
-  weekly_cases <- weekly_cases[week <= max_week]
-
   # effective_r0_vect and cases_in_gen_vect grow together so only check one
   if (length(effective_r0_vect) == 0) {
     warning(
@@ -143,16 +145,28 @@ outbreak_model <- function(initial_cases,
     cases_in_gen_vect <- NA_real_
   }
 
-  setattr(weekly_cases, name = "extinct", value = all(case_data$sampled))
+  # case line list ordered by symptom onset time
+  outbreak_ts <- case_data[order(onset), list(onset, cumulative = seq_len(.N))]
+  if (identical(sim$aggregation, "none")) {
+    # cases with symptom onset after cap_max_days are not fully simulated
+    outbreak_ts <- outbreak_ts[onset < sim$cap_max_days]
+  }
+
+  setattr(outbreak_ts, name = "extinct", value = all(case_data$sampled))
+  setattr(outbreak_ts, name = "cap_max_days", value = sim$cap_max_days)
+  setattr(outbreak_ts, name = "aggregation", value = "none")
 
   outbreak_stats <- data.table(
     effective_r0 = mean(effective_r0_vect, na.rm = TRUE),
     cases_per_gen = list(cases_in_gen_vect)
   )
 
-  # return
-  list(
-    outbreak_ts = weekly_cases[],
+  out <- list(
+    outbreak_ts = outbreak_ts[],
     outbreak_stats = outbreak_stats
   )
+  class(out) <- "ringbp"
+
+  # aggregate case data to time interval
+  aggregate(out, interval = sim$aggregation)
 }
