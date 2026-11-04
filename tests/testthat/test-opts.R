@@ -65,7 +65,10 @@ test_that("sim_opts works as expected with defaults", {
   expect_s3_class(sim, "ringbp_sim_opts")
   expect_identical(
     vapply(sim, class, FUN.VALUE = character(1)),
-    c(cap_max_days = "numeric", cap_cases = "numeric")
+    c(
+      cap_max_days = "numeric", cap_cases = "numeric",
+      aggregation = "character"
+    )
   )
 })
 
@@ -74,6 +77,47 @@ test_that("sim_opts works as expected with arguments", {
   expect_s3_class(sim, "ringbp_sim_opts")
   expect_identical(
     vapply(sim, class, FUN.VALUE = character(1)),
-    c(cap_max_days = "numeric", cap_cases = "numeric")
+    c(
+      cap_max_days = "numeric", cap_cases = "numeric",
+      aggregation = "character"
+    )
   )
+})
+
+test_that("sim_opts aggregation default is weekly", {
+  expect_identical(sim_opts()$aggregation, "weekly")
+})
+
+test_that("sim_opts aggregation accepts and standardises aliases", {
+  for (x in c("none", "NONE")) {
+    expect_identical(sim_opts(aggregation = x)$aggregation, "none")
+  }
+  for (x in c("day", "days", "daily", "Daily")) {
+    expect_identical(sim_opts(aggregation = x)$aggregation, "daily")
+  }
+  for (x in c("week", "weeks", "weekly", "WEEKS")) {
+    expect_identical(sim_opts(aggregation = x)$aggregation, "weekly")
+  }
+  for (x in c("month", "months", "monthly", "mOnTh")) {
+    expect_identical(sim_opts(aggregation = x)$aggregation, "monthly")
+  }
+})
+
+test_that("sim_opts aggregation accepts an integer number of days", {
+  expect_identical(sim_opts(aggregation = 14)$aggregation, 14L)
+  expect_identical(sim_opts(aggregation = 1L)$aggregation, 1L)
+})
+
+test_that("sim_opts aggregation errors with invalid input", {
+  expect_error(
+    sim_opts(aggregation = "fortnightly"),
+    regexp = "Must be element"
+  )
+  expect_error(sim_opts(aggregation = 0), regexp = "Element 1 is not >= 1")
+  expect_error(sim_opts(aggregation = 1.5), regexp = "integerish")
+  expect_error(
+    sim_opts(aggregation = c("daily", "weekly")),
+    regexp = "atomic scalar"
+  )
+  expect_error(sim_opts(aggregation = NA), regexp = "Must be element")
 })
