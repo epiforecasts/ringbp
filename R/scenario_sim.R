@@ -50,7 +50,7 @@
 #' )
 #' interventions <- intervention_opts(quarantine = TRUE)
 #' sim <- sim_opts(
-#'   cap_max_days = 365,
+#'   cap_max_days = 364,
 #'   cap_cases = 2000
 #' )
 #' res <- scenario_sim(
