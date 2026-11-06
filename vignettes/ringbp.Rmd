@@ -176,7 +176,7 @@ outbreak <- scenario_sim(
 
 The returned object is a `list` with class `<ringbp>` with two `data.table` elements:
 
-* `outbreak_ts`: the simulated outbreak trajectories (time series), with one row per simulation week for the weekly aggregation used here. The columns are:
+* `outbreak_ts`: the simulated outbreak trajectories (time series), with one row per simulation week for the weekly aggregation (default aggregation) used here. The columns are:
     * `sim`: simulation replicate ID
     * `week`: outbreak week, zero indexed
     * `weekly_cases`: number of new cases that week
