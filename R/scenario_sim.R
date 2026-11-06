@@ -6,13 +6,16 @@
 #' @inheritParams outbreak_model
 #'
 #' @importFrom data.table rbindlist setattr
-#' @return A `list` with 2 `data.table` elements:
+#' @return A `list` with class `<ringbp>` with 2 `data.table` elements:
 #' 1. `$outbreak_ts`: the results for multiple simulations using the same
-#'    set of parameters. The `data.table` has columns:
+#'    set of parameters. For the default `aggregation = "weekly"` in
+#'    [sim_opts()] the `data.table` has columns:
 #'    * `sim`: the simulation replicate index (`integer`)
 #'    * `week`: the week in the simulation (`integer`)
 #'    * `weekly_cases`: the number of new cases that week (`integer`)
 #'    * `cumulative`: the cumulative cases (`integer`)
+#'
+#'    See [outbreak_model()] for the columns for other time intervals.
 #' 2. `$outbreak_stats`: the summary statistics for each outbreak simulation
 #'    replicate using the same set of parameters. The `data.table` has columns:
 #'    * `sim`: the simulation replicate index (`integer`)
@@ -23,7 +26,9 @@
 #' The `$outbreak_ts` element also carries two attributes used by
 #' [extinct_prob()] and [detect_extinct()]: `extinct`, a `logical` vector
 #' recording whether each replicate went extinct, and `cap_cases`, the maximum
-#' number of cases used to cap each simulation.
+#' number of cases used to cap each simulation. It also carries the
+#' `aggregation` and `cap_max_days` attributes used by
+#' [`aggregate()`][aggregate.ringbp()] (see [outbreak_model()]).
 #'
 #' @autoglobal
 #' @export
@@ -45,7 +50,7 @@
 #' )
 #' interventions <- intervention_opts(quarantine = TRUE)
 #' sim <- sim_opts(
-#'   cap_max_days = 365,
+#'   cap_max_days = 364,
 #'   cap_cases = 2000
 #' )
 #' res <- scenario_sim(
@@ -104,9 +109,13 @@ scenario_sim <- function(n,
 
   setattr(outbreak_ts, name = "cap_cases", value = sim$cap_cases)
   setattr(outbreak_ts, name = "extinct", value = extinct)
+  setattr(outbreak_ts, name = "cap_max_days", value = sim$cap_max_days)
+  setattr(outbreak_ts, name = "aggregation", value = sim$aggregation)
 
-  list(
+  out <- list(
     outbreak_ts = outbreak_ts,
     outbreak_stats = outbreak_stats
   )
+  class(out) <- "ringbp"
+  out
 }

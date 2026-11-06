@@ -129,37 +129,46 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #' before passing to [extinct_prob()] be careful not to drop the attribute
 #' (e.g. from subsetting the `data.table`).
 #'
+#' The `extinction_time` is in the time interval the `scenario` is aggregated
+#' to (set by the `aggregation` argument in [sim_opts()], or by
+#' [`aggregate()`][aggregate.ringbp()]), for example weeks for the default
+#' `"weekly"` aggregation, or days for `"daily"` aggregation. If the `scenario`
+#' is not aggregated (`aggregation = "none"`) it is aggregated to daily cases,
+#' with a warning, and `extinction_time` is in days.
+#'
 #' @param scenario a `list` output by [scenario_sim()], containing the
-#'   `$outbreak_ts` `data.table` of weekly cases used to determine extinction
-#' @param extinction_week By default `NULL` but also accepts a positive
+#'   `$outbreak_ts` `data.table` of cases used to determine extinction
+#' @param extinction_time By default `NULL` but also accepts a positive
 #'   `integer` scalar or `integer` vector to test if the outbreak has gone
-#'   extinct (i.e. no new cases) by this week (zero indexed):
+#'   extinct (i.e. no new cases) by this time (zero indexed), in the time
+#'   interval of the aggregated `scenario` (e.g. weeks for weekly aggregated
+#'   data):
 #'   * By default (`NULL`) the extinction status is stored in the output of
 #'     `scenario_sim()` which is supplied to the `scenario` argument. If
-#'     `extinction_week` is not specified or specified as `NULL` then the
+#'     `extinction_time` is not specified or specified as `NULL` then the
 #'     pre-computed extinction status from the outbreak simulation will be used.
 #'     This is defined as all infectious cases have had the opportunity to
 #'     transmit but no new cases are generated.
-#'   * A single `integer` to test if extinction has occurred by this week.
-#'     For example, `extinction_week = 5` tests whether the outbreak is
-#'     extinct by week 5 (inclusive) until the end of the outbreak.
+#'   * A single `integer` to test if extinction has occurred by this time.
+#'     For example, for weekly data, `extinction_time = 5` tests whether the
+#'     outbreak is extinct by week 5 (inclusive) until the end of the outbreak.
 #'   * An `integer` vector of length two can be supplied to provide the lower
-#'     and upper bounds (inclusive) of the week range to test for whether
-#'     extinction occurred by this window. For example
-#'     `extinction_week = c(5, 10)` will test whether the outbreak went extinct
-#'     by week 5 and there we no new cases between weeks 5 and 10 (inclusive).
-#'   * An `integer` vector of length _n_ can be supplied to provide the weeks
-#'     to test for whether extinction occurred by this window. For example
-#'     `extinction_week = 12:16` will test that there are no new infections
-#'     between 12 and 16 weeks after the initial cases (inclusive). These
-#'     integer sequences will most likely be contiguous but the function
-#'     does allow non-contiguous integer sequences.
+#'     and upper bounds (inclusive) of the time range to test for whether
+#'     extinction occurred by this window. For example, for weekly data,
+#'     `extinction_time = c(5, 10)` will test whether the outbreak went extinct
+#'     by week 5 and there were no new cases between weeks 5 and 10 (inclusive).
+#'   * An `integer` vector of length _n_ can be supplied to provide the times
+#'     to test for whether extinction occurred by this window. For example,
+#'     for weekly data, `extinction_time = 12:16` will test that there are no
+#'     new infections between 12 and 16 weeks after the initial cases
+#'     (inclusive). These integer sequences will most likely be contiguous but
+#'     the function does allow non-contiguous integer sequences.
 #'
-#'   If extinction occurs before the `extinction_week` window then the outbreak
+#'   If extinction occurs before the `extinction_time` window then the outbreak
 #'   extinction is considered extinct, however, if the extinction occurs within
-#'   the `extinction_week` window it is not considered extinct. Therefore,
-#'   using a single `integer` for `extinction_week` and thinking of this as
-#'   "_has the outbreak gone extinct by week X_".
+#'   the `extinction_time` window it is not considered extinct. Therefore,
+#'   using a single `integer` for `extinction_time` and thinking of this as
+#'   "_has the outbreak gone extinct by time X_".
 #'
 #' @importFrom data.table setDT fifelse data.table
 #'
@@ -199,21 +208,21 @@ presymptomatic_transmission_to_alpha <- function(presymptomatic_transmission) {
 #'
 #' # calculate extinction in the last 2 weeks of the simulated outbreak
 #' # (i.e. the penultimate and last week of the outbreak)
-#' extinct_prob(res, extinction_week = max(res$outbreak_ts$week) - 1)
+#' extinct_prob(res, extinction_time = max(res$outbreak_ts$week) - 1)
 #'
 #' # calculate extinction as no new cases between weeks 12 and 16 of the outbreak
-#' extinct_prob(res, extinction_week = 12:16)
+#' extinct_prob(res, extinction_time = 12:16)
 #' @name extinction
 NULL
 
 #' @rdname extinction
 #' @export
 extinct_prob <- function(scenario,
-                         extinction_week = NULL) {
+                         extinction_time = NULL) {
 
   extinct_runs <- detect_extinct(
     scenario = scenario,
-    extinction_week = extinction_week
+    extinction_time = extinction_time
   )
   sum(extinct_runs$extinct) / max(extinct_runs$sim)
 }
@@ -222,10 +231,11 @@ extinct_prob <- function(scenario,
 #' @autoglobal
 #' @export
 detect_extinct <- function(scenario,
-                           extinction_week = NULL) {
+                           extinction_time = NULL) {
+  outbreak <- scenario
   scenario <- scenario$outbreak_ts
   extinct <- attr(scenario, which = "extinct", exact = TRUE)
-  if (is.null(extinction_week)) {
+  if (is.null(extinction_time)) {
     if (!is.null(extinct)) {
       message(
         "Calculating extinction using the extinction status from ",
@@ -233,35 +243,63 @@ detect_extinct <- function(scenario,
       )
       return(
         data.table(
-          sim = 1:max(scenario$sim),
+          # one extinct value per replicate, including replicates without
+          # cases in a case line list
+          sim = seq_along(extinct),
           extinct = as.integer(extinct)
         )
       )
     } else {
       stop(
-        "`extinction_week` not specified and `scenario` is missing the ",
+        "`extinction_time` not specified and `scenario` is missing the ",
         "`extinct` attribute.\n Use `scenario_sim()` to simulate `scenario`, ",
-        "or specify `extinction_week`.",
+        "or specify `extinction_time`.",
         call. = FALSE
       )
     }
   }
 
   checkmate::assert_data_frame(scenario)
-  checkmate::assert_integerish(extinction_week, min.len = 1)
+  checkmate::assert_integerish(extinction_time, min.len = 1)
 
-  if (length(extinction_week) == 1) {
-    extinction_week <- extinction_week:max(scenario$week)
-  } else if (length(extinction_week) == 2) {
-    extinction_week <- min(extinction_week):max(extinction_week)
+  aggregation <- attr(scenario, which = "aggregation", exact = TRUE)
+  stopifnot(
+    "`scenario` is missing the `aggregation` attribute.
+    Use `scenario_sim()` to simulate `scenario`" = !is.null(aggregation)
+  )
+  # extinction for case line list is calculated on daily cases
+  if (identical(aggregation, "none")) {
+    checkmate::assert_class(outbreak, "ringbp", .var.name = "scenario")
+    warning(
+      "`scenario` is not aggregated (`aggregation = \"none\"`), it will be ",
+      "aggregated to daily cases to calculate extinction.\n",
+      "`extinction_time` is in days.",
+      call. = FALSE
+    )
+    aggregation <- "daily"
+    scenario <- aggregate(outbreak, interval = aggregation)$outbreak_ts
+  }
+  cols <- aggregation_cols(aggregation)
+  time_col <- cols[["time"]]
+  cases_col <- cols[["cases"]]
+  time_unit <- if (is.numeric(aggregation)) {
+    paste0(aggregation, "-day periods")
+  } else {
+    paste0(time_col, "s")
+  }
+
+  if (length(extinction_time) == 1) {
+    extinction_time <- extinction_time:max(scenario[[time_col]])
+  } else if (length(extinction_time) == 2) {
+    extinction_time <- min(extinction_time):max(extinction_time)
   }
   stopifnot(
-    "`extinction_week` not in simulated outbreak data" =
-      all(extinction_week %in% scenario$week)
+    "`extinction_time` not in simulated outbreak data" =
+      all(extinction_time %in% scenario[[time_col]])
   )
   message(
-    "Calculating extinction as no new cases within weeks: ",
-    min(extinction_week), " to ", max(extinction_week), " (inclusive)."
+    "Calculating extinction as no new cases within ", time_unit, ": ",
+    min(extinction_time), " to ", max(extinction_time), " (inclusive)."
   )
 
   cap_cases <- attr(scenario, which = "cap_cases", exact = TRUE)
@@ -271,9 +309,9 @@ detect_extinct <- function(scenario,
   )
 
   scenario <- setDT(scenario)
-  scenario <- scenario[week %in% extinction_week]
+  scenario <- scenario[get(time_col) %in% extinction_time]
   scenario[, list(
-    extinct = fifelse(all(weekly_cases == 0 & cumulative < cap_cases), 1, 0)
+    extinct = fifelse(all(get(cases_col) == 0 & cumulative < cap_cases), 1, 0)
   ), by = sim][]
 }
 

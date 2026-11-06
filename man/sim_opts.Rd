@@ -4,16 +4,49 @@
 \alias{sim_opts}
 \title{Create a list of simulation control options for the \pkg{ringbp} model}
 \usage{
-sim_opts(cap_max_days = 350, cap_cases = 5000)
+sim_opts(cap_max_days = 350, cap_cases = 5000, aggregation = "weekly")
 }
 \arguments{
-\item{cap_max_days}{a positive \code{integer} scalar: stops the outbreak
-simulation once all new infections occur on more than \code{cap_max_days}
-days after the start of the outbreak, counted from the exposure of the
-initial cases on day 0}
+\item{cap_max_days}{a positive \code{integer} scalar: the maximum number of days
+of the outbreak simulation, counted from the exposure of the initial cases
+on day 0. The outbreak simulation stops once all new infections occur
+after \code{cap_max_days}, so every case with symptom onset before
+\code{cap_max_days} is simulated.
+
+\code{cap_max_days} must be a whole number of \code{aggregation} time intervals
+(e.g. a multiple of 7 for \code{"weekly"} aggregation, or of 30 for
+\code{"monthly"}), so the output contains every time interval up to
+\code{cap_max_days} and the final interval ends at \code{cap_max_days}. The default
+of 350 days is 50 weeks.}
 
 \item{cap_cases}{a positive \code{integer} scalar: number of cumulative cases at
 which the branching process (simulation) was terminated}
+
+\item{aggregation}{a \code{character} string or a positive \code{integer} scalar:
+the time interval to aggregate the simulated cases to, by symptom onset
+time. One of:
+\itemize{
+\item \code{"none"}: no aggregation, the output contains the symptom onset time of
+each case with symptom onset before \code{cap_max_days} (i.e. a line list).
+See \code{\link[=outbreak_model]{outbreak_model()}} for the output columns.
+\item \code{"daily"} (or \code{"day"}, \code{"days"}): number of cases each day.
+\item \code{"weekly"} (or \code{"week"}, \code{"weeks"}): number of cases each week (7 days).
+This is the default.
+\item \code{"monthly"} (or \code{"month"}, \code{"months"}): number of cases each month (30
+days).
+\item A positive \code{integer}: number of cases in each period of that many days
+(e.g. \code{14} for fortnightly cases).
+}
+
+\code{character} strings are case insensitive (e.g. \code{"Weekly"} is the same as
+\code{"weekly"}).
+
+Intervals are fixed-length blocks of days counted from the exposure of
+the initial cases on day 0, not calendar weeks or months. The output can
+be aggregated to a different interval after the simulation using
+\code{\link[=aggregate.ringbp]{aggregate()}}, if the simulation can be divided
+exactly into the new interval (i.e. \code{cap_max_days} is a multiple of the
+new interval).}
 }
 \value{
 A \code{list} with class \verb{<ringbp_sim_opts>}.
@@ -30,4 +63,13 @@ sim_opts(
   cap_max_days = 140,
   cap_cases = 1000
 )
+
+# daily case counts
+sim_opts(aggregation = "daily")
+
+# monthly case counts, cap_max_days must be a multiple of 30
+sim_opts(cap_max_days = 360, aggregation = "monthly")
+
+# no aggregation (case line list)
+sim_opts(aggregation = "none")
 }

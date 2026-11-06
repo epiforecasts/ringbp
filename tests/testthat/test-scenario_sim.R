@@ -20,7 +20,7 @@ test_that("scenario_sim runs as expected", {
     ),
     interventions = intervention_opts(quarantine = TRUE),
     sim = sim_opts(
-      cap_max_days = 365,
+      cap_max_days = 364,
       cap_cases = 2000
     )
   )
@@ -91,7 +91,7 @@ test_that("scenario_sim with dynamic seed and parameters runs as expected", {
       quarantine = sample(c(TRUE, FALSE), size = 1)
     ),
     sim = sim_opts(
-      cap_max_days = sample(100:1000, size = 1),
+      cap_max_days = 7 * sample(15:140, size = 1),
       cap_cases = sample(100:10000, size = 1)
     )
   )

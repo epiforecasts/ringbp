@@ -53,7 +53,7 @@ scenarios <- data.table(
    prop_ascertain = seq(0, 1, 0.25),
    initial_cases = c(5, 10),
    quarantine = FALSE,
-   cap_max_days = 365,
+   cap_max_days = 364,
    cap_cases = 5000
  )
 )
