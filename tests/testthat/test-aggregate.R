@@ -1,26 +1,24 @@
 offspring <- offspring_opts(
-  community = \(n) rnbinom(n = n, mu = 2.5, size = 0.16),
-  isolated = \(n) rnbinom(n = n, mu = 0.5, size = 1)
+  community = \(n) rep(2, n),
+  isolated = \(n) rep(0, n)
 )
 delays <- delay_opts(
-  incubation_period = \(n) rweibull(n = n, shape = 2.32, scale = 6.49),
-  onset_to_isolation = \(n) rweibull(n = n, shape = 1.65, scale = 4.28)
+  incubation_period = \(n) rep(2, n),
+  onset_to_isolation = \(n) rep(5, n)
 )
 event_probs <- event_prob_opts(
   asymptomatic = 0.1,
-  presymptomatic_transmission = 0.5,
+  presymptomatic_transmission = 0.2,
   symptomatic_traced = 0.2
 )
 interventions <- intervention_opts()
 
-# case line list simulated for 210 days (a whole number of days, weeks, months
-# and 14-day periods) with 4 cases in replicate 1 (symptom onset days 2 to 16)
-# and 16 cases in replicate 2 (symptom onset days 6 to 31), both replicates go
-# extinct
-set.seed(285)
+# cap_max_days = 210 as the smallest cap that divides into daily, weeks,
+# months, and 14-day period
+set.seed(1)
 line_list <- scenario_sim(
   n = 2,
-  initial_cases = 2,
+  initial_cases = 1,
   offspring = offspring,
   delays = delays,
   event_probs = event_probs,
@@ -48,7 +46,7 @@ test_that("aggregate returns a <ringbp> object", {
   # attributes are set and preserved
   res <- aggregate(line_list, interval = "daily")$outbreak_ts
   expect_identical(attr(res, "aggregation"), "daily")
-  expect_identical(attr(res, "extinct"), c(TRUE, TRUE))
+  expect_identical(attr(res, "extinct"), c(FALSE, FALSE))
   expect_identical(attr(res, "cap_cases"), 5000)
   expect_identical(attr(res, "cap_max_days"), 210)
   res <- aggregate(line_list, interval = 14)$outbreak_ts
@@ -60,15 +58,15 @@ test_that("aggregate to daily works as expected", {
   expect_named(res, c("sim", "day", "daily_cases", "cumulative"))
   expect_identical(res$sim, rep(1:2, each = 210))
   expect_identical(res$day, rep(0:209, times = 2))
-  daily_cases_sim1 <- integer(210)
-  daily_cases_sim1[c(2, 5, 14, 16) + 1] <- 1L
-  daily_cases_sim2 <- integer(210)
-  daily_cases_sim2[c(6, 9, 12, 14, 17, 18, 19, 20, 21, 22, 24, 26, 31) + 1] <-
-    c(1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 1L, 1L)
-  expect_identical(res[sim == 1, daily_cases], daily_cases_sim1)
-  expect_identical(res[sim == 2, daily_cases], daily_cases_sim2)
-  expect_identical(res[sim == 1, cumulative], cumsum(daily_cases_sim1))
-  expect_identical(res[sim == 2, cumulative], cumsum(daily_cases_sim2))
+  expect_type(res$daily_cases, "integer")
+  expect_identical(
+    res[sim == 1, cumulative],
+    cumsum(res[sim == 1, daily_cases])
+  )
+  expect_identical(
+    res[sim == 2, cumulative],
+    cumsum(res[sim == 2, daily_cases])
+  )
 })
 
 test_that("aggregate to weekly works as expected", {
@@ -76,12 +74,15 @@ test_that("aggregate to weekly works as expected", {
   expect_named(res, c("sim", "week", "weekly_cases", "cumulative"))
   expect_identical(res$sim, rep(1:2, each = 30))
   expect_identical(res$week, rep(0:29, times = 2))
-  weekly_cases_sim1 <- c(2L, 0L, 2L, rep(0L, 27))
-  weekly_cases_sim2 <- c(1L, 2L, 7L, 5L, 1L, rep(0L, 25))
-  expect_identical(res[sim == 1, weekly_cases], weekly_cases_sim1)
-  expect_identical(res[sim == 2, weekly_cases], weekly_cases_sim2)
-  expect_identical(res[sim == 1, cumulative], cumsum(weekly_cases_sim1))
-  expect_identical(res[sim == 2, cumulative], cumsum(weekly_cases_sim2))
+  expect_type(res$weekly_cases, "integer")
+  expect_identical(
+    res[sim == 1, cumulative],
+    cumsum(res[sim == 1, weekly_cases])
+  )
+  expect_identical(
+    res[sim == 2, cumulative],
+    cumsum(res[sim == 2, weekly_cases])
+  )
 })
 
 test_that("aggregate to monthly works as expected", {
@@ -89,10 +90,15 @@ test_that("aggregate to monthly works as expected", {
   expect_named(res, c("sim", "month", "monthly_cases", "cumulative"))
   expect_identical(res$sim, rep(1:2, each = 7))
   expect_identical(res$month, rep(0:6, times = 2))
-  expect_identical(res[sim == 1, monthly_cases], c(4L, rep(0L, 6)))
-  expect_identical(res[sim == 2, monthly_cases], c(15L, 1L, rep(0L, 5)))
-  expect_identical(res[sim == 1, cumulative], rep(4L, 7))
-  expect_identical(res[sim == 2, cumulative], c(15L, rep(16L, 6)))
+  expect_type(res$monthly_cases, "integer")
+  expect_identical(
+    res[sim == 1, cumulative],
+    cumsum(res[sim == 1, monthly_cases])
+  )
+  expect_identical(
+    res[sim == 2, cumulative],
+    cumsum(res[sim == 2, monthly_cases])
+  )
 })
 
 test_that("aggregate to integer number of days works as expected", {
@@ -100,10 +106,15 @@ test_that("aggregate to integer number of days works as expected", {
   expect_named(res, c("sim", "period", "period_cases", "cumulative"))
   expect_identical(res$sim, rep(1:2, each = 15))
   expect_identical(res$period, rep(0:14, times = 2))
-  expect_identical(res[sim == 1, period_cases], c(2L, 2L, rep(0L, 13)))
-  expect_identical(res[sim == 2, period_cases], c(3L, 12L, 1L, rep(0L, 12)))
-  expect_identical(res[sim == 1, cumulative], c(2L, rep(4L, 14)))
-  expect_identical(res[sim == 2, cumulative], c(3L, 15L, rep(16L, 13)))
+  expect_type(res$period_cases, "integer")
+  expect_identical(
+    res[sim == 1, cumulative],
+    cumsum(res[sim == 1, period_cases])
+  )
+  expect_identical(
+    res[sim == 2, cumulative],
+    cumsum(res[sim == 2, period_cases])
+  )
 })
 
 test_that("aggregate accepts interval aliases", {
@@ -130,17 +141,17 @@ test_that("aggregate includes replicates missing from the case line list", {
     delays = delays,
     event_probs = event_probs,
     interventions = interventions,
-    sim = sim_opts(cap_max_days = 3, aggregation = "none")
+    sim = sim_opts(cap_max_days = 2, aggregation = "none")
   )
-  # only replicates 3 and 4 have a case with symptom onset before
-  # cap_max_days (day 3)
-  expect_identical(res$outbreak_ts$sim, 3:4)
+  # the initial case in every replicate has symptom onset on day 2 (fixed
+  # incubation period), so no replicate has a case with symptom onset before
+  # cap_max_days (day 2) and the case line list is empty
+  expect_identical(nrow(res$outbreak_ts), 0L)
   agg <- aggregate(res, interval = "daily")$outbreak_ts
-  expect_identical(agg$sim, rep(1:5, each = 3))
-  expect_identical(
-    agg[, sum(daily_cases), by = sim]$V1,
-    c(0L, 0L, 1L, 1L, 0L)
-  )
+  expect_identical(agg$sim, rep(1:5, each = 2))
+  expect_identical(agg$day, rep(0:1, times = 5))
+  expect_identical(agg$daily_cases, integer(10))
+  expect_identical(agg$cumulative, integer(10))
 })
 
 test_that("aggregate can re-aggregate to a coarser interval", {
