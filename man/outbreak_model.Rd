@@ -81,7 +81,7 @@ whole simulation (\code{numeric})
 }
 
 The \verb{$outbreak_ts} element also carries the attributes: \code{extinct}, a
-\code{logical} recording whether the outbreak went extinct (see \link{extinction}
+\code{logical} recording whether the outbreak went extinct (see \link{control}
 functions for the definition of extinction); \code{aggregation}, the time
 interval of the aggregation; and \code{cap_max_days}, from \code{\link[=sim_opts]{sim_opts()}}. These
 are used by \code{\link[=aggregate.ringbp]{aggregate()}} to aggregate the outbreak
