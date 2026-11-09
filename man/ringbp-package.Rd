@@ -6,6 +6,8 @@
 \alias{ringbp-package}
 \title{ringbp: Simulate and Evaluate Targeted Interventions in Infectious Disease Outbreaks}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 Branching process simulation model of infectious disease transmission with flexible parameterisation of epidemiology and targeted interventions, including isolation, contact tracing and quarantine, to reduce transmission, together with functions to evaluate outbreak control. Introduced in Hellewell et al. (2020) \doi{10.1016/S2214-109X(20)30074-7}.
 }
 \seealso{
@@ -22,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Joshua W. Lambert \email{joshua.lambert@lshtm.ac.uk} (\href{https://orcid.org/0000-0001-5218-3046}{ORCID})
   \item Joel Hellewell \email{Joel.Hellewell@lshtm.ac.uk} (\href{https://orcid.org/0000-0003-2683-0849}{ORCID})
   \item Sam Abbott \email{contact@samabbott.co.uk} (\href{https://orcid.org/0000-0001-8057-8037}{ORCID})
   \item Amy Gimma \email{amy.gimma@lshtm.ac.uk}

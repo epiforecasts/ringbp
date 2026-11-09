@@ -13,23 +13,27 @@ export(outbreak_setup)
 export(outbreak_step)
 export(scenario_sim)
 export(sim_opts)
-importFrom(data.table,":=")
-importFrom(data.table,.BY)
-importFrom(data.table,.EACHI)
-importFrom(data.table,.GRP)
-importFrom(data.table,.I)
-importFrom(data.table,.N)
-importFrom(data.table,.NGRP)
-importFrom(data.table,.SD)
-importFrom(data.table,copy)
-importFrom(data.table,data.table)
-importFrom(data.table,fcase)
-importFrom(data.table,fifelse)
-importFrom(data.table,rbindlist)
-importFrom(data.table,setDT)
-importFrom(data.table,setattr)
+importFrom(data.table,
+  ":=",
+  .BY,
+  .EACHI,
+  .GRP,
+  .I,
+  .N,
+  .NGRP,
+  .SD,
+  copy,
+  data.table,
+  fcase,
+  fifelse,
+  rbindlist,
+  setDT,
+  setattr
+)
 importFrom(sn,rsn)
-importFrom(stats,aggregate)
-importFrom(stats,rbinom)
-importFrom(stats,rnbinom)
-importFrom(stats,runif)
+importFrom(stats,
+  aggregate,
+  rbinom,
+  rnbinom,
+  runif
+)
