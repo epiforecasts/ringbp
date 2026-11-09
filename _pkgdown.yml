@@ -26,6 +26,8 @@ reference:
     - sim_opts
   - title: Post-processing
     contents:
-    - detect_extinct
+    - control_prob
+    - detect_control
     - extinct_prob
+    - detect_extinct
     - aggregate.ringbp
