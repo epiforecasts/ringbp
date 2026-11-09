@@ -47,9 +47,9 @@ detect_extinct(): Calculate whether outbreaks went extinct or not"><meta propert
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">scenario</span>, extinction_week <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">scenario</span>, extinction_time <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">detect_extinct</span><span class="op">(</span><span class="va">scenario</span>, extinction_week <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">detect_extinct</span><span class="op">(</span><span class="va">scenario</span>, extinction_time <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,37 +58,39 @@ detect_extinct(): Calculate whether outbreaks went extinct or not"><meta propert
 
 <dl><dt id="arg-scenario">scenario<a class="anchor" aria-label="anchor" href="#arg-scenario"></a></dt>
 <dd><p>a <code>list</code> output by <code><a href="scenario_sim.html">scenario_sim()</a></code>, containing the
-<code>$outbreak_ts</code> <code>data.table</code> of weekly cases used to determine extinction</p></dd>
+<code>$outbreak_ts</code> <code>data.table</code> of cases used to determine extinction</p></dd>
 
 
-<dt id="arg-extinction-week">extinction_week<a class="anchor" aria-label="anchor" href="#arg-extinction-week"></a></dt>
+<dt id="arg-extinction-time">extinction_time<a class="anchor" aria-label="anchor" href="#arg-extinction-time"></a></dt>
 <dd><p>By default <code>NULL</code> but also accepts a positive
 <code>integer</code> scalar or <code>integer</code> vector to test if the outbreak has gone
-extinct (i.e. no new cases) by this week (zero indexed):</p><ul><li><p>By default (<code>NULL</code>) the extinction status is stored in the output of
+extinct (i.e. no new cases) by this time (zero indexed), in the time
+interval of the aggregated <code>scenario</code> (e.g. weeks for weekly aggregated
+data):</p><ul><li><p>By default (<code>NULL</code>) the extinction status is stored in the output of
 <code><a href="scenario_sim.html">scenario_sim()</a></code> which is supplied to the <code>scenario</code> argument. If
-<code>extinction_week</code> is not specified or specified as <code>NULL</code> then the
+<code>extinction_time</code> is not specified or specified as <code>NULL</code> then the
 pre-computed extinction status from the outbreak simulation will be used.
 This is defined as all infectious cases have had the opportunity to
 transmit but no new cases are generated.</p></li>
-<li><p>A single <code>integer</code> to test if extinction has occurred by this week.
-For example, <code>extinction_week = 5</code> tests whether the outbreak is
-extinct by week 5 (inclusive) until the end of the outbreak.</p></li>
+<li><p>A single <code>integer</code> to test if extinction has occurred by this time.
+For example, for weekly data, <code>extinction_time = 5</code> tests whether the
+outbreak is extinct by week 5 (inclusive) until the end of the outbreak.</p></li>
 <li><p>An <code>integer</code> vector of length two can be supplied to provide the lower
-and upper bounds (inclusive) of the week range to test for whether
-extinction occurred by this window. For example
-<code>extinction_week = c(5, 10)</code> will test whether the outbreak went extinct
-by week 5 and there we no new cases between weeks 5 and 10 (inclusive).</p></li>
-<li><p>An <code>integer</code> vector of length <em>n</em> can be supplied to provide the weeks
-to test for whether extinction occurred by this window. For example
-<code>extinction_week = 12:16</code> will test that there are no new infections
-between 12 and 16 weeks after the initial cases (inclusive). These
-integer sequences will most likely be contiguous but the function
-does allow non-contiguous integer sequences.</p></li>
-</ul><p>If extinction occurs before the <code>extinction_week</code> window then the outbreak
+and upper bounds (inclusive) of the time range to test for whether
+extinction occurred by this window. For example, for weekly data,
+<code>extinction_time = c(5, 10)</code> will test whether the outbreak went extinct
+by week 5 and there were no new cases between weeks 5 and 10 (inclusive).</p></li>
+<li><p>An <code>integer</code> vector of length <em>n</em> can be supplied to provide the times
+to test for whether extinction occurred by this window. For example,
+for weekly data, <code>extinction_time = 12:16</code> will test that there are no
+new infections between 12 and 16 weeks after the initial cases
+(inclusive). These integer sequences will most likely be contiguous but
+the function does allow non-contiguous integer sequences.</p></li>
+</ul><p>If extinction occurs before the <code>extinction_time</code> window then the outbreak
 extinction is considered extinct, however, if the extinction occurs within
-the <code>extinction_week</code> window it is not considered extinct. Therefore,
-using a single <code>integer</code> for <code>extinction_week</code> and thinking of this as
-"<em>has the outbreak gone extinct by week X</em>".</p></dd>
+the <code>extinction_time</code> window it is not considered extinct. Therefore,
+using a single <code>integer</code> for <code>extinction_time</code> and thinking of this as
+"<em>has the outbreak gone extinct by time X</em>".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -108,6 +110,12 @@ carries an <code>cap_cases</code> attribute which is used by <code>extinct_prob(
 <code>detect_extinct()</code>, therefore if you modify the output of <code><a href="scenario_sim.html">scenario_sim()</a></code>
 before passing to <code>extinct_prob()</code> be careful not to drop the attribute
 (e.g. from subsetting the <code>data.table</code>).</p>
+<p>The <code>extinction_time</code> is in the time interval the <code>scenario</code> is aggregated
+to (set by the <code>aggregation</code> argument in <code><a href="sim_opts.html">sim_opts()</a></code>, or by
+<code><a href="aggregate.ringbp.html">aggregate()</a></code>), for example weeks for the default
+<code>"weekly"</code> aggregation, or days for <code>"daily"</code> aggregation. If the <code>scenario</code>
+is not aggregated (<code>aggregation = "none"</code>) it is aggregated to daily cases,
+with a warning, and <code>extinction_time</code> is in days.</p>
     </div>
 
     <div class="section level2">
@@ -135,7 +143,7 @@ before passing to <code>extinct_prob()</code> be careful not to drop the attribu
 <span class="r-in"><span><span class="co"># calculate probability of extinction</span></span></span>
 <span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction using the extinction status from the simulation.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># determine if each outbreak simulation replicate has gone extinct</span></span></span>
 <span class="r-in"><span><span class="fu">detect_extinct</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
@@ -144,25 +152,25 @@ before passing to <code>extinct_prob()</code> be careful not to drop the attribu
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;   &lt;int&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:     1       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:     2       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     3       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     3       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:     4       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  5:     5       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  6:     6       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     7       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     7       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     8       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  9:     9       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    10       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    10       1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate extinction in the last 2 weeks of the simulated outbreak</span></span></span>
 <span class="r-in"><span><span class="co"># (i.e. the penultimate and last week of the outbreak)</span></span></span>
-<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">outbreak_ts</span><span class="op">$</span><span class="va">week</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 49 to 50 (inclusive).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">outbreak_ts</span><span class="op">$</span><span class="va">week</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 48 to 49 (inclusive).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate extinction as no new cases between weeks 12 and 16 of the outbreak</span></span></span>
-<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_week <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">extinct_prob</span><span class="op">(</span><span class="va">res</span>, extinction_time <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating extinction as no new cases within weeks: 12 to 16 (inclusive).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

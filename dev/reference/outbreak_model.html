@@ -100,19 +100,34 @@ options for the <span class="pkg">ringbp</span> model, returned by <code><a href
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>list</code> with 2 <code>data.table</code> elements:</p><ol><li><p><code>$outbreak_ts</code>: the results for a single outbreak simulation. The
-<code>data.table</code> has columns:</p><ul><li><p><code>week</code>: the week in the simulation (<code>integer</code>)</p></li>
+    <p>A <code>list</code> with class <code>&lt;ringbp&gt;</code> with 2 <code>data.table</code> elements:</p><ol><li><p><code>$outbreak_ts</code>: the results for a single outbreak simulation, aggregated
+by symptom onset time to the time interval set by the <code>aggregation</code>
+argument of <code><a href="sim_opts.html">sim_opts()</a></code>. For the default <code>aggregation = "weekly"</code>
+the <code>data.table</code> has columns:</p><ul><li><p><code>week</code>: the week in the simulation (<code>integer</code>)</p></li>
 <li><p><code>weekly_cases</code>: the number of new cases that week (<code>integer</code>)</p></li>
 <li><p><code>cumulative</code>: the cumulative cases (<code>integer</code>)</p></li>
-</ul></li>
+</ul><p>For <code>"daily"</code> the columns are <code>day</code> and <code>daily_cases</code>, for <code>"monthly"</code>
+they are <code>month</code> and <code>monthly_cases</code>, and for an <code>integer</code> number of
+days they are <code>period</code> and <code>period_cases</code>, each with <code>cumulative</code>.
+Time intervals are zero indexed from the exposure of the initial cases.</p>
+<p>For <code>aggregation = "none"</code> the <code>data.table</code> contains one row per case
+(i.e. a line list), ordered by symptom onset time, with columns:</p><ul><li><p><code>onset</code>: the symptom onset time of the case (<code>numeric</code>)</p></li>
+<li><p><code>cumulative</code>: the cumulative cases (<code>integer</code>)</p></li>
+</ul><p>For all aggregations, only cases with symptom onset before
+<code>cap_max_days</code> (see <code><a href="sim_opts.html">sim_opts()</a></code>) are included, as cases with a later
+symptom onset are not fully simulated. The final time interval ends at
+<code>cap_max_days</code>.</p></li>
 <li><p><code>$outbreak_stats</code>: the summary statistics for the outbreak simulation. The
 <code>data.table</code> has columns:</p><ul><li><p><code>effective_r0</code>: the effective reproduction rate for the
 whole simulation (<code>numeric</code>)</p></li>
 <li><p><code>cases_per_gen</code>: the cases per generation (<code>list</code>)</p></li>
 </ul></li>
-</ol><p>The <code>$outbreak_ts</code> element also carries an <code>extinct</code> attribute: a <code>logical</code>
-recording whether the outbreak went extinct. See <a href="extinction.html">extinction</a> functions for
-the definition of extinction.</p>
+</ol><p>The <code>$outbreak_ts</code> element also carries the attributes: <code>extinct</code>, a
+<code>logical</code> recording whether the outbreak went extinct (see <a href="extinction.html">extinction</a>
+functions for the definition of extinction); <code>aggregation</code>, the time
+interval of the aggregation; and <code>cap_max_days</code>, from <code><a href="sim_opts.html">sim_opts()</a></code>. These
+are used by <code><a href="aggregate.ringbp.html">aggregate()</a></code> to aggregate the outbreak
+simulation after it has been run.</p>
     </div>
 
     <div class="section level2">
@@ -195,7 +210,6 @@ the definition of extinction.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 48:    47            0          2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 49:    48            0          2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50:    49            0          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    50            0          2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      week weekly_cases cumulative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;int&gt;        &lt;int&gt;      &lt;int&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -204,6 +218,8 @@ the definition of extinction.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;        &lt;list&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:          0.5           1,0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

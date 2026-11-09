@@ -44,7 +44,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sim_opts</span><span class="op">(</span>cap_max_days <span class="op">=</span> <span class="fl">350</span>, cap_cases <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sim_opts</span><span class="op">(</span>cap_max_days <span class="op">=</span> <span class="fl">350</span>, cap_cases <span class="op">=</span> <span class="fl">5000</span>, aggregation <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -52,15 +52,44 @@
 
 
 <dl><dt id="arg-cap-max-days">cap_max_days<a class="anchor" aria-label="anchor" href="#arg-cap-max-days"></a></dt>
-<dd><p>a positive <code>integer</code> scalar: stops the outbreak
-simulation once all new infections occur on more than <code>cap_max_days</code>
-days after the start of the outbreak, counted from the exposure of the
-initial cases on day 0</p></dd>
+<dd><p>a positive <code>integer</code> scalar: the maximum number of days
+of the outbreak simulation, counted from the exposure of the initial cases
+on day 0. The outbreak simulation stops once all new infections occur
+after <code>cap_max_days</code>, so every case with symptom onset before
+<code>cap_max_days</code> is simulated.</p>
+<p><code>cap_max_days</code> must be a whole number of <code>aggregation</code> time intervals
+(e.g. a multiple of 7 for <code>"weekly"</code> aggregation, or of 30 for
+<code>"monthly"</code>), so the output contains every time interval up to
+<code>cap_max_days</code> and the final interval ends at <code>cap_max_days</code>. The default
+of 350 days is 50 weeks.</p></dd>
 
 
 <dt id="arg-cap-cases">cap_cases<a class="anchor" aria-label="anchor" href="#arg-cap-cases"></a></dt>
 <dd><p>a positive <code>integer</code> scalar: number of cumulative cases at
 which the branching process (simulation) was terminated</p></dd>
+
+
+<dt id="arg-aggregation">aggregation<a class="anchor" aria-label="anchor" href="#arg-aggregation"></a></dt>
+<dd><p>a <code>character</code> string or a positive <code>integer</code> scalar:
+the time interval to aggregate the simulated cases to, by symptom onset
+time. One of:</p><ul><li><p><code>"none"</code>: no aggregation, the output contains the symptom onset time of
+each case with symptom onset before <code>cap_max_days</code> (i.e. a line list).
+See <code><a href="outbreak_model.html">outbreak_model()</a></code> for the output columns.</p></li>
+<li><p><code>"daily"</code> (or <code>"day"</code>, <code>"days"</code>): number of cases each day.</p></li>
+<li><p><code>"weekly"</code> (or <code>"week"</code>, <code>"weeks"</code>): number of cases each week (7 days).
+This is the default.</p></li>
+<li><p><code>"monthly"</code> (or <code>"month"</code>, <code>"months"</code>): number of cases each month (30
+days).</p></li>
+<li><p>A positive <code>integer</code>: number of cases in each period of that many days
+(e.g. <code>14</code> for fortnightly cases).</p></li>
+</ul><p><code>character</code> strings are case insensitive (e.g. <code>"Weekly"</code> is the same as
+<code>"weekly"</code>).</p>
+<p>Intervals are fixed-length blocks of days counted from the exposure of
+the initial cases on day 0, not calendar weeks or months. The output can
+be aggregated to a different interval after the simulation using
+<code><a href="aggregate.ringbp.html">aggregate()</a></code>, if the simulation can be divided
+exactly into the new interval (i.e. <code>cap_max_days</code> is a multiple of the
+new interval).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -78,6 +107,9 @@ which the branching process (simulation) was terminated</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cap_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $aggregation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "weekly"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_sim_opts"</span>
 <span class="r-in"><span></span></span>
@@ -91,6 +123,51 @@ which the branching process (simulation) was terminated</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cap_cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $aggregation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "weekly"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_sim_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># daily case counts</span></span></span>
+<span class="r-in"><span><span class="fu">sim_opts</span><span class="op">(</span>aggregation <span class="op">=</span> <span class="st">"daily"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_max_days</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $aggregation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "daily"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_sim_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># monthly case counts, cap_max_days must be a multiple of 30</span></span></span>
+<span class="r-in"><span><span class="fu">sim_opts</span><span class="op">(</span>cap_max_days <span class="op">=</span> <span class="fl">360</span>, aggregation <span class="op">=</span> <span class="st">"monthly"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_max_days</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $aggregation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "monthly"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_sim_opts"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># no aggregation (case line list)</span></span></span>
+<span class="r-in"><span><span class="fu">sim_opts</span><span class="op">(</span>aggregation <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_max_days</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $cap_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $aggregation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ringbp_sim_opts"</span>

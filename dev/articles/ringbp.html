@@ -238,10 +238,25 @@ is not active.</p>
 <p>Finally, global simulation limits (for example, maximum duration (<a href="https://epiforecasts.io/ringbp/reference/sim_opts.html#arg-cap-max-days"><code>cap_max_days</code></a>)
 or outbreak size (<a href="https://epiforecasts.io/ringbp/reference/sim_opts.html#arg-cap-cases"><code>cap_cases</code></a>))
 are specified using <code><a href="../reference/sim_opts.html">sim_opts()</a></code>.</p>
+<p>The time interval that the simulated cases are aggregated to (<a href="https://epiforecasts.io/ringbp/reference/sim_opts.html#arg-aggregation"><code>aggregation</code></a>)
+is also specified using <code><a href="../reference/sim_opts.html">sim_opts()</a></code>. Cases are counted by
+their symptom onset time, and the aggregation can be
+<code>"daily"</code>, <code>"weekly"</code> (the default),
+<code>"monthly"</code>, a whole number of days (e.g. <code>14</code> for
+fortnightly), or <code>"none"</code> to return a case line list without
+aggregation. Time intervals are fixed-length blocks of days counted from
+the exposure of the initial cases on day 0 (e.g. weeks are 7 days and
+months are 30 days), not calendar weeks or months.</p>
+<p>The maximum duration of the simulation (<code>cap_max_days</code>)
+must be a whole number of aggregation time intervals, for example below
+<code>cap_max_days = 350</code> is 50 weeks. The output contains every
+time interval up to <code>cap_max_days</code>, so the final interval
+ends at <code>cap_max_days</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_opts.html">sim_opts</a></span><span class="op">(</span></span>
 <span>  cap_max_days <span class="op">=</span> <span class="fl">350</span>,</span>
-<span>  cap_cases <span class="op">=</span> <span class="fl">4500</span></span>
+<span>  cap_cases <span class="op">=</span> <span class="fl">4500</span>,</span>
+<span>  aggregation <span class="op">=</span> <span class="st">"weekly"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -272,12 +287,14 @@ times.</p>
 <span>  interventions <span class="op">=</span> <span class="va">interventions</span>,</span>
 <span>  sim <span class="op">=</span> <span class="va">sim</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>The returned object is a <code>list</code> with two
-<code>data.table</code> elements:</p>
+<p>The returned object is a <code>list</code> with class
+<code>&lt;ringbp&gt;</code> with two <code>data.table</code>
+elements:</p>
 <ul>
 <li>
 <code>outbreak_ts</code>: the simulated outbreak trajectories (time
-series), with one row per simulation week. The columns are:
+series), with one row per simulation week for the weekly aggregation
+(default aggregation) used here. The columns are:
 <ul>
 <li>
 <code>sim</code>: simulation replicate ID</li>
@@ -286,9 +303,13 @@ series), with one row per simulation week. The columns are:
 <li>
 <code>weekly_cases</code>: number of new cases that week</li>
 <li>
-<code>cumulative</code>: cumulative weekly cases</li>
+<code>cumulative</code>: cumulative cases</li>
 </ul>
-</li>
+The column names depend on the <code>aggregation</code> set in
+<code><a href="../reference/sim_opts.html">sim_opts()</a></code>, for example <code>day</code> and
+<code>daily_cases</code> for <code>"daily"</code>, or <code>onset</code>
+(the symptom onset time of each case) for <code>"none"</code>. See
+<code><a href="../reference/outbreak_model.html">?outbreak_model</a></code> for the columns for each aggregation.</li>
 <li>
 <code>outbreak_stats</code>: summary statistics for each replicate,
 with one row per simulation. The columns are:
@@ -340,6 +361,50 @@ decline in cases to zero is due to reaching that upper bound.</p>
 <span>  theme <span class="op">=</span> <span class="st">"clean"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="ringbp_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="768"></p>
+<div class="section level3">
+<h3 id="aggregating-to-a-different-time-interval">Aggregating to a different time interval<a class="anchor" aria-label="anchor" href="#aggregating-to-a-different-time-interval"></a>
+</h3>
+<p>The simulated outbreaks can be aggregated to a different time
+interval after the simulation using <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>. Aggregated
+output can only be aggregated to a longer time interval that is made up
+of whole intervals of the current aggregation, and the simulation must
+be divided exactly into the new time interval so no simulated cases are
+dropped. For example, the weekly cases simulated for 50 weeks (350 days)
+can be aggregated to fortnightly (14-day) periods, but not to 4-week
+(28-day) periods as 350 days is not a whole number of 28-day
+periods.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">outbreak_fortnightly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">outbreak</span>, interval <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
+<span><span class="va">outbreak_fortnightly</span><span class="op">$</span><span class="va">outbreak_ts</span></span>
+<span><span class="co">#&gt;         sim period period_cases cumulative</span></span>
+<span><span class="co">#&gt;       &lt;int&gt;  &lt;int&gt;        &lt;int&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt;    1:     1      0            1          1</span></span>
+<span><span class="co">#&gt;    2:     1      1            0          1</span></span>
+<span><span class="co">#&gt;    3:     1      2            0          1</span></span>
+<span><span class="co">#&gt;    4:     1      3            0          1</span></span>
+<span><span class="co">#&gt;    5:     1      4            0          1</span></span>
+<span><span class="co">#&gt;   ---                                     </span></span>
+<span><span class="co">#&gt; 2496:   100     20            0          2</span></span>
+<span><span class="co">#&gt; 2497:   100     21            0          2</span></span>
+<span><span class="co">#&gt; 2498:   100     22            0          2</span></span>
+<span><span class="co">#&gt; 2499:   100     23            0          2</span></span>
+<span><span class="co">#&gt; 2500:   100     24            0          2</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://grantmcdermott.com/tinyplot/man/tinyplot.html" class="external-link">tinyplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">period_cases</span> <span class="op">~</span> <span class="va">period</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">outbreak_fortnightly</span><span class="op">$</span><span class="va">outbreak_ts</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"l"</span>,</span>
+<span>  lwd <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Number of cases per fortnight"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Fortnight"</span>,</span>
+<span>  legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  theme <span class="op">=</span> <span class="st">"clean"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="ringbp_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="768"></p>
+<p>To be able to aggregate to any time interval after the simulation,
+run the simulation with <code>sim_opts(aggregation = "none")</code> to
+keep the case line list.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="summarising-outcomes">Summarising outcomes<a class="anchor" aria-label="anchor" href="#summarising-outcomes"></a>
@@ -347,16 +412,22 @@ decline in cases to zero is due to reaching that upper bound.</p>
 <p>A common quantity of interest is the probability that an outbreak
 goes extinct (i.e. dies out without sustained transmission). This can be
 calculated using <code><a href="../reference/extinction.html">extinct_prob()</a></code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extinction.html">extinct_prob</a></span><span class="op">(</span><span class="va">outbreak</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Calculating extinction using the extinction status from the simulation.</span></span>
 <span><span class="co">#&gt; [1] 0.8</span></span></code></pre></div>
 <p>By default, extinction is defined as all infectious individuals have
 had the opportunity to transmit but no new infections are generated. The
-<code>extinction_week</code> argument in <code><a href="../reference/extinction.html">extinct_prob()</a></code> can
+<code>extinction_time</code> argument in <code><a href="../reference/extinction.html">extinct_prob()</a></code> can
 also be used to specify whether extinction has happened by a certain
-week, e.g. <code>extinct_prob(..., extinction_week = 5)</code> checks
-whether extinction has occurred by week 5 of the outbreak. See
+time, e.g. <code>extinct_prob(..., extinction_time = 5)</code> checks
+whether extinction has occurred by week 5 of the outbreak. The
+<code>extinction_time</code> is in the time interval the simulation
+output is aggregated to, which is weekly by default (see the
+<code>aggregation</code> argument in <code><a href="../reference/sim_opts.html">sim_opts()</a></code>). If the
+simulation output is not aggregated (<code>aggregation = "none"</code>),
+<code><a href="../reference/extinction.html">extinct_prob()</a></code> aggregates it to daily cases, with a
+warning, and <code>extinction_time</code> is in days. See
 <code><a href="../reference/extinction.html">?extinct_prob</a></code> for other methods of checking for
 extinction.</p>
 </div>
@@ -382,7 +453,7 @@ analysis scripts</a>.</p>
 <div class="section level2">
 <h2 id="define-epidemiological-parameters">Define epidemiological parameters<a class="anchor" aria-label="anchor" href="#define-epidemiological-parameters"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
 <span>    initial_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">20</span><span class="op">)</span>,</span>
@@ -396,7 +467,7 @@ analysis scripts</a>.</p>
 <div class="section level2">
 <h2 id="run-the-simulation">Run the simulation<a class="anchor" aria-label="anchor" href="#run-the-simulation"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span></span>
 <span><span class="va">scenarios</span><span class="op">[</span>, <span class="va">sims</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">data</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
@@ -417,7 +488,11 @@ analysis scripts</a>.</p>
 <span>       symptomatic_traced <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">symptomatic_traced</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    interventions <span class="op">=</span> <span class="fu"><a href="../reference/intervention_opts.html">intervention_opts</a></span><span class="op">(</span>quarantine <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>    sim <span class="op">=</span> <span class="fu"><a href="../reference/sim_opts.html">sim_opts</a></span><span class="op">(</span>cap_max_days <span class="op">=</span> <span class="fl">365</span>, cap_cases <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span>
+<span>    sim <span class="op">=</span> <span class="fu"><a href="../reference/sim_opts.html">sim_opts</a></span><span class="op">(</span></span>
+<span>      cap_max_days <span class="op">=</span> <span class="fl">364</span>,</span>
+<span>      cap_cases <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>      aggregation <span class="op">=</span> <span class="st">"weekly"</span></span>
+<span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="op">}</span>,</span>
 <span>  n <span class="op">=</span> <span class="va">n</span></span>
@@ -426,10 +501,10 @@ analysis scripts</a>.</p>
 multiple parameter sets see the <a href="parameter-sweep.html"><code>parameter-sweep.Rmd</code>
 vignette</a>, which also includes information on how to parallelise the
 simulation.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">scenarios</span><span class="op">[</span>, </span>
-<span>  <span class="va">pext</span> <span class="op">:=</span> <span class="fu"><a href="../reference/extinction.html">extinct_prob</a></span><span class="op">(</span><span class="va">sims</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, extinction_week <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span>, </span>
+<span>  <span class="va">pext</span> <span class="op">:=</span> <span class="fu"><a href="../reference/extinction.html">extinct_prob</a></span><span class="op">(</span><span class="va">sims</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, extinction_time <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">)</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">scenario</span></span>
 <span><span class="op">]</span></span>
 <span><span class="co">#&gt; Calculating extinction as no new cases within weeks: 12 to 16 (inclusive).</span></span>

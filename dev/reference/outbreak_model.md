@@ -61,16 +61,40 @@ outbreak_model(
 
 ## Value
 
-A `list` with 2 `data.table` elements:
+A `list` with class `<ringbp>` with 2 `data.table` elements:
 
-1.  `$outbreak_ts`: the results for a single outbreak simulation. The
-    `data.table` has columns:
+1.  `$outbreak_ts`: the results for a single outbreak simulation,
+    aggregated by symptom onset time to the time interval set by the
+    `aggregation` argument of
+    [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md).
+    For the default `aggregation = "weekly"` the `data.table` has
+    columns:
 
     - `week`: the week in the simulation (`integer`)
 
     - `weekly_cases`: the number of new cases that week (`integer`)
 
     - `cumulative`: the cumulative cases (`integer`)
+
+    For `"daily"` the columns are `day` and `daily_cases`, for
+    `"monthly"` they are `month` and `monthly_cases`, and for an
+    `integer` number of days they are `period` and `period_cases`, each
+    with `cumulative`. Time intervals are zero indexed from the exposure
+    of the initial cases.
+
+    For `aggregation = "none"` the `data.table` contains one row per
+    case (i.e. a line list), ordered by symptom onset time, with
+    columns:
+
+    - `onset`: the symptom onset time of the case (`numeric`)
+
+    - `cumulative`: the cumulative cases (`integer`)
+
+    For all aggregations, only cases with symptom onset before
+    `cap_max_days` (see
+    [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md))
+    are included, as cases with a later symptom onset are not fully
+    simulated. The final time interval ends at `cap_max_days`.
 
 2.  `$outbreak_stats`: the summary statistics for the outbreak
     simulation. The `data.table` has columns:
@@ -80,10 +104,15 @@ A `list` with 2 `data.table` elements:
 
     - `cases_per_gen`: the cases per generation (`list`)
 
-The `$outbreak_ts` element also carries an `extinct` attribute: a
-`logical` recording whether the outbreak went extinct. See
+The `$outbreak_ts` element also carries the attributes: `extinct`, a
+`logical` recording whether the outbreak went extinct (see
 [extinction](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
-functions for the definition of extinction.
+functions for the definition of extinction); `aggregation`, the time
+interval of the aggregation; and `cap_max_days`, from
+[`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md).
+These are used by
+[`aggregate()`](https://epiforecasts.io/ringbp/dev/reference/aggregate.ringbp.md)
+to aggregate the outbreak simulation after it has been run.
 
 ## Examples
 
@@ -166,7 +195,6 @@ out
 #> 48:    47            0          2
 #> 49:    48            0          2
 #> 50:    49            0          2
-#> 51:    50            0          2
 #>      week weekly_cases cumulative
 #>     <int>        <int>      <int>
 #> 
@@ -175,4 +203,6 @@ out
 #>           <num>        <list>
 #> 1:          0.5           1,0
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 ```

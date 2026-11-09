@@ -66,10 +66,12 @@ scenario_sim(
 
 ## Value
 
-A `list` with 2 `data.table` elements:
+A `list` with class `<ringbp>` with 2 `data.table` elements:
 
 1.  `$outbreak_ts`: the results for multiple simulations using the same
-    set of parameters. The `data.table` has columns:
+    set of parameters. For the default `aggregation = "weekly"` in
+    [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md)
+    the `data.table` has columns:
 
     - `sim`: the simulation replicate index (`integer`)
 
@@ -78,6 +80,10 @@ A `list` with 2 `data.table` elements:
     - `weekly_cases`: the number of new cases that week (`integer`)
 
     - `cumulative`: the cumulative cases (`integer`)
+
+    See
+    [`outbreak_model()`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)
+    for the columns for other time intervals.
 
 2.  `$outbreak_stats`: the summary statistics for each outbreak
     simulation replicate using the same set of parameters. The
@@ -96,7 +102,11 @@ and
 [`detect_extinct()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md):
 `extinct`, a `logical` vector recording whether each replicate went
 extinct, and `cap_cases`, the maximum number of cases used to cap each
-simulation.
+simulation. It also carries the `aggregation` and `cap_max_days`
+attributes used by
+[`aggregate()`](https://epiforecasts.io/ringbp/dev/reference/aggregate.ringbp.md)
+(see
+[`outbreak_model()`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)).
 
 ## Examples
 
@@ -117,7 +127,7 @@ event_probs <- event_prob_opts(
 )
 interventions <- intervention_opts(quarantine = TRUE)
 sim <- sim_opts(
-  cap_max_days = 365,
+  cap_max_days = 364,
   cap_cases = 2000
 )
 res <- scenario_sim(
@@ -139,11 +149,11 @@ res
 #>   4:     1     3          198        255
 #>   5:     1     4          488        743
 #>  ---                                    
-#> 261:     5    48            0       2860
-#> 262:     5    49            0       2860
-#> 263:     5    50            0       2860
-#> 264:     5    51            0       2860
-#> 265:     5    52            0       2860
+#> 256:     5    47            0       2860
+#> 257:     5    48            0       2860
+#> 258:     5    49            0       2860
+#> 259:     5    50            0       2860
+#> 260:     5    51            0       2860
 #> 
 #> $outbreak_stats
 #>      sim effective_r0                  cases_per_gen
@@ -154,4 +164,6 @@ res
 #> 4:     4     3.517917     6,  62, 187, 402, 921,1950
 #> 5:     5     2.609450  33, 43, 96,136,332,700,...[7]
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 ```

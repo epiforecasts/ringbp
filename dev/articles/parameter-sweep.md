@@ -62,7 +62,7 @@ scenarios <- data.table(
    prop_ascertain = seq(0, 1, 0.25),
    initial_cases = c(5, 10),
    quarantine = FALSE,
-   cap_max_days = 365,
+   cap_max_days = 364,
    cap_cases = 5000
  )
 )
@@ -149,7 +149,7 @@ for more information on the contents of these outputs.
 
 head(res, 3)
 #> [[1]]
-#> [[1]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0            5          5
@@ -158,22 +158,24 @@ head(res, 3)
 #>   4:     1     3            0          5
 #>   5:     1     4            0          5
 #>  ---                                    
-#> 155:     3    48            0          5
-#> 156:     3    49            0          5
-#> 157:     3    50            0          5
-#> 158:     3    51            0          5
-#> 159:     3    52            0          5
+#> 152:     3    47            0          5
+#> 153:     3    48            0          5
+#> 154:     3    49            0          5
+#> 155:     3    50            0          5
+#> 156:     3    51            0          5
 #> 
-#> [[1]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0     cases_per_gen
 #>    <int>        <num>            <list>
 #> 1:     1     0.000000                 0
 #> 2:     2     1.717344 33,48,77,26, 8, 0
 #> 3:     3     0.000000                 0
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 #> 
 #> [[2]]
-#> [[2]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0            4          4
@@ -182,22 +184,24 @@ head(res, 3)
 #>   4:     1     3            0          9
 #>   5:     1     4            0          9
 #>  ---                                    
-#> 155:     3    48            0         33
-#> 156:     3    49            0         33
-#> 157:     3    50            0         33
-#> 158:     3    51            0         33
-#> 159:     3    52            0         33
+#> 152:     3    47            0         33
+#> 153:     3    48            0         33
+#> 154:     3    49            0         33
+#> 155:     3    50            0         33
+#> 156:     3    51            0         33
 #> 
-#> [[2]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0             cases_per_gen
 #>    <int>        <num>                    <list>
 #> 1:     1    1.0666667                     1,3,0
 #> 2:     2    1.2759899  9,34,22,16,29,69,...[25]
 #> 3:     3    0.9162698               7,5,4,9,3,0
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 #> 
 #> [[3]]
-#> [[3]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0            8          8
@@ -206,18 +210,21 @@ head(res, 3)
 #>   4:     1     3            0         14
 #>   5:     1     4            0         14
 #>  ---                                    
-#> 155:     3    48            0         12
-#> 156:     3    49            0         12
-#> 157:     3    50            0         12
-#> 158:     3    51            0         12
-#> 159:     3    52            0         12
+#> 152:     3    47            0         12
+#> 153:     3    48            0         12
+#> 154:     3    49            0         12
+#> 155:     3    50            0         12
+#> 156:     3    51            0         12
 #> 
-#> [[3]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0 cases_per_gen
 #>    <int>        <num>        <list>
 #> 1:     1    0.6357143       7,1,1,0
 #> 2:     2    0.1000000           1,0
 #> 3:     3    0.4666667         5,2,0
+#> 
+#> attr(,"class")
+#> [1] "ringbp"
 ```
 
 ## Storing simulations with scenarios
@@ -260,19 +267,19 @@ scenario_sims[, sims := lapply(data, \(x, n) {
   n = n
 )]
 scenario_sims
-#>      scenario               data      sims
-#>         <int>             <list>    <list>
-#>   1:        1 <data.table[1x14]> <list[2]>
-#>   2:        2 <data.table[1x14]> <list[2]>
-#>   3:        3 <data.table[1x14]> <list[2]>
-#>   4:        4 <data.table[1x14]> <list[2]>
-#>   5:        5 <data.table[1x14]> <list[2]>
-#>  ---                                      
-#> 156:      156 <data.table[1x14]> <list[2]>
-#> 157:      157 <data.table[1x14]> <list[2]>
-#> 158:      158 <data.table[1x14]> <list[2]>
-#> 159:      159 <data.table[1x14]> <list[2]>
-#> 160:      160 <data.table[1x14]> <list[2]>
+#>      scenario               data        sims
+#>         <int>             <list>      <list>
+#>   1:        1 <data.table[1x14]> <ringbp[2]>
+#>   2:        2 <data.table[1x14]> <ringbp[2]>
+#>   3:        3 <data.table[1x14]> <ringbp[2]>
+#>   4:        4 <data.table[1x14]> <ringbp[2]>
+#>   5:        5 <data.table[1x14]> <ringbp[2]>
+#>  ---                                        
+#> 156:      156 <data.table[1x14]> <ringbp[2]>
+#> 157:      157 <data.table[1x14]> <ringbp[2]>
+#> 158:      158 <data.table[1x14]> <ringbp[2]>
+#> 159:      159 <data.table[1x14]> <ringbp[2]>
+#> 160:      160 <data.table[1x14]> <ringbp[2]>
 head(scenario_sims$data, 3)
 #> [[1]]
 #>    r0_community r0_isolated disp_community disp_isolated prop_presymptomatic
@@ -280,7 +287,7 @@ head(scenario_sims$data, 3)
 #> 1:          1.1           0           0.16             1                0.01
 #>    prop_asymptomatic prop_ascertain initial_cases quarantine cap_max_days
 #>                <num>          <num>         <num>     <lgcl>        <num>
-#> 1:                 0              0             5      FALSE          365
+#> 1:                 0              0             5      FALSE          364
 #>    cap_cases  delay onset_to_isolation incubation_period
 #>        <num> <char>             <list>            <list>
 #> 1:      5000   SARS      <function[1]>     <function[1]>
@@ -291,7 +298,7 @@ head(scenario_sims$data, 3)
 #> 1:          1.1           0           0.16             1                0.01
 #>    prop_asymptomatic prop_ascertain initial_cases quarantine cap_max_days
 #>                <num>          <num>         <num>     <lgcl>        <num>
-#> 1:                 0              0             5      FALSE          365
+#> 1:                 0              0             5      FALSE          364
 #>    cap_cases  delay onset_to_isolation incubation_period
 #>        <num> <char>             <list>            <list>
 #> 1:      5000  Wuhan      <function[1]>     <function[1]>
@@ -302,13 +309,13 @@ head(scenario_sims$data, 3)
 #> 1:          1.5           0           0.16             1                0.01
 #>    prop_asymptomatic prop_ascertain initial_cases quarantine cap_max_days
 #>                <num>          <num>         <num>     <lgcl>        <num>
-#> 1:                 0              0             5      FALSE          365
+#> 1:                 0              0             5      FALSE          364
 #>    cap_cases  delay onset_to_isolation incubation_period
 #>        <num> <char>             <list>            <list>
 #> 1:      5000   SARS      <function[1]>     <function[1]>
 head(scenario_sims$sims, 3)
 #> [[1]]
-#> [[1]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0            5          5
@@ -317,22 +324,24 @@ head(scenario_sims$sims, 3)
 #>   4:     1     3            0          5
 #>   5:     1     4            0          5
 #>  ---                                    
-#> 155:     3    48            0         38
-#> 156:     3    49            0         38
-#> 157:     3    50            0         38
-#> 158:     3    51            0         38
-#> 159:     3    52            0         38
+#> 152:     3    47            0         38
+#> 153:     3    48            0         38
+#> 154:     3    49            0         38
+#> 155:     3    50            0         38
+#> 156:     3    51            0         38
 #> 
-#> [[1]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0  cases_per_gen
 #>    <int>        <num>         <list>
 #> 1:     1    0.0000000              0
 #> 2:     2    0.3000000            3,0
 #> 3:     3    0.8541026 13,15, 4, 1, 0
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 #> 
 #> [[2]]
-#> [[2]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0            6          6
@@ -341,22 +350,24 @@ head(scenario_sims$sims, 3)
 #>   4:     1     3            0          8
 #>   5:     1     4            0          8
 #>  ---                                    
-#> 155:     3    48            0         20
-#> 156:     3    49            0         20
-#> 157:     3    50            0         20
-#> 158:     3    51            0         20
-#> 159:     3    52            0         20
+#> 152:     3    47            0         20
+#> 153:     3    48            0         20
+#> 154:     3    49            0         20
+#> 155:     3    50            0         20
+#> 156:     3    51            0         20
 #> 
-#> [[2]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0 cases_per_gen
 #>    <int>        <num>        <list>
 #> 1:     1    0.3000000           3,0
 #> 2:     2    0.3000000           3,0
 #> 3:     3    0.6866667     6,5,2,2,0
 #> 
+#> attr(,"class")
+#> [1] "ringbp"
 #> 
 #> [[3]]
-#> [[3]]$outbreak_ts
+#> $outbreak_ts
 #>        sim  week weekly_cases cumulative
 #>      <int> <int>        <int>      <int>
 #>   1:     1     0           14         14
@@ -365,18 +376,21 @@ head(scenario_sims$sims, 3)
 #>   4:     1     3           48        157
 #>   5:     1     4           49        206
 #>  ---                                    
-#> 155:     3    48            0          6
-#> 156:     3    49            0          6
-#> 157:     3    50            0          6
-#> 158:     3    51            0          6
-#> 159:     3    52            0          6
+#> 152:     3    47            0          6
+#> 153:     3    48            0          6
+#> 154:     3    49            0          6
+#> 155:     3    50            0          6
+#> 156:     3    51            0          6
 #> 
-#> [[3]]$outbreak_stats
+#> $outbreak_stats
 #>      sim effective_r0            cases_per_gen
 #>    <int>        <num>                   <list>
 #> 1:     1     1.232248 21,28,38,56,46,16,...[9]
 #> 2:     2     0.300000                    2,1,0
 #> 3:     3     0.100000                      1,0
+#> 
+#> attr(,"class")
+#> [1] "ringbp"
 ```
 
 ## Running scenarios in parallel

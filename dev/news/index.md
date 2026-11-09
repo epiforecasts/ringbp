@@ -2,6 +2,48 @@
 
 ## ringbp (development version)
 
+- Added
+  [`aggregate.ringbp()`](https://epiforecasts.io/ringbp/dev/reference/aggregate.ringbp.md)
+  function (S3 method) to allow simulated outbreak data to be aggregated
+  to various time intervals. Default aggregation is weekly (backwards
+  compatible), but can also be set to daily, monthly, an `integer`
+  specified period (e.g. 14 days) or none (for continuous symptom onset
+  times). Aggregation units accept aliases (e.g. singular and plural)
+  and are case insensitive. The
+  [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md)
+  gains an `aggregation` argument to control the aggregation interval of
+  the simulated data output. The output of
+  [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)
+  and
+  [`outbreak_model()`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)
+  now have a `<ringbp>` class attribute. The `extinction_week` argument
+  of
+  [`detect_extinct()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
+  and
+  [`extinct_prob()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
+  is renamed to `extinction_time` to reflect the variable time units
+  outbreak data can now take. Addresses
+  [\#164](https://github.com/epiforecasts/ringbp/issues/164) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#257](https://github.com/epiforecasts/ringbp/issues/257) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
+- The final time interval of `$outbreak_ts` now ends at `cap_max_days`,
+  and only cases with symptom onset before `cap_max_days` are included.
+  Previously, the output always had one extra week (weeks
+  `0:floor(cap_max_days / 7)`), which was partially or entirely after
+  `cap_max_days`, so its case counts were incomplete.
+  [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md)
+  and [`aggregate()`](https://rdrr.io/r/stats/aggregate.html) now error
+  if `cap_max_days` is not a whole number of aggregation intervals
+  (e.g. a multiple of 7 for weekly aggregation). Addresses
+  [\#258](https://github.com/epiforecasts/ringbp/issues/258) by
+  [@joshwlambert](https://github.com/joshwlambert) in
+  [\#257](https://github.com/epiforecasts/ringbp/issues/257) and
+  reviewed by [@pearsonca](https://github.com/pearsonca) and
+  [@sbfnk](https://github.com/sbfnk).
+
 - [`outbreak_model()`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)
   and
   [`scenario_sim()`](https://epiforecasts.io/ringbp/dev/reference/scenario_sim.md)

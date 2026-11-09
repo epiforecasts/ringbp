@@ -198,11 +198,29 @@ or outbreak size
 are specified using
 [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md).
 
+The time interval that the simulated cases are aggregated to
+([`aggregation`](https://epiforecasts.io/ringbp/reference/sim_opts.html#arg-aggregation))
+is also specified using
+[`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md).
+Cases are counted by their symptom onset time, and the aggregation can
+be `"daily"`, `"weekly"` (the default), `"monthly"`, a whole number of
+days (e.g. `14` for fortnightly), or `"none"` to return a case line list
+without aggregation. Time intervals are fixed-length blocks of days
+counted from the exposure of the initial cases on day 0 (e.g. weeks are
+7 days and months are 30 days), not calendar weeks or months.
+
+The maximum duration of the simulation (`cap_max_days`) must be a whole
+number of aggregation time intervals, for example below
+`cap_max_days = 350` is 50 weeks. The output contains every time
+interval up to `cap_max_days`, so the final interval ends at
+`cap_max_days`.
+
 ``` r
 
 sim <- sim_opts(
   cap_max_days = 350,
-  cap_cases = 4500
+  cap_cases = 4500,
+  aggregation = "weekly"
 )
 ```
 
@@ -240,14 +258,23 @@ outbreak <- scenario_sim(
 )
 ```
 
-The returned object is a `list` with two `data.table` elements:
+The returned object is a `list` with class `<ringbp>` with two
+`data.table` elements:
 
 - `outbreak_ts`: the simulated outbreak trajectories (time series), with
-  one row per simulation week. The columns are:
+  one row per simulation week for the weekly aggregation (default
+  aggregation) used here. The columns are:
   - `sim`: simulation replicate ID
   - `week`: outbreak week, zero indexed
   - `weekly_cases`: number of new cases that week
-  - `cumulative`: cumulative weekly cases
+  - `cumulative`: cumulative cases
+
+  The column names depend on the `aggregation` set in
+  [`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md),
+  for example `day` and `daily_cases` for `"daily"`, or `onset` (the
+  symptom onset time of each case) for `"none"`. See
+  [`?outbreak_model`](https://epiforecasts.io/ringbp/dev/reference/outbreak_model.md)
+  for the columns for each aggregation.
 - `outbreak_stats`: summary statistics for each replicate, with one row
   per simulation. The columns are:
   - `sim`: simulation replicate ID
@@ -298,6 +325,57 @@ tinyplot(
 
 ![](ringbp_files/figure-html/unnamed-chunk-10-1.png)
 
+### Aggregating to a different time interval
+
+The simulated outbreaks can be aggregated to a different time interval
+after the simulation using
+[`aggregate()`](https://rdrr.io/r/stats/aggregate.html). Aggregated
+output can only be aggregated to a longer time interval that is made up
+of whole intervals of the current aggregation, and the simulation must
+be divided exactly into the new time interval so no simulated cases are
+dropped. For example, the weekly cases simulated for 50 weeks (350 days)
+can be aggregated to fortnightly (14-day) periods, but not to 4-week
+(28-day) periods as 350 days is not a whole number of 28-day periods.
+
+``` r
+
+outbreak_fortnightly <- aggregate(outbreak, interval = 14)
+outbreak_fortnightly$outbreak_ts
+#>         sim period period_cases cumulative
+#>       <int>  <int>        <int>      <int>
+#>    1:     1      0            1          1
+#>    2:     1      1            0          1
+#>    3:     1      2            0          1
+#>    4:     1      3            0          1
+#>    5:     1      4            0          1
+#>   ---                                     
+#> 2496:   100     20            0          2
+#> 2497:   100     21            0          2
+#> 2498:   100     22            0          2
+#> 2499:   100     23            0          2
+#> 2500:   100     24            0          2
+```
+
+``` r
+
+tinyplot(
+  period_cases ~ period | as.factor(sim),
+  data = outbreak_fortnightly$outbreak_ts,
+  type = "l",
+  lwd = 3,
+  ylab = "Number of cases per fortnight",
+  xlab = "Fortnight",
+  legend = FALSE,
+  theme = "clean"
+)
+```
+
+![](ringbp_files/figure-html/unnamed-chunk-12-1.png)
+
+To be able to aggregate to any time interval after the simulation, run
+the simulation with `sim_opts(aggregation = "none")` to keep the case
+line list.
+
 ## Summarising outcomes
 
 A common quantity of interest is the probability that an outbreak goes
@@ -314,11 +392,18 @@ extinct_prob(outbreak)
 
 By default, extinction is defined as all infectious individuals have had
 the opportunity to transmit but no new infections are generated. The
-`extinction_week` argument in
+`extinction_time` argument in
 [`extinct_prob()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
 can also be used to specify whether extinction has happened by a certain
-week, e.g. `extinct_prob(..., extinction_week = 5)` checks whether
-extinction has occurred by week 5 of the outbreak. See
+time, e.g. `extinct_prob(..., extinction_time = 5)` checks whether
+extinction has occurred by week 5 of the outbreak. The `extinction_time`
+is in the time interval the simulation output is aggregated to, which is
+weekly by default (see the `aggregation` argument in
+[`sim_opts()`](https://epiforecasts.io/ringbp/dev/reference/sim_opts.md)).
+If the simulation output is not aggregated (`aggregation = "none"`),
+[`extinct_prob()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
+aggregates it to daily cases, with a warning, and `extinction_time` is
+in days. See
 [`?extinct_prob`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
 for other methods of checking for extinction.
 
@@ -382,7 +467,11 @@ scenarios[, sims := lapply(data, \(x, n) {
        symptomatic_traced = x$symptomatic_traced
     ),
     interventions = intervention_opts(quarantine = FALSE),
-    sim = sim_opts(cap_max_days = 365, cap_cases = 5000)
+    sim = sim_opts(
+      cap_max_days = 364,
+      cap_cases = 5000,
+      aggregation = "weekly"
+    )
   )
   },
   n = n
@@ -399,7 +488,7 @@ which also includes information on how to parallelise the simulation.
 
 
 scenarios[, 
-  pext := extinct_prob(sims[[1]], extinction_week = 12:16), 
+  pext := extinct_prob(sims[[1]], extinction_time = 12:16),
   by = scenario
 ]
 #> Calculating extinction as no new cases within weeks: 12 to 16 (inclusive).

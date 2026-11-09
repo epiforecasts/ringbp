@@ -9,6 +9,9 @@
 <url><loc>https://epiforecasts.io/ringbp/dev/authors.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/index.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/news/index.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/dev/reference/aggregate.ringbp.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/dev/reference/aggregation_as_int.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/dev/reference/aggregation_cols.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/as_prob_function.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/check_dist_func.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/cross_check_opts.html</loc></url>
@@ -18,6 +21,7 @@
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/incubation_to_generation_time.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/index.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/intervention_opts.html</loc></url>
+<url><loc>https://epiforecasts.io/ringbp/dev/reference/match_aggregation.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/offspring_opts.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/outbreak_continue.html</loc></url>
 <url><loc>https://epiforecasts.io/ringbp/dev/reference/outbreak_model.html</loc></url>

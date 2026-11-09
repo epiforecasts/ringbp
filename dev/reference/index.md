@@ -55,3 +55,8 @@
 - [`extinct_prob()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
   [`detect_extinct()`](https://epiforecasts.io/ringbp/dev/reference/extinction.md)
   : Outbreak extinction functions
+
+- [`aggregate(`*`<ringbp>`*`)`](https://epiforecasts.io/ringbp/dev/reference/aggregate.ringbp.md)
+  :
+
+  Aggregate ringbp outbreak simulations by time interval
