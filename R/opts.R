@@ -264,12 +264,42 @@ intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
 
 #' Create a list of simulation control options for the \pkg{ringbp} model
 #'
-#' @param cap_max_days a positive `integer` scalar: stops the outbreak
-#'   simulation once all new infections occur on more than `cap_max_days`
-#'   days after the start of the outbreak, counted from the exposure of the
-#'   initial cases on day 0
+#' @param cap_max_days a positive `integer` scalar: the maximum number of days
+#'   of the outbreak simulation, counted from the exposure of the initial cases
+#'   on day 0. The outbreak simulation stops once all new infections occur
+#'   after `cap_max_days`, so every case with symptom onset before
+#'   `cap_max_days` is simulated.
+#'
+#'   `cap_max_days` must be a whole number of `aggregation` time intervals
+#'   (e.g. a multiple of 7 for `"weekly"` aggregation, or of 30 for
+#'   `"monthly"`), so the output contains every time interval up to
+#'   `cap_max_days` and the final interval ends at `cap_max_days`. The default
+#'   of 350 days is 50 weeks.
 #' @param cap_cases a positive `integer` scalar: number of cumulative cases at
 #'   which the branching process (simulation) was terminated
+#' @param aggregation a `character` string or a positive `integer` scalar:
+#'   the time interval to aggregate the simulated cases to, by symptom onset
+#'   time. One of:
+#'   * `"none"`: no aggregation, the output contains the symptom onset time of
+#'     each case with symptom onset before `cap_max_days` (i.e. a line list).
+#'     See [outbreak_model()] for the output columns.
+#'   * `"daily"` (or `"day"`, `"days"`): number of cases each day.
+#'   * `"weekly"` (or `"week"`, `"weeks"`): number of cases each week (7 days).
+#'     This is the default.
+#'   * `"monthly"` (or `"month"`, `"months"`): number of cases each month (30
+#'     days).
+#'   * A positive `integer`: number of cases in each period of that many days
+#'     (e.g. `14` for fortnightly cases).
+#'
+#'   `character` strings are case insensitive (e.g. `"Weekly"` is the same as
+#'   `"weekly"`).
+#'
+#'   Intervals are fixed-length blocks of days counted from the exposure of
+#'   the initial cases on day 0, not calendar weeks or months. The output can
+#'   be aggregated to a different interval after the simulation using
+#'   [`aggregate()`][aggregate.ringbp()], if the simulation can be divided
+#'   exactly into the new interval (i.e. `cap_max_days` is a multiple of the
+#'   new interval).
 #'
 #' @return A `list` with class `<ringbp_sim_opts>`.
 #' @export
@@ -283,14 +313,42 @@ intervention_opts <- function(quarantine = FALSE, test_sensitivity = 1) {
 #'   cap_max_days = 140,
 #'   cap_cases = 1000
 #' )
-sim_opts <- function(cap_max_days = 350, cap_cases  = 5000) {
+#'
+#' # daily case counts
+#' sim_opts(aggregation = "daily")
+#'
+#' # monthly case counts, cap_max_days must be a multiple of 30
+#' sim_opts(cap_max_days = 360, aggregation = "monthly")
+#'
+#' # no aggregation (case line list)
+#' sim_opts(aggregation = "none")
+sim_opts <- function(cap_max_days = 350,
+                     cap_cases  = 5000,
+                     aggregation = "weekly") {
 
   checkmate::assert_int(cap_max_days, lower = 1)
   checkmate::assert_int(cap_cases, lower = 1)
+  aggregation <- match_aggregation(aggregation)
+
+  # the final time interval must end at cap_max_days
+  width <- aggregation_as_int(aggregation)
+  if (cap_max_days %% width != 0) {
+    valid <- c(floor(cap_max_days / width), ceiling(cap_max_days / width))
+    valid <- valid[valid > 0] * width
+    stop(
+      "`cap_max_days` (", cap_max_days, ") is not a whole number of `",
+      aggregation, "` (", width, " day) intervals.\n",
+      "Use a `cap_max_days` that is a multiple of ", width, ", for example ",
+      paste(valid, collapse = " or "), ".\n",
+      "Alternatively, use `aggregation = \"daily\"`.",
+      call. = FALSE
+    )
+  }
 
   opts <- list(
     cap_max_days = cap_max_days,
-    cap_cases = cap_cases
+    cap_cases = cap_cases,
+    aggregation = aggregation
   )
 
   class(opts) <- "ringbp_sim_opts"

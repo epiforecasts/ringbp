@@ -43,15 +43,34 @@ the intervention settings for the \pkg{ringbp} model, returned by
 options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
-A \code{list} with 2 \code{data.table} elements:
+A \code{list} with class \verb{<ringbp>} with 2 \code{data.table} elements:
 \enumerate{
-\item \verb{$outbreak_ts}: the results for a single outbreak simulation. The
-\code{data.table} has columns:
+\item \verb{$outbreak_ts}: the results for a single outbreak simulation, aggregated
+by symptom onset time to the time interval set by the \code{aggregation}
+argument of \code{\link[=sim_opts]{sim_opts()}}. For the default \code{aggregation = "weekly"}
+the \code{data.table} has columns:
 \itemize{
 \item \code{week}: the week in the simulation (\code{integer})
 \item \code{weekly_cases}: the number of new cases that week (\code{integer})
 \item \code{cumulative}: the cumulative cases (\code{integer})
 }
+
+For \code{"daily"} the columns are \code{day} and \code{daily_cases}, for \code{"monthly"}
+they are \code{month} and \code{monthly_cases}, and for an \code{integer} number of
+days they are \code{period} and \code{period_cases}, each with \code{cumulative}.
+Time intervals are zero indexed from the exposure of the initial cases.
+
+For \code{aggregation = "none"} the \code{data.table} contains one row per case
+(i.e. a line list), ordered by symptom onset time, with columns:
+\itemize{
+\item \code{onset}: the symptom onset time of the case (\code{numeric})
+\item \code{cumulative}: the cumulative cases (\code{integer})
+}
+
+For all aggregations, only cases with symptom onset before
+\code{cap_max_days} (see \code{\link[=sim_opts]{sim_opts()}}) are included, as cases with a later
+symptom onset are not fully simulated. The final time interval ends at
+\code{cap_max_days}.
 \item \verb{$outbreak_stats}: the summary statistics for the outbreak simulation. The
 \code{data.table} has columns:
 \itemize{
@@ -61,9 +80,12 @@ whole simulation (\code{numeric})
 }
 }
 
-The \verb{$outbreak_ts} element also carries an \code{extinct} attribute: a \code{logical}
-recording whether the outbreak went extinct. See \link{extinction} functions for
-the definition of extinction.
+The \verb{$outbreak_ts} element also carries the attributes: \code{extinct}, a
+\code{logical} recording whether the outbreak went extinct (see \link{extinction}
+functions for the definition of extinction); \code{aggregation}, the time
+interval of the aggregation; and \code{cap_max_days}, from \code{\link[=sim_opts]{sim_opts()}}. These
+are used by \code{\link[=aggregate.ringbp]{aggregate()}} to aggregate the outbreak
+simulation after it has been run.
 }
 \description{
 Run a single instance of the branching process model

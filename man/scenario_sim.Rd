@@ -46,16 +46,19 @@ the intervention settings for the \pkg{ringbp} model, returned by
 options for the \pkg{ringbp} model, returned by \code{\link[=sim_opts]{sim_opts()}}}
 }
 \value{
-A \code{list} with 2 \code{data.table} elements:
+A \code{list} with class \verb{<ringbp>} with 2 \code{data.table} elements:
 \enumerate{
 \item \verb{$outbreak_ts}: the results for multiple simulations using the same
-set of parameters. The \code{data.table} has columns:
+set of parameters. For the default \code{aggregation = "weekly"} in
+\code{\link[=sim_opts]{sim_opts()}} the \code{data.table} has columns:
 \itemize{
 \item \code{sim}: the simulation replicate index (\code{integer})
 \item \code{week}: the week in the simulation (\code{integer})
 \item \code{weekly_cases}: the number of new cases that week (\code{integer})
 \item \code{cumulative}: the cumulative cases (\code{integer})
 }
+
+See \code{\link[=outbreak_model]{outbreak_model()}} for the columns for other time intervals.
 \item \verb{$outbreak_stats}: the summary statistics for each outbreak simulation
 replicate using the same set of parameters. The \code{data.table} has columns:
 \itemize{
@@ -69,7 +72,9 @@ simulation (\code{numeric})
 The \verb{$outbreak_ts} element also carries two attributes used by
 \code{\link[=extinct_prob]{extinct_prob()}} and \code{\link[=detect_extinct]{detect_extinct()}}: \code{extinct}, a \code{logical} vector
 recording whether each replicate went extinct, and \code{cap_cases}, the maximum
-number of cases used to cap each simulation.
+number of cases used to cap each simulation. It also carries the
+\code{aggregation} and \code{cap_max_days} attributes used by
+\code{\link[=aggregate.ringbp]{aggregate()}} (see \code{\link[=outbreak_model]{outbreak_model()}}).
 }
 \description{
 Run a specified number of simulations with identical parameters
@@ -91,7 +96,7 @@ event_probs <- event_prob_opts(
 )
 interventions <- intervention_opts(quarantine = TRUE)
 sim <- sim_opts(
-  cap_max_days = 365,
+  cap_max_days = 364,
   cap_cases = 2000
 )
 res <- scenario_sim(

@@ -18,7 +18,7 @@ test_that("outbreak_model runs with no transmission", {
     interventions = intervention_opts(quarantine = TRUE),
     sim = sim_opts()
   )
-  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7 - 1))
   # one initial case
   expect_identical(res$outbreak_ts$weekly_cases[1], 1L)
   # no secondary cases
@@ -50,7 +50,7 @@ test_that("outbreak_model runs to cap_max_days stopping criterion", {
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_max_days = cap_max_days, cap_cases = cap_cases)
   )
-  expect_equal(res$outbreak_ts$week, 0:(cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(cap_max_days / 7 - 1))
   # has not reached cap_cases stopping criterion
   expect_lt(res$outbreak_ts[.N, cumulative], cap_cases)
   # monotonic cumulative cases
@@ -83,7 +83,7 @@ test_that("outbreak_model runs to cap_cases stopping criterion", {
     interventions = intervention_opts(quarantine = FALSE),
     sim = sim_opts(cap_cases = cap_cases)
   )
-  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7))
+  expect_equal(res$outbreak_ts$week, 0:(sim_opts()$cap_max_days / 7 - 1))
   # no cases in the last 10 weeks
   expect_identical(tail(res$outbreak_ts$weekly_cases, n = 10), rep(0L, 10))
   # cap_cases is soft upper bound so cumulative cases exceed cap_cases
@@ -117,7 +117,7 @@ test_that("outbreak_model runs for 1 gen when onset > cap_max_days", {
         symptomatic_traced = 1
       ),
       interventions = intervention_opts(quarantine = TRUE),
-      sim = sim_opts(cap_max_days = 5)
+      sim = sim_opts(cap_max_days = 7)
     ),
     message = "zero generations"
   )
@@ -128,11 +128,11 @@ test_that("outbreak_model runs for 1 gen when onset > cap_max_days", {
 })
 
 test_that("outbreak_model in-window counts are independent of cap_max_days", {
-  # regression test for #225: for a fixed seed, weekly and cumulative case
-  # counts for weeks fully inside the simulation window must not change with
+  # regression test for #225 and #258: for a fixed seed, weekly and cumulative
+  # case counts for weeks inside the simulation window must not change with
   # `cap_max_days`
   outbreaks <- list()
-  cap_max_days <- c(50, 100)
+  cap_max_days <- c(49, 98)
   for (i in seq_along(cap_max_days)) {
     set.seed(1)
     outbreaks[[i]] <- outbreak_model(
@@ -160,11 +160,14 @@ test_that("outbreak_model in-window counts are independent of cap_max_days", {
     outbreaks[[1]]$outbreak_ts[.N, cumulative]
   )
 
-  # weeks 0-5 fall fully inside both simulation windows, so their cumulative
-  # case counts must be identical
+  # weeks 0-6 are all of the weeks of the shorter simulation, including its
+  # final week, and fall inside both simulation windows, so their case counts
+  # must be identical
+  expect_identical(outbreaks[[1]]$outbreak_ts$week, 0:6)
   expect_identical(
-    outbreaks[[1]]$outbreak_ts[week <= 5, cumulative],
-    outbreaks[[2]]$outbreak_ts[week <= 5, cumulative]
+    outbreaks[[1]]$outbreak_ts,
+    outbreaks[[2]]$outbreak_ts[week <= 6],
+    ignore_attr = TRUE
   )
 })
 
@@ -191,7 +194,7 @@ test_that("outbreak_model warns if outbreak_step is not run (cap_cases)", {
     ),
     regexp = "The outbreak simulation ran for zero generations"
   )
-  expect_identical(res$outbreak_ts$week, 0:50)
+  expect_identical(res$outbreak_ts$week, 0:49)
   expect_identical(res$outbreak_ts$weekly_cases[1], 25L)
   expect_identical(unique(res$outbreak_ts$weekly_cases[-1]), 0L)
   expect_identical(unique(res$outbreak_ts$cumulative), 25L)
