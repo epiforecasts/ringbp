@@ -4,8 +4,8 @@ utils::globalVariables(c(
   "i.cases", # <aggregate.ringbp>
   "cumulative", # <aggregate.ringbp>
   "sim", # <aggregate.ringbp>
-  "cumulative", # <detect_extinct>
-  "sim", # <detect_extinct>
+  "cumulative", # <detect_control>
+  "sim", # <detect_control>
   "exposure", # <outbreak_model>
   "caseid", # <outbreak_model>
   "infector", # <outbreak_model>
