@@ -38,7 +38,7 @@ A \code{numeric} vector with the generation times for the new cases
 exposure/infection times.
 
 \emph{\strong{Note}} The \code{case_data} supplied to the function is modified by
-references, see \code{\link[data.table:assign]{data.table::set()}} for more information.
+references, see \code{\link[data.table:set]{data.table::set()}} for more information.
 }
 \description{
 Samples from the offspring distributions (see \code{\link[=offspring_opts]{offspring_opts()}}) and adds

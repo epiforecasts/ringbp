@@ -27,7 +27,7 @@ the function's codomain). The default is \code{0} so \code{func} must return
 non-negative values.}
 
 \item{finite}{Check for only finite values in distribution output, passed
-to \code{\link[checkmate:checkNumeric]{checkmate::test_numeric()}}. Default is \code{TRUE}.}
+to \code{\link[checkmate:test_numeric]{checkmate::test_numeric()}}. Default is \code{TRUE}.}
 }
 \value{
 \code{TRUE} if all the checks pass or an error is thrown if the
