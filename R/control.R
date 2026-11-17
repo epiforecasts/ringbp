@@ -1,6 +1,29 @@
 #' Outbreak control and extinction functions
 #'
 #' @description
+#' Summarise outbreaks simulated by [scenario_sim()] by whether they were
+#' controlled or went extinct. An outbreak is _controlled_ when the number of
+#' cases in every time interval of a time window is at or below
+#' `control_threshold`, and _extinct_ when there are no new cases
+#' (`control_threshold = 0`). See _Definition of control_ in Details.
+#'
+#' These functions answer questions such as:
+#' * Did the outbreak go extinct in the simulation? Use
+#'   `extinct_prob(scenario)`.
+#' * Has the outbreak gone extinct by time `t`, with no new cases from `t`
+#'   until the end of the simulation? Use
+#'   `extinct_prob(scenario, extinction_time = t)`.
+#' * Has the outbreak been controlled by time `t`, with at most `n` cases in
+#'   each time interval from `t` until the end of the simulation? Use
+#'   `control_prob(scenario, control_time = t, control_threshold = n)`.
+#' * Were there at most `n` cases in each time interval between times `a` and
+#'   `b`, regardless of the number of cases after `b`? Use
+#'   `control_prob(scenario, control_time = c(a, b), control_threshold = n)`.
+#'
+#' The `*_prob()` functions return the proportion of simulation replicates
+#' for which the answer is yes, and the `detect_*()` functions return the
+#' answer for each simulation replicate:
+#'
 #' `control_prob()` / `extinct_prob()`: Calculate proportion of runs that have
 #'   a controlled / extinct outbreak (`extinct_prob()` is a special case of
 #'   `control_prob()` with `control_threshold = 0`)
@@ -10,17 +33,36 @@
 #'   `detect_control()` with `control_threshold = 0`)
 #'
 #' @details
-#' The data passed to `scenario` has to be produced by [scenario_sim()].
-#' The output of [outbreak_model()] is not supported, as it does not contain
-#' the `sim` column, which is only appended in [scenario_sim()].
+#' ## Definition of control
 #'
-#' ***Warning***: the `$outbreak_ts` element of the [scenario_sim()] output
-#' carries attributes which are used by all four functions: `extinct` is used
-#' when `control_time`/`extinction_time` is `NULL`, and `aggregation` and
-#' `cap_cases` are used when `control_time`/`extinction_time` is specified.
-#' Therefore if you modify the output of [scenario_sim()] before passing it to
-#' any of these functions be careful not to drop the attributes (e.g. from
-#' subsetting the `data.table`).
+#' An outbreak is controlled in a time window if the number of cases in
+#' **every** time interval of the window is at or below `control_threshold`,
+#' and the outbreak has not reached `cap_cases` (see [sim_opts()]) by the end
+#' of the window. Control is a count below a threshold, it does not require
+#' the outbreak to end, and extinction is the special case of no new cases
+#' (`control_threshold = 0`). If the number of cases falls below
+#' `control_threshold` and then rises above it again within the window, the
+#' outbreak is not controlled.
+#'
+#' The window is set by `control_time` / `extinction_time`, and its form
+#' determines whether cases rising above `control_threshold` after a period
+#' below it means the outbreak is not controlled:
+#' * `NULL` (default, only valid for `control_threshold = 0`): uses the
+#'   extinction status from the simulation, where all infectious cases have
+#'   had the opportunity to transmit but no new cases were generated, so the
+#'   number of cases cannot rise again.
+#' * A single `integer` `t`: the window is from `t` until the end of the
+#'   simulation, so cases rising above `control_threshold` at any time from
+#'   `t` means the outbreak is not controlled. This tests whether the
+#'   outbreak _stayed_ controlled from `t`, but only until the end of the
+#'   simulation (`cap_max_days`, see [sim_opts()]), not indefinitely.
+#' * An `integer` vector, e.g. `c(a, b)` or `12:16`: the window is only these
+#'   times, so cases rising above `control_threshold` within the window means
+#'   the outbreak is not controlled, but cases rising above it after the
+#'   window does not. This tests whether the outbreak was controlled
+#'   _throughout_ the window.
+#'
+#' ## Time intervals
 #'
 #' The `control_time` and `extinction_time` are in the time interval the
 #' `scenario` is aggregated to (set by the `aggregation` argument in
@@ -34,53 +76,44 @@
 #' daily cases, with a warning, and `control_time`/`extinction_time` is in
 #' days and `control_threshold` is in daily cases.
 #'
+#' ## Input data
+#'
+#' The data passed to `scenario` has to be produced by [scenario_sim()].
+#' The output of [outbreak_model()] is not supported, as it does not contain
+#' the `sim` column, which is only appended in [scenario_sim()].
+#'
+#' ***Warning***: the `$outbreak_ts` element of the [scenario_sim()] output
+#' carries attributes which are used by all four functions: `extinct` is used
+#' when `control_time`/`extinction_time` is `NULL`, and `aggregation` and
+#' `cap_cases` are used when `control_time`/`extinction_time` is specified.
+#' Therefore if you modify the output of [scenario_sim()] before passing it to
+#' any of these functions be careful not to drop the attributes (e.g. from
+#' subsetting the `data.table`).
+#'
 #' @param scenario a `<ringbp>` object: the output of [scenario_sim()],
 #'   containing the `$outbreak_ts` `data.table` of cases used to determine
 #'   control/extinction.
 #'
 #' @param control_time,extinction_time a non-negative `integer` scalar,
-#'   `integer` vector, or `NULL` (default): the time (zero indexed) by which to
-#'   test if an outbreak has been controlled / gone extinct, in the time
-#'   interval of the aggregated `scenario` (e.g. weeks for weekly aggregated
-#'   data).
-#'   `control_time` is used by [control_prob()] and [detect_control()] and
-#'   tests whether the cases in each time interval are at most
-#'   `control_threshold`; `extinction_time` is used by [extinct_prob()]
-#'   and [detect_extinct()] and is the same test fixed to
-#'   `control_threshold = 0` (i.e. no new cases). Both arguments accept:
-#'   * By default (`NULL`) the extinction status is stored in the output of
-#'     `scenario_sim()` which is supplied to the `scenario` argument. If
-#'     `control_time`/`extinction_time` is not specified or specified as
-#'     `NULL` then the pre-computed extinction status from the outbreak
-#'     simulation will be used. This is defined as all infectious cases have
-#'     had the opportunity to transmit but no new cases are generated. This is
-#'     only valid when `control_threshold = 0`; when `control_threshold > 0` a
+#'   `integer` vector, or `NULL` (default): the time window (zero indexed)
+#'   over which to test whether an outbreak has been controlled / gone
+#'   extinct, in the time interval of the aggregated `scenario` (e.g. weeks
+#'   for weekly aggregated data). `control_time` is used by [control_prob()]
+#'   and [detect_control()], and `extinction_time` is used by
+#'   [extinct_prob()] and [detect_extinct()]. Both arguments accept:
+#'   * `NULL` (default): use the extinction status from the simulation. Only
+#'     valid when `control_threshold = 0`; when `control_threshold > 0` a
 #'     `control_time` is required and the default will error.
-#'   * A single `integer` to test if control/extinction has occurred by this
-#'     time. For example, for weekly data, `extinction_time = 5` tests whether
-#'     the outbreak is extinct by week 5 (inclusive) until the end of the
-#'     outbreak, and `control_time = 5` with `control_threshold = 10` tests
-#'     whether weekly cases stay at or below 10 from week 5 until the end of
-#'     the outbreak.
-#'   * An `integer` vector of length two can be supplied to provide the lower
-#'     and upper bounds (inclusive) of the time range to test for whether
-#'     control/extinction occurred by this window. For example, for weekly
-#'     data, `extinction_time = c(5, 10)` will test whether the outbreak went
-#'     extinct by week 5 and there were no new cases between weeks 5 and 10
-#'     (inclusive).
-#'   * An `integer` vector of length _n_ can be supplied to provide the times
-#'     to test for whether control/extinction occurred by this window. For
-#'     example, for weekly data, `extinction_time = 12:16` will test that there
-#'     are no new infections between 12 and 16 weeks after the initial cases
-#'     (inclusive). These integer sequences will most likely be contiguous but
-#'     the function does allow non-contiguous integer sequences.
+#'   * A single `integer`: the window is from this time until the end of the
+#'     simulation.
+#'   * An `integer` vector of length two: the lower and upper bounds
+#'     (inclusive) of the window.
+#'   * An `integer` vector of length _n_ (e.g. `12:16`): the times in the
+#'     window. These will most likely be contiguous but non-contiguous times
+#'     are allowed.
 #'
-#'   If control/extinction occurs before the `control_time`/`extinction_time`
-#'   window then the outbreak is considered controlled/extinct, however, if
-#'   control/extinction occurs within the window it is not, because at least
-#'   one time interval within the window exceeded the `control_threshold`.
-#'   Therefore, a single `integer` can be thought of as "_has the outbreak
-#'   been controlled / gone extinct by time X_".
+#'   See _Definition of control_ in Details for how each form of window is
+#'   used to classify control / extinction.
 #'
 #' @param control_threshold a non-negative `integer` scalar: the threshold
 #'   number of cases in each time interval of the aggregated `scenario` (e.g.
@@ -89,8 +122,8 @@
 #'   extinction. Values greater than zero correspond to control defined under
 #'   outbreak suppression strategies, e.g. if weekly cases do not exceed 100
 #'   (`control_threshold = 100`), then the outbreak is said to be under
-#'   control in that period. Outbreaks that reach the `cap_cases` (see
-#'   [sim_opts()]) are never classified as controlled.
+#'   control in that period. Outbreaks that have reached `cap_cases` (see
+#'   [sim_opts()]) by the end of the window are not classified as controlled.
 #'
 #' @importFrom data.table setDT fifelse data.table
 #'
@@ -125,31 +158,29 @@
 #'   sim = sim_opts(cap_max_days = 350, cap_cases = 4500)
 #' )
 #'
-#' # calculate probability of extinction
+#' # Did the outbreak go extinct in the simulation?
+#' # proportion of simulation replicates
 #' extinct_prob(res)
-#'
-#' # determine if each outbreak simulation replicate has gone extinct
+#' # each simulation replicate
 #' detect_extinct(res)
 #'
-#' # calculate extinction in the last 2 weeks of the simulated outbreak
-#' # (i.e. the penultimate and last week of the outbreak)
-#' extinct_prob(res, extinction_time = max(res$outbreak_ts$week) - 1)
+#' # Has the outbreak gone extinct by week 20, with no new cases from week 20
+#' # until the end of the simulation?
+#' extinct_prob(res, extinction_time = 20)
 #'
-#' # calculate extinction as no new cases between weeks 12 and 16 of outbreak
-#' extinct_prob(res, extinction_time = 12:16)
+#' # Has the outbreak been controlled by week 20, with at most 100 cases in
+#' # each week from week 20 until the end of the simulation?
+#' control_prob(res, control_time = 20, control_threshold = 100)
 #'
-#' # calculate probability of control under a suppression strategy: weekly
-#' # cases at or below 100 in the last 2 weeks of the outbreak
-#' control_prob(
-#'   res,
-#'   control_time = max(res$outbreak_ts$week) - 1,
-#'   control_threshold = 100
-#' )
+#' # Were there at most 100 cases in each week between weeks 10 and 20,
+#' # regardless of the number of cases after week 20?
+#' control_prob(res, control_time = c(10, 20), control_threshold = 100)
 #'
-#' # determine if each outbreak simulation replicate has been controlled,
-#' # defined as fortnightly cases at or below 100 from fortnight 20 onwards
+#' # Were there at most 100 cases in each fortnight between fortnights 5 and
+#' # 10, regardless of the number of cases after fortnight 10? For each
+#' # simulation replicate, after aggregating the weekly data to fortnights
 #' fortnightly <- aggregate(res, interval = 14)
-#' detect_control(fortnightly, control_time = 20, control_threshold = 100)
+#' detect_control(fortnightly, control_time = c(5, 10), control_threshold = 100)
 #' @name control
 NULL
 
