@@ -78,31 +78,23 @@ control in that period. Outbreaks that reach the \code{cap_cases} (see
 \code{\link[=sim_opts]{sim_opts()}}) are never classified as controlled.}
 }
 \value{
-\code{control_prob()}: a single \code{numeric} with the probability of control
+\code{control_prob()} / \code{extinct_prob()}: a single \code{numeric} with the
+probability of control / extinction
 
-\code{detect_control()}: a \code{data.table}, with two \code{integer} columns \code{sim} and
-\code{control}, for a binary classification of whether the outbreak was
-controlled in each simulation replicate. \code{1} is an outbreak that was
-controlled, \code{0} if not.
-
-\code{extinct_prob()}: a single \code{numeric} with the probability of extinction
-
-\code{detect_extinct()}: a \code{data.table}, with two \code{integer} columns \code{sim} and
-\code{extinct}, for a binary classification of whether the outbreak went extinct
-in each simulation replicate. \code{1} is an outbreak that went extinct, \code{0} if
+\code{detect_control()} / \code{detect_extinct()}: a \code{data.table}, with two \code{integer}
+columns \code{sim} and \code{control} / \code{extinct}, for a binary classification of
+whether the outbreak was controlled / went extinct in each simulation
+replicate. \code{1} is an outbreak that was controlled / went extinct, \code{0} if
 not.
 }
 \description{
-\code{control_prob()}: Calculate proportion of runs that have a controlled
-outbreak
+\code{control_prob()} / \code{extinct_prob()}: Calculate proportion of runs that have
+a controlled / extinct outbreak (\code{extinct_prob()} is a special case of
+\code{control_prob()} with \code{control_threshold = 0})
 
-\code{detect_control()}: Calculate whether outbreaks were controlled or not
-
-\code{extinct_prob()}: Calculate proportion of runs with an extinct outbreak (a
-special case of \code{control_prob()} with \code{control_threshold = 0})
-
-\code{detect_extinct()}: Calculate whether outbreaks went extinct or not (a
-special case of \code{detect_control()} with \code{control_threshold = 0})
+\code{detect_control()} / \code{detect_extinct()}: Calculate whether outbreaks were
+controlled / went extinct or not (\code{detect_extinct()} is a special case of
+\code{detect_control()} with \code{control_threshold = 0})
 }
 \details{
 The data passed to \code{scenario} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.

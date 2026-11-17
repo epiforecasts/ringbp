@@ -1,16 +1,13 @@
 #' Outbreak control and extinction functions
 #'
 #' @description
-#' `control_prob()`: Calculate proportion of runs that have a controlled
-#'   outbreak
+#' `control_prob()` / `extinct_prob()`: Calculate proportion of runs that have
+#'   a controlled / extinct outbreak (`extinct_prob()` is a special case of
+#'   `control_prob()` with `control_threshold = 0`)
 #'
-#' `detect_control()`: Calculate whether outbreaks were controlled or not
-#'
-#' `extinct_prob()`: Calculate proportion of runs with an extinct outbreak (a
-#'   special case of `control_prob()` with `control_threshold = 0`)
-#'
-#' `detect_extinct()`: Calculate whether outbreaks went extinct or not (a
-#'   special case of `detect_control()` with `control_threshold = 0`)
+#' `detect_control()` / `detect_extinct()`: Calculate whether outbreaks were
+#'   controlled / went extinct or not (`detect_extinct()` is a special case of
+#'   `detect_control()` with `control_threshold = 0`)
 #'
 #' @details
 #' The data passed to `scenario` has to be produced by [scenario_sim()].
@@ -98,18 +95,13 @@
 #' @importFrom data.table setDT fifelse data.table
 #'
 #' @return
-#' `control_prob()`: a single `numeric` with the probability of control
+#' `control_prob()` / `extinct_prob()`: a single `numeric` with the
+#' probability of control / extinction
 #'
-#' `detect_control()`: a `data.table`, with two `integer` columns `sim` and
-#' `control`, for a binary classification of whether the outbreak was
-#' controlled in each simulation replicate. `1` is an outbreak that was
-#' controlled, `0` if not.
-#'
-#' `extinct_prob()`: a single `numeric` with the probability of extinction
-#'
-#' `detect_extinct()`: a `data.table`, with two `integer` columns `sim` and
-#' `extinct`, for a binary classification of whether the outbreak went extinct
-#' in each simulation replicate. `1` is an outbreak that went extinct, `0` if
+#' `detect_control()` / `detect_extinct()`: a `data.table`, with two `integer`
+#' columns `sim` and `control` / `extinct`, for a binary classification of
+#' whether the outbreak was controlled / went extinct in each simulation
+#' replicate. `1` is an outbreak that was controlled / went extinct, `0` if
 #' not.
 #'
 #' @examples
