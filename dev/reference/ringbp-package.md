@@ -25,6 +25,9 @@ Useful links:
 
 Authors:
 
+- Joshua W. Lambert <joshua.lambert@lshtm.ac.uk>
+  ([ORCID](https://orcid.org/0000-0001-5218-3046))
+
 - Joel Hellewell <Joel.Hellewell@lshtm.ac.uk>
   ([ORCID](https://orcid.org/0000-0003-2683-0849))
 
