@@ -6,6 +6,8 @@
 #' cases in every time interval of a time window is at or below
 #' `control_threshold`, and _extinct_ when there are no new cases
 #' (`control_threshold = 0`). See _Definition of control_ in Details.
+#' A time window can be defined by either just a starting time, in which case
+#' the window is all periods from that time on, or as a `[start, end]` interval
 #'
 #' These functions answer questions such as:
 #' * Did the outbreak go extinct in the simulation? Use
