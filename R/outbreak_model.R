@@ -35,7 +35,7 @@
 #'    * `cases_per_gen`: the cases per generation (`list`)
 #'
 #' The `$outbreak_ts` element also carries the attributes: `extinct`, a
-#' `logical` recording whether the outbreak went extinct (see [extinction]
+#' `logical` recording whether the outbreak went extinct (see [control]
 #' functions for the definition of extinction); `aggregation`, the time
 #' interval of the aggregation; and `cap_max_days`, from [sim_opts()]. These
 #' are used by [`aggregate()`][aggregate.ringbp()] to aggregate the outbreak

@@ -1,3 +1,5 @@
+set.seed(515)
+
 test_that("outbreak_model runs with no transmission", {
   res <- outbreak_model(
     initial_cases = 1,
