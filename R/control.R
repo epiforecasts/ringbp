@@ -331,6 +331,5 @@ detect_extinct <- function(scenario,
     control_time = extinction_time,
     control_threshold = 0
   )
-  data.table::setnames(extinct, old = "control", new = "extinct")
-  extinct
+  data.table::setnames(extinct, old = "control", new = "extinct")[]
 }
