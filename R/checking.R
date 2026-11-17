@@ -103,3 +103,83 @@ cross_check_opts <- function(delays, event_probs) {
   }
   TRUE
 }
+
+#' Check the outbreak data in a `<ringbp>` object has not been invalidated
+#'
+#' @description
+#' Checks that the `$outbreak_ts` element of a `<ringbp>` object is the
+#' output of [scenario_sim()] (optionally aggregated with
+#' [`aggregate()`][aggregate.ringbp()]), so that outbreak control and
+#' extinction can be calculated. An error is thrown if the outbreak data has
+#' been invalidated, for example by filtering, reordering or combining rows,
+#' changing values, or dropping attributes.
+#'
+#' @inheritParams detect_control
+#'
+#' @return `TRUE` (invisibly) if all the checks pass or an error is thrown.
+#' @autoglobal
+#' @keywords internal
+check_scenario <- function(scenario) {
+  checkmate::assert_class(scenario, "ringbp")
+  outbreak_ts <- scenario$outbreak_ts
+  checkmate::assert_data_table(outbreak_ts, .var.name = "scenario$outbreak_ts")
+
+  attr_names <- c("extinct", "aggregation", "cap_cases", "cap_max_days")
+  attr_missing <- vapply(
+    attr_names,
+    function(x) is.null(attr(outbreak_ts, which = x, exact = TRUE)),
+    FUN.VALUE = logical(1)
+  )
+  if (any(attr_missing)) {
+    stop(
+      "`scenario$outbreak_ts` is missing the ",
+      toString(paste0("`", attr_names[attr_missing], "`")), " attribute(s).\n",
+      "Use the unmodified output of `scenario_sim()`.",
+      call. = FALSE
+    )
+  }
+
+  n_sim <- length(attr(outbreak_ts, which = "extinct", exact = TRUE))
+  aggregation <- attr(outbreak_ts, which = "aggregation", exact = TRUE)
+  cap_max_days <- attr(outbreak_ts, which = "cap_max_days", exact = TRUE)
+  # column names are determined by the aggregation
+  cols <- if (identical(aggregation, "none")) {
+    c(time = "onset")
+  } else {
+    aggregation_cols(aggregation)
+  }
+  checkmate::assert_names(
+    colnames(outbreak_ts),
+    identical.to = c("sim", unname(cols), "cumulative"),
+    .var.name = "scenario$outbreak_ts"
+  )
+  if (identical(aggregation, "none")) {
+    # case line list: replicates without cases have no rows
+    valid <- all(outbreak_ts$sim %in% seq_len(n_sim)) &&
+      all(outbreak_ts$onset < cap_max_days) &&
+      all(outbreak_ts[, identical(cumulative, seq_len(.N)), by = sim]$V1)
+  } else {
+    # aggregated data: every time interval for every replicate, in order
+    n_time <- cap_max_days / aggregation_as_int(aggregation)
+    sim_time <- data.table::CJ(sim = seq_len(n_sim), time = 0:(n_time - 1L))
+    valid <- isTRUE(all.equal(
+      outbreak_ts[, c("sim", cols[["time"]]), with = FALSE],
+      sim_time,
+      check.attributes = FALSE
+    )) &&
+      all(
+        outbreak_ts[
+          , cumulative == cumsum(get(cols[["cases"]])), by = sim
+        ]$V1
+      )
+  }
+  if (!valid) {
+    stop(
+      "`scenario$outbreak_ts` has been modified, control and extinction ",
+      "cannot be calculated on modified outbreak data.\n",
+      "Use the unmodified output of `scenario_sim()` or `aggregate()`.",
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
