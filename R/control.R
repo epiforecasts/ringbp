@@ -82,13 +82,14 @@
 #' The output of [outbreak_model()] is not supported, as it does not contain
 #' the `sim` column, which is only appended in [scenario_sim()].
 #'
-#' ***Warning***: the `$outbreak_ts` element of the [scenario_sim()] output
-#' carries attributes which are used by all four functions: `extinct` is used
-#' when `control_time`/`extinction_time` is `NULL`, and `aggregation` and
-#' `cap_cases` are used when `control_time`/`extinction_time` is specified.
-#' Therefore if you modify the output of [scenario_sim()] before passing it to
-#' any of these functions be careful not to drop the attributes (e.g. from
-#' subsetting the `data.table`).
+#' ***Warning***: control and extinction are calculated from the
+#' `$outbreak_ts` element of the [scenario_sim()] output and its attributes
+#' (`extinct`, `aggregation`, `cap_cases` and `cap_max_days`), so it must not
+#' be modified before it is passed to these functions. These functions error
+#' if they detect that `$outbreak_ts` has been modified, for example by
+#' filtering, reordering or combining rows, changing values, or dropping
+#' attributes. To change the time interval of the outbreak data use
+#' [`aggregate()`][aggregate.ringbp()].
 #'
 #' @param scenario a `<ringbp>` object: the output of [scenario_sim()],
 #'   containing the `$outbreak_ts` `data.table` of cases used to determine
@@ -194,7 +195,7 @@ control_prob <- function(scenario,
     control_time = control_time,
     control_threshold = control_threshold
   )
-  sum(control_runs$control) / max(control_runs$sim)
+  mean(control_runs$control)
 }
 
 #' @rdname control
@@ -203,12 +204,7 @@ control_prob <- function(scenario,
 detect_control <- function(scenario,
                            control_time = NULL,
                            control_threshold = 0) {
-  checkmate::assert_class(scenario, "ringbp")
-  checkmate::assert_names(
-    colnames(scenario$outbreak_ts),
-    must.include = "sim",
-    .var.name = "scenario$outbreak_ts"
-  )
+  check_scenario(scenario)
   checkmate::assert_integerish(
     control_threshold, len = 1, lower = 0, any.missing = FALSE
   )
@@ -224,36 +220,23 @@ detect_control <- function(scenario,
         call. = FALSE
       )
     }
-    if (!is.null(extinct)) {
-      message(
-        "Calculating extinction using the extinction status from ",
-        "the simulation."
+    message(
+      "Calculating extinction using the extinction status from ",
+      "the simulation."
+    )
+    return(
+      data.table(
+        # one extinct value per replicate, including replicates without
+        # cases in a case line list
+        sim = seq_along(extinct),
+        control = as.integer(extinct)
       )
-      return(
-        data.table(
-          # one extinct value per replicate, including replicates without
-          # cases in a case line list
-          sim = seq_along(extinct),
-          control = as.integer(extinct)
-        )
-      )
-    } else {
-      stop(
-        "`control_time`/`extinction_time` not specified and `scenario` is ",
-        "missing the `extinct` attribute.\n Use `scenario_sim()` to simulate ",
-        "`scenario`, or specify `control_time`/`extinction_time`.",
-        call. = FALSE
-      )
-    }
+    )
   }
 
   checkmate::assert_integerish(control_time, min.len = 1, any.missing = FALSE)
 
   aggregation <- attr(scenario, which = "aggregation", exact = TRUE)
-  stopifnot(
-    "`scenario` is missing the `aggregation` attribute.
-    Use `scenario_sim()` to simulate `scenario`" = !is.null(aggregation)
-  )
   # control/extinction for case line list is calculated on daily cases
   if (identical(aggregation, "none")) {
     warning(
@@ -266,10 +249,6 @@ detect_control <- function(scenario,
     scenario <- aggregate(outbreak, interval = aggregation)$outbreak_ts
   }
   cap_cases <- attr(scenario, which = "cap_cases", exact = TRUE)
-  stopifnot(
-    "`scenario` is missing the `cap_cases` attribute.
-    Use `scenario_sim()` to simulate `scenario`" = !is.null(cap_cases)
-  )
 
   cols <- aggregation_cols(aggregation)
   time_col <- cols[["time"]]

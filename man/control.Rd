@@ -129,11 +129,6 @@ the outbreak is not controlled, but cases rising above it after the
 window does not. This tests whether the outbreak was controlled
 \emph{throughout} the window.
 }
-
-For example, for weekly aggregated data with \code{control_threshold = 5} and
-weekly cases of 20, 8, 1, 0, 15, 3, 0 in weeks 0 to 6, the outbreak is
-controlled for \code{control_time = c(2, 3)}, but not for \code{control_time = 2}
-because of the 15 cases in week 4.
 }
 
 \subsection{Time intervals}{
@@ -157,13 +152,14 @@ The data passed to \code{scenario} has to be produced by \code{\link[=scenario_s
 The output of \code{\link[=outbreak_model]{outbreak_model()}} is not supported, as it does not contain
 the \code{sim} column, which is only appended in \code{\link[=scenario_sim]{scenario_sim()}}.
 
-\emph{\strong{Warning}}: the \verb{$outbreak_ts} element of the \code{\link[=scenario_sim]{scenario_sim()}} output
-carries attributes which are used by all four functions: \code{extinct} is used
-when \code{control_time}/\code{extinction_time} is \code{NULL}, and \code{aggregation} and
-\code{cap_cases} are used when \code{control_time}/\code{extinction_time} is specified.
-Therefore if you modify the output of \code{\link[=scenario_sim]{scenario_sim()}} before passing it to
-any of these functions be careful not to drop the attributes (e.g. from
-subsetting the \code{data.table}).
+\emph{\strong{Warning}}: control and extinction are calculated from the
+\verb{$outbreak_ts} element of the \code{\link[=scenario_sim]{scenario_sim()}} output and its attributes
+(\code{extinct}, \code{aggregation}, \code{cap_cases} and \code{cap_max_days}), so it must not
+be modified before it is passed to these functions. These functions error
+if they detect that \verb{$outbreak_ts} has been modified, for example by
+filtering, reordering or combining rows, changing values, or dropping
+attributes. To change the time interval of the outbreak data use
+\code{\link[=aggregate.ringbp]{aggregate()}}.
 }
 }
 \examples{
