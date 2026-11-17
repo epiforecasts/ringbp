@@ -32,27 +32,29 @@ and \code{\link[=detect_control]{detect_control()}}, and \code{extinction_time} 
 \item \code{NULL} (default): use the extinction status from the simulation. Only
 valid when \code{control_threshold = 0}; when \code{control_threshold > 0} a
 \code{control_time} is required and the default will error.
-\item A single \code{integer}: the window is from this time until the end of the
-simulation.
-\item An \code{integer} vector of length two: the lower and upper bounds
-(inclusive) of the window.
+\item A single \code{integer}: the window is from this time (inclusive) until the
+end of the simulation.
+\item An \code{integer} vector of length two: the lower and upper bounds of the
+window, both inclusive (\verb{[start, end]}).
 \item An \code{integer} vector of length \emph{n} (e.g. \code{12:16}): the times in the
-window. These will most likely be contiguous but non-contiguous times
-are allowed.
+window, all of which are included. These will most likely be
+contiguous but non-contiguous times are allowed.
 }
 
 See \emph{Definition of control} in Details for how each form of window is
 used to classify control / extinction.}
 
-\item{control_threshold}{a non-negative \code{integer} scalar: the threshold
-number of cases in each time interval of the aggregated \code{scenario} (e.g.
-weekly cases for weekly aggregated data) at or below which the outbreak
-is classified as controlled. By default it is \code{0}, which is outbreak
-extinction. Values greater than zero correspond to control defined under
-outbreak suppression strategies, e.g. if weekly cases do not exceed 100
-(\code{control_threshold = 100}), then the outbreak is said to be under
-control in that period. Outbreaks that have reached \code{cap_cases} (see
-\code{\link[=sim_opts]{sim_opts()}}) by the end of the window are not classified as controlled.}
+\item{control_threshold}{a non-negative \code{integer} scalar: the maximum
+number of cases (inclusive) in each time interval of the aggregated
+\code{scenario} (e.g. weekly cases for weekly aggregated data) for the
+outbreak to be classified as controlled. By default it is \code{0}, which is
+outbreak extinction. Values greater than zero correspond to control
+defined under outbreak suppression strategies, e.g. if weekly cases do
+not exceed 100 (\code{control_threshold = 100}), then the outbreak is said to
+be under control in that period. Outbreaks that have reached \code{cap_cases}
+(see \code{\link[=sim_opts]{sim_opts()}}) by the end of the window are not classified as
+controlled, reaching \code{cap_cases} after the window does not affect the
+classification.}
 }
 \value{
 \code{control_prob()} / \code{extinct_prob()}: a single \code{numeric} with the
@@ -67,9 +69,13 @@ not.
 \description{
 Summarise outbreaks simulated by \code{\link[=scenario_sim]{scenario_sim()}} by whether they were
 controlled or went extinct. An outbreak is \emph{controlled} when the number of
-cases in every time interval of a time window is at or below
-\code{control_threshold}, and \emph{extinct} when there are no new cases
-(\code{control_threshold = 0}). See \emph{Definition of control} in Details.
+cases in every time interval of a time window does not exceed
+\code{control_threshold} (i.e. cases \verb{<= control_threshold}), and \emph{extinct} when
+there are no new cases (\code{control_threshold = 0}). A time window can be
+defined by either just a starting time, in which case the window is all
+periods from that time on (inclusive), or as a \verb{[start, end]} interval,
+which includes both the \code{start} and \code{end} time intervals. See \emph{Definition
+of control} and \emph{Time intervals} in Details.
 
 These functions answer questions such as:
 \itemize{
@@ -102,31 +108,35 @@ controlled / went extinct or not (\code{detect_extinct()} is a special case of
 \subsection{Definition of control}{
 
 An outbreak is controlled in a time window if the number of cases in
-\strong{every} time interval of the window is at or below \code{control_threshold},
-and the outbreak has not reached \code{cap_cases} (see \code{\link[=sim_opts]{sim_opts()}}) by the end
-of the window. Control is a count below a threshold, it does not require
-the outbreak to end, and extinction is the special case of no new cases
-(\code{control_threshold = 0}). If the number of cases falls below
-\code{control_threshold} and then rises above it again within the window, the
+\strong{every} time interval of the window does not exceed \code{control_threshold}
+(i.e. cases \verb{<= control_threshold}, so the threshold is inclusive), and the
+cumulative number of cases is below \code{cap_cases} (see \code{\link[=sim_opts]{sim_opts()}}) in every
+time interval of the window, i.e. the outbreak has not reached \code{cap_cases}
+by the end of the window. Reaching \code{cap_cases} after the end of the window
+does not affect whether the outbreak is controlled in the window. Control
+is a count not exceeding a threshold, it does not require the outbreak to
+end, and extinction is the special case of no new cases
+(\code{control_threshold = 0}). If the number of cases falls to or below
+\code{control_threshold} and then exceeds it again within the window, the
 outbreak is not controlled.
 
 The window is set by \code{control_time} / \code{extinction_time}, and its form
-determines whether cases rising above \code{control_threshold} after a period
-below it means the outbreak is not controlled:
+determines whether cases exceeding \code{control_threshold} after a period
+at or below it means the outbreak is not controlled:
 \itemize{
 \item \code{NULL} (default, only valid for \code{control_threshold = 0}): uses the
 extinction status from the simulation, where all infectious cases have
 had the opportunity to transmit but no new cases were generated, so the
 number of cases cannot rise again.
-\item A single \code{integer} \code{t}: the window is from \code{t} until the end of the
-simulation, so cases rising above \code{control_threshold} at any time from
-\code{t} means the outbreak is not controlled. This tests whether the
+\item A single \code{integer} \code{t}: the window is from \code{t} (inclusive) until the end
+of the simulation, so cases exceeding \code{control_threshold} at any time
+from \code{t} means the outbreak is not controlled. This tests whether the
 outbreak \emph{stayed} controlled from \code{t}, but only until the end of the
 simulation (\code{cap_max_days}, see \code{\link[=sim_opts]{sim_opts()}}), not indefinitely.
 \item An \code{integer} vector, e.g. \code{c(a, b)} or \code{12:16}: the window is only these
-times, so cases rising above \code{control_threshold} within the window means
-the outbreak is not controlled, but cases rising above it after the
-window does not. This tests whether the outbreak was controlled
+times (inclusive), so cases exceeding \code{control_threshold} within the
+window means the outbreak is not controlled, but cases exceeding it after
+the window does not. This tests whether the outbreak was controlled
 \emph{throughout} the window.
 }
 }

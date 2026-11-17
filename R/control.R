@@ -3,11 +3,13 @@
 #' @description
 #' Summarise outbreaks simulated by [scenario_sim()] by whether they were
 #' controlled or went extinct. An outbreak is _controlled_ when the number of
-#' cases in every time interval of a time window is at or below
-#' `control_threshold`, and _extinct_ when there are no new cases
-#' (`control_threshold = 0`). See _Definition of control_ in Details.
-#' A time window can be defined by either just a starting time, in which case
-#' the window is all periods from that time on, or as a `[start, end]` interval
+#' cases in every time interval of a time window does not exceed
+#' `control_threshold` (i.e. cases `<= control_threshold`), and _extinct_ when
+#' there are no new cases (`control_threshold = 0`). A time window can be
+#' defined by either just a starting time, in which case the window is all
+#' periods from that time on (inclusive), or as a `[start, end]` interval,
+#' which includes both the `start` and `end` time intervals. See _Definition
+#' of control_ and _Time intervals_ in Details.
 #'
 #' These functions answer questions such as:
 #' * Did the outbreak go extinct in the simulation? Use
@@ -38,30 +40,34 @@
 #' ## Definition of control
 #'
 #' An outbreak is controlled in a time window if the number of cases in
-#' **every** time interval of the window is at or below `control_threshold`,
-#' and the outbreak has not reached `cap_cases` (see [sim_opts()]) by the end
-#' of the window. Control is a count below a threshold, it does not require
-#' the outbreak to end, and extinction is the special case of no new cases
-#' (`control_threshold = 0`). If the number of cases falls below
-#' `control_threshold` and then rises above it again within the window, the
+#' **every** time interval of the window does not exceed `control_threshold`
+#' (i.e. cases `<= control_threshold`, so the threshold is inclusive), and the
+#' cumulative number of cases is below `cap_cases` (see [sim_opts()]) in every
+#' time interval of the window, i.e. the outbreak has not reached `cap_cases`
+#' by the end of the window. Reaching `cap_cases` after the end of the window
+#' does not affect whether the outbreak is controlled in the window. Control
+#' is a count not exceeding a threshold, it does not require the outbreak to
+#' end, and extinction is the special case of no new cases
+#' (`control_threshold = 0`). If the number of cases falls to or below
+#' `control_threshold` and then exceeds it again within the window, the
 #' outbreak is not controlled.
 #'
 #' The window is set by `control_time` / `extinction_time`, and its form
-#' determines whether cases rising above `control_threshold` after a period
-#' below it means the outbreak is not controlled:
+#' determines whether cases exceeding `control_threshold` after a period
+#' at or below it means the outbreak is not controlled:
 #' * `NULL` (default, only valid for `control_threshold = 0`): uses the
 #'   extinction status from the simulation, where all infectious cases have
 #'   had the opportunity to transmit but no new cases were generated, so the
 #'   number of cases cannot rise again.
-#' * A single `integer` `t`: the window is from `t` until the end of the
-#'   simulation, so cases rising above `control_threshold` at any time from
-#'   `t` means the outbreak is not controlled. This tests whether the
+#' * A single `integer` `t`: the window is from `t` (inclusive) until the end
+#'   of the simulation, so cases exceeding `control_threshold` at any time
+#'   from `t` means the outbreak is not controlled. This tests whether the
 #'   outbreak _stayed_ controlled from `t`, but only until the end of the
 #'   simulation (`cap_max_days`, see [sim_opts()]), not indefinitely.
 #' * An `integer` vector, e.g. `c(a, b)` or `12:16`: the window is only these
-#'   times, so cases rising above `control_threshold` within the window means
-#'   the outbreak is not controlled, but cases rising above it after the
-#'   window does not. This tests whether the outbreak was controlled
+#'   times (inclusive), so cases exceeding `control_threshold` within the
+#'   window means the outbreak is not controlled, but cases exceeding it after
+#'   the window does not. This tests whether the outbreak was controlled
 #'   _throughout_ the window.
 #'
 #' ## Time intervals
@@ -107,26 +113,28 @@
 #'   * `NULL` (default): use the extinction status from the simulation. Only
 #'     valid when `control_threshold = 0`; when `control_threshold > 0` a
 #'     `control_time` is required and the default will error.
-#'   * A single `integer`: the window is from this time until the end of the
-#'     simulation.
-#'   * An `integer` vector of length two: the lower and upper bounds
-#'     (inclusive) of the window.
+#'   * A single `integer`: the window is from this time (inclusive) until the
+#'     end of the simulation.
+#'   * An `integer` vector of length two: the lower and upper bounds of the
+#'     window, both inclusive (`[start, end]`).
 #'   * An `integer` vector of length _n_ (e.g. `12:16`): the times in the
-#'     window. These will most likely be contiguous but non-contiguous times
-#'     are allowed.
+#'     window, all of which are included. These will most likely be
+#'     contiguous but non-contiguous times are allowed.
 #'
 #'   See _Definition of control_ in Details for how each form of window is
 #'   used to classify control / extinction.
 #'
-#' @param control_threshold a non-negative `integer` scalar: the threshold
-#'   number of cases in each time interval of the aggregated `scenario` (e.g.
-#'   weekly cases for weekly aggregated data) at or below which the outbreak
-#'   is classified as controlled. By default it is `0`, which is outbreak
-#'   extinction. Values greater than zero correspond to control defined under
-#'   outbreak suppression strategies, e.g. if weekly cases do not exceed 100
-#'   (`control_threshold = 100`), then the outbreak is said to be under
-#'   control in that period. Outbreaks that have reached `cap_cases` (see
-#'   [sim_opts()]) by the end of the window are not classified as controlled.
+#' @param control_threshold a non-negative `integer` scalar: the maximum
+#'   number of cases (inclusive) in each time interval of the aggregated
+#'   `scenario` (e.g. weekly cases for weekly aggregated data) for the
+#'   outbreak to be classified as controlled. By default it is `0`, which is
+#'   outbreak extinction. Values greater than zero correspond to control
+#'   defined under outbreak suppression strategies, e.g. if weekly cases do
+#'   not exceed 100 (`control_threshold = 100`), then the outbreak is said to
+#'   be under control in that period. Outbreaks that have reached `cap_cases`
+#'   (see [sim_opts()]) by the end of the window are not classified as
+#'   controlled, reaching `cap_cases` after the window does not affect the
+#'   classification.
 #'
 #' @importFrom data.table setDT fifelse data.table
 #'
