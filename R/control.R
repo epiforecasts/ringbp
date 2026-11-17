@@ -13,12 +13,6 @@
 #'   special case of `detect_control()` with `control_threshold = 0`)
 #'
 #' @details
-#' `extinct_prob()` and `detect_extinct()` were added to the package before
-#' `control_prob()` and `detect_control()`. The extinction functions are
-#' special cases of the more general control functions, fixing
-#' `control_threshold = 0`. They remain in the package for backwards
-#' compatibility and convenience to calculate extinction metrics.
-#'
 #' The data passed to `scenario` has to be produced by [scenario_sim()].
 #' The output of [outbreak_model()] is not supported, as it does not contain
 #' the `sim` column, which is only appended in [scenario_sim()].

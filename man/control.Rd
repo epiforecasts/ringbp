@@ -105,12 +105,6 @@ special case of \code{control_prob()} with \code{control_threshold = 0})
 special case of \code{detect_control()} with \code{control_threshold = 0})
 }
 \details{
-\code{extinct_prob()} and \code{detect_extinct()} were added to the package before
-\code{control_prob()} and \code{detect_control()}. The extinction functions are
-special cases of the more general control functions, fixing
-\code{control_threshold = 0}. They remain in the package for backwards
-compatibility and convenience to calculate extinction metrics.
-
 The data passed to \code{scenario} has to be produced by \code{\link[=scenario_sim]{scenario_sim()}}.
 The output of \code{\link[=outbreak_model]{outbreak_model()}} is not supported, as it does not contain
 the \code{sim} column, which is only appended in \code{\link[=scenario_sim]{scenario_sim()}}.
